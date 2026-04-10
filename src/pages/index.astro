@@ -12,6 +12,11 @@ import Base from '../layouts/Base.astro';
       <a href="/" class="nav-logo" aria-label="BuyerVoice.AI home">
         <img src="/images/logo.svg" alt="BuyerVoice.AI" height="48" />
       </a>
+      <div class="nav-links">
+        <a href="#deliverables" class="nav-link">Services</a>
+        <a href="#method" class="nav-link">Methodology</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
     </div>
   </nav>
 
@@ -163,20 +168,10 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- 6. Footer / Contact -->
-  <footer class="footer" id="contact">
+  <!-- Footer -->
+  <footer class="footer">
     <div class="container">
       <div class="footer-rule"></div>
-      <div class="footer-content">
-        <div>
-          <img src="/images/logo.svg" alt="BuyerVoice.AI" height="36" class="footer-logo" />
-          <p class="footer-tagline">Buyer intelligence, at interview depth.</p>
-        </div>
-        <div class="footer-contact">
-          <p class="eyebrow">Get in touch</p>
-          <a href="mailto:forest@buyervoice.ai" class="footer-email">forest@buyervoice.ai</a>
-        </div>
-      </div>
       <p class="footer-copy">&copy; 2026 BuyerVoice.AI. All rights reserved.</p>
     </div>
   </footer>
@@ -195,9 +190,9 @@ import Base from '../layouts/Base.astro';
   }
 
   .nav-inner {
-    max-width: var(--col-10);
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 1rem 1.5rem;
+    padding: 1rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -207,16 +202,36 @@ import Base from '../layouts/Base.astro';
     text-decoration: none;
   }
 
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-link:hover {
+    color: var(--signal);
+  }
+
+  /* Container */
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
   /* Hero */
   .hero {
     padding-top: clamp(140px, 20vw, 220px);
     padding-bottom: var(--section-gap);
-  }
-
-  .container {
-    max-width: var(--col-8);
-    margin: 0 auto;
-    padding: 0 1.5rem;
   }
 
   .hero-headline {
@@ -224,7 +239,7 @@ import Base from '../layouts/Base.astro';
     line-height: 1.08;
     font-weight: 700;
     letter-spacing: -0.02em;
-    max-width: 14ch;
+    max-width: 16ch;
   }
 
   .hero-sub {
@@ -232,7 +247,7 @@ import Base from '../layouts/Base.astro';
     font-size: 1.1rem;
     line-height: 1.6;
     color: var(--muted);
-    max-width: 52ch;
+    max-width: 60ch;
   }
 
   .hero-rule {
@@ -251,11 +266,11 @@ import Base from '../layouts/Base.astro';
     font-size: clamp(1.6rem, 3.5vw, 2.2rem);
     line-height: 1.18;
     margin-top: 0.75rem;
-    max-width: 22ch;
+    max-width: 28ch;
   }
 
   .section-heading--wide {
-    max-width: 36ch;
+    max-width: none;
   }
 
   .section-intro {
@@ -282,8 +297,9 @@ import Base from '../layouts/Base.astro';
   .divider {
     border: none;
     border-top: 1px solid var(--ink);
-    max-width: var(--col-8);
+    max-width: var(--container);
     margin: 0 auto;
+    padding: 0 2rem;
     opacity: 0.12;
   }
 
@@ -355,7 +371,6 @@ import Base from '../layouts/Base.astro';
     grid-template-columns: 200px 1fr;
     gap: 3rem;
     align-items: start;
-    max-width: var(--col-10);
   }
 
   .about-sidebar {
@@ -380,7 +395,6 @@ import Base from '../layouts/Base.astro';
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    margin-top: 0.75rem;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--signal);
@@ -443,47 +457,24 @@ import Base from '../layouts/Base.astro';
   .footer-rule {
     height: 1px;
     background: var(--ink);
-    margin-bottom: 3rem;
-  }
-
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .footer-logo {
-    opacity: 0.7;
-  }
-
-  .footer-tagline {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  .footer-contact {
-    text-align: right;
-  }
-
-  .footer-email {
-    display: block;
-    margin-top: 0.4rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ink);
+    margin-bottom: 2rem;
   }
 
   .footer-copy {
-    margin-top: 3rem;
     font-size: 0.75rem;
     color: var(--muted);
   }
 
   /* Responsive */
   @media (max-width: 640px) {
+    .nav-links {
+      gap: 1.25rem;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+    }
+
     .about-grid {
       grid-template-columns: 1fr;
     }
@@ -500,14 +491,6 @@ import Base from '../layouts/Base.astro';
 
     .method-number {
       font-size: 2rem;
-    }
-
-    .footer-content {
-      flex-direction: column;
-    }
-
-    .footer-contact {
-      text-align: left;
     }
   }
 </style>
