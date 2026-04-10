@@ -128,17 +128,13 @@ import Base from '../layouts/Base.astro';
   <section class="section" id="about">
     <div class="container">
       <span class="eyebrow">Who's behind it</span>
-      <h2 class="section-heading">Senior judgment on every engagement.</h2>
+      <h2 class="section-heading section-heading--wide">Decades of academic and industry experience.</h2>
 
       <div class="about-grid">
         <div class="about-sidebar">
           <div class="about-photo-wrap">
             <img src="/images/forest-baker.jpg" alt="Forest Baker, PhD" class="about-photo" />
           </div>
-          <p class="eyebrow about-label">Education</p>
-          <p class="about-education">
-            PhD in Experimental Psychology, SUNY Stony Brook | MBA, Duke Fuqua School of Business | NIDA Postdoctoral Fellow, University of Vermont
-          </p>
           <a href="https://www.linkedin.com/in/forestb/" target="_blank" rel="noopener noreferrer" class="about-linkedin">LinkedIn profile <span class="external-icon" aria-hidden="true">&#8599;</span></a>
         </div>
         <div class="about-bio">
@@ -258,6 +254,10 @@ import Base from '../layouts/Base.astro';
     max-width: 22ch;
   }
 
+  .section-heading--wide {
+    max-width: 36ch;
+  }
+
   .section-intro {
     margin-top: 1.25rem;
     color: var(--muted);
@@ -352,9 +352,10 @@ import Base from '../layouts/Base.astro';
   .about-grid {
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 200px 1fr;
     gap: 3rem;
     align-items: start;
+    max-width: var(--col-10);
   }
 
   .about-sidebar {
@@ -373,16 +374,6 @@ import Base from '../layouts/Base.astro';
     object-fit: cover;
     object-position: top center;
     border-radius: 50%;
-  }
-
-  .about-label {
-    margin-bottom: 0.5rem;
-  }
-
-  .about-education {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--rule);
   }
 
   .about-linkedin {
