@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" font-family="'Source Serif 4', 'GT Sectra', Georgia, serif">
+  <rect width="600" height="160" fill="#F7F5EF"/>
+  <text x="40" y="95" font-size="68" font-weight="600" fill="#0B1F3A" letter-spacing="-1.5">BuyerVoice</text>
+  <text x="443" y="95" font-size="44" font-weight="500" fill="#B8341B" letter-spacing="-0.5">.AI</text>
+  <line x1="40" y1="115" x2="540" y2="115" stroke="#0B1F3A" stroke-width="1.2"/>
+  <text x="40" y="138" font-size="11" font-weight="500" fill="#6B6B6B" letter-spacing="2" font-family="'Inter', system-ui, sans-serif">THE SIGNAL IN THE CONVERSATION</text>
+</svg>
