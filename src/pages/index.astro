@@ -71,31 +71,35 @@ import Base from '../layouts/Base.astro';
   <section class="section" id="method">
     <div class="container">
       <span class="eyebrow">Our method</span>
-      <h2 class="section-heading">Three steps. Hundreds of conversations. One clear answer.</h2>
+      <h2 class="section-heading section-heading--wide">Marketing Science + AI</h2>
 
-      <div class="method-grid">
-        <div class="method-card">
-          <span class="method-number">01</span>
-          <h3 class="method-title">Interview at scale.</h3>
-          <p>
-            AI-moderated interviews run hundreds of structured conversations with buyers, switchers, and non-customers in your category. Each one follows a research-grade guide. Each one probes on follow-ups a survey never could.
-          </p>
+      <div class="method-capabilities">
+        <div class="capability">
+          <div class="capability-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M12 16.5l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Apply PhD-level marketing science to conversational data</p>
         </div>
 
-        <div class="method-card">
-          <span class="method-number">02</span>
-          <h3 class="method-title">Anchor on the switch.</h3>
-          <p>
-            Every study centers on the buyer's last real decision in the category. What they considered, what they picked, what they regret. Switching analysis reveals the actual decision logic of your market, not a hypothetical ranking of features.
-          </p>
+        <div class="capability">
+          <div class="capability-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M12 16.5l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Leverage AI to organize and analyze unstructured data</p>
         </div>
 
-        <div class="method-card">
-          <span class="method-number">03</span>
-          <h3 class="method-title">Analyze with marketing science.</h3>
-          <p>
-            Transcripts are coded and analyzed using established frameworks: category entry points, jobs-to-be-done, perceived differentiation, switching cost models. The output is a structured finding, not a stack of highlighted quotes.
-          </p>
+        <div class="capability">
+          <div class="capability-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M12 16.5l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Deliver results in weeks, not months</p>
+        </div>
+
+        <div class="capability">
+          <div class="capability-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5"/><path d="M12 16.5l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p>Equip Product and Marketing with insights that drive strategy</p>
         </div>
       </div>
     </div>
@@ -427,47 +431,44 @@ import Base from '../layouts/Base.astro';
     letter-spacing: 0.02em;
   }
 
-  /* Method (paper background) */
-  .method-grid {
+  /* Method — capabilities (paper background) */
+  .method-capabilities {
     margin-top: 3rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
   }
 
-  .method-card {
-    padding: 2rem 1.75rem;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(11, 31, 58, 0.06), 0 4px 16px rgba(11, 31, 58, 0.04);
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  .capability {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 2rem 2.25rem;
+    border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+    border-right: 1px solid rgba(11, 31, 58, 0.08);
   }
 
-  .method-card:hover {
-    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.08), 0 8px 28px rgba(11, 31, 58, 0.06);
-    transform: translateY(-2px);
+  .capability:nth-child(2n) {
+    border-right: none;
   }
 
-  .method-number {
-    font-family: var(--serif);
-    font-size: 0.85rem;
-    font-weight: 600;
+  .capability:nth-child(n+3) {
+    border-bottom: none;
+  }
+
+  .capability-icon {
     color: var(--signal);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
   }
 
-  .method-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-
-  .method-card p {
-    font-size: 0.95rem;
-    line-height: 1.65;
-    color: var(--muted);
+  .capability p {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.01em;
   }
 
   /* Deliverables (warm band) */
@@ -660,9 +661,16 @@ import Base from '../layouts/Base.astro';
 
   /* Responsive */
   @media (max-width: 960px) {
-    .method-grid {
+    .method-capabilities {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
+    }
+
+    .capability {
+      border-right: none;
+    }
+
+    .capability:nth-child(3) {
+      border-bottom: 1px solid rgba(11, 31, 58, 0.08);
     }
 
     .deliverables-grid {
