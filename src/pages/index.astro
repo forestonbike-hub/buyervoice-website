@@ -7,10 +7,10 @@ import Base from '../layouts/Base.astro';
   description="Buyer intelligence built on hundreds of interviews. We answer the most important questions for brand growth."
 >
   <!-- Nav -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <div class="nav-inner">
       <a href="/" class="nav-logo" aria-label="BuyerVoice.AI home">
-        <img src="/images/logo.svg" alt="BuyerVoice.AI" height="48" />
+        <img src="/images/logo.svg" alt="BuyerVoice.AI" width="240" height="48" />
       </a>
       <div class="nav-links">
         <a href="#deliverables" class="nav-link">Services</a>
@@ -24,14 +24,14 @@ import Base from '../layouts/Base.astro';
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <h1 class="hero-headline">The signal in the conversation.</h1>
+        <h1 class="hero-headline">The signal in<br />the conversation.</h1>
         <p class="hero-sub">
           Buyer intelligence built on hundreds of interviews. We answer the most important questions for brand growth.
         </p>
         <div class="hero-rule"></div>
       </div>
       <div class="hero-illustration">
-        <img src="/images/hero-illustration.svg" alt="Interview data visualization showing patterns across hundreds of buyer conversations" />
+        <img src="/images/hero-illustration.svg" alt="Interview data visualization showing patterns across hundreds of buyer conversations" width="700" height="400" loading="eager" />
       </div>
     </div>
   </section>
@@ -41,17 +41,19 @@ import Base from '../layouts/Base.astro';
     <div class="container">
       <span class="eyebrow">The problem</span>
       <h2 class="section-heading">Most companies don't understand how their buyers actually decide.</h2>
-      <div class="prose">
-        <p>
-          Surveys capture what buyers will click. They rarely capture what buyers mean. A five-point scale tells you someone is "satisfied." It does not tell you why they almost switched to your competitor last quarter, or what phrase a colleague used that made them reconsider.
-        </p>
-        <p>
-          Traditional interview research goes deeper, but a dozen conversations will not tell you how a market decides. You get anecdotes, not patterns. The research takes months and reads like an academic paper instead of a brief your team can act on Monday morning.
-        </p>
-        <p>
-          Depth and scale have been a trade-off for a long time. They are not anymore.
-        </p>
+      <div class="problem-columns">
+        <div class="prose">
+          <p>
+            Surveys capture what buyers will click. They rarely capture what buyers mean. A five-point scale tells you someone is "satisfied." It does not tell you why they almost switched to your competitor last quarter, or what phrase a colleague used that made them reconsider.
+          </p>
+        </div>
+        <div class="prose">
+          <p>
+            Traditional interview research goes deeper, but a dozen conversations will not tell you how a market decides. You get anecdotes, not patterns. The research takes months and reads like an academic paper instead of a brief your team can act on Monday morning.
+          </p>
+        </div>
       </div>
+      <p class="problem-kicker">Depth and scale have been a trade-off for a long time. They are not anymore.</p>
     </div>
   </section>
 
@@ -63,35 +65,29 @@ import Base from '../layouts/Base.astro';
       <span class="eyebrow">Our method</span>
       <h2 class="section-heading">Three steps. Hundreds of conversations. One clear answer.</h2>
 
-      <div class="method-list">
-        <div class="method-item">
-          <span class="method-number">1</span>
-          <div>
-            <h3 class="method-title">Interview at scale.</h3>
-            <p>
-              AI-moderated interviews run hundreds of structured conversations with buyers, switchers, and non-customers in your category. Each one follows a research-grade guide. Each one probes on follow-ups a survey never could.
-            </p>
-          </div>
+      <div class="method-grid">
+        <div class="method-card">
+          <span class="method-number">01</span>
+          <h3 class="method-title">Interview at scale.</h3>
+          <p>
+            AI-moderated interviews run hundreds of structured conversations with buyers, switchers, and non-customers in your category. Each one follows a research-grade guide. Each one probes on follow-ups a survey never could.
+          </p>
         </div>
 
-        <div class="method-item">
-          <span class="method-number">2</span>
-          <div>
-            <h3 class="method-title">Anchor on the switch.</h3>
-            <p>
-              Every study centers on the buyer's last real decision in the category. What they considered, what they picked, what they regret. Switching analysis reveals the actual decision logic of your market, not a hypothetical ranking of features.
-            </p>
-          </div>
+        <div class="method-card">
+          <span class="method-number">02</span>
+          <h3 class="method-title">Anchor on the switch.</h3>
+          <p>
+            Every study centers on the buyer's last real decision in the category. What they considered, what they picked, what they regret. Switching analysis reveals the actual decision logic of your market, not a hypothetical ranking of features.
+          </p>
         </div>
 
-        <div class="method-item">
-          <span class="method-number">3</span>
-          <div>
-            <h3 class="method-title">Analyze with marketing science.</h3>
-            <p>
-              Transcripts are coded and analyzed using established frameworks: category entry points, jobs-to-be-done, perceived differentiation, switching cost models. The output is a structured finding, not a stack of highlighted quotes.
-            </p>
-          </div>
+        <div class="method-card">
+          <span class="method-number">03</span>
+          <h3 class="method-title">Analyze with marketing science.</h3>
+          <p>
+            Transcripts are coded and analyzed using established frameworks: category entry points, jobs-to-be-done, perceived differentiation, switching cost models. The output is a structured finding, not a stack of highlighted quotes.
+          </p>
         </div>
       </div>
     </div>
@@ -105,25 +101,22 @@ import Base from '../layouts/Base.astro';
       <span class="eyebrow">What you get</span>
       <h2 class="section-heading">A finished answer, not a data dump.</h2>
       <p class="section-intro">
-        Every engagement produces a set of deliverables designed to move directly into your marketing, product, and sales workflows. No dashboards. No raw transcripts dropped over the wall.
+        Every engagement produces deliverables designed to move directly into your marketing, product, and sales workflows. No dashboards. No raw transcripts dropped over the wall.
       </p>
 
-      <div class="deliverables-list">
+      <div class="deliverables-grid">
         <div class="deliverable">
           <h3>Narrative report</h3>
           <p>A structured account of how your market perceives your category, grounded in hundreds of real conversations. Written for executives, not academics.</p>
         </div>
-        <hr class="rule-light" />
         <div class="deliverable">
           <h3>Switching map</h3>
           <p>A visual model of how buyers move between solutions in your category. What triggers consideration, what closes the deal, what causes regret.</p>
         </div>
-        <hr class="rule-light" />
         <div class="deliverable">
           <h3>Persona-language library</h3>
           <p>The actual words your buyers use to describe their problems, evaluate alternatives, and justify decisions. Organized by persona and buying stage.</p>
         </div>
-        <hr class="rule-light" />
         <div class="deliverable">
           <h3>Specific recommendations</h3>
           <p>Concrete actions for marketing, product, and sales, each tied to a finding in the data. Not "consider repositioning." Instead: here is the positioning, here is the evidence, here is who it resonates with.</p>
@@ -143,7 +136,7 @@ import Base from '../layouts/Base.astro';
       <div class="about-grid">
         <div class="about-sidebar">
           <div class="about-photo-wrap">
-            <img src="/images/forest-baker.jpg" alt="Forest Baker, PhD" class="about-photo" />
+            <img src="/images/forest-baker.jpg" alt="Forest Baker, PhD" class="about-photo" width="180" height="180" loading="lazy" />
           </div>
           <a href="https://www.linkedin.com/in/forestb/" target="_blank" rel="noopener noreferrer" class="about-linkedin">LinkedIn profile <span class="external-icon" aria-hidden="true">&#8599;</span></a>
         </div>
@@ -176,8 +169,14 @@ import Base from '../layouts/Base.astro';
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-rule"></div>
-      <p class="footer-copy">&copy; 2026 BuyerVoice.AI. All rights reserved.</p>
+      <div class="footer-inner">
+        <p class="footer-copy">&copy; 2026 BuyerVoice.AI</p>
+        <div class="footer-links">
+          <a href="#deliverables">Services</a>
+          <a href="#method">Methodology</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
     </div>
   </footer>
 </Base>
@@ -190,8 +189,10 @@ import Base from '../layouts/Base.astro';
     left: 0;
     right: 0;
     z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+    background: rgba(247, 245, 239, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(11, 31, 58, 0.06);
   }
 
   .nav-inner {
@@ -205,11 +206,17 @@ import Base from '../layouts/Base.astro';
 
   .nav-logo {
     text-decoration: none;
+    display: inline-flex;
+  }
+
+  .nav-logo img {
+    height: 40px;
+    width: auto;
   }
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 2.25rem;
     align-items: center;
   }
 
@@ -220,10 +227,26 @@ import Base from '../layouts/Base.astro';
     color: var(--ink);
     text-decoration: none;
     letter-spacing: 0.01em;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--signal);
+    transition: width 0.25s ease;
   }
 
   .nav-link:hover {
     color: var(--signal);
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
   }
 
   /* Container */
@@ -241,8 +264,8 @@ import Base from '../layouts/Base.astro';
 
   .hero-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 38% 60%;
+    gap: 2%;
     align-items: center;
   }
 
@@ -251,24 +274,30 @@ import Base from '../layouts/Base.astro';
   }
 
   .hero-headline {
-    font-size: clamp(2.4rem, 5.5vw, 3.6rem);
-    line-height: 1.08;
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    line-height: 1.06;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   .hero-sub {
     margin-top: 1.5rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.65;
     color: var(--muted);
+    max-width: 38ch;
   }
 
   .hero-rule {
-    width: 60px;
+    width: 48px;
     height: 2px;
     background: var(--signal);
     margin-top: 2.5rem;
+  }
+
+  .hero-illustration {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .hero-illustration img {
@@ -285,7 +314,7 @@ import Base from '../layouts/Base.astro';
     font-size: clamp(1.6rem, 3.5vw, 2.2rem);
     line-height: 1.18;
     margin-top: 0.75rem;
-    max-width: 28ch;
+    max-width: 26ch;
   }
 
   .section-heading--wide {
@@ -295,22 +324,31 @@ import Base from '../layouts/Base.astro';
   .section-intro {
     margin-top: 1.25rem;
     color: var(--muted);
-    max-width: var(--measure);
-    line-height: 1.6;
-  }
-
-  .prose {
-    margin-top: 1.5rem;
-    max-width: var(--measure);
-  }
-
-  .prose p {
-    margin-top: 1.25rem;
+    max-width: 60ch;
     line-height: 1.65;
   }
 
-  .prose p:first-child {
-    margin-top: 0;
+  /* Problem section */
+  .problem-columns {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .prose p {
+    line-height: 1.7;
+    color: var(--rule);
+  }
+
+  .problem-kicker {
+    margin-top: 2.5rem;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    letter-spacing: -0.01em;
   }
 
   .divider {
@@ -319,73 +357,82 @@ import Base from '../layouts/Base.astro';
     max-width: var(--container);
     margin: 0 auto;
     padding: 0 2rem;
-    opacity: 0.12;
+    opacity: 0.1;
   }
 
   /* Method */
-  .method-list {
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+  .method-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 
-  .method-item {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
+  .method-card {
+    padding: 2rem 1.75rem;
+    border: 1px solid rgba(11, 31, 58, 0.08);
+    border-radius: 4px;
+    transition: border-color 0.2s ease;
+  }
+
+  .method-card:hover {
+    border-color: rgba(184, 52, 27, 0.25);
   }
 
   .method-number {
     font-family: var(--serif);
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1;
-    min-width: 48px;
-    opacity: 0.15;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--signal);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 1.25rem;
   }
 
   .method-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .method-item p {
-    line-height: 1.6;
-    color: var(--rule);
+  .method-card p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--muted);
   }
 
   /* Deliverables */
-  .deliverables-list {
+  .deliverables-grid {
     margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(11, 31, 58, 0.06);
+    border: 1px solid rgba(11, 31, 58, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
   }
 
   .deliverable {
-    padding: 1.5rem 0;
+    padding: 2rem;
+    background: var(--paper);
   }
 
   .deliverable h3 {
     font-size: 1.05rem;
     font-weight: 600;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
   }
 
   .deliverable p {
-    line-height: 1.6;
-    color: var(--rule);
-    max-width: var(--measure);
-  }
-
-  .rule-light {
-    border: none;
-    border-top: 1px solid rgba(11, 31, 58, 0.08);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--muted);
   }
 
   /* About */
   .about-grid {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     display: grid;
     grid-template-columns: 200px 1fr;
     gap: 3rem;
@@ -399,7 +446,7 @@ import Base from '../layouts/Base.astro';
 
   .about-photo-wrap {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .about-photo {
@@ -408,13 +455,14 @@ import Base from '../layouts/Base.astro';
     object-fit: cover;
     object-position: top center;
     border-radius: 50%;
+    filter: grayscale(15%);
   }
 
   .about-linkedin {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    font-size: 0.9rem;
+    gap: 0.3rem;
+    font-size: 0.88rem;
     font-weight: 500;
     color: var(--signal);
     text-decoration: none;
@@ -425,28 +473,30 @@ import Base from '../layouts/Base.astro';
   }
 
   .external-icon {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .about-bio h3 {
     font-family: var(--serif);
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
     line-height: 1.2;
   }
 
   .about-title {
     margin-top: 0.25rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--signal);
   }
 
   .about-section-head {
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--ink);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(11, 31, 58, 0.08);
   }
 
   .about-category {
@@ -455,43 +505,94 @@ import Base from '../layouts/Base.astro';
   }
 
   .about-list {
-    list-style: disc;
-    padding-left: 1.25rem;
+    list-style: none;
+    padding-left: 0;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
   }
 
   .about-list li {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--rule);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .about-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal);
   }
 
   /* Footer */
   .footer {
-    padding: var(--section-gap) 0 3rem;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(11, 31, 58, 0.08);
+    margin-top: var(--section-gap);
   }
 
-  .footer-rule {
-    height: 1px;
-    background: var(--ink);
-    margin-bottom: 2rem;
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .footer-copy {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--muted);
   }
 
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    color: var(--signal);
+  }
+
   /* Responsive */
-  @media (max-width: 768px) {
-    .hero-grid {
+  @media (max-width: 960px) {
+    .method-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .deliverables-grid {
       grid-template-columns: 1fr;
     }
 
+    .problem-columns {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
     .hero-illustration {
-      max-width: 400px;
+      max-width: 500px;
+    }
+
+    .hero-headline {
+      font-size: clamp(2rem, 7vw, 2.6rem);
     }
   }
 
@@ -509,17 +610,14 @@ import Base from '../layouts/Base.astro';
     }
 
     .about-photo {
-      width: 150px;
-      height: 150px;
+      width: 140px;
+      height: 140px;
     }
 
-    .method-item {
+    .footer-inner {
       flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .method-number {
-      font-size: 2rem;
+      gap: 1rem;
+      text-align: center;
     }
   }
 </style>
