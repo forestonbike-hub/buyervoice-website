@@ -300,105 +300,87 @@ import Base from '../layouts/Base.astro';
             <p>Who do we target?</p>
           </div>
           <div class="deliverable-graphic">
-            <svg viewBox="0 0 740 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Horizontal bar chart showing requirements during evaluation by brand">
-              <!-- Title -->
-              <text x="0" y="20" font-family="var(--sans)" font-size="13" font-weight="600" fill="#6B6B6B" letter-spacing="0.08em">REQUIREMENTS DURING EVALUATION</text>
+            <svg viewBox="0 0 740 440" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Horizontal bar chart showing buyer criteria by brand purchased">
+              <!-- Title (3x size) -->
+              <text x="0" y="30" font-family="var(--serif)" font-size="26" font-weight="600" fill="#0B1F3A">Buyers' Stated Criteria x Brand Purchased</text>
 
-              <!-- Legend -->
-              <rect x="200" y="40" width="14" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="220" y="49" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand C</text>
-              <rect x="370" y="40" width="14" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="390" y="49" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand A</text>
-              <rect x="520" y="40" width="14" height="10" rx="5" fill="#D4732A"/>
-              <text x="540" y="49" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand B</text>
+              <!-- Legend: Brand A, Brand B, Brand C -->
+              <rect x="200" y="55" width="14" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="220" y="64" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand A</text>
+              <rect x="370" y="55" width="14" height="10" rx="5" fill="#D4732A"/>
+              <text x="390" y="64" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand B</text>
+              <rect x="520" y="55" width="14" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="540" y="64" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Brand C</text>
 
               <!-- Row backgrounds (alternating) -->
-              <rect x="0" y="65" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
-              <rect x="0" y="153" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
-              <rect x="0" y="241" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
-              <rect x="0" y="329" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
+              <rect x="0" y="80" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
+              <rect x="0" y="168" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
+              <rect x="0" y="256" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
+              <rect x="0" y="344" width="740" height="44" fill="#0B1F3A" opacity="0.02"/>
+
+              <!-- Col positions: Brand A starts x=200, Brand B starts x=390, Brand C starts x=580 -->
+              <!-- Bar scale: 2px per 1% -->
 
               <!-- Row 1: Onboarding automation -->
-              <text x="0" y="92" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Onboarding automation</text>
-              <!-- Brand C: 14% -->
-              <rect x="200" y="82" width="28" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="234" y="92" font-family="var(--sans)" font-size="11" fill="#6B6B6B">14%</text>
-              <!-- Brand A: 83% -->
-              <rect x="370" y="82" width="166" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="542" y="92" font-family="var(--sans)" font-size="11" fill="#6B6B6B">83%</text>
-              <!-- Brand B: 9% -->
-              <rect x="580" y="82" width="18" height="10" rx="5" fill="#D4732A"/>
-              <text x="604" y="92" font-family="var(--sans)" font-size="11" fill="#6B6B6B">9%</text>
+              <text x="0" y="107" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Onboarding automation</text>
+              <rect x="200" y="97" width="166" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="372" y="107" font-family="var(--sans)" font-size="11" fill="#6B6B6B">83%</text>
+              <rect x="390" y="97" width="18" height="10" rx="5" fill="#D4732A"/>
+              <text x="414" y="107" font-family="var(--sans)" font-size="11" fill="#6B6B6B">9%</text>
+              <rect x="580" y="97" width="28" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="614" y="107" font-family="var(--sans)" font-size="11" fill="#6B6B6B">14%</text>
 
               <!-- Row 2: Multi-state payroll compliance -->
-              <text x="0" y="136" font-family="var(--sans)" font-size="12" fill="#0B1F3A" font-weight="500">Multi-state payroll compliance</text>
-              <!-- Brand C: 55% -->
-              <rect x="200" y="126" width="110" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="316" y="136" font-family="var(--sans)" font-size="11" fill="#6B6B6B">55%</text>
-              <!-- Brand A: 0% -->
-              <text x="542" y="136" font-family="var(--sans)" font-size="11" fill="#6B6B6B">0%</text>
-              <!-- Brand B: 45% -->
-              <rect x="580" y="126" width="90" height="10" rx="5" fill="#D4732A"/>
-              <text x="676" y="136" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
+              <text x="0" y="151" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Multi-state payroll compliance</text>
+              <text x="200" y="151" font-family="var(--sans)" font-size="11" fill="#6B6B6B">0%</text>
+              <rect x="390" y="141" width="90" height="10" rx="5" fill="#D4732A"/>
+              <text x="486" y="151" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
+              <rect x="580" y="141" width="110" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="696" y="151" font-family="var(--sans)" font-size="11" fill="#6B6B6B">55%</text>
 
               <!-- Row 3: Budget constraint -->
-              <text x="0" y="180" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Budget constraint</text>
-              <!-- Brand C: 9% -->
-              <rect x="200" y="170" width="18" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="224" y="180" font-family="var(--sans)" font-size="11" fill="#6B6B6B">9%</text>
-              <!-- Brand A: 58% -->
-              <rect x="370" y="170" width="116" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="492" y="180" font-family="var(--sans)" font-size="11" fill="#6B6B6B">58%</text>
-              <!-- Brand B: 55% -->
-              <rect x="580" y="170" width="110" height="10" rx="5" fill="#D4732A"/>
-              <text x="696" y="180" font-family="var(--sans)" font-size="11" fill="#6B6B6B">55%</text>
+              <text x="0" y="195" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Budget constraint</text>
+              <rect x="200" y="185" width="116" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="322" y="195" font-family="var(--sans)" font-size="11" fill="#6B6B6B">58%</text>
+              <rect x="390" y="185" width="110" height="10" rx="5" fill="#D4732A"/>
+              <text x="506" y="195" font-family="var(--sans)" font-size="11" fill="#6B6B6B">55%</text>
+              <rect x="580" y="185" width="18" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="604" y="195" font-family="var(--sans)" font-size="11" fill="#6B6B6B">9%</text>
 
               <!-- Row 4: Employee self-service -->
-              <text x="0" y="224" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Employee self-service</text>
-              <!-- Brand C: 45% -->
-              <rect x="200" y="214" width="90" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="296" y="224" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
-              <!-- Brand A: 67% -->
-              <rect x="370" y="214" width="134" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="510" y="224" font-family="var(--sans)" font-size="11" fill="#6B6B6B">67%</text>
-              <!-- Brand B: 27% -->
-              <rect x="580" y="214" width="54" height="10" rx="5" fill="#D4732A"/>
-              <text x="640" y="224" font-family="var(--sans)" font-size="11" fill="#6B6B6B">27%</text>
+              <text x="0" y="239" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Employee self-service</text>
+              <rect x="200" y="229" width="134" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="340" y="239" font-family="var(--sans)" font-size="11" fill="#6B6B6B">67%</text>
+              <rect x="390" y="229" width="54" height="10" rx="5" fill="#D4732A"/>
+              <text x="450" y="239" font-family="var(--sans)" font-size="11" fill="#6B6B6B">27%</text>
+              <rect x="580" y="229" width="90" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="676" y="239" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
 
               <!-- Row 5: Native payroll -->
-              <text x="0" y="268" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Native payroll</text>
-              <!-- Brand C: 77% -->
-              <rect x="200" y="258" width="154" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="360" y="268" font-family="var(--sans)" font-size="11" fill="#6B6B6B">77%</text>
-              <!-- Brand A: 42% -->
-              <rect x="370" y="258" width="84" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="460" y="268" font-family="var(--sans)" font-size="11" fill="#6B6B6B">42%</text>
-              <!-- Brand B: 45% -->
-              <rect x="580" y="258" width="90" height="10" rx="5" fill="#D4732A"/>
-              <text x="676" y="268" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
+              <text x="0" y="283" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Native payroll</text>
+              <rect x="200" y="273" width="84" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="290" y="283" font-family="var(--sans)" font-size="11" fill="#6B6B6B">42%</text>
+              <rect x="390" y="273" width="90" height="10" rx="5" fill="#D4732A"/>
+              <text x="486" y="283" font-family="var(--sans)" font-size="11" fill="#6B6B6B">45%</text>
+              <rect x="580" y="273" width="154" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="740" y="283" font-family="var(--sans)" font-size="11" fill="#6B6B6B">77%</text>
 
               <!-- Row 6: Implementation support -->
-              <text x="0" y="312" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Implementation support</text>
-              <!-- Brand C: 32% -->
-              <rect x="200" y="302" width="64" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="270" y="312" font-family="var(--sans)" font-size="11" fill="#6B6B6B">32%</text>
-              <!-- Brand A: 25% -->
-              <rect x="370" y="302" width="50" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
-              <text x="426" y="312" font-family="var(--sans)" font-size="11" fill="#6B6B6B">25%</text>
-              <!-- Brand B: 36% -->
-              <rect x="580" y="302" width="72" height="10" rx="5" fill="#D4732A"/>
-              <text x="658" y="312" font-family="var(--sans)" font-size="11" fill="#6B6B6B">36%</text>
+              <text x="0" y="327" font-family="var(--sans)" font-size="12" fill="#0B1F3A">Implementation support</text>
+              <rect x="200" y="317" width="50" height="10" rx="5" fill="#B8341B" opacity="0.7"/>
+              <text x="256" y="327" font-family="var(--sans)" font-size="11" fill="#6B6B6B">25%</text>
+              <rect x="390" y="317" width="72" height="10" rx="5" fill="#D4732A"/>
+              <text x="468" y="327" font-family="var(--sans)" font-size="11" fill="#6B6B6B">36%</text>
+              <rect x="580" y="317" width="64" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="650" y="327" font-family="var(--sans)" font-size="11" fill="#6B6B6B">32%</text>
 
               <!-- Row 7: SSO / security compliance -->
-              <text x="0" y="356" font-family="var(--sans)" font-size="12" fill="#0B1F3A">SSO / security compliance</text>
-              <!-- Brand C: 18% -->
-              <rect x="200" y="346" width="36" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
-              <text x="242" y="356" font-family="var(--sans)" font-size="11" fill="#6B6B6B">18%</text>
-              <!-- Brand A: 0% -->
-              <text x="542" y="356" font-family="var(--sans)" font-size="11" fill="#6B6B6B">0%</text>
-              <!-- Brand B: 27% -->
-              <rect x="580" y="346" width="54" height="10" rx="5" fill="#D4732A"/>
-              <text x="640" y="356" font-family="var(--sans)" font-size="11" fill="#6B6B6B">27%</text>
+              <text x="0" y="371" font-family="var(--sans)" font-size="12" fill="#0B1F3A">SSO / security compliance</text>
+              <text x="200" y="371" font-family="var(--sans)" font-size="11" fill="#6B6B6B">0%</text>
+              <rect x="390" y="361" width="54" height="10" rx="5" fill="#D4732A"/>
+              <text x="450" y="371" font-family="var(--sans)" font-size="11" fill="#6B6B6B">27%</text>
+              <rect x="580" y="361" width="36" height="10" rx="5" fill="#0B1F3A" opacity="0.55"/>
+              <text x="622" y="371" font-family="var(--sans)" font-size="11" fill="#6B6B6B">18%</text>
             </svg>
           </div>
         </div>
