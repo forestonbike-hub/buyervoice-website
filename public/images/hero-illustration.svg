@@ -558,7 +558,7 @@
 <rect x="266" y="400.55" width="28" height="0.50" fill="#0B1F3A" opacity="0.45"/>
 <rect x="328" y="400.55" width="28" height="0.50" fill="#0B1F3A" opacity="0.45"/>
 <rect x="421" y="400.55" width="28" height="0.50" fill="#0B1F3A" opacity="0.45"/>
-<text x="50" y="280.6" font-size="9" font-weight="600" fill="#6B6B6B" letter-spacing="2" text-anchor="middle" transform="rotate(-90 50 280.6)">PARTICIPANTS</text>
+<text x="50" y="280.6" font-size="9" font-weight="600" fill="#6B6B6B" letter-spacing="2" text-anchor="middle" transform="rotate(-90 50 280.6)">BUYER INTERVIEWS</text>
 <line x1="80" y1="415.2" x2="460" y2="415.2" stroke="#0B1F3A" stroke-width="1"/>
 <text x="80" y="431.2" font-size="10" font-weight="500" fill="#6B6B6B" letter-spacing="2">HUNDREDS OF INTERVIEWS. LEADERSHIP-READY INSIGHTS.</text>
 </svg>
