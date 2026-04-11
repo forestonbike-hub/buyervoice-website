@@ -101,39 +101,39 @@ import Base from '../layouts/Base.astro';
   <section class="band-warm" id="deliverables">
     <div class="container">
       <span class="eyebrow">What you get</span>
-      <h2 class="section-heading">A finished answer, not a data dump.</h2>
+      <h2 class="section-heading section-heading--wide">Insights that drive growth.</h2>
       <p class="section-intro">
-        Every engagement produces deliverables designed to move directly into your marketing, product, and sales workflows. No dashboards. No raw transcripts dropped over the wall.
+        Our research methods and deliverables are structured around the insights that our stakeholders need. We apply frameworks and analyses that are grounded in decades of marketing science.
       </p>
 
-      <div class="deliverables-grid">
+      <div class="deliverables-list">
         <div class="deliverable">
-          <div class="deliverable-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="4" width="22" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="14" x2="17" y2="14" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="18" x2="14" y2="18" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="deliverable-text">
+            <h3>Market landscape according to buyers</h3>
+            <p>Who are we really competing against?</p>
           </div>
-          <h3>Narrative report</h3>
-          <p>A structured account of how your market perceives your category, grounded in hundreds of real conversations. Written for executives, not academics.</p>
+          <div class="deliverable-graphic"></div>
         </div>
         <div class="deliverable">
-          <div class="deliverable-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="9" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="19" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="12" x2="13" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="17" y1="12" x2="15" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="deliverable-text">
+            <h3>Solutions buyers will pay for</h3>
+            <p>What should we build?</p>
           </div>
-          <h3>Switching map</h3>
-          <p>A visual model of how buyers move between solutions in your category. What triggers consideration, what closes the deal, what causes regret.</p>
+          <div class="deliverable-graphic"></div>
         </div>
         <div class="deliverable">
-          <div class="deliverable-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 8h16v14H6z" stroke="currentColor" stroke-width="1.5" rx="1"/><line x1="6" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="14" y1="12" x2="14" y2="22" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="deliverable-text">
+            <h3>Attractive buyer segments</h3>
+            <p>Who do we target?</p>
           </div>
-          <h3>Persona-language library</h3>
-          <p>The actual words your buyers use to describe their problems, evaluate alternatives, and justify decisions. Organized by persona and buying stage.</p>
+          <div class="deliverable-graphic"></div>
         </div>
         <div class="deliverable">
-          <div class="deliverable-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 5l3 6h6l-5 4 2 7-6-4-6 4 2-7-5-4h6z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          <div class="deliverable-text">
+            <h3>What buyers think of brands</h3>
+            <p>What is our messaging?</p>
           </div>
-          <h3>Specific recommendations</h3>
-          <p>Concrete actions for marketing, product, and sales, each tied to a finding in the data. Not "consider repositioning." Instead: here is the positioning, here is the evidence, here is who it resonates with.</p>
+          <div class="deliverable-graphic"></div>
         </div>
       </div>
     </div>
@@ -469,41 +469,39 @@ import Base from '../layouts/Base.astro';
   }
 
   /* Deliverables (warm band) */
-  .deliverables-grid {
+  .deliverables-list {
     margin-top: 2.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .deliverable {
-    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 2.5rem;
     background: #fff;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(11, 31, 58, 0.05);
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
-  }
-
-  .deliverable:hover {
-    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.08), 0 6px 20px rgba(11, 31, 58, 0.04);
-    transform: translateY(-2px);
-  }
-
-  .deliverable-icon {
-    color: var(--signal);
-    margin-bottom: 1rem;
   }
 
   .deliverable h3 {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
   .deliverable p {
-    font-size: 0.95rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.5;
     color: var(--muted);
+  }
+
+  .deliverable-graphic {
+    min-height: 80px;
   }
 
   /* About */
@@ -670,7 +668,7 @@ import Base from '../layouts/Base.astro';
       border-bottom: 1px solid rgba(11, 31, 58, 0.08);
     }
 
-    .deliverables-grid {
+    .deliverable {
       grid-template-columns: 1fr;
     }
 
