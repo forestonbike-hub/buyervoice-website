@@ -22,12 +22,17 @@ import Base from '../layouts/Base.astro';
 
   <!-- 1. Hero -->
   <section class="hero">
-    <div class="container">
-      <h1 class="hero-headline">The signal in the conversation.</h1>
-      <p class="hero-sub">
-        Buyer intelligence built on hundreds of interviews. We answer the most important questions for brand growth.
-      </p>
-      <div class="hero-rule"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1 class="hero-headline">The signal in the conversation.</h1>
+        <p class="hero-sub">
+          Buyer intelligence built on hundreds of interviews. We answer the most important questions for brand growth.
+        </p>
+        <div class="hero-rule"></div>
+      </div>
+      <div class="hero-illustration">
+        <img src="/images/hero-illustration.svg" alt="Interview data visualization showing patterns across hundreds of buyer conversations" />
+      </div>
     </div>
   </section>
 
@@ -230,8 +235,19 @@ import Base from '../layouts/Base.astro';
 
   /* Hero */
   .hero {
-    padding-top: clamp(140px, 20vw, 220px);
+    padding-top: clamp(120px, 16vw, 180px);
     padding-bottom: var(--section-gap);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-copy {
+    min-width: 0;
   }
 
   .hero-headline {
@@ -239,7 +255,6 @@ import Base from '../layouts/Base.astro';
     line-height: 1.08;
     font-weight: 700;
     letter-spacing: -0.02em;
-    max-width: 16ch;
   }
 
   .hero-sub {
@@ -247,7 +262,6 @@ import Base from '../layouts/Base.astro';
     font-size: 1.1rem;
     line-height: 1.6;
     color: var(--muted);
-    max-width: 60ch;
   }
 
   .hero-rule {
@@ -255,6 +269,11 @@ import Base from '../layouts/Base.astro';
     height: 2px;
     background: var(--signal);
     margin-top: 2.5rem;
+  }
+
+  .hero-illustration img {
+    width: 100%;
+    height: auto;
   }
 
   /* Sections */
@@ -466,6 +485,16 @@ import Base from '../layouts/Base.astro';
   }
 
   /* Responsive */
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-illustration {
+      max-width: 400px;
+    }
+  }
+
   @media (max-width: 640px) {
     .nav-links {
       gap: 1.25rem;
