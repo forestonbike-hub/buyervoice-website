@@ -40,20 +40,30 @@ import Base from '../layouts/Base.astro';
   <section class="band-dark" id="problem">
     <div class="container">
       <span class="eyebrow eyebrow--light">The problem</span>
-      <h2 class="section-heading heading--light">Most companies don't understand how their buyers actually decide.</h2>
-      <div class="problem-columns">
-        <div class="prose prose--light">
-          <p>
-            Surveys capture what buyers will click. They rarely capture what buyers mean. A five-point scale tells you someone is "satisfied." It does not tell you why they almost switched to your competitor last quarter, or what phrase a colleague used that made them reconsider.
-          </p>
+      <h2 class="section-heading heading--light section-heading--wide">Flying blind is the norm, and costly.</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-context">Among 353 startups,</p>
+          <p class="stat-number">42%</p>
+          <p class="stat-detail">of <strong>product failures</strong> traced to "no market need"</p>
+          <p class="stat-source">CB Insights</p>
         </div>
-        <div class="prose prose--light">
-          <p>
-            Traditional interview research goes deeper, but a dozen conversations will not tell you how a market decides. You get anecdotes, not patterns. The research takes months and reads like an academic paper instead of a brief your team can act on Monday morning.
-          </p>
+
+        <div class="stat-card">
+          <p class="stat-context">Among 1,600 companies,</p>
+          <p class="stat-number">80%</p>
+          <p class="stat-detail"><strong>did not</strong> have pricing discussions with customers early in product development</p>
+          <p class="stat-source">Simon-Kucher &amp; Partners</p>
+        </div>
+
+        <div class="stat-card">
+          <p class="stat-context">Companies <strong>without</strong> strong insights capabilities are</p>
+          <p class="stat-number">88%</p>
+          <p class="stat-detail"><strong>less likely</strong> to achieve strong revenue growth</p>
+          <p class="stat-source">Forrester</p>
         </div>
       </div>
-      <p class="problem-kicker">Depth and scale have been a trade-off for a long time. They are not anymore.</p>
     </div>
   </section>
 
@@ -359,31 +369,62 @@ import Base from '../layouts/Base.astro';
     line-height: 1.65;
   }
 
-  /* Problem section (dark band) */
-  .problem-columns {
-    margin-top: 2rem;
+  /* Stats cards (problem section) */
+  .stats-grid {
+    margin-top: 3rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 
-  .prose p {
-    line-height: 1.7;
-    color: var(--rule);
+  .stat-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 2.25rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
   }
 
-  .prose--light p {
-    color: rgba(255, 255, 255, 0.7);
+  .stat-context {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
   }
 
-  .problem-kicker {
-    margin-top: 2.5rem;
+  .stat-context strong {
+    color: #fff;
+  }
+
+  .stat-number {
     font-family: var(--serif);
-    font-size: 1.2rem;
-    font-weight: 500;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: -0.01em;
+    font-size: clamp(3.5rem, 7vw, 5rem);
+    font-weight: 700;
+    color: var(--signal);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0.5rem 0;
+  }
+
+  .stat-detail {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+    max-width: 26ch;
+  }
+
+  .stat-detail strong {
+    color: #fff;
+  }
+
+  .stat-source {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.02em;
   }
 
   /* Method (paper background) */
@@ -628,7 +669,7 @@ import Base from '../layouts/Base.astro';
       grid-template-columns: 1fr;
     }
 
-    .problem-columns {
+    .stats-grid {
       grid-template-columns: 1fr;
       gap: 1.25rem;
     }
