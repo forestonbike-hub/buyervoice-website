@@ -110,8 +110,8 @@ import Base from '../layouts/Base.astro';
             <h3>Market landscape according to buyers</h3>
             <p>Who are we really competing against?</p>
           </div>
-          <div class="deliverable-graphic">
-            <svg viewBox="0 0 740 530" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Correspondence analysis map showing how buyers perceive brands and product attributes">
+          <div class="deliverable-graphic chart-zoom-wrap">
+            <svg class="chart-zoom chart-zoom--landscape" viewBox="0 0 740 530" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Correspondence analysis map showing how buyers perceive brands and product attributes">
               <!-- Legend -->
               <circle cx="30" cy="18" r="8" fill="#0B1F3A" opacity="0.7"/>
               <text x="44" y="26" font-family="var(--sans)" font-size="26" fill="#0B1F3A">Current software</text>
@@ -226,8 +226,8 @@ import Base from '../layouts/Base.astro';
               <text x="690" y="436" font-family="var(--sans)" font-size="17" fill="#6B6B6B" text-anchor="middle">30%</text>
 
               <!-- Axis titles (doubled from 12 to 24) -->
-              <text x="400" y="478" font-family="var(--sans)" font-size="24" font-weight="500" fill="#0B1F3A" text-anchor="middle">Frustration with Current Product</text>
-              <text transform="rotate(-90)" x="-230" y="24" font-family="var(--sans)" font-size="24" font-weight="500" fill="#0B1F3A" text-anchor="middle">Mean WTP to Solve Frustration</text>
+              <text x="400" y="478" font-family="var(--sans)" font-size="24" font-weight="500" fill="#0B1F3A" text-anchor="middle">% of Buyers with Frustration</text>
+              <text transform="rotate(-90)" x="-230" y="24" font-family="var(--sans)" font-size="24" font-weight="500" fill="#0B1F3A" text-anchor="middle">WTP to Solve Frustration</text>
 
               <!-- Quadrant dividers (dashed) -->
               <line x1="303" y1="55" x2="303" y2="410" stroke="#0B1F3A" stroke-width="1" stroke-dasharray="6 4" opacity="0.15"/>
@@ -383,8 +383,8 @@ import Base from '../layouts/Base.astro';
             <h3>What buyers think of brands</h3>
             <p>What is our messaging?</p>
           </div>
-          <div class="deliverable-graphic">
-            <svg viewBox="0 0 740 560" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Correspondence analysis map showing why buyers reject brands">
+          <div class="deliverable-graphic chart-zoom-wrap">
+            <svg class="chart-zoom chart-zoom--rejection" viewBox="0 0 740 560" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Correspondence analysis map showing why buyers reject brands">
               <!-- Legend -->
               <circle cx="30" cy="18" r="8" fill="#0B1F3A" opacity="0.7"/>
               <text x="44" y="26" font-family="var(--sans)" font-size="26" fill="#0B1F3A">Rejected brand</text>
@@ -817,6 +817,54 @@ import Base from '../layouts/Base.astro';
 
   .deliverable-graphic {
     min-height: 80px;
+  }
+
+  /* Correspondence map zoom animation */
+  .chart-zoom-wrap {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .chart-zoom {
+    will-change: transform;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+
+  .chart-zoom--landscape {
+    transform-origin: 54% 54%; /* Brand C at ~399/740, 287/530 */
+    animation: zoomLandscape 7s ease-in-out infinite;
+  }
+
+  .chart-zoom--rejection {
+    transform-origin: 30% 51%; /* Brand C at ~220/740, 285/560 */
+    animation: zoomRejection 7s ease-in-out infinite;
+  }
+
+  @keyframes zoomLandscape {
+    0%   { transform: scale(1); }
+    28%  { transform: scale(1); }        /* hold 2s */
+    43%  { transform: scale(1.8); }      /* zoom in 1s */
+    57%  { transform: scale(1.8); }      /* hold 1s */
+    71%  { transform: scale(1); }        /* zoom out 1s */
+    100% { transform: scale(1); }        /* hold 2s */
+  }
+
+  @keyframes zoomRejection {
+    0%   { transform: scale(1); }
+    28%  { transform: scale(1); }
+    43%  { transform: scale(1.8); }
+    57%  { transform: scale(1.8); }
+    71%  { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chart-zoom--landscape,
+    .chart-zoom--rejection {
+      animation: none;
+    }
   }
 
   /* About */
