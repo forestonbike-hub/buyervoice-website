@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base
-  title="BuyerVoice.AI — The signal in the conversation"
-  description="Buyer intelligence built on hundreds of interviews. We answer the most important questions for brand growth."
+  title="BuyerVoice.AI — Buyer signals across conversations"
+  description="Market intelligence generated from hundreds of interviews. Insights that drive brand growth."
 >
   <!-- Nav -->
   <nav class="nav" aria-label="Primary navigation">
@@ -36,18 +36,18 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- 2. The Problem -->
-  <section class="section" id="problem">
+  <!-- 2. The Problem — dark band -->
+  <section class="band-dark" id="problem">
     <div class="container">
-      <span class="eyebrow">The problem</span>
-      <h2 class="section-heading">Most companies don't understand how their buyers actually decide.</h2>
+      <span class="eyebrow eyebrow--light">The problem</span>
+      <h2 class="section-heading heading--light">Most companies don't understand how their buyers actually decide.</h2>
       <div class="problem-columns">
-        <div class="prose">
+        <div class="prose prose--light">
           <p>
             Surveys capture what buyers will click. They rarely capture what buyers mean. A five-point scale tells you someone is "satisfied." It does not tell you why they almost switched to your competitor last quarter, or what phrase a colleague used that made them reconsider.
           </p>
         </div>
-        <div class="prose">
+        <div class="prose prose--light">
           <p>
             Traditional interview research goes deeper, but a dozen conversations will not tell you how a market decides. You get anecdotes, not patterns. The research takes months and reads like an academic paper instead of a brief your team can act on Monday morning.
           </p>
@@ -57,9 +57,7 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <hr class="divider" />
-
-  <!-- 3. Our Method -->
+  <!-- 3. Our Method — paper background -->
   <section class="section" id="method">
     <div class="container">
       <span class="eyebrow">Our method</span>
@@ -93,10 +91,8 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <hr class="divider" />
-
-  <!-- 4. What You Get -->
-  <section class="section" id="deliverables">
+  <!-- 4. What You Get — warm tint band -->
+  <section class="band-warm" id="deliverables">
     <div class="container">
       <span class="eyebrow">What you get</span>
       <h2 class="section-heading">A finished answer, not a data dump.</h2>
@@ -106,18 +102,30 @@ import Base from '../layouts/Base.astro';
 
       <div class="deliverables-grid">
         <div class="deliverable">
+          <div class="deliverable-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="4" width="22" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="14" x2="17" y2="14" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="18" x2="14" y2="18" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
           <h3>Narrative report</h3>
           <p>A structured account of how your market perceives your category, grounded in hundreds of real conversations. Written for executives, not academics.</p>
         </div>
         <div class="deliverable">
+          <div class="deliverable-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="9" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="19" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="20" r="3" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="12" x2="13" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="17" y1="12" x2="15" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
           <h3>Switching map</h3>
           <p>A visual model of how buyers move between solutions in your category. What triggers consideration, what closes the deal, what causes regret.</p>
         </div>
         <div class="deliverable">
+          <div class="deliverable-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 8h16v14H6z" stroke="currentColor" stroke-width="1.5" rx="1"/><line x1="6" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="14" y1="12" x2="14" y2="22" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
           <h3>Persona-language library</h3>
           <p>The actual words your buyers use to describe their problems, evaluate alternatives, and justify decisions. Organized by persona and buying stage.</p>
         </div>
         <div class="deliverable">
+          <div class="deliverable-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 5l3 6h6l-5 4 2 7-6-4-6 4 2-7-5-4h6z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+          </div>
           <h3>Specific recommendations</h3>
           <p>Concrete actions for marketing, product, and sales, each tied to a finding in the data. Not "consider repositioning." Instead: here is the positioning, here is the evidence, here is who it resonates with.</p>
         </div>
@@ -125,9 +133,7 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <hr class="divider" />
-
-  <!-- 5. Who's Behind It -->
+  <!-- 5. Who's Behind It — paper background -->
   <section class="section" id="about">
     <div class="container">
       <span class="eyebrow">Who's behind it</span>
@@ -166,17 +172,20 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer — dark -->
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <p class="footer-copy">&copy; 2026 BuyerVoice.AI</p>
+        <a href="/" class="footer-logo" aria-label="BuyerVoice.AI home">
+          <img src="/images/logo.svg" alt="BuyerVoice.AI" width="160" height="32" />
+        </a>
         <div class="footer-links">
           <a href="#deliverables">Services</a>
           <a href="#method">Methodology</a>
           <a href="#about">About</a>
         </div>
       </div>
+      <p class="footer-copy">&copy; 2026 BuyerVoice.AI. All rights reserved.</p>
     </div>
   </footer>
 </Base>
@@ -256,7 +265,7 @@ import Base from '../layouts/Base.astro';
     padding: 0 2rem;
   }
 
-  /* Hero */
+  /* Hero — paper background (default) */
   .hero {
     padding-top: clamp(120px, 16vw, 180px);
     padding-bottom: var(--section-gap);
@@ -278,6 +287,7 @@ import Base from '../layouts/Base.astro';
     line-height: 1.06;
     font-weight: 700;
     letter-spacing: -0.025em;
+    text-wrap: balance;
   }
 
   .hero-sub {
@@ -305,20 +315,41 @@ import Base from '../layouts/Base.astro';
     height: auto;
   }
 
-  /* Sections */
+  /* Section bands */
   .section {
     padding: var(--section-gap) 0;
   }
 
+  .band-dark {
+    padding: var(--section-gap) 0;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .band-warm {
+    padding: var(--section-gap) 0;
+    background: #EDE9DF;
+  }
+
+  /* Section typography */
   .section-heading {
     font-size: clamp(1.6rem, 3.5vw, 2.2rem);
     line-height: 1.18;
     margin-top: 0.75rem;
     max-width: 26ch;
+    text-wrap: balance;
   }
 
   .section-heading--wide {
     max-width: none;
+  }
+
+  .heading--light {
+    color: #fff;
+  }
+
+  .eyebrow--light {
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .section-intro {
@@ -328,7 +359,7 @@ import Base from '../layouts/Base.astro';
     line-height: 1.65;
   }
 
-  /* Problem section */
+  /* Problem section (dark band) */
   .problem-columns {
     margin-top: 2rem;
     display: grid;
@@ -341,26 +372,21 @@ import Base from '../layouts/Base.astro';
     color: var(--rule);
   }
 
+  .prose--light p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   .problem-kicker {
     margin-top: 2.5rem;
     font-family: var(--serif);
     font-size: 1.2rem;
     font-weight: 500;
     font-style: italic;
-    color: var(--ink);
+    color: rgba(255, 255, 255, 0.9);
     letter-spacing: -0.01em;
   }
 
-  .divider {
-    border: none;
-    border-top: 1px solid var(--ink);
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 0 2rem;
-    opacity: 0.1;
-  }
-
-  /* Method */
+  /* Method (paper background) */
   .method-grid {
     margin-top: 3rem;
     display: grid;
@@ -370,13 +396,15 @@ import Base from '../layouts/Base.astro';
 
   .method-card {
     padding: 2rem 1.75rem;
-    border: 1px solid rgba(11, 31, 58, 0.08);
-    border-radius: 4px;
-    transition: border-color 0.2s ease;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(11, 31, 58, 0.06), 0 4px 16px rgba(11, 31, 58, 0.04);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
   }
 
   .method-card:hover {
-    border-color: rgba(184, 52, 27, 0.25);
+    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.08), 0 8px 28px rgba(11, 31, 58, 0.06);
+    transform: translateY(-2px);
   }
 
   .method-number {
@@ -401,21 +429,30 @@ import Base from '../layouts/Base.astro';
     color: var(--muted);
   }
 
-  /* Deliverables */
+  /* Deliverables (warm band) */
   .deliverables-grid {
     margin-top: 2.5rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: rgba(11, 31, 58, 0.06);
-    border: 1px solid rgba(11, 31, 58, 0.06);
-    border-radius: 4px;
-    overflow: hidden;
+    gap: 1.5rem;
   }
 
   .deliverable {
     padding: 2rem;
-    background: var(--paper);
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(11, 31, 58, 0.05);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .deliverable:hover {
+    box-shadow: 0 2px 8px rgba(11, 31, 58, 0.08), 0 6px 20px rgba(11, 31, 58, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .deliverable-icon {
+    color: var(--signal);
+    margin-bottom: 1rem;
   }
 
   .deliverable h3 {
@@ -531,22 +568,37 @@ import Base from '../layouts/Base.astro';
     background: var(--signal);
   }
 
-  /* Footer */
+  /* Footer — dark */
   .footer {
     padding: 3rem 0;
-    border-top: 1px solid rgba(11, 31, 58, 0.08);
-    margin-top: var(--section-gap);
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .footer-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-logo {
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .footer-logo img {
+    height: 28px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
   }
 
   .footer-copy {
     font-size: 0.78rem;
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.4);
   }
 
   .footer-links {
@@ -556,12 +608,13 @@ import Base from '../layouts/Base.astro';
 
   .footer-links a {
     font-size: 0.82rem;
-    color: var(--muted);
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
+    transition: color 0.2s ease;
   }
 
   .footer-links a:hover {
-    color: var(--signal);
+    color: #fff;
   }
 
   /* Responsive */
