@@ -16,6 +16,7 @@ import Base from '../layouts/Base.astro';
         <a href="#deliverables" class="nav-link">Services</a>
         <a href="#method" class="nav-link">Methodology</a>
         <a href="#about" class="nav-link">About</a>
+        <a href="mailto:contact@buyervoice.ai" class="nav-cta">Contact</a>
       </div>
     </div>
   </nav>
@@ -190,6 +191,7 @@ import Base from '../layouts/Base.astro';
           <a href="#deliverables">Services</a>
           <a href="#method">Methodology</a>
           <a href="#about">About</a>
+          <a href="mailto:contact@buyervoice.ai" class="footer-cta">Contact</a>
         </div>
       </div>
       <p class="footer-copy">&copy; 2026 BuyerVoice.AI. All rights reserved.</p>
@@ -261,6 +263,24 @@ import Base from '../layouts/Base.astro';
 
   .nav-link:hover::after {
     width: 100%;
+  }
+
+  .nav-cta {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--signal);
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    background: #9a2c17;
+    color: #fff;
   }
 
   /* Container */
@@ -650,6 +670,20 @@ import Base from '../layouts/Base.astro';
   }
 
   .footer-links a:hover {
+    color: #fff;
+  }
+
+  .footer-cta {
+    color: #fff;
+    background: var(--signal);
+    padding: 0.4rem 1.1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .footer-cta:hover {
+    background: #9a2c17;
     color: #fff;
   }
 
