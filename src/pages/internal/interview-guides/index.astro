@@ -1,0 +1,1101 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Interview Guide Design | BuyerVoice.AI</title>
+  <meta name="description" content="How to design and annotate interview guides that produce data ready for segmentation analysis." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-green: var(--ink);
+      --color-deep-green: var(--ink);
+      --color-teal: #1a7a5e;
+      --color-black: #1A1A1A;
+      --color-white: #FFFFFF;
+      --color-slate: var(--rule);
+      --color-light-gray: var(--card-bg);
+      --color-medium-gray: var(--border);
+      --color-amber: #D97706;
+      --color-amber-light: #FEF3C7;
+      --color-red: #DC2626;
+      --color-red-light: #FEE2E2;
+      --color-blue: #2563EB;
+      --color-blue-light: #EFF6FF;
+      --color-green-light: transparent;
+      --font-heading: var(--serif), Georgia, serif;
+      --font-body: var(--sans);
+      --max-width: 1200px;
+      --max-text-width: 760px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-black);
+      background: var(--color-white);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-medium-gray);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-black);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-slate);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 2px;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--color-green);
+      background: var(--color-green-light);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--color-green);
+      color: var(--color-white);
+      padding: 72px 24px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 64px 24px;
+    }
+    section.gray {
+      background: var(--color-light-gray);
+    }
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-number {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-green);
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--color-black);
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--color-slate);
+      max-width: var(--max-text-width);
+      line-height: 1.6;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      margin-top: 36px;
+      color: var(--color-black);
+    }
+    h3:first-of-type { margin-top: 0; }
+    p {
+      font-size: 15px;
+      color: var(--color-slate);
+      max-width: var(--max-text-width);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--color-blue-light);
+      border-left: 4px solid var(--color-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-top: 24px;
+    }
+    .callout p { color: var(--color-black); font-size: 14px; max-width: none; }
+    .callout.warning {
+      background: var(--color-amber-light);
+      border-color: var(--color-amber);
+    }
+    .callout.danger {
+      background: var(--color-red-light);
+      border-color: var(--color-red);
+    }
+
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 20px;
+      border-radius: 2px;
+      border: 1px solid var(--color-medium-gray);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      background: var(--color-light-gray);
+      padding: 10px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-slate);
+      border-bottom: 1px solid var(--color-medium-gray);
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-medium-gray);
+      vertical-align: top;
+      font-size: 14px;
+      color: var(--color-black);
+    }
+    tr:last-child td { border-bottom: none; }
+    td code, th code { background: var(--color-medium-gray); padding: 1px 5px; border-radius: 3px; font-size: 12px; font-family: monospace; }
+
+    /* CARDS */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+    @media (max-width: 768px) {
+      .cards-3 { grid-template-columns: 1fr; }
+    }
+    .card {
+      border-radius: 10px;
+      padding: 24px;
+      border: 1px solid var(--color-medium-gray);
+    }
+    .card.green { background: var(--color-green-light); border-color: #86efac; }
+    .card.amber { background: var(--color-amber-light); border-color: #fcd34d; }
+    .card.blue { background: var(--color-blue-light); border-color: #93c5fd; }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .card-title.green { color: var(--color-deep-green); }
+    .card-title.amber { color: #92400e; }
+    .card-title.blue { color: #1e40af; }
+    .card p { font-size: 13px; max-width: none; }
+    .card ul { font-size: 13px; padding-left: 16px; margin-top: 8px; color: var(--color-slate); }
+    .card li { margin-bottom: 4px; }
+
+    /* TEMPORAL DIAGRAM */
+    .temporal-diagram {
+      margin-top: 28px;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--color-medium-gray);
+    }
+    .temporal-side {
+      flex: 1;
+      padding: 24px;
+    }
+    .temporal-side.module-a { background: var(--color-green-light); }
+    .temporal-side.module-b { background: var(--color-amber-light); }
+    .temporal-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-black);
+      color: var(--color-white);
+      padding: 12px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      min-width: 60px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .temporal-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .temporal-label.a { color: var(--color-deep-green); }
+    .temporal-label.b { color: #92400e; }
+    .temporal-role {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .temporal-role.a { background: #dcfce7; color: var(--color-deep-green); }
+    .temporal-role.b { background: #fef3c7; color: #92400e; }
+    .temporal-side ul { font-size: 13px; padding-left: 16px; color: var(--color-slate); margin-top: 8px; }
+    .temporal-side li { margin-bottom: 5px; }
+    @media (max-width: 700px) {
+      .temporal-diagram { flex-direction: column; }
+      .temporal-divider { writing-mode: horizontal-tb; min-width: auto; padding: 10px 24px; }
+    }
+
+    /* ANNOTATION EXAMPLE */
+    .annotation-example {
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 24px;
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #cdd6f4;
+      overflow-x: auto;
+    }
+    .ann-qnum { color: #89dceb; font-weight: bold; }
+    .ann-tag { color: #a6e3a1; }
+    .ann-pipe { color: #6c7086; }
+    .ann-question { color: #cdd6f4; }
+    .ann-note-label { color: #fab387; font-weight: 600; }
+    .ann-note { color: #bac2de; font-style: italic; }
+    .ann-criterion { color: #f38ba8; }
+    .ann-descriptor { color: #89dceb; }
+    .ann-basis { color: #a6e3a1; }
+    .ann-comment { color: #6c7086; }
+
+    /* BADGE TAGS */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-basis { background: #dcfce7; color: var(--color-deep-green); }
+    .badge-criterion { background: #fee2e2; color: #991b1b; }
+    .badge-descriptor { background: #eff6ff; color: #1e40af; }
+    .badge-module-a { background: #dcfce7; color: var(--color-deep-green); }
+    .badge-module-b { background: #fef3c7; color: #92400e; }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 2px;
+      padding: 20px 24px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+    .code-key { color: #89b4fa; }
+    .code-string { color: #a6e3a1; }
+    .code-comment { color: #6c7086; font-style: italic; }
+
+    /* CHECKLIST */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin-top: 16px;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+      font-size: 14px;
+      color: var(--color-black);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-medium-gray);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .checklist-content { flex: 1; }
+    .checklist-title { font-weight: 600; display: block; margin-bottom: 2px; }
+    .checklist-desc { font-size: 13px; color: var(--color-slate); }
+
+    /* QUICK REF */
+    .quick-ref-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+    @media (max-width: 700px) { .quick-ref-grid { grid-template-columns: 1fr; } }
+    .quick-ref-card {
+      border: 1px solid var(--color-medium-gray);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .quick-ref-header {
+      background: var(--color-light-gray);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-slate);
+      border-bottom: 1px solid var(--color-medium-gray);
+    }
+    .quick-ref-body {
+      padding: 16px;
+    }
+    .quick-ref-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+      font-size: 13px;
+    }
+    .quick-ref-row:last-child { border-bottom: none; }
+    .quick-ref-label { color: var(--color-black); font-weight: 500; }
+    .quick-ref-value { color: var(--color-slate); text-align: right; }
+
+    /* FOOTER */
+    footer {
+      background: var(--color-black);
+      color: rgba(255,255,255,0.5);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+    }
+    footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+    footer a:hover { color: var(--color-white); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">BuyerVoice.AI</a>
+    <ul class="nav-links">
+      <li><a href="#why-it-matters">Why It Matters</a></li>
+      <li><a href="#three-audiences">Three Audiences</a></li>
+      <li><a href="#temporal-layers">Temporal Layers</a></li>
+      <li><a href="#annotation-system">Annotations</a></li>
+      <li><a href="#screener">Screener</a></li>
+      <li><a href="#study-config">study_config.json</a></li>
+      <li><a href="#walkthrough">Walkthrough</a></li>
+      <li><a href="#errors">Common Errors</a></li>
+      <li><a href="#quick-reference">Quick Reference</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Internal Methodology Reference</p>
+  <h1>Interview Guide Design</h1>
+  <p>How to design and annotate interview guides that produce data ready for segmentation analysis.</p>
+</div>
+
+<!-- WHY IT MATTERS -->
+<section class="gray" id="why-it-matters">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">The Foundational Constraint</div>
+      <h2>Why Guide Design Determines Segmentation Outcomes</h2>
+      <p class="section-subtitle">The interview guide is not just a question list. It is the data collection plan that determines which segmentation variables will exist in the final dataset.</p>
+    </div>
+
+    <p>No amount of analysis can recover data the guide did not collect. If the guide does not ask about evaluation triggers, you cannot build an Evaluation Trigger dimension. If it does not ask about buying committee composition, you cannot build a Decision Complexity dimension.</p>
+
+    <div class="callout warning" style="margin-top: 20px;">
+      <p><strong>The binding constraint:</strong> Every clustering variable must come from something you explicitly asked about. Finalize the interview guide only after mapping every question to its segmentation role.</p>
+    </div>
+
+    <div class="cards-3" style="margin-top: 36px;">
+      <div class="card green">
+        <div class="card-title green">What questions produce</div>
+        <ul>
+          <li>Categorical/ordinal responses become firmographic basis variables</li>
+          <li>Thematic responses become composite binary basis variables</li>
+          <li>Screener fields become the criterion variable ground truth</li>
+          <li>Current-state questions become descriptor variables</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title amber">What cannot be fixed after</div>
+        <ul>
+          <li>Missing Module A questions cannot be reconstructed from Module B data</li>
+          <li>Criterion variable not in screener cannot be de-contaminated</li>
+          <li>Low-variance variables cannot become discriminating after collection</li>
+          <li>Three-audience gaps cannot be papered over in analysis</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">What guide annotations do</div>
+        <ul>
+          <li>Force explicit segmentation role assignment before fieldwork</li>
+          <li>Provide the Dimension Architect with question context</li>
+          <li>Become the study_config.json that feeds Phase 6 of the pipeline</li>
+          <li>Create an auditable record of design decisions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE AUDIENCES -->
+<section id="three-audiences">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Study Design</div>
+      <h2>The Three-Audience Test</h2>
+      <p class="section-subtitle">Before writing any question, identify which downstream audiences will use the segmentation findings. Each audience needs a different type of variable.</p>
+    </div>
+
+    <div class="cards-3">
+      <div class="card green">
+        <div class="card-title green">Marketing</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs pain points in the participant's own words, evaluation criteria, and what messaging resonates or triggers rejection.</p>
+        <p style="font-size:12px;font-weight:600;color:var(--color-deep-green);margin-bottom:6px;">Questions to include:</p>
+        <ul>
+          <li>What language did they use to describe the problem?</li>
+          <li>What triggered the evaluation?</li>
+          <li>What made a tool feel like a match or a mismatch?</li>
+          <li>What were they trying to accomplish?</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title amber">Sales</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs observable signals to classify a prospect before a full interview, and differentiated scripts for each segment type.</p>
+        <p style="font-size:12px;font-weight:600;color:#92400e;margin-bottom:6px;">Questions to include:</p>
+        <ul>
+          <li>What is observable about their situation from LinkedIn or a website?</li>
+          <li>What triggered the evaluation and who was involved?</li>
+          <li>Current tool situation (replacing vs. augmenting)</li>
+          <li>Buying committee composition</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">Product</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs feature requirements, table-stakes disqualifiers, and what would accelerate or block the purchase decision.</p>
+        <p style="font-size:12px;font-weight:600;color:#1e40af;margin-bottom:6px;">Questions to include:</p>
+        <ul>
+          <li>What must the tool do? (table-stakes requirements)</li>
+          <li>What blocked or disqualified alternatives?</li>
+          <li>What current workarounds exist?</li>
+          <li>What would accelerate the purchase decision?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warning" style="margin-top: 28px;">
+      <p><strong>If the guide only covers one audience, the segmentation can only make recommendations to one audience.</strong> This is the most common avoidable failure in client studies and is detectable from the interview guide before a single interview is conducted.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPORAL LAYERS -->
+<section class="gray" id="temporal-layers">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">The Most Important Structural Decision</div>
+      <h2>The Two Temporal Layers</h2>
+      <p class="section-subtitle">All interview questions fall into one of two temporal layers. This determines whether a variable can be a clustering input or must be treated as descriptor.</p>
+    </div>
+
+    <div class="temporal-diagram">
+      <div class="temporal-side module-a">
+        <div class="temporal-label a">Module A: Historical Evaluation</div>
+        <span class="temporal-role a">Upstream of tool choice</span>
+        <p style="font-size:13px;max-width:none;margin-bottom:10px;">Questions about the past evaluation process — what drove the decision, what criteria were applied, who was involved, why alternatives were rejected.</p>
+        <p style="font-size:12px;font-weight:600;color:var(--color-deep-green);margin-bottom:6px;">Basis variable candidates</p>
+        <ul>
+          <li>What triggered the evaluation?</li>
+          <li>What criteria mattered most?</li>
+          <li>Why was the previous tool rejected?</li>
+          <li>Who was involved in the decision?</li>
+          <li>What problems drove the switch evaluation?</li>
+        </ul>
+      </div>
+      <div class="temporal-divider">Tool Choice</div>
+      <div class="temporal-side module-b">
+        <div class="temporal-label b">Module B: Current State</div>
+        <span class="temporal-role b">Downstream of tool choice</span>
+        <p style="font-size:13px;max-width:none;margin-bottom:10px;">Questions about current satisfaction, gaps, and needs — describing what the participant experiences with the tool they chose.</p>
+        <p style="font-size:12px;font-weight:600;color:#92400e;margin-bottom:6px;">Descriptor variables by default</p>
+        <ul>
+          <li>How satisfied are you with your current tool?</li>
+          <li>What features do you wish it had?</li>
+          <li>What frustrates you about it?</li>
+          <li>What does your current workflow look like?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout danger" style="margin-top: 24px;">
+      <p><strong>The temporal contamination risk:</strong> A participant who chose Ease-of-Use Tool A may now report ease of use as highly important — because the tool shaped their expectations, not because ease of use predicted the choice. Using Module B data as basis variables introduces reverse causality: the outcome (tool choice) partly causes the variables you are using to predict it. The resulting clusters group people by downstream effects rather than upstream drivers.</p>
+    </div>
+
+    <div class="callout" style="margin-top: 16px;">
+      <p><strong>The boundary question:</strong> "What criteria did you use when evaluating tools?" is Module A (asking about a past decision). "What do you look for in a tool today?" is Module B (describing current preferences, shaped by the current tool). These questions look similar but have opposite segmentation roles. Always anchor the question in time explicitly — "Back then..." for Module A, "Currently..." for Module B.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANNOTATION SYSTEM -->
+<section id="annotation-system">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">How to Annotate</div>
+      <h2>The Annotation System</h2>
+      <p class="section-subtitle">Annotate every question before finalizing the guide. Annotations force explicit segmentation role assignment and feed directly into the coding pipeline.</p>
+    </div>
+
+    <h3>Annotation Format</h3>
+    <p>Place the annotation immediately after the question number, before the question text:</p>
+
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q7**</span></div>
+      <div><span class="ann-tag">`thematic</span> <span class="ann-pipe">|</span> <span class="ann-basis">basis</span> <span class="ann-pipe">|</span> <span class="ann-tag">Module A`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">Back then, what motivated your team to consider other recruiting tools?</span></div>
+      <div>&nbsp;</div>
+      <div>&gt; <span class="ann-note-label">Coding note:</span> <span class="ann-note">This is one of the highest-value questions in the guide. Code all themes present. Candidate themes include: tool capability gap / team growth event / poor prior tool reliability / compliance requirement / new HR leadership / manual process pain / integration failure / contract renewal as trigger. These themes will form the Evaluation Trigger composite dimension.</span></div>
+    </div>
+
+    <h3>Variable Types</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>When to use</th>
+            <th>How it encodes</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>thematic</code></td>
+            <td>Open-ended qualitative question</td>
+            <td>Coded to named themes; becomes composite binary dimension</td>
+            <td>"What motivated you to evaluate new tools?"</td>
+          </tr>
+          <tr>
+            <td><code>discrete category</code></td>
+            <td>Fixed set of non-ordered values</td>
+            <td>Coded to a category label</td>
+            <td>"What industry is your company in?"</td>
+          </tr>
+          <tr>
+            <td><code>ordinal category</code></td>
+            <td>Ordered values (size, tenure, recency)</td>
+            <td>Coded to an ordered label; encoded as integer</td>
+            <td>"How many people work at your company?"</td>
+          </tr>
+          <tr>
+            <td><code>binary</code></td>
+            <td>Yes/no or forced choice</td>
+            <td>Coded as 1/0</td>
+            <td>"Did you evaluate more than one tool?"</td>
+          </tr>
+          <tr>
+            <td><code>rank order</code></td>
+            <td>Participant ranks a list of options</td>
+            <td>Binary flags per rank position, or top-N presence</td>
+            <td>"Rank these 5 features by importance"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Segmentation Roles</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>What it means</th>
+            <th>Where it goes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-basis">basis</span></td>
+            <td>Goes into cluster analysis. Determines which cluster each participant falls into.</td>
+            <td>segmentation-ready.csv (basis columns)</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-criterion">criterion</span></td>
+            <td>Validates that clusters predict something useful. Never enters clustering. Must come from screener.</td>
+            <td>segmentation-profile.csv (criterion column)</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-descriptor">descriptor</span></td>
+            <td>Describes what each segment looks like after clustering. No causal role in segment formation.</td>
+            <td>segmentation-profile.csv (descriptor columns)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <p><strong>Most of your variables are descriptor.</strong> Only a small, curated set — typically 6-12 for a 70-100 participant study — should be basis. The N/10 rule sets the hard cap: maximum basis dimensions = sample_size / 10. At N=80 that is 8 basis dimensions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENER VS INTERVIEW -->
+<section class="gray" id="screener">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Data Collection Design</div>
+      <h2>Screener vs. Interview</h2>
+      <p class="section-subtitle">The screener and interview serve different roles. Mixing them up contaminates the criterion variable and weakens the segmentation.</p>
+    </div>
+
+    <div class="cards-3" style="grid-template-columns: 1fr 1fr; max-width: 760px;">
+      <div class="card green">
+        <div class="card-title green">Capture in the Screener</div>
+        <p style="font-size:13px;margin-bottom:10px;">Structured fields captured before the interview. Consistent format, not subject to conversational bias or interviewer effect.</p>
+        <ul>
+          <li>Company size (must be verified, not estimated in conversation)</li>
+          <li>Seniority level</li>
+          <li>Industry</li>
+          <li><strong>Current tool</strong> (the criterion variable ground truth)</li>
+          <li>Budget authority level</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">Capture in the Interview</div>
+        <p style="font-size:13px;margin-bottom:10px;">Qualitative depth the screener cannot capture: narrative, emotion, language, criteria, committee dynamics.</p>
+        <ul>
+          <li>Evaluation triggers and their context</li>
+          <li>Decision criteria and their weighting</li>
+          <li>Rejection reasons for alternatives</li>
+          <li>Buying committee composition</li>
+          <li>Feature requirements and disqualifiers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout danger" style="margin-top: 24px;">
+      <p><strong>The criterion variable must come from the screener.</strong> If you infer current tool adoption from what someone says during the interview, the criterion variable is contaminated. The interview topic primes them. Their description of their current tool is influenced by the conversation context. You cannot verify the answer independently afterward. The screener field is the ground truth — the interview version is a recall confirmation only.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STUDY_CONFIG.JSON -->
+<section id="study-config">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Pipeline Connection</div>
+      <h2>The study_config.json Connection</h2>
+      <p class="section-subtitle">Every annotation you write in the interview guide becomes machine-readable context in study_config.json, which feeds Phase 6 of the coding pipeline.</p>
+    </div>
+
+    <p>Create <code style="background:var(--color-medium-gray);padding:1px 6px;border-radius:3px;font-size:13px;">study_config.json</code> in the Interview Project folder alongside <code style="background:var(--color-medium-gray);padding:1px 6px;border-radius:3px;font-size:13px;">transcripts.json</code>. The Dimension Architect reads it during Phase 6 to classify themes into segmentation dimensions.</p>
+
+    <div class="code-block">
+      <pre>{`{
+  `}<span class="code-key">"study_name"</span>{`: `}<span class="code-string">"HR Leaders"</span>{`,
+  `}<span class="code-key">"sample_size"</span>{`: 80,          `}<span class="code-comment">// sets N/10 ceiling: max 8 basis dimensions</span>{`
+  `}<span class="code-key">"outcome_variable"</span>{`: {
+    `}<span class="code-key">"question_id"</span>{`: `}<span class="code-string">"Q4"</span>{`,
+    `}<span class="code-key">"field_name"</span>{`: `}<span class="code-string">"current_tool"</span>{`,
+    `}<span class="code-key">"description"</span>{`: `}<span class="code-string">"Primary recruiting tool — verified from screener"</span>{`
+  },
+  `}<span class="code-key">"question_context"</span>{`: [
+    {
+      `}<span class="code-key">"question_id"</span>{`: `}<span class="code-string">"Q1"</span>{`,
+      `}<span class="code-key">"temporal_layer"</span>{`: `}<span class="code-string">"firmographic"</span>{`,
+      `}<span class="code-key">"purpose_hint"</span>{`: `}<span class="code-string">"basis"</span>{`,
+      `}<span class="code-key">"note"</span>{`: `}<span class="code-string">"seniority and function"</span>{`
+    },
+    {
+      `}<span class="code-key">"question_id"</span>{`: `}<span class="code-string">"Q7"</span>{`,
+      `}<span class="code-key">"temporal_layer"</span>{`: `}<span class="code-string">"module_a"</span>{`,   `}<span class="code-comment">// upstream of tool choice</span>{`
+      `}<span class="code-key">"purpose_hint"</span>{`: `}<span class="code-string">"basis"</span>{`,
+      `}<span class="code-key">"note"</span>{`: `}<span class="code-string">"evaluation trigger — primary basis variable"</span>{`
+    },
+    {
+      `}<span class="code-key">"question_id"</span>{`: `}<span class="code-string">"Q16"</span>{`,
+      `}<span class="code-key">"temporal_layer"</span>{`: `}<span class="code-string">"module_b"</span>{`,   `}<span class="code-comment">// downstream of tool choice</span>{`
+      `}<span class="code-key">"purpose_hint"</span>{`: `}<span class="code-string">"descriptor"</span>{`,
+      `}<span class="code-key">"note"</span>{`: `}<span class="code-string">"current tool strengths — descriptor only"</span>{`
+    }
+  ]
+}`}
+    </pre>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <p><strong>If study_config.json is absent</strong>, Phase 6 runs with no question context and infers temporal layers from question text alone. The Dimension Architect will do its best, but it cannot know which question holds the criterion variable without being told. Always create this file before running the pipeline.</p>
+    </div>
+
+    <h3>N/10 Ceiling</h3>
+    <p>The <code style="background:var(--color-medium-gray);padding:1px 6px;border-radius:3px;font-size:13px;">sample_size</code> field drives the maximum number of basis dimensions. The N/10 rule (at least 10 participants per variable for stable clusters) sets the ceiling.</p>
+
+    <div class="table-wrap" style="max-width: 520px;">
+      <table>
+        <thead>
+          <tr><th>Study size</th><th>Max basis dimensions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>50 participants</td><td>5</td></tr>
+          <tr><td>70 participants</td><td>7</td></tr>
+          <tr><td>80 participants</td><td>8</td></tr>
+          <tr><td>100 participants</td><td>10</td></tr>
+          <tr><td>200 participants</td><td>20</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- WALKTHROUGH -->
+<section class="gray" id="walkthrough">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Applied Example</div>
+      <h2>Annotation Walkthrough: HR Leaders Guide</h2>
+      <p class="section-subtitle">Six questions from the HR Leaders study showing annotation decisions and the reasoning behind each classification.</p>
+    </div>
+
+    <h3>Q4 — The Criterion Variable</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q4**</span></div>
+      <div><span class="ann-tag">`discrete category</span> <span class="ann-pipe">|</span> <span class="ann-criterion">criterion</span><span class="ann-tag">`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">Currently, when you or your team needs to recruit new talent, what is the main software or tool that you use for that?</span></div>
+    </div>
+    <p style="margin-top:12px;">Q4 is annotated <span class="badge badge-criterion">criterion</span> because it is the ground truth for cluster validation. The answer is already known from the screener. The interview version is a recall check — if screener and interview responses conflict, flag the participant. Never use this field as a clustering input.</p>
+
+    <h3>Q7 — The Primary Basis Variable</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q7**</span></div>
+      <div><span class="ann-tag">`thematic</span> <span class="ann-pipe">|</span> <span class="ann-basis">basis</span> <span class="ann-pipe">|</span> <span class="ann-tag">Module A`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">Back then, what motivated your team to consider other recruiting tools?</span></div>
+    </div>
+    <p style="margin-top:12px;">Q7 is <span class="badge badge-module-a">Module A</span> (asking about a historical decision) and thematic. It will likely form the Evaluation Trigger composite dimension — a primary clustering input. All themes should be coded, not just the first one mentioned. This is one of the highest-value questions in the guide.</p>
+
+    <h3>Q9 — A Module A Question That Looks Like Module B</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q9**</span></div>
+      <div><span class="ann-tag">`thematic</span> <span class="ann-pipe">|</span> <span class="ann-basis">basis</span> <span class="ann-pipe">|</span> <span class="ann-tag">Module A`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">What specific problems or pain points <em>drove you to look for</em> a new tool?</span></div>
+    </div>
+    <p style="margin-top:12px;">This question could be mistaken for Module B because it asks about "problems." But the explicit temporal anchor ("drove you to look for a new tool") places it in the evaluation period. The problems described here caused the switch evaluation — upstream of the choice. <span class="badge badge-basis">basis</span> candidate. If rephrased as "What problems do you have with your current tool?" it would become Module B and must be annotated <span class="badge badge-descriptor">descriptor</span>.</p>
+
+    <h3>Q12 — Buying Committee Composition</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q12**</span></div>
+      <div><span class="ann-tag">`discrete category</span> <span class="ann-pipe">|</span> <span class="ann-basis">basis</span> <span class="ann-pipe">|</span> <span class="ann-tag">Module A`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">Who else, if anyone, was involved in the decision to select a new tool?</span></div>
+    </div>
+    <p style="margin-top:12px;">Buying committee complexity is <span class="badge badge-module-a">Module A</span> (the decision has been made) and produces a categorical code (sole decider / small group / formal committee). It reliably predicts evaluation process length and sales motion complexity. <span class="badge badge-basis">basis</span>.</p>
+
+    <h3>Q6 — Reclassified to Descriptor</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q6**</span></div>
+      <div><span class="ann-tag">`discrete category</span> <span class="ann-pipe">|</span> <span class="ann-descriptor">descriptor</span><span class="ann-tag">`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">Back then, what recruiting tool were you using when you started evaluating other tools?</span></div>
+    </div>
+    <p style="margin-top:12px;">Q6 asks about the prior tool — Module A in temporal terms. But the specific prior tool name is competitive intelligence, not a structural segmentation variable. Segments defined partly by "was using Tool X before" cannot be activated — sales and marketing cannot target people based on their prior tool without a full research interview. Annotated <span class="badge badge-descriptor">descriptor</span> for competitive win/loss analysis post-clustering.</p>
+
+    <h3>Q16 — Current Tool Strengths (Module B)</h3>
+    <div class="annotation-example">
+      <div><span class="ann-qnum">**Q16**</span></div>
+      <div><span class="ann-tag">`thematic</span> <span class="ann-pipe">|</span> <span class="ann-descriptor">descriptor</span> <span class="ann-pipe">|</span> <span class="ann-tag">Module B`</span></div>
+      <div>&nbsp;</div>
+      <div><span class="ann-question">What do you see as the main strengths of your current recruiting tool?</span></div>
+    </div>
+    <p style="margin-top:12px;">Q16 is squarely <span class="badge badge-module-b">Module B</span> — the participant is describing their current experience with the tool they chose. These themes are downstream of the tool choice. They describe what the tool is good at, not what drove the selection. <span class="badge badge-descriptor">descriptor</span> only.</p>
+  </div>
+</section>
+
+<!-- COMMON ERRORS -->
+<section id="errors">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Annotation Quality</div>
+      <h2>Common Annotation Errors</h2>
+      <p class="section-subtitle">Five errors that produce bad segmentation variables — all detectable before fieldwork begins.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Error</th>
+            <th>Example</th>
+            <th>Correct approach</th>
+            <th>Why it matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Module B as basis</strong></td>
+            <td>"What frustrates you about your current tool?" annotated <code>basis</code></td>
+            <td>Annotate as <code>descriptor</code>; move the corresponding Module A question to <code>basis</code></td>
+            <td>Current frustrations are shaped by the tool chosen, not the other way around. Produces reverse-causal clusters.</td>
+          </tr>
+          <tr>
+            <td><strong>Criterion as basis</strong></td>
+            <td>Q4 (current tool) annotated <code>basis</code></td>
+            <td>Annotate as <code>criterion</code>; ensure screener captures it</td>
+            <td>Putting the criterion into clustering builds the answer into the question. Clusters become self-fulfilling.</td>
+          </tr>
+          <tr>
+            <td><strong>Module A / B conflation</strong></td>
+            <td>"What were your evaluation criteria?" (Module A) and "What do you look for in a tool?" (Module B) both annotated <code>basis</code></td>
+            <td>Module A version is basis candidate; Module B version is descriptor</td>
+            <td>These questions look similar but have opposite segmentation roles due to temporal anchoring.</td>
+          </tr>
+          <tr>
+            <td><strong>Near-constant variable as basis</strong></td>
+            <td>All participants are mid-market HR leaders; company size annotated <code>basis</code></td>
+            <td>Check screener distribution first; if near-constant, annotate <code>descriptor</code></td>
+            <td>Near-constant variables waste a basis variable slot without adding discriminative power.</td>
+          </tr>
+          <tr>
+            <td><strong>Rank-order with no encoding plan</strong></td>
+            <td>"Rank 6 features" annotated <code>basis</code> with no note</td>
+            <td>Specify encoding in the coding note: binary flag for rank-1 position, or presence in top 3</td>
+            <td>The Dimension Architect needs clear encoding guidance for rank-order data. Without it, it will guess.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK REFERENCE -->
+<section class="gray" id="quick-reference">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Reference Card</div>
+      <h2>Quick Reference</h2>
+      <p class="section-subtitle">The annotation key, decision rules, and pre-finalization checklist on one page.</p>
+    </div>
+
+    <div class="quick-ref-grid">
+      <div class="quick-ref-card">
+        <div class="quick-ref-header">Variable Types</div>
+        <div class="quick-ref-body">
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><code>thematic</code></span>
+            <span class="quick-ref-value">Open-ended qualitative; codes to themes</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><code>discrete category</code></span>
+            <span class="quick-ref-value">Fixed non-ordered values</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><code>ordinal category</code></span>
+            <span class="quick-ref-value">Ordered values; encodes as integer</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><code>binary</code></span>
+            <span class="quick-ref-value">Yes/no or forced choice</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><code>rank order</code></span>
+            <span class="quick-ref-value">Ranked list; specify encoding in note</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-ref-card">
+        <div class="quick-ref-header">Segmentation Roles</div>
+        <div class="quick-ref-body">
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><span class="badge badge-basis">basis</span></span>
+            <span class="quick-ref-value">Goes into cluster analysis</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><span class="badge badge-criterion">criterion</span></span>
+            <span class="quick-ref-value">Validates clusters; never clusters</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><span class="badge badge-descriptor">descriptor</span></span>
+            <span class="quick-ref-value">Describes segments post-clustering</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-ref-card">
+        <div class="quick-ref-header">Temporal Layers</div>
+        <div class="quick-ref-body">
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><span class="badge badge-module-a">Module A</span></span>
+            <span class="quick-ref-value">Historical evaluation — upstream of tool choice — basis candidates</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label"><span class="badge badge-module-b">Module B</span></span>
+            <span class="quick-ref-value">Current state — downstream of tool choice — descriptor by default</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">firmographic</span>
+            <span class="quick-ref-value">Organizational facts — no temporal layer needed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-ref-card">
+        <div class="quick-ref-header">N/10 Ceiling</div>
+        <div class="quick-ref-body">
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">50 participants</span>
+            <span class="quick-ref-value">max 5 basis dimensions</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">70 participants</span>
+            <span class="quick-ref-value">max 7 basis dimensions</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">80 participants</span>
+            <span class="quick-ref-value">max 8 basis dimensions</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">100 participants</span>
+            <span class="quick-ref-value">max 10 basis dimensions</span>
+          </div>
+          <div class="quick-ref-row">
+            <span class="quick-ref-label">200 participants</span>
+            <span class="quick-ref-value">max 20 basis dimensions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Before Finalizing the Guide</h3>
+    <ul class="checklist">
+      <li>
+        <div class="checklist-box"></div>
+        <div class="checklist-content">
+          <span class="checklist-title">Three-audience coverage check</span>
+          <span class="checklist-desc">At least 3 strong questions per audience (marketing, sales, product). Identify any gap and add questions before finalizing.</span>
+        </div>
+      </li>
+      <li>
+        <div class="checklist-box"></div>
+        <div class="checklist-content">
+          <span class="checklist-title">Temporal layer check</span>
+          <span class="checklist-desc">Every thematic question is explicitly anchored in time (Module A or Module B). If a question is ambiguous, add a temporal anchor to the question text.</span>
+        </div>
+      </li>
+      <li>
+        <div class="checklist-box"></div>
+        <div class="checklist-content">
+          <span class="checklist-title">Criterion variable check</span>
+          <span class="checklist-desc">The criterion variable is in the screener. The corresponding interview question has a coding note saying to flag discrepancies between screener and interview.</span>
+        </div>
+      </li>
+      <li>
+        <div class="checklist-box"></div>
+        <div class="checklist-content">
+          <span class="checklist-title">Basis variable count</span>
+          <span class="checklist-desc">Count the questions annotated basis. This is the upper bound on how many composite dimensions are possible. Fewer than 6 basis questions for a 70-participant study warrants reconsideration.</span>
+        </div>
+      </li>
+      <li>
+        <div class="checklist-box"></div>
+        <div class="checklist-content">
+          <span class="checklist-title">study_config.json pre-fill</span>
+          <span class="checklist-desc">Before running any interviews, draft study_config.json from the annotations. If you cannot fill in purpose_hint and temporal_layer for each question, the annotation is incomplete.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>BuyerVoice.AI Internal Methodology Reference &middot; <a href="https://buyervoice.ai">buyervoice.ai</a></p>
+</footer>
+
+</body>
+</html>

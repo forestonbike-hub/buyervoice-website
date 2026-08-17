@@ -1,0 +1,1544 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+let dataAvailable = true;
+let data: any = null;
+let vdScript = '';
+try {
+  const dataPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/HR Leaders BGR/A6 Data Files - Simulated/report-stats.json');
+  data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  const vdPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/HR Leaders BGR/A6 Data Files - Simulated/verbatim-data.json');
+  const vqPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/HR Leaders BGR/A6 Data Files - Simulated/verbatim-questions.json');
+  const VD = JSON.parse(fs.readFileSync(vdPath, 'utf8'));
+  const VQ = JSON.parse(fs.readFileSync(vqPath, 'utf8'));
+  vdScript = '<script>window.__VD=' + JSON.stringify(VD).replace(/<\//g, '<\\/') + ';window.__VQ=' + JSON.stringify(VQ).replace(/<\//g, '<\\/') + ';<' + '/script>';
+} catch {
+  dataAvailable = false;
+}
+
+const sp = data?.sample_profile;
+const qf = data?.question_frequencies;
+const ct = data?.crosstabs;
+const seg = data?.segmentation;
+
+// Question text lookup
+const questionText: Record<string, string> = {
+  Q1: 'To start, please tell me your current seniority and function.',
+  Q2: 'How many years have you worked in your current company?',
+  Q3: 'What industry is your company in? And, roughly, how many people work at your company?',
+  Q4: 'Currently, does your team use one platform or several different tools for HR, payroll, and benefits? What is the main software or set of tools that you use?',
+  Q5: 'How long ago did your team last consider buying an HR, payroll, and benefits tool?',
+  Q6: 'What software or tools were you using when you started this evaluation?',
+  Q7: 'What motivated your team to consider other HR, payroll, or benefits tools?',
+  Q8: 'Was there anything else happening more broadly at your company or industry that motivated you to consider other tools?',
+  Q9: 'Was your HR, payroll, or benefits tools causing any particular frustrations or challenges?',
+  Q10: 'Which tools did you seriously consider?',
+  Q11: 'Did you have any minimum criteria that a tool had to have in order to be seriously considered?',
+  Q12: 'Who else was involved in the final decision during this evaluation? What role did they play?',
+  Q13: 'After your evaluation, did you purchase and switch to a new one or continue using your previous software?',
+  Q14: 'Why did you choose that tool? How did it stand out?',
+  Q15: 'For each of the tools that you considered but rejected, please share the main reasons why.',
+  Q16: 'What does your current tool(s) do well?',
+  Q17: 'Where does it fall short of what you need today?',
+  Q18: 'What is your biggest frustration with your current tool(s)?',
+  Q19: 'What has changed about your needs since the last time you considered HR, payroll, and benefits tools?',
+  Q20: 'On an annual basis, how much does your company spend on your current HR, payroll, and benefits tool(s)?',
+  Q21: 'Do you think the cost is reasonable relative to the value your company gets?',
+  Q22: 'How much would it be worth to your company annually to solve your biggest frustration?',
+  Q23: 'Within the next 6 months, do you think you will likely consider switching to new HR, payroll, and benefits tools?',
+  Q24: 'What are the biggest challenges with HR, payroll, and benefits tools today?',
+};
+
+// Helper: format code label for display
+function formatLabel(label: string): string {
+  return label
+    .replace(/\bHr\b/g, 'HR')
+    .replace(/\bHris\b/g, 'HRIS')
+    .replace(/\bIt\b/g, 'IT')
+    .replace(/\bSso\b/g, 'SSO')
+    .replace(/\bCfo\b/g, 'CFO')
+    .replace(/\bAi\b/g, 'AI')
+    .replace(/\bAts\b/g, 'ATS');
+}
+
+// Helper: clean Q23 bucket labels (remove " ( to )" artifacts from coded data)
+function cleanQ23Label(label: string): string {
+  return label.replace(/\s*\(\s*to\s*\)\s*$/, '');
+}
+
+// Helpers for segment naming (based on data patterns)
+// Segment 1: smaller cos, BambooHR/Gusto heavy, price/UX driven, employee-self-service focused
+// Segment 2: larger cos, Rippling heavy, integration/payroll driven, platform-consolidation focused
+const segNames = ['Ease-First Buyers', 'Platform Consolidators'];
+---
+{!dataAvailable && (
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow" /><title>Data Not Available</title></head>
+<body style="font-family:system-ui;padding:4rem;text-align:center;color:#333">
+<h1 style="margin-bottom:1rem">Report data not available</h1>
+<p>This page requires research data files that are not present in this deployment.</p>
+<p style="margin-top:1rem"><a href="/internal/">Back to Dashboard</a></p>
+</body></html>
+)}
+{dataAvailable && (
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<title>HR Leaders BGR: Interview Research Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.65; background: var(--paper); }
+.pdf-btn { position: fixed; top: 16px; right: 24px; background: var(--ink); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 2px; z-index: 100; text-decoration: none; }
+.pdf-btn:hover { background: var(--ink); }
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+.cover { text-align: center; padding: 64px 32px 48px; }
+.cover .logo { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 48px; }
+.cover h1 { font-family: var(--serif); font-size: 36px; font-weight: 700; color: var(--ink); margin-bottom: 16px; line-height: 1.2; }
+.cover .subtitle { font-size: 18px; color: var(--rule); margin-bottom: 32px; line-height: 1.5; }
+.cover .meta { font-size: 14px; color: var(--muted); margin-top: 32px; }
+h1 { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+h2 { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 8px; margin-top: 28px; }
+h3 { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; margin-top: 24px; }
+p { font-size: 14px; color: #374151; margin-bottom: 12px; }
+.overline { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); margin-bottom: 4px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+.stat-card { text-align: center; padding: 16px; background: var(--card-bg); border-radius: 2px; }
+.stat-num { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); }
+.stat-label { font-size: 11px; color: var(--rule); margin-top: 4px; }
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { width: 240px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+.bar-fill.green { background: var(--ink); }
+.bar-fill.blue { background: var(--ink); opacity: 0.75; }
+.bar-fill.amber { background: #C08533; }
+.bar-fill.gray { background: rgba(11, 31, 58, 0.35); }
+.bar-fill.teal { background: var(--ink); opacity: 0.65; }
+.bar-fill.purple { background: var(--ink); opacity: 0.85; }
+.bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+th { text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--rule); padding: 10px 12px; border-bottom: 2px solid var(--ink); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+tr:hover { background: #F9FAFB; }
+.insight { border-left: 4px solid var(--ink); background: transparent; padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.insight p { font-size: 13px; margin-bottom: 0; }
+.insight strong { color: var(--ink); }
+.source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; }
+.crosstab { font-size: 12px; overflow-x: auto; margin: 16px 0; }
+.crosstab table { min-width: 700px; }
+.crosstab th, .crosstab td { padding: 8px 10px; text-align: right; white-space: nowrap; }
+.crosstab th:first-child, .crosstab td:first-child { text-align: left; min-width: 200px; }
+.crosstab th { text-align: center; }
+.crosstab .highlight { background: rgba(184, 52, 27, 0.08); font-weight: 700; }
+.crosstab .total-row td { border-top: 2px solid #E2E4E8; font-weight: 600; font-style: italic; }
+.accordion { border-bottom: 1px solid var(--border); }
+.accordion:last-of-type { border-bottom: none; }
+.accordion-header { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; list-style: none; }
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-header::marker { display: none; content: ""; }
+.accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); min-width: 40px; }
+.accordion-text { flex: 1; }
+.accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); display: block; }
+.accordion-subtitle { font-size: 14px; color: var(--rule); display: block; margin-top: 4px; }
+.accordion-icon { font-size: 28px; font-weight: 300; color: var(--ink); min-width: 30px; text-align: center; transition: transform 0.2s; }
+details[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-body { padding: 0 0 48px 0; }
+.rec-table { width: 100%; }
+.rec-table th { background: var(--card-bg); }
+.rec-table td:first-child { font-weight: 600; width: 30%; }
+.team-section { margin-bottom: 32px; }
+.team-section h3 { color: var(--ink); border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.seg-note { background: var(--card-bg); border-left: 3px solid var(--muted); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 13px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 16px 0; }
+.footer-print { text-align: center; padding: 32px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 48px; }
+
+/* Verbatim drill-down */
+[data-drilldown] { cursor: pointer; }
+[data-drilldown]:hover { opacity: 0.85; }
+[data-drilldown] .bar-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 2px; }
+.vb-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; }
+.vb-overlay.open { display:flex; justify-content:center; align-items:center; }
+.vb-dialog { background:#fff; border-radius:12px; max-width:760px; width:95%; max-height:85vh; display:flex; flex-direction:column; position:relative; }
+.vb-header { padding:20px 24px 12px; border-bottom:1px solid #E2E4E8; }
+.vb-header h3 { font-family:var(--serif); font-size:18px; color:#1A1A2E; margin:0; }
+.vb-header p { font-size:13px; color:#6B7280; margin:4px 0 0; }
+.vb-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:24px; cursor:pointer; color:#6B7280; }
+.vb-close:hover { color:#1A1A2E; }
+.vb-body { padding:16px 24px 24px; overflow-y:auto; flex:1; }
+.vb-card { background:#F7F8FA; border-left:3px solid var(--ink); padding:14px 16px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+.vb-card .vb-quote { font-style:italic; font-size:13px; color:#374151; line-height:1.6; margin-bottom:8px; }
+.vb-card .vb-more { font-size:12px; color:var(--ink); cursor:pointer; border:none; background:none; padding:0; margin-bottom:8px; font-weight:500; }
+.vb-card .vb-more:hover { text-decoration:underline; }
+.vb-card .vb-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.vb-card .vb-tag { font-size:11px; background:rgba(11,31,58,0.08); color:var(--ink); padding:2px 8px; border-radius:10px; }
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  .pdf-btn { display: none !important; }
+  details.accordion { display: block !important; }
+  details.accordion > .accordion-body { display: block !important; visibility: visible !important; }
+  details.accordion[open] > .accordion-body { display: block !important; }
+  .accordion { border-bottom: 1px solid var(--border); }
+  .accordion-icon { display: none !important; }
+  .accordion-header { pointer-events: none; }
+  .accordion-body { padding: 16px 0 32px; }
+  body { font-size: 12px; }
+  .cover { padding: 60px 0 40px; page-break-after: always; }
+  .container { max-width: 100%; padding: 0 24px; }
+  .bar-fill.green { background: var(--ink) !important; }
+  .bar-fill.blue { background: #3B82F6 !important; }
+  .bar-fill.amber { background: #F59E0B !important; }
+  .bar-fill.gray { background: #94A3B8 !important; }
+  .bar-fill.teal { background: #0D9488 !important; }
+  .bar-fill.purple { background: #7C3AED !important; }
+  .bar-track { background: rgba(11, 31, 58, 0.06) !important; }
+  .bar-val { color: #fff !important; }
+  .stat-card { background: var(--card-bg) !important; }
+  .stat-num { color: var(--ink) !important; }
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .insight { background: transparent !important; border-left: 3px solid var(--signal) !important; }
+  .seg-note { background: var(--card-bg) !important; border-left: 3px solid var(--muted) !important; }
+  .crosstab .highlight { background: rgba(184, 52, 27, 0.08) !important; }
+  .crosstab table { page-break-inside: auto; }
+  .vb-overlay { display:none !important; }
+  [data-drilldown] { cursor:default !important; }
+  [data-drilldown] .bar-label { text-decoration:none !important; }
+  @page { size: letter portrait; margin: 0.75in; }
+  @page landscape { size: letter landscape; }
+  .page-break { page-break-before: always; }
+  .accordion-body { page-break-before: avoid; }
+  details.accordion { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<a href="javascript:window.print()" class="pdf-btn">Save as PDF</a>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="bv-logo" aria-label="BuyerVoice.AI" style="display:inline-block;font-family:var(--serif);line-height:1;margin:0 auto 48px;">
+  <span style="font-size:44px;font-weight:600;color:var(--ink);letter-spacing:-0.03em;">BuyerVoice</span><span style="font-size:30px;font-weight:500;color:var(--signal);letter-spacing:-0.02em;margin-left:2px;">.AI</span>
+</div>
+  <h1>HR Leaders BGR:<br>Interview Research Report</h1>
+  <p class="subtitle">Understanding HR, Payroll, and Benefits Software<br>Evaluation and Purchase Decisions</p>
+  <p class="meta">Prepared for BGR &bull; April 2026 &nbsp;|&nbsp; 180 participants &nbsp;|&nbsp; Qualitative interviews</p>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<!-- ============================================================ -->
+<details class="accordion" open>
+  <summary class="accordion-header">
+    <span class="accordion-num">01</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Executive Summary</span>
+      <span class="accordion-subtitle">Research objectives, methodology, and key findings</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Research Objective</h2>
+    <p>This study explored how HR, People Operations, and Talent Acquisition leaders at mid-market companies (50 to 1,000 employees) evaluate, select, and experience HR, payroll, and benefits software. The research captured the full purchase journey: from initial triggers and frustrations through evaluation criteria, competitive consideration, final selection rationale, and ongoing satisfaction with the chosen platform.</p>
+
+    <h2>Methodology</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">180</div>
+        <div class="stat-label">Participants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24</div>
+        <div class="stat-label">Questions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">153</div>
+        <div class="stat-label">Thematic Codes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Segments (Exploratory)</div>
+      </div>
+    </div>
+    <p>Participants were split evenly across three current platforms: BambooHR (60), Gusto (60), and Rippling (60). The sample spanned four company-size tiers from 50 to 1,000 employees, with representation across Technology, Healthcare, Professional Services, Financial Services, Retail, Education, and Manufacturing sectors.</p>
+
+    <h2>Key Findings</h2>
+    <div class="insight">
+      <p><strong>69% cited manual process burden as the primary trigger for evaluation.</strong> Nearly seven in ten participants said that the weight of manual HR processes, such as data entry, approvals, and paper-based workflows, was the event that pushed them to start looking at new tools.</p>
+    </div>
+    <div class="insight">
+      <p><strong>82% reported reporting inadequacy as a core frustration.</strong> The single most prevalent frustration across the entire study was the inability of current tools to produce the reports HR leaders need to inform business decisions and demonstrate strategic value.</p>
+    </div>
+    <div class="insight">
+      <p><strong>Competitive pricing (54%) and intuitive UI (47%) drove selection decisions.</strong> When asked why they chose their current platform, more than half pointed to competitive pricing, while nearly half valued an intuitive user interface over feature depth.</p>
+    </div>
+    <div class="insight">
+      <p><strong>82% rejected competitors for being overbuilt.</strong> The most common rejection reason was that competing platforms were too complex for the company's needs, reinforcing that mid-market buyers penalize unnecessary complexity.</p>
+    </div>
+    <div class="insight">
+      <p><strong>58% see a mid-market platform capability gap as an industry-wide challenge.</strong> More than half of participants said the biggest challenge in their space is that platforms are either built for small businesses or enterprises, leaving mid-market companies underserved.</p>
+    </div>
+
+    <h2>Priority Recommendations</h2>
+    <table class="rec-table">
+      <thead><tr><th>Priority</th><th>Recommendation</th><th>Supporting Data</th></tr></thead>
+      <tbody>
+        <tr><td>1. Reporting</td><td>Invest in flexible, self-service reporting and dashboard capabilities that let HR leaders pull strategic workforce data without exporting to spreadsheets.</td><td>82% frustration with reporting (Q9), 67% say current tool falls short on reporting (Q17), 32% name it their single biggest frustration (Q18)</td></tr>
+        <tr><td>2. Integration</td><td>Reduce integration friction between payroll, HRIS, and benefits modules, especially for multi-tool stacks.</td><td>41% frustrated with poor integration (Q9), 39% triggered evaluation due to integration issues (Q7)</td></tr>
+        <tr><td>3. Right-sizing</td><td>Position the platform as purpose-built for mid-market needs: avoid both under-building and over-building.</td><td>82% rejected competitors for being overbuilt (Q15), 58% identify a mid-market capability gap (Q24)</td></tr>
+        <tr><td>4. Onboarding UX</td><td>Automate the onboarding workflow, which is a pain point for over a third of participants.</td><td>34% frustrated with manual onboarding (Q9), 28% require onboarding automation as a minimum criterion (Q11)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Suggested Next Steps</h2>
+    <table>
+      <thead><tr><th>Step</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Share key findings with Product, Marketing, and Sales leadership within one week.</td></tr>
+        <tr><td>2</td><td>Prioritize reporting and integration improvements in the next product roadmap cycle.</td></tr>
+        <tr><td>3</td><td>Develop mid-market positioning messaging that addresses the "overbuilt vs. underbuilt" gap.</td></tr>
+        <tr><td>4</td><td>Create competitive battlecards based on rejection reasons (Section 6) for the Sales team.</td></tr>
+        <tr><td>5</td><td>Consider a follow-up quantitative study to validate the exploratory segmentation findings with a larger, representative sample.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: TEAM-SPECIFIC RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">02</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Team-Specific Recommendations</span>
+      <span class="accordion-subtitle">Strategic and tactical guidance for Marketing, Product, and Sales</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <!-- MARKETING -->
+    <div class="team-section">
+      <h3>Marketing Recommendations</h3>
+
+      <div class="insight">
+        <p><strong>Lead with the reporting pain point in top-of-funnel content.</strong> 82% of participants cited reporting inadequacy as a frustration with their current tool (Q9). Content that addresses "why your HR reports fail you" will resonate with this audience at scale.</p>
+      </div>
+      <div class="insight">
+        <p><strong>Position against complexity, not features.</strong> 82% rejected competitors for being overbuilt (Q15), and 58% said the mid-market is underserved by platforms designed for enterprises (Q24). Messaging should emphasize "built for your stage" rather than feature counts.</p>
+      </div>
+      <div class="insight">
+        <p><strong>Highlight the evaluation trigger window.</strong> 69% of evaluations were triggered by manual process burden (Q7) and 48% by growth outpacing system capacity. Target companies showing growth signals (funding announcements, job postings) with timely outreach.</p>
+      </div>
+
+      <table class="rec-table">
+        <thead><tr><th>Tactic</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Content pillar</td><td>Develop a "Mid-Market HR Tech" content series addressing reporting, integration, and right-sizing. Use the 82%/58% data points as hooks.</td></tr>
+          <tr><td>Competitive landing pages</td><td>Create comparison pages for ADP (25% of prior tools used), Gusto, and BambooHR. Lead with "overbuilt" and "capability gap" messaging from Q15 rejection data.</td></tr>
+          <tr><td>Lead magnets</td><td>Offer a "HR Tech Evaluation Checklist" based on the minimum criteria data from Q11 (native payroll, multi-state compliance, employee self-service).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PRODUCT -->
+    <div class="team-section">
+      <h3>Product Recommendations</h3>
+
+      <div class="insight">
+        <p><strong>Reporting is the single highest-priority gap.</strong> Reporting frustration appears in Q9 (82%), Q17 (67%), Q18 (32%), and Q24 (19%). It spans every company size and every current tool. This is the universal unmet need.</p>
+      </div>
+      <div class="insight">
+        <p><strong>Integration friction drives both evaluation triggers and ongoing frustration.</strong> Poor system integration shows up in Q7 (39%), Q9 (41%), Q17 (41%), and Q18 (24%). Payroll/HRIS integration friction specifically appears in Q7 (28%), Q9 (19%), and Q18 (18%).</p>
+      </div>
+      <div class="insight">
+        <p><strong>Performance management and compensation are emerging gaps.</strong> 38% say their current tool falls short on performance management (Q17), and 32% say compensation needs have emerged since their last evaluation (Q19). These are growth opportunities.</p>
+      </div>
+
+      <table class="rec-table">
+        <thead><tr><th>Tactic</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Reporting overhaul</td><td>Build self-service dashboards with pre-built templates for headcount, turnover, compensation, and compliance. 20% of participants required reporting capabilities as a minimum criterion (Q11).</td></tr>
+          <tr><td>Onboarding automation</td><td>34% frustrated with manual onboarding (Q9), 28% required it as table stakes (Q11). Automate document collection, task assignment, and new-hire provisioning.</td></tr>
+          <tr><td>Multi-state compliance</td><td>41% required multi-state payroll compliance as a minimum criterion (Q11). As remote work drives multi-state employment (28% cited this in Q8), this becomes non-negotiable.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SALES -->
+    <div class="team-section">
+      <h3>Sales Recommendations</h3>
+
+      <div class="insight">
+        <p><strong>The buying committee is cross-functional but HR-led.</strong> 94% of participants were the primary evaluator (Q12), but 91% said the process was cross-functional, and 74% said the CFO held financial approval authority. Sales conversations must address both HR needs and CFO cost concerns.</p>
+      </div>
+      <div class="insight">
+        <p><strong>Demos are a critical conversion point.</strong> 22% cited the demo experience as a reason they chose their current tool (Q14). Structured, personalized demos that mirror the buyer's actual workflows will outperform generic product tours.</p>
+      </div>
+      <div class="insight">
+        <p><strong>Switching costs are a real barrier.</strong> 24% cited switching cost as a factor in their decision (Q14), and 43% of Gusto users specifically pointed to switching costs. Address migration pain proactively with implementation support messaging. 28% of participants required implementation support as a minimum criterion (Q11).</p>
+      </div>
+
+      <table class="rec-table">
+        <thead><tr><th>Tactic</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Discovery questions</td><td>Ask about reporting frustrations (82% prevalence), manual process burden (69%), and growth trajectory. These are the most common triggers and pain points.</td></tr>
+          <tr><td>Competitive positioning</td><td>Against overbuilt competitors: "You don't need enterprise complexity." Against underbuilt competitors: "You've outgrown basic tools." 76% cited capability gaps in rejected tools (Q15).</td></tr>
+          <tr><td>Pricing strategy</td><td>54% said competitive pricing was a selection factor (Q14). Lead with transparent, per-employee pricing. BambooHR (63%) and Gusto (67%) users are especially price-sensitive.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PARTICIPANTS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">03</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Participants</span>
+      <span class="accordion-subtitle">Sample profile and demographic breakdown</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <p>The study included 180 HR, People Operations, and Talent Acquisition leaders across four company-size tiers. Participants were evenly distributed across three current platforms (BambooHR, Gusto, Rippling) to enable platform-level comparisons.</p>
+
+    <h2>Seniority</h2>
+    <div class="bar-chart">
+      {sp.seniority.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q1. {questionText.Q1} (n={sp.seniority.n})</p>
+
+    <h2>Function</h2>
+    <div class="bar-chart">
+      {sp.function.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q1. {questionText.Q1} (n={sp.function.n})</p>
+
+    <h2>Company Size</h2>
+    <div class="bar-chart">
+      {sp.company_size.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill teal" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q3. {questionText.Q3} (n={sp.company_size.n})</p>
+
+    <h2>Industry</h2>
+    <div class="bar-chart">
+      {sp.industry.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill amber" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q3. {questionText.Q3} (n={sp.industry.n})</p>
+
+    <h2>Current Tool</h2>
+    <div class="bar-chart">
+      {sp.current_tool.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill purple" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Study design. Participants evenly split across three current platforms. (n={sp.current_tool.n})</p>
+
+    <h2>Work Model</h2>
+    <div class="bar-chart">
+      {sp.work_model.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill gray" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Sample profile. (n={sp.work_model.n})</p>
+
+    <h2>HR Team Size</h2>
+    <div class="bar-chart">
+      {sp.hr_team_size.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Sample profile. (n={sp.hr_team_size.n})</p>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: CURRENT TOOL LANDSCAPE & FRUSTRATIONS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">04</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Current Tool Landscape &amp; Frustrations</span>
+      <span class="accordion-subtitle">Q4 (tech stack), Q16 (what works), Q17 (shortcomings), Q18 (biggest frustration)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Current Tech Stack (Q4)</h2>
+    <p>Nearly all participants (99%) identified a core HRIS platform, but 63% layer point solutions on top, and 36% described a fragmented multi-tool stack.</p>
+    <div class="bar-chart">
+      {qf.Q4.codes.filter((c: any) => c.pct > 0).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q4. {questionText.Q4} (n={qf.Q4.n})</p>
+
+    <div class="insight">
+      <p><strong>BambooHR users run the most fragmented stacks.</strong> 70% of BambooHR users described a fragmented multi-tool setup (vs. 35% Gusto, 2% Rippling), and 85% use a separate benefits administration system. This reflects BambooHR's narrower native feature set compared to more unified platforms.</p>
+    </div>
+
+    <h2>What Current Tools Do Well (Q16)</h2>
+    <div class="bar-chart">
+      {qf.Q16.codes.filter((c: any) => c.pct > 0).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q16. {questionText.Q16} (n={qf.Q16.n})</p>
+
+    <h2>Where Current Tools Fall Short (Q17)</h2>
+    <div class="bar-chart">
+      {qf.Q17.codes.filter((c: any) => c.pct > 0).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill amber" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q17. {questionText.Q17} (n={qf.Q17.n})</p>
+
+    <div class="insight">
+      <p><strong>Reporting is the dominant shortcoming.</strong> 67% of participants said their current tool falls short on reporting (Q17), making it the single most common gap. This is followed by poor system integration (41%) and performance management gaps (38%).</p>
+    </div>
+
+    <h2>Biggest Frustration (Q18)</h2>
+    <div class="bar-chart">
+      {qf.Q18.codes.filter((c: any) => c.pct >= 2).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill gray" style={`width:${Math.min(c.pct * 2.5, 100)}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q18. {questionText.Q18} (n={qf.Q18.n})</p>
+
+    <div class="insight">
+      <p><strong>Reporting frustration undermines HR's strategic role.</strong> When asked to name their single biggest frustration, 32% cited reporting inadequacy and 23% said reporting gaps undermine their ability to play a strategic role. Combined, over half of biggest-frustration mentions relate to the inability to produce meaningful workforce analytics.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: CATEGORY ENTRY POINTS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">05</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Category Entry Points</span>
+      <span class="accordion-subtitle">Q7 (evaluation triggers), Q8 (broader context), Q5 (timeline)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Evaluation Triggers (Q7)</h2>
+    <p>Participants described the events and pressures that prompted their most recent evaluation of HR, payroll, and benefits tools.</p>
+    <div class="bar-chart">
+      {qf.Q7.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q7. {questionText.Q7} (n={qf.Q7.n})</p>
+
+    <div class="insight">
+      <p><strong>Manual process burden is the dominant trigger at every company size.</strong> It ranges from 61% at 50-100 employee companies to 77% at 101-250 employee companies. This is a universal pain point, not limited to any segment of the market.</p>
+    </div>
+
+    <h2>Evaluation Triggers by Company Size</h2>
+    <p>Top five triggers broken down by company size tier. Highlighted cells indicate the two highest values within each row.</p>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Trigger</th>
+            <th>Overall</th>
+            <th>50-100</th>
+            <th>101-250</th>
+            <th>251-500</th>
+            <th>501-1,000</th>
+          </tr>
+        </thead>
+        <tbody>
+          {qf.Q7.codes.slice(0, 7).map((c: any) => {
+            const ctData = ct.Q7[c.code];
+            if (!ctData) return null;
+            const sizes = ['50-100 employees', '101-250 employees', '251-500 employees', '501-1,000 employees'];
+            const vals = sizes.map(s => ctData.by_company_size[s]?.pct ?? 0);
+            const sorted = [...vals].sort((a, b) => b - a);
+            const top2 = sorted.slice(0, 2);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td style="text-align:center;font-weight:600">{c.pct}%</td>
+                {vals.map((v: number) => (
+                  <td class={top2.includes(v) && v > 0 ? 'highlight' : ''} style="text-align:center">{v}%</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q7. {questionText.Q7} (n={qf.Q7.n}). Row percentages shown. Top 2 values per row highlighted.</p>
+
+    <h2>Broader Company Context (Q8)</h2>
+    <div class="bar-chart">
+      {qf.Q8.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q8. {questionText.Q8} (n={qf.Q8.n})</p>
+
+    <div class="insight">
+      <p><strong>Executive pressure and talent competition are the top contextual drivers.</strong> 37% cited executive pressure for modernization and 33% pointed to talent market competition as forces beyond their immediate team that drove them to evaluate new tools. Investor pressure (32%) and remote work (28%) also play meaningful roles.</p>
+    </div>
+
+    <h2>Evaluation Timeline (Q5)</h2>
+    <p>When participants last evaluated HR, payroll, and benefits tools. The majority (60%) evaluated within the last 12-18 months, with another 27% within 18-24 months.</p>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">6-12 months ago</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:13.9%"><span class="bar-val">13.9%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">12-18 months ago</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:38.9%"><span class="bar-val">38.9%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">18-24 months ago</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:28.3%"><span class="bar-val">28.3%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">More than 24 months ago</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:16.1%"><span class="bar-val">16.1%</span></div></div>
+      </div>
+    </div>
+    <p class="source-note">Source: Q5. {questionText.Q5} (n={qf.Q5.n}). Aggregated across similar time buckets.</p>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: PURCHASE PUSH & PULL -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">06</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Purchase Push &amp; Pull</span>
+      <span class="accordion-subtitle">Q10 (tools considered), Q13 (switch or stay), Q14 (why chose), Q15 (why rejected)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Tools Seriously Considered (Q10)</h2>
+    <div class="bar-chart">
+      {qf.Q10.categories.filter((c: any) => c.pct >= 1).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q10. {questionText.Q10} (n={qf.Q10.n})</p>
+
+    <h2>Switch or Stay Decision (Q13)</h2>
+    <div class="bar-chart">
+      {qf.Q13.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q13. {questionText.Q13} (n={qf.Q13.n})</p>
+
+    <div class="insight">
+      <p><strong>Three-quarters switched to a new tool.</strong> 76% of participants who went through an evaluation process ultimately purchased a new platform, indicating strong purchase intent once the evaluation begins. Only 24% stayed with their existing tool.</p>
+    </div>
+
+    <h2>Why They Chose Their Tool (Q14)</h2>
+    <div class="bar-chart">
+      {qf.Q14.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q14. {questionText.Q14} (n={qf.Q14.n})</p>
+
+    <h2>Selection Factors by Current Tool</h2>
+    <p>What drove selection decisions for each platform's user base. Highlighted cells indicate the two highest values within each row.</p>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Selection Factor</th>
+            <th>Overall</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {qf.Q14.codes.slice(0, 9).map((c: any) => {
+            const ctData = ct.Q14?.[c.code];
+            if (!ctData) return null;
+            const tools = ['BambooHR', 'Gusto', 'Rippling'];
+            const vals = tools.map(t => ctData.by_current_tool[t]?.pct ?? 0);
+            const sorted = [...vals].sort((a, b) => b - a);
+            const top2 = sorted.slice(0, 2);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td style="text-align:center;font-weight:600">{c.pct}%</td>
+                {vals.map((v: number) => (
+                  <td class={top2.includes(v) && v > 0 ? 'highlight' : ''} style="text-align:center">{v}%</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q14. {questionText.Q14} (n=60 per platform). Row percentages shown. Top 2 values per row highlighted.</p>
+
+    <div class="insight">
+      <p><strong>Rippling users chose for platform breadth; BambooHR and Gusto users chose for price and ease.</strong> 73% of Rippling users valued the unified platform, and 75% valued IT device management. Meanwhile, BambooHR (63%) and Gusto (67%) users prioritized competitive pricing, and BambooHR users especially valued intuitive UI (70%).</p>
+    </div>
+
+    <h2>Why Competitors Were Rejected (Q15)</h2>
+    <div class="bar-chart">
+      {qf.Q15.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill amber" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q15. {questionText.Q15} (n={qf.Q15.n})</p>
+
+    <div class="insight">
+      <p><strong>The top four rejection reasons are remarkably tightly clustered.</strong> "Overbuilt for needs" (82%), "capability gap" (76%), "priced too high" (72%), and "implementation complexity" (71%) all appear within an 11-point band. This means rejected tools typically failed on multiple dimensions simultaneously, not just one.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: EVALUATION REQUIREMENTS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">07</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Evaluation Requirements</span>
+      <span class="accordion-subtitle">Q11 (minimum criteria) and Q12 (decision stakeholders)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Minimum Criteria (Q11)</h2>
+    <p>Participants described the non-negotiable requirements that a tool had to meet to be seriously considered during their evaluation.</p>
+    <div class="bar-chart">
+      {qf.Q11.codes.filter((c: any) => c.pct > 0).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q11. {questionText.Q11} (n={qf.Q11.n})</p>
+
+    <div class="insight">
+      <p><strong>Native payroll is the top table-stakes requirement.</strong> 48% of participants required native payroll capabilities as a minimum criterion. Multi-state payroll compliance (41%), employee self-service (34%), and budget fit (32%) round out the top four. Any platform that lacks native payroll is disqualified by nearly half the market before the evaluation even begins.</p>
+    </div>
+
+    <h2>Decision Stakeholders (Q12)</h2>
+    <div class="bar-chart">
+      {qf.Q12.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q12. {questionText.Q12} (n={qf.Q12.n})</p>
+
+    <div class="insight">
+      <p><strong>HR leads the evaluation, but the CFO controls the budget.</strong> 94% of participants were the primary evaluator and 91% described a cross-functional process. Critically, 74% said the CFO holds financial approval authority, and 52% involved IT stakeholders. Sales and marketing materials must speak to both the HR evaluator's workflow needs and the CFO's cost-benefit calculus.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: SPEND & VALUE -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">08</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Spend &amp; Value</span>
+      <span class="accordion-subtitle">Q20 (annual spend), Q21 (value perception), Q22 (WTP for fixing frustration)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Annual Spend (Q20)</h2>
+    <p>Participants estimated their company's total annual spending on HR, payroll, and benefits software.</p>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">$5K to $20K</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:7.8%"><span class="bar-val">7.8%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$20K to $50K</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:38.4%"><span class="bar-val">38.4%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$50K to $100K</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:34.5%"><span class="bar-val">34.5%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$100K to $250K</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:17.8%"><span class="bar-val">17.8%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">More than $250K</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:1.7%"><span class="bar-val">1.7%</span></div></div>
+      </div>
+    </div>
+    <p class="source-note">Source: Q20. {questionText.Q20} (n={qf.Q20.n}). Aggregated across similar spend buckets.</p>
+
+    <div class="insight">
+      <p><strong>The mid-market spending sweet spot is $20K to $100K annually.</strong> 73% of participants estimated their annual spend falls between $20K and $100K. This aligns with per-employee pricing models at companies of 50 to 1,000 employees and suggests that pricing above $100K risks excluding the majority of the addressable market.</p>
+    </div>
+
+    <h2>Value Perception (Q21)</h2>
+    <div class="bar-chart">
+      {qf.Q21.buckets.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q21. {questionText.Q21} (n={qf.Q21.n})</p>
+
+    <div class="insight">
+      <p><strong>Most perceive the cost as "mostly reasonable with caveats."</strong> 88% of participants said the cost is somewhat reasonable, but with caveats. Only 1% said it is clearly reasonable, while 11% said it is not reasonable. This "grudging acceptance" suggests there is room for competitors to win on value perception by addressing the specific caveats (likely reporting and integration gaps).</p>
+    </div>
+
+    <h2>Willingness to Pay to Fix Biggest Frustration (Q22)</h2>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">Under $5K</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:2.2%"><span class="bar-val">2.2%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$5K to $10K</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:30.6%"><span class="bar-val">30.6%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$10K to $25K</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:57.3%"><span class="bar-val">57.3%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$25K to $50K</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:7.8%"><span class="bar-val">7.8%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">More than $50K</span>
+        <div class="bar-track"><div class="bar-fill teal" style="width:2.2%"><span class="bar-val">2.2%</span></div></div>
+      </div>
+    </div>
+    <p class="source-note">Source: Q22. {questionText.Q22} (n={qf.Q22.n}). Aggregated across similar WTP buckets.</p>
+
+    <div class="insight">
+      <p><strong>57% would pay $10K to $25K annually to fix their biggest frustration.</strong> Given that reporting inadequacy is the dominant frustration (Q18), this data point effectively places a $10K-$25K annual value on solving the reporting gap. This figure can anchor pricing conversations for reporting-focused add-ons or premium tiers.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 9: BUSINESS CHALLENGES & FUTURE INTENT -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">09</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Business Challenges &amp; Future Intent</span>
+      <span class="accordion-subtitle">Q24 (industry challenges), Q19 (changing needs), Q23 (likelihood to switch)</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Biggest Industry Challenges (Q24)</h2>
+    <p>Participants described what they believe most people in their position would identify as the biggest challenges with HR, payroll, and benefits tools today.</p>
+    <div class="bar-chart">
+      {qf.Q24.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q24. {questionText.Q24} (n={qf.Q24.n})</p>
+
+    <div class="insight">
+      <p><strong>The mid-market platform gap is the industry's defining challenge.</strong> 58% said mid-market companies are underserved by platforms designed for either small businesses or enterprises, and 51% pointed to fragmented multi-tool stacks as a systemic problem. Together, these form a clear market opportunity for a platform that is purpose-built for the 50-1,000 employee range.</p>
+    </div>
+
+    <h2>How Needs Have Changed (Q19)</h2>
+    <div class="bar-chart">
+      {qf.Q19.codes.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill blue" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q19. {questionText.Q19} (n={qf.Q19.n})</p>
+
+    <div class="insight">
+      <p><strong>Data-driven HR and AI are the top emerging needs.</strong> 43% said leadership now expects data-driven HR decision-making, and 37% said AI features are on their radar. Compensation management needs (32%) and performance management gaps (18%) round out the picture. These represent the next wave of requirements that will shape evaluations in the coming 12-18 months.</p>
+    </div>
+
+    <h2>Likelihood to Switch in Next 6 Months (Q23)</h2>
+    <div class="bar-chart">
+      {qf.Q23.buckets.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label.replace(/ \( to \)/g, '')}</span>
+          <div class="bar-track"><div class="bar-fill amber" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q23. {questionText.Q23} (n={qf.Q23.n})</p>
+
+    <div class="insight">
+      <p><strong>31% are somewhat likely to switch within 6 months.</strong> While the majority (69%) say they are unlikely to switch, nearly one in three participants expressed some likelihood of switching. Combined with the widespread reporting and integration frustrations documented throughout this study, this suggests a meaningful near-term opportunity for platforms that address those gaps.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 10: SEGMENTATION (EXPLORATORY) -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">10</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Segmentation (Exploratory)</span>
+      <span class="accordion-subtitle">Block-wise MCA and Ward clustering results</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <div class="seg-note">
+      <strong>Note:</strong> The segments shown below were identified through block-wise MCA and Ward clustering but did not reach the stability threshold (Jaccard = 0.38 vs. the 0.60 minimum) required for publication-grade findings. They are presented here for exploratory purposes. Differences between segments should be treated as directional patterns, not established findings.
+    </div>
+
+    <h2>Segment Overview</h2>
+    <p>Two exploratory segments emerged from the analysis. Based on the patterns in their data, we have labeled them descriptively:</p>
+
+    <div class="stat-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="stat-card">
+        <div class="stat-num">74</div>
+        <div class="stat-label">Segment 1: {segNames[0]} (41%)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">106</div>
+        <div class="stat-label">Segment 2: {segNames[1]} (59%)</div>
+      </div>
+    </div>
+
+    <p><strong>{segNames[0]} (Segment 1)</strong> skew toward smaller companies, are more likely to use BambooHR or Gusto, and chose their tool primarily for competitive pricing (78%), intuitive UI (70%), and structured implementation (58%). They prioritize employee self-service (57%) and onboarding automation (41%) as minimum criteria. They are more budget-conscious (43% cited budget constraints) and more sensitive to manual onboarding pain.</p>
+
+    <p><strong>{segNames[1]} (Segment 2)</strong> skew toward larger companies, are more likely to use Rippling, and chose their tool for platform unification (40%), IT device management (40%), and responsive sales (31%). They require native payroll (60%), multi-state compliance (48%), and SSO/security (27%) as minimum criteria. They are driven by investor pressure (44%) and system integration needs (56%).</p>
+
+    <h2>Segment Profiles</h2>
+
+    <h3>By Company Size</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Company Size</th>
+            <th>{segNames[0]} (n=74)</th>
+            <th>{segNames[1]} (n=106)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {['50-100 employees', '101-250 employees', '251-500 employees', '501-1,000 employees'].map((size: string) => {
+            const s1 = seg.profile_crosstabs.company_size.segment_1.categories.find((c: any) => c.label === size);
+            const s2 = seg.profile_crosstabs.company_size.segment_2.categories.find((c: any) => c.label === size);
+            const v1 = s1?.pct ?? 0;
+            const v2 = s2?.pct ?? 0;
+            const maxV = Math.max(v1, v2);
+            return (
+              <tr>
+                <td style="text-align:left">{size}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Segmentation analysis. Column percentages shown within each segment.</p>
+
+    <h3>By Seniority</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Seniority</th>
+            <th>{segNames[0]} (n=74)</th>
+            <th>{segNames[1]} (n=106)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {['Manager', 'Director', 'Senior Manager', 'VP or above', 'C-suite'].map((sen: string) => {
+            const s1 = seg.profile_crosstabs.seniority.segment_1.categories.find((c: any) => c.label === sen);
+            const s2 = seg.profile_crosstabs.seniority.segment_2.categories.find((c: any) => c.label === sen);
+            const v1 = s1?.pct ?? 0;
+            const v2 = s2?.pct ?? 0;
+            const maxV = Math.max(v1, v2);
+            return (
+              <tr>
+                <td style="text-align:left">{sen}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Segmentation analysis. Column percentages shown within each segment.</p>
+
+    <h3>By Current Tool</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Current Tool</th>
+            <th>{segNames[0]} (n=74)</th>
+            <th>{segNames[1]} (n=106)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {['BambooHR', 'Gusto', 'Rippling'].map((tool: string) => {
+            const s1 = seg.profile_crosstabs.current_tool.segment_1.categories.find((c: any) => c.label === tool);
+            const s2 = seg.profile_crosstabs.current_tool.segment_2.categories.find((c: any) => c.label === tool);
+            const v1 = s1?.pct ?? 0;
+            const v2 = s2?.pct ?? 0;
+            const maxV = Math.max(v1, v2);
+            return (
+              <tr>
+                <td style="text-align:left">{tool}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Segmentation analysis. Column percentages shown within each segment.</p>
+
+    <div class="insight">
+      <p><strong>{segNames[0]} are concentrated among BambooHR and Gusto users.</strong> 46% of Segment 1 uses BambooHR and 39% uses Gusto, while only 15% uses Rippling. Conversely, 46% of {segNames[1]} use Rippling. This suggests the two segments may partially reflect different product philosophies: simplicity-first vs. platform-consolidation.</p>
+    </div>
+
+    <h2>Criterion Variable Validation</h2>
+    <p>The tables below cross-tab the exploratory segments against criterion and outcome variables that were held out of clustering. In a stable segmentation, significant differences here would validate that the segments predict strategically meaningful outcomes.</p>
+
+    <h3>By Switch Outcome (Q13)</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Outcome</th>
+            <th>{segNames[0]} (n=74)</th>
+            <th>{segNames[1]} (n=106)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {['Switched to a new tool', 'Stayed with existing tool'].map((cat: string) => {
+            const s1 = seg.profile_crosstabs.Q13_category?.segment_1?.categories?.find((c: any) => c.label === cat);
+            const s2 = seg.profile_crosstabs.Q13_category?.segment_2?.categories?.find((c: any) => c.label === cat);
+            const v1 = s1?.pct ?? 0;
+            const v2 = s2?.pct ?? 0;
+            const maxV = Math.max(v1, v2);
+            return (
+              <tr>
+                <td style="text-align:left">{cat}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q13. {questionText.Q13} Column percentages shown within each segment.</p>
+
+    <h3>By Switching Intent (Q23)</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Likelihood</th>
+            <th>{segNames[0]} (n=74)</th>
+            <th>{segNames[1]} (n=106)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(seg.profile_crosstabs.Q23_bucket?.segment_1?.categories || []).map((cat1: any) => {
+            const label = cleanQ23Label(cat1.label);
+            const s2 = seg.profile_crosstabs.Q23_bucket?.segment_2?.categories?.find((c: any) => cleanQ23Label(c.label) === label);
+            const v1 = cat1.pct ?? 0;
+            const v2 = s2?.pct ?? 0;
+            const maxV = Math.max(v1, v2);
+            return (
+              <tr>
+                <td style="text-align:left">{label}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q23. {questionText.Q23} Column percentages shown within each segment.</p>
+
+    <div class="insight">
+      <p><strong>{segNames[0]} switched tools at a higher rate (84% vs. 70%) and show more near-term switching intent (36% somewhat likely vs. 27%).</strong> This directional pattern suggests Segment 1 may be more action-oriented in their buying behavior, though the unstable cluster solution means these differences should not be treated as confirmed findings.</p>
+    </div>
+
+    <h2>Basis Code Prevalence by Segment</h2>
+    <p>The codes below show the largest gaps between segments, indicating where the two groups diverge most in their motivations and requirements. Only codes with a gap of 15+ percentage points are shown.</p>
+
+    <h3>Evaluation Triggers (Q7): Largest Segment Gaps</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Code</th>
+            <th>Overall</th>
+            <th>{segNames[0]}</th>
+            <th>{segNames[1]}</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(seg.basis_code_prevalence_by_segment.Q7)
+            .map((c: any) => ({ ...c, gap: Math.abs(c.by_segment.segment_1.pct - c.by_segment.segment_2.pct) }))
+            .filter((c: any) => c.gap >= 15)
+            .sort((a: any, b: any) => b.gap - a.gap)
+            .map((c: any) => {
+              const v1 = c.by_segment.segment_1.pct;
+              const v2 = c.by_segment.segment_2.pct;
+              const maxV = Math.max(v1, v2);
+              return (
+                <tr>
+                  <td style="text-align:left">{formatLabel(c.label)}</td>
+                  <td style="text-align:center;font-weight:600">{c.overall_pct}%</td>
+                  <td class={v1 === maxV ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                  <td class={v2 === maxV ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+                  <td style="text-align:center;font-weight:600">{Math.round(c.gap)}pp</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q7. {questionText.Q7} Segment-level prevalence. Gap = absolute difference in percentage points.</p>
+
+    <h3>Frustrations (Q9): Largest Segment Gaps</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Code</th>
+            <th>Overall</th>
+            <th>{segNames[0]}</th>
+            <th>{segNames[1]}</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(seg.basis_code_prevalence_by_segment.Q9)
+            .map((c: any) => ({ ...c, gap: Math.abs(c.by_segment.segment_1.pct - c.by_segment.segment_2.pct) }))
+            .filter((c: any) => c.gap >= 10)
+            .sort((a: any, b: any) => b.gap - a.gap)
+            .map((c: any) => {
+              const v1 = c.by_segment.segment_1.pct;
+              const v2 = c.by_segment.segment_2.pct;
+              const maxV = Math.max(v1, v2);
+              return (
+                <tr>
+                  <td style="text-align:left">{formatLabel(c.label)}</td>
+                  <td style="text-align:center;font-weight:600">{c.overall_pct}%</td>
+                  <td class={v1 === maxV ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                  <td class={v2 === maxV ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+                  <td style="text-align:center;font-weight:600">{Math.round(c.gap)}pp</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q9. {questionText.Q9} Segment-level prevalence. Gap = absolute difference in percentage points.</p>
+
+    <h3>Minimum Criteria (Q11): Largest Segment Gaps</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Code</th>
+            <th>Overall</th>
+            <th>{segNames[0]}</th>
+            <th>{segNames[1]}</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(seg.basis_code_prevalence_by_segment.Q11)
+            .map((c: any) => ({ ...c, gap: Math.abs(c.by_segment.segment_1.pct - c.by_segment.segment_2.pct) }))
+            .filter((c: any) => c.gap >= 5 && c.overall_pct > 0)
+            .sort((a: any, b: any) => b.gap - a.gap)
+            .map((c: any) => {
+              const v1 = c.by_segment.segment_1.pct;
+              const v2 = c.by_segment.segment_2.pct;
+              const maxV = Math.max(v1, v2);
+              return (
+                <tr>
+                  <td style="text-align:left">{formatLabel(c.label)}</td>
+                  <td style="text-align:center;font-weight:600">{c.overall_pct}%</td>
+                  <td class={v1 === maxV ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                  <td class={v2 === maxV ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+                  <td style="text-align:center;font-weight:600">{Math.round(c.gap)}pp</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q11. {questionText.Q11} Segment-level prevalence. Gap = absolute difference in percentage points.</p>
+
+    <h3>Selection Factors (Q14): Largest Segment Gaps</h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Code</th>
+            <th>Overall</th>
+            <th>{segNames[0]}</th>
+            <th>{segNames[1]}</th>
+            <th>Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(seg.basis_code_prevalence_by_segment.Q14)
+            .map((c: any) => ({ ...c, gap: Math.abs(c.by_segment.segment_1.pct - c.by_segment.segment_2.pct) }))
+            .filter((c: any) => c.gap >= 7)
+            .sort((a: any, b: any) => b.gap - a.gap)
+            .map((c: any) => {
+              const v1 = c.by_segment.segment_1.pct;
+              const v2 = c.by_segment.segment_2.pct;
+              const maxV = Math.max(v1, v2);
+              return (
+                <tr>
+                  <td style="text-align:left">{formatLabel(c.label)}</td>
+                  <td style="text-align:center;font-weight:600">{c.overall_pct}%</td>
+                  <td class={v1 === maxV ? 'highlight' : ''} style="text-align:center">{v1}%</td>
+                  <td class={v2 === maxV ? 'highlight' : ''} style="text-align:center">{v2}%</td>
+                  <td style="text-align:center;font-weight:600">{Math.round(c.gap)}pp</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q14. {questionText.Q14} Segment-level prevalence. Gap = absolute difference in percentage points.</p>
+
+    <div class="insight">
+      <p><strong>The two segments represent fundamentally different buying motives.</strong> {segNames[0]} chose based on price (78% vs. 38%), UI intuitiveness (70% vs. 31%), and implementation support (58% vs. 33%). {segNames[1]} chose based on platform unification (40% vs. 5%), IT device management (40% vs. 5%), and were triggered by system integration needs (56% vs. 16%) and investor pressure (44% vs. 14%). These patterns suggest that a single marketing message will not reach both groups effectively.</p>
+    </div>
+
+  </div>
+</details>
+
+</div> <!-- end container -->
+
+<div class="footer-print">
+  <p style="text-transform:uppercase;letter-spacing:0.08em;">BuyerVoice.AI &bull; HR Leaders BGR Interview Research Report &bull; April 2026</p>
+</div>
+
+<!-- Verbatim drill-down data -->
+<Fragment set:html={vdScript} />
+
+<!-- Verbatim modal -->
+<div class="vb-overlay" id="vbOverlay">
+  <div class="vb-dialog">
+    <button class="vb-close" id="vbClose">&times;</button>
+    <div class="vb-header">
+      <h3 id="vbTitle"></h3>
+      <p id="vbSubtitle"></p>
+    </div>
+    <div class="vb-body" id="vbBody"></div>
+  </div>
+</div>
+
+<script is:inline>
+(function(){
+  var VD = window.__VD;
+  var VQ = window.__VQ;
+  if (!VD || !VQ) return;
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  /* --- Map each section to its question IDs and chart type --- */
+  /* Thematic bar charts use qf.QX.codes with formatLabel; categorical use categories/buckets */
+  /* We detect question IDs from the source-note text "Source: QX." */
+
+  function annotateCharts() {
+    var sourceNotes = document.querySelectorAll('.source-note');
+    sourceNotes.forEach(function(note) {
+      var m = note.textContent.match(/Source:\s*Q(\d+)\./);
+      if (!m) return;
+      var qid = 'Q' + m[1];
+
+      /* Only annotate thematic questions (ones that have codes in VD) */
+      var thematicQs = ['Q4','Q7','Q8','Q9','Q11','Q12','Q14','Q15','Q16','Q17','Q18','Q19','Q24'];
+      var catQs = ['Q1','Q10','Q13','Q21'];
+
+      var isThematic = thematicQs.indexOf(qid) !== -1;
+      var isCat = catQs.indexOf(qid) !== -1;
+      if (!isThematic && !isCat) return;
+
+      /* The bar-chart div is the sibling before this source-note */
+      var barChart = note.previousElementSibling;
+      while (barChart && !barChart.classList.contains('bar-chart')) {
+        barChart = barChart.previousElementSibling;
+      }
+      if (!barChart) return;
+
+      var rows = barChart.querySelectorAll('.bar-row');
+      rows.forEach(function(row) {
+        var labelEl = row.querySelector('.bar-label');
+        if (!labelEl) return;
+        var label = labelEl.textContent.trim();
+        row.setAttribute('data-drilldown', 'true');
+        row.setAttribute('data-q', qid);
+        row.setAttribute('data-code', label);
+        row.setAttribute('data-type', isThematic ? 'code' : 'cat');
+      });
+    });
+  }
+
+  annotateCharts();
+
+  /* --- Modal logic --- */
+  var overlay = document.getElementById('vbOverlay');
+  var titleEl = document.getElementById('vbTitle');
+  var subtitleEl = document.getElementById('vbSubtitle');
+  var bodyEl = document.getElementById('vbBody');
+  var closeBtn = document.getElementById('vbClose');
+
+  function openModal(qid, codeName, matchType) {
+    var matches = [];
+    VD.forEach(function(p) {
+      var hit = false;
+      if (matchType === 'code') {
+        var codes = p.c[qid];
+        if (codes) {
+          for (var i = 0; i < codes.length; i++) {
+            if (codes[i].toLowerCase() === codeName.toLowerCase()) {
+              hit = true;
+              break;
+            }
+          }
+        }
+      } else {
+        var cat = p.cat[qid];
+        if (cat && cat.toLowerCase() === codeName.toLowerCase()) {
+          hit = true;
+        }
+      }
+      if (hit && p.v[qid]) {
+        matches.push(p);
+      }
+    });
+
+    titleEl.textContent = codeName + ' (' + matches.length + ' participant' + (matches.length !== 1 ? 's' : '') + ')';
+    subtitleEl.textContent = VQ[qid] || '';
+
+    bodyEl.innerHTML = '';
+    if (matches.length === 0) {
+      bodyEl.innerHTML = '<p style="color:#6B7280;font-size:13px;">No matching verbatims found.</p>';
+    } else {
+      matches.forEach(function(p) {
+        var card = document.createElement('div');
+        card.className = 'vb-card';
+
+        var fullText = p.v[qid];
+        var truncated = fullText.length > 500;
+        var shortText = truncated ? fullText.substring(0, 500) + '...' : fullText;
+
+        var quoteDiv = document.createElement('div');
+        quoteDiv.className = 'vb-quote';
+        quoteDiv.textContent = shortText;
+        card.appendChild(quoteDiv);
+
+        if (truncated) {
+          var moreBtn = document.createElement('button');
+          moreBtn.className = 'vb-more';
+          moreBtn.textContent = 'Show more';
+          var expanded = false;
+          moreBtn.addEventListener('click', function() {
+            expanded = !expanded;
+            quoteDiv.textContent = expanded ? fullText : shortText;
+            moreBtn.textContent = expanded ? 'Show less' : 'Show more';
+          });
+          card.appendChild(moreBtn);
+        }
+
+        var tagsDiv = document.createElement('div');
+        tagsDiv.className = 'vb-tags';
+        var tags = [p.sen, p.sz, p.ind, p.tool].filter(Boolean);
+        tags.forEach(function(t) {
+          var span = document.createElement('span');
+          span.className = 'vb-tag';
+          span.textContent = t;
+          tagsDiv.appendChild(span);
+        });
+        card.appendChild(tagsDiv);
+
+        bodyEl.appendChild(card);
+      });
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  document.addEventListener('click', function(e) {
+    var row = e.target.closest('[data-drilldown]');
+    if (!row) return;
+    var qid = row.getAttribute('data-q');
+    var code = row.getAttribute('data-code');
+    var type = row.getAttribute('data-type') || 'code';
+    openModal(qid, code, type);
+  });
+})();
+</script>
+
+</body>
+</html>
+)}

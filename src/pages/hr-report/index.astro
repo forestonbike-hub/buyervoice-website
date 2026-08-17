@@ -1,0 +1,1443 @@
+---
+import reportStats from '../../data/hr-leaders-bgr/report-stats-v2.json';
+import verbatimData from '../../data/hr-leaders-bgr/verbatim-data.json';
+import verbatimQuestions from '../../data/hr-leaders-bgr/verbatim-questions.json';
+
+const d = reportStats;
+const VD = verbatimData;
+const VQ = verbatimQuestions;
+const vdScript = '<script>window.__VD=' + JSON.stringify(VD).replace(/<\//g, '<\\/') + ';window.__VQ=' + JSON.stringify(VQ).replace(/<\//g, '<\\/') + ';<' + '/script>';
+const es = d.executive_stats;
+const bp = d.bamboo_profile;
+
+// Helper: format code label for display
+function formatLabel(label: string): string {
+  return label
+    .replace(/\bHr\b/g, 'HR')
+    .replace(/\bHris\b/g, 'HRIS')
+    .replace(/\bIt\b/g, 'IT')
+    .replace(/\bSso\b/g, 'SSO')
+    .replace(/\bCfo\b/g, 'CFO')
+    .replace(/\bAi\b/g, 'AI')
+    .replace(/\bAts\b/g, 'ATS')
+    .replace(/\bUi\b/g, 'UI')
+    .replace(/\bWtp\b/g, 'WTP');
+}
+
+// Fixed sort orders
+const companySizeOrder = ['50-100 employees', '101-250 employees', '251-500 employees', '501-1,000 employees'];
+const seniorityOrder = ['Manager', 'Senior Manager', 'Director', 'VP or above', 'C-suite'];
+
+function sortByOrder(categories: any[], order: string[]): any[] {
+  return [...categories].sort((a, b) => {
+    const ai = order.indexOf(a.label);
+    const bi = order.indexOf(b.label);
+    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+  });
+}
+
+// Question text lookup
+const questionText: Record<string, string> = {
+  Q1: 'To start, please tell me your current seniority and function.',
+  Q2: 'How many years have you worked in your current company?',
+  Q3: 'What industry is your company in? And, roughly, how many people work at your company?',
+  Q4: 'Currently, does your team use one platform or several different tools for HR, payroll, and benefits? What is the main software or set of tools that you use?',
+  Q5: 'How long ago did your team last consider buying an HR, payroll, and benefits tool?',
+  Q6: 'What software or tools were you using when you started this evaluation?',
+  Q7: 'What motivated your team to consider other HR, payroll, or benefits tools?',
+  Q8: 'Was there anything else happening more broadly at your company or industry that motivated you to consider other tools?',
+  Q9: 'Was your HR, payroll, or benefits tools causing any particular frustrations or challenges?',
+  Q10: 'Which tools did you seriously consider?',
+  Q11: 'Did you have any minimum criteria that a tool had to have in order to be seriously considered?',
+  Q12: 'Who else was involved in the final decision during this evaluation? What role did they play?',
+  Q13: 'After your evaluation, did you purchase and switch to a new one or continue using your previous software?',
+  Q14: 'Why did you choose that tool? How did it stand out?',
+  Q15: 'For each of the tools that you considered but rejected, please share the main reasons why.',
+  Q16: 'What does your current tool(s) do well?',
+  Q17: 'Where does it fall short of what you need today?',
+  Q18: 'What is your biggest frustration with your current tool(s)?',
+  Q19: 'What has changed about your needs since the last time you considered HR, payroll, and benefits tools?',
+  Q20: 'On an annual basis, how much does your company spend on your current HR, payroll, and benefits tool(s)?',
+  Q21: 'Do you think the cost is reasonable relative to the value your company gets?',
+  Q22: 'How much would it be worth to your company annually to solve your biggest frustration?',
+  Q23: 'Within the next 6 months, do you think you will likely consider switching to new HR, payroll, and benefits tools?',
+  Q24: 'What are the biggest challenges with HR, payroll, and benefits tools today?',
+};
+---
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N7JWFV8H');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8MZNTQVSZ5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BambooHR in the Mid-Market: A Data-Driven Strategic Review | BuyerVoice LLC</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --bamboo: #73C41D;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.6; background: var(--paper); -webkit-font-smoothing: antialiased; }
+.pdf-btn { position: fixed; top: 16px; right: 24px; background: var(--signal); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 6px; z-index: 100; text-decoration: none; }
+.pdf-btn:hover { background: #922B16; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+.cover { text-align: center; padding: 64px 32px 48px; }
+.cover .logo { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--ink); margin: 0 auto 48px; letter-spacing: -0.02em; display: block; width: fit-content; text-decoration: none; transition: opacity 0.15s; }
+.cover a.logo:hover { opacity: 0.75; }
+.cover .logo .logo-dot { color: var(--signal); }
+.cover h1 { font-family: var(--serif); font-size: 34px; font-weight: 600; color: var(--ink); margin-bottom: 16px; line-height: 1.2; letter-spacing: -0.02em; }
+.cover .subtitle { font-size: 17px; color: var(--muted); margin-bottom: 32px; line-height: 1.5; }
+.cover .meta { font-size: 14px; color: var(--muted); margin-top: 32px; }
+.cover .badge { display: inline-block; background: rgba(184, 52, 27, 0.10); color: var(--signal); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; }
+h1 { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em; }
+h2 { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 28px; letter-spacing: -0.02em; }
+h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 24px; letter-spacing: -0.02em; }
+p { font-size: 14px; color: var(--rule); margin-bottom: 12px; }
+.overline { font-family: var(--sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--signal); margin-bottom: 4px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+.stat-card { text-align: center; padding: 16px; background: rgba(11, 31, 58, 0.04); border-radius: 8px; }
+.stat-num { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--signal); }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { width: 240px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+.bar-fill.signal { background: var(--signal); }
+.bar-fill.ink { background: var(--ink); }
+.bar-fill.warm { background: #C4784A; }
+.bar-fill.slate { background: #5A7A94; }
+.bar-fill.teal { background: #2A7A6E; }
+.bar-fill.plum { background: #6B4C6E; }
+.bar-fill.bamboo-green { background: var(--bamboo); }
+.bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+.bar-track { position: relative; }
+.bar-avg { position: absolute; top: 0; bottom: 0; width: 2px; border-left: 2px dashed rgba(11, 31, 58, 0.35); z-index: 1; pointer-events: none; }
+.bar-avg-label { position: absolute; top: -14px; font-size: 9px; color: var(--muted); white-space: nowrap; transform: translateX(-50%); }
+.avg-legend { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+.avg-legend-line { width: 16px; height: 0; border-top: 2px dashed rgba(11, 31, 58, 0.35); }
+.sig-mark { color: var(--signal); font-weight: 700; margin-left: 2px; font-size: 13px; }
+.q-cite { display: block; font-family: var(--sans); font-size: 12px; font-weight: 400; color: var(--muted); font-style: italic; margin-top: 2px; }
+.pw-sig { font-size: 9px; font-weight: 700; color: var(--signal); vertical-align: super; line-height: 0; margin-left: 1px; }
+.pw-legend { font-size: 11px; color: var(--muted); margin-top: 4px; margin-bottom: 0; }
+.scatter-wrap { width: 100%; max-width: 740px; margin: 12px 0; }
+.scatter-svg { width: 100%; height: auto; font-family: var(--sans); background: var(--paper); }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+th { text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid rgba(11, 31, 58, 0.12); }
+td { padding: 10px 12px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+tr:hover { background: rgba(11, 31, 58, 0.02); }
+.insight { border-left: 4px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.insight p { font-size: 13px; margin-bottom: 0; }
+.insight strong { color: var(--signal); }
+.source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; }
+.crosstab { font-size: 12px; overflow-x: auto; margin: 16px 0; }
+.crosstab table { min-width: 600px; }
+.crosstab th, .crosstab td { padding: 8px 10px; text-align: right; white-space: nowrap; }
+.crosstab th:first-child, .crosstab td:first-child { text-align: left; min-width: 200px; }
+.crosstab th { text-align: center; }
+.crosstab .highlight { background: rgba(184, 52, 27, 0.10); font-weight: 700; }
+.crosstab .total-row td { border-top: 2px solid rgba(11, 31, 58, 0.12); font-weight: 600; font-style: italic; }
+.accordion { border-bottom: 1px solid rgba(11, 31, 58, 0.10); }
+.accordion:last-of-type { border-bottom: none; }
+.accordion-header { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; list-style: none; }
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-header::marker { display: none; content: ""; }
+.accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+.accordion-text { flex: 1; }
+.accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); display: block; letter-spacing: -0.02em; }
+.accordion-subtitle { font-size: 14px; color: var(--muted); display: block; margin-top: 4px; }
+.accordion-icon { font-size: 28px; font-weight: 300; color: var(--signal); min-width: 30px; text-align: center; transition: transform 0.2s; }
+details[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-body { padding: 0 0 48px 0; }
+.rec-table { width: 100%; }
+.rec-table th { background: rgba(11, 31, 58, 0.04); }
+.rec-table td:first-child { font-weight: 600; width: 30%; }
+.team-section { margin-bottom: 32px; }
+.team-section h3 { color: var(--ink); border-bottom: 2px solid var(--signal); padding-bottom: 8px; }
+.seg-note { background: rgba(184, 52, 27, 0.08); border-left: 4px solid #C4784A; padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 13px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 16px 0; }
+.footer-print { text-align: center; padding: 32px; font-size: 12px; color: var(--muted); border-top: 1px solid rgba(11, 31, 58, 0.10); margin-top: 48px; }
+.bamboo-callout { border-left: 4px solid var(--bamboo); background: rgba(115, 196, 29, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.bamboo-callout p { font-size: 13px; margin-bottom: 0; }
+.bamboo-callout strong { color: #4A8A10; }
+.vuln-callout { border-left: 4px solid #C4784A; background: rgba(196, 120, 74, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.vuln-callout p { font-size: 13px; margin-bottom: 0; }
+.vuln-callout strong { color: #C4784A; }
+.opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42, 122, 110, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.opp-callout p { font-size: 13px; margin-bottom: 0; }
+.opp-callout strong { color: #2A7A6E; }
+.scorecard { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin: 20px 0; background: rgba(11,31,58,0.08); border-radius: 8px; overflow: hidden; }
+.scorecard-header { background: var(--ink); color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 600; text-align: center; }
+.scorecard-cell { background: var(--paper); padding: 10px 16px; font-size: 13px; text-align: center; }
+.scorecard-cell.win { background: rgba(42, 122, 110, 0.12); font-weight: 600; }
+.scorecard-cell.lose { background: rgba(196, 120, 74, 0.12); }
+.scorecard-label { background: rgba(11,31,58,0.03); padding: 10px 16px; font-size: 13px; font-weight: 600; text-align: left; }
+
+/* Verbatim drill-down */
+[data-drilldown] { cursor: pointer; }
+[data-drilldown]:hover { opacity: 0.85; }
+[data-drilldown] .bar-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 2px; }
+.vb-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; }
+.vb-overlay.open { display:flex; justify-content:center; align-items:center; }
+.vb-dialog { background: var(--paper); border-radius:12px; max-width:760px; width:95%; max-height:85vh; display:flex; flex-direction:column; position:relative; }
+.vb-header { padding:20px 24px 12px; border-bottom:1px solid rgba(11,31,58,0.10); }
+.vb-header h3 { font-family: var(--serif); font-size:18px; color: var(--ink); margin:0; }
+.vb-header p { font-size:13px; color: var(--muted); margin:4px 0 0; }
+.vb-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:24px; cursor:pointer; color: var(--muted); }
+.vb-close:hover { color: var(--ink); }
+.vb-body { padding:16px 24px 24px; overflow-y:auto; flex:1; }
+.vb-card { background: rgba(11,31,58,0.04); border-left:3px solid var(--signal); padding:14px 16px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+.vb-card .vb-quote { font-style:italic; font-size:13px; color: var(--rule); line-height:1.6; margin-bottom:8px; }
+.vb-card .vb-more { font-size:12px; color: var(--signal); cursor:pointer; border:none; background:none; padding:0; margin-bottom:8px; font-weight:500; }
+.vb-card .vb-more:hover { text-decoration:underline; }
+.vb-card .vb-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.vb-card .vb-tag { font-size:11px; background: rgba(11,31,58,0.08); color: var(--rule); padding:2px 8px; border-radius:10px; }
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  .pdf-btn { display: none !important; }
+  details.accordion { display: block !important; }
+  details.accordion > .accordion-body { display: block !important; visibility: visible !important; }
+  details.accordion[open] > .accordion-body { display: block !important; }
+  .accordion { border-bottom: 1px solid rgba(11, 31, 58, 0.10); }
+  .accordion-icon { display: none !important; }
+  .accordion-header { pointer-events: none; }
+  .accordion-body { padding: 16px 0 32px; }
+  body { font-size: 12px; background: #fff; }
+  .cover { padding: 60px 0 40px; page-break-after: always; }
+  .container { max-width: 100%; padding: 0 24px; }
+  .bar-fill.signal { background: var(--signal) !important; }
+  .bar-fill.ink { background: var(--ink) !important; }
+  .bar-fill.warm { background: #C4784A !important; }
+  .bar-fill.slate { background: #5A7A94 !important; }
+  .bar-fill.teal { background: #2A7A6E !important; }
+  .bar-fill.plum { background: #6B4C6E !important; }
+  .bar-fill.bamboo-green { background: var(--bamboo) !important; }
+  .bar-track { background: rgba(11, 31, 58, 0.06) !important; position: relative; }
+  .bar-avg { border-left: 2px dashed rgba(11, 31, 58, 0.35) !important; }
+  .bar-val { color: #fff !important; }
+  .stat-card { background: rgba(11, 31, 58, 0.04) !important; }
+  .stat-num { color: var(--signal) !important; }
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .insight { background: rgba(184, 52, 27, 0.06) !important; border-left: 4px solid var(--signal) !important; }
+  .bamboo-callout { background: rgba(115, 196, 29, 0.08) !important; border-left: 4px solid var(--bamboo) !important; }
+  .vuln-callout { background: rgba(196, 120, 74, 0.08) !important; border-left: 4px solid #C4784A !important; }
+  .opp-callout { background: rgba(42, 122, 110, 0.08) !important; border-left: 4px solid #2A7A6E !important; }
+  .seg-note { background: rgba(184, 52, 27, 0.08) !important; border-left: 4px solid #C4784A !important; }
+  .crosstab .highlight { background: rgba(184, 52, 27, 0.10) !important; }
+  .crosstab table { page-break-inside: auto; }
+  .vb-overlay { display:none !important; }
+  [data-drilldown] { cursor:default !important; }
+  [data-drilldown] .bar-label { text-decoration:none !important; }
+  @page { size: letter portrait; margin: 0.75in; }
+  .page-break { page-break-before: always; }
+  .accordion-body { page-break-before: avoid; }
+  details.accordion { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<a href="javascript:void(0)" class="pdf-btn" onclick="(function(){var d=document.querySelectorAll('details.accordion');var prev=[];d.forEach(function(el){prev.push(el.open);el.open=true;});setTimeout(function(){window.print();setTimeout(function(){d.forEach(function(el,i){el.open=prev[i];});},500);},100);})()">Save as PDF</a>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <a href="/" class="logo" aria-label="BuyerVoice.AI home">BuyerVoice<span class="logo-dot">.AI</span></a>
+  <div class="badge">Custom Client Engagement</div>
+  <h1>BambooHR</h1>
+  <p class="subtitle">Mid-Market Insights Based on Buyer Interviews</p>
+  <p class="meta">180 qualitative interviews with HR leaders at 50 to 1,000 employee companies &bull; April 2026</p>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">01</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Executive Summary</span>
+      <span class="accordion-subtitle">BambooHR's strategic position, five critical findings, and three recommended moves</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>The BambooHR Market Position</h2>
+    <p>BambooHR owns the "intuitive UI" lane in mid-market HR tech at a concentration no competitor approaches: 70% of BambooHR users chose the platform specifically for its user interface, compared to 47% for Gusto and 25% for Rippling. This is a strong market position, but there are some clear risks too. BambooHR's customer base runs the most fragmented tech stacks in the dataset (70% fragmented vs. 35% Gusto, 2% Rippling), faces acute reporting frustration (85%), and shows meaningful switching intent (45% somewhat likely to re-evaluate within 6 months). A core question is whether BambooHR can evolve from a best-in-class point solution into a more complete platform without surrendering the simplicity that built its brand.</p>
+
+    <h2>Five Key Findings</h2>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">UI ownership (vs. 47% Gusto, 25% Rippling)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">Fragmented stacks (vs. 35% Gusto)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">85%</div>
+        <div class="stat-label">Reporting frustration among BambooHR users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">45%</div>
+        <div class="stat-label">BambooHR users somewhat likely to re-evaluate</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <p><strong>1. BambooHR owns the "intuitive UI" lane at 70% concentration.</strong> This is the highest category-specific position in the dataset. No competitor comes close. Consider making this an anchor of all brand positioning and, potentially, a requirement for all product decisions. <em>Owner: Marketing.</em></p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>2. BambooHR users run the most fragmented tech stacks in the study.</strong> 70% of BambooHR customers describe a fragmented multi-tool setup, compared to 35% of Gusto users and just 2% of Rippling users. This creates daily friction, undermines the "simple" brand promise, and opens the door for platform consolidators to poach accounts. <em>Owner: Product.</em></p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>3. Reporting gaps drive 85% of BambooHR-user frustration.</strong> Reporting inadequacy is the single most prevalent frustration among BambooHR's own customers, and 62% say the platform falls short on reporting today. This could be BambooHR's most urgent product gap. <em>Owner: Product.</em></p>
+    </div>
+    <div class="opp-callout">
+      <p><strong>4. 45% of BambooHR users are somewhat likely to re-evaluate within 6 months.</strong> Nearly half of the BambooHR base shows switching intent. Combined with 52% naming payroll/HRIS integration friction as their biggest frustration, suggesting a specific and real retention risk. <em>Owner: Sales / Customer Success.</em></p>
+    </div>
+    <div class="opp-callout">
+      <p><strong>5. 43% of Gusto users cite switching costs as the reason they stayed.</strong> Gusto's retention is partly inertia, not satisfaction. A targeted migration program with implementation support could unlock direct share gains from Gusto's base. <em>Owner: Sales.</em></p>
+    </div>
+
+    <h2>Three Recommendations</h2>
+    <table class="rec-table">
+      <thead><tr><th>Move</th><th>Description</th><th>Data Anchor</th></tr></thead>
+      <tbody>
+        <tr><td>1. Close the reporting gap</td><td>Build self-service dashboards and pre-built analytics templates. This is the single highest-ROI product investment: it addresses the #1 frustration (85%) and the #1 shortcoming (62%) simultaneously, and 57% of the market would pay $10K to $25K annually for it.</td><td>Q9: 85%, Q17: 62%, Q22: 57% WTP</td></tr>
+        <tr><td>2. Reduce stack fragmentation</td><td>Invest in native integrations and first-party modules (payroll, benefits) that let BambooHR users consolidate from 3-4 tools to 1-2. This defends the base against Rippling's platform consolidation pitch.</td><td>Q4: 70% fragmented, Q18: 52% payroll friction</td></tr>
+        <tr><td>3. Launch a Gusto displacement program</td><td>Target Gusto users at companies that have outgrown Gusto's feature set. Lead with implementation support and switching-cost offset. The 43% switching-cost retention finding among Gusto users is the attack surface.</td><td>Q14: 43% Gusto switching cost, Q15: capability gap</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Report Navigation</h2>
+    <table>
+      <thead><tr><th>Section</th><th>Primary Audience</th></tr></thead>
+      <tbody>
+        <tr><td>02. BambooHR Customer Insights</td><td>All teams</td></tr>
+        <tr><td>03. Competitive Position</td><td>Marketing, Product</td></tr>
+        <tr><td>04. Marketing Recommendations</td><td>Marketing</td></tr>
+        <tr><td>05. Product Recommendations</td><td>Product</td></tr>
+        <tr><td>06. Sales Recommendations</td><td>Sales, Revenue</td></tr>
+        <tr><td>07. Customer Retention & Risk</td><td>Customer Success</td></tr>
+        <tr><td>08. Methodology</td><td>All Teams</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: THE BAMBOOHR CUSTOMER -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">02</span>
+    <span class="accordion-text">
+      <span class="accordion-title">BambooHR Customer Insights</span>
+      <span class="accordion-subtitle">Who they are, how they bought, how they use the product, and what has changed</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Who the BambooHR Customer Is</h2>
+    <p>The study includes 60 BambooHR users, 60 Gusto users, and 60 Rippling users. Below is the demographic profile of BambooHR's customer base in this sample.</p>
+
+    <h3>Company Size</h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {sortByOrder(bp.company_size.categories, companySizeOrder).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">BambooHR users only (n=60)</p>
+
+    <h3>Industry</h3>
+    <div class="bar-chart">
+      {bp.industry.categories.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">BambooHR users only (n=60)</p>
+
+    <h3>Seniority</h3>
+    <div class="bar-chart">
+      {sortByOrder(bp.seniority.categories, seniorityOrder).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{c.label}</span>
+          <div class="bar-track"><div class="bar-fill ink" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">BambooHR users only (n=60)</p>
+
+    <h3>Tech Stack Composition</h3>
+    <p>BambooHR users run the most fragmented tech stacks of any platform in the study. This is both a weakness (daily friction, integration pain) and a revenue opportunity (native modules to consolidate).</p>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Stack Characteristic</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q4_comparison.map((c: any) => {
+            const vals = [c.bamboo_pct, c.gusto_pct, c.rippling_pct];
+            const maxV = Math.max(...vals);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td class={c.bamboo_pct === maxV && c.bamboo_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.bamboo_pct}%{c.bamboo_sig && <span class="pw-sig">{c.bamboo_sig}</span>}</td>
+                <td class={c.gusto_pct === maxV && c.gusto_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.gusto_pct}%{c.gusto_sig && <span class="pw-sig">{c.gusto_sig}</span>}</td>
+                <td class={c.rippling_pct === maxV && c.rippling_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.rippling_pct}%{c.rippling_sig && <span class="pw-sig">{c.rippling_sig}</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q4. {questionText.Q4} (n=60 per platform)</p>
+    <p class="pw-legend">Superscript letters indicate the value is significantly higher (p &lt; 0.05) than: <strong>B</strong> = BambooHR, <strong>G</strong> = Gusto, <strong>R</strong> = Rippling</p>
+
+    <div class="vuln-callout">
+      <p><strong>70% of BambooHR users describe a fragmented multi-tool stack</strong>, compared to 35% of Gusto and 2% of Rippling. BambooHR users also lead on separate payroll systems, separate benefits systems, and poor system integration. This is BambooHR's most actionable product gap.</p>
+    </div>
+
+    <h2>How They Bought BambooHR</h2>
+
+    <h3>Evaluation Triggers<span class="q-cite">Q7: {questionText.Q7}</span></h3>
+    <p>What prompted BambooHR's current customers to start looking at HR tools.</p>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q7_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q7. BambooHR users only (n=60)</p>
+
+    <h3>Why They Chose BambooHR<span class="q-cite">Q14: {questionText.Q14}</span></h3>
+    <p>The selection factors that drove BambooHR's wins.</p>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q14_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill bamboo-green" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q14. BambooHR users only (n=60)</p>
+
+    <div class="bamboo-callout">
+      <p><strong>BambooHR's clearest differentiator is intuitive UI, cited by 70% of its users as a selection factor.</strong> This is significantly above the 47% overall average (p &lt; 0.05) and nearly 3x Rippling's rate. Price (63%) and structured implementation (45%) are also frequently cited but do not differ significantly from the overall sample, suggesting these are broadly valued across all platforms rather than unique to BambooHR's value proposition.</p>
+    </div>
+
+    <h3>Tools BambooHR Users Considered<span class="q-cite">Q10: {questionText.Q10}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q10_bamboo.filter((c: any) => c.pct >= 5).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill slate" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q10. BambooHR users only, tools considered during evaluation (n=60). Showing 5%+.</p>
+
+    <h2>How They Use BambooHR Today</h2>
+
+    <h3>What BambooHR Does Well<span class="q-cite">Q16: {questionText.Q16}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q16_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill teal" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q16. BambooHR users only (n=60)</p>
+
+    <h3>Where BambooHR Falls Short<span class="q-cite">Q17: {questionText.Q17}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q17_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q17. BambooHR users only (n=60)</p>
+
+    <div class="vuln-callout">
+      <p><strong>BambooHR's shortcomings cluster around integration and reporting.</strong> Payroll/HRIS integration friction stands out: 67% of BambooHR users cite it, significantly above the overall average (p &lt; 0.05). Reporting inadequacy (62%) and poor system integration (50%) are also frequently cited, though at rates comparable to the broader sample.</p>
+    </div>
+
+    <h3>Biggest Single Frustration<span class="q-cite">Q18: {questionText.Q18}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q18_bamboo.filter((c: any) => c.pct >= 5).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${Math.min(c.pct * 1.8, 100)}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${Math.min(c.all_pct * 1.8, 100)}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q18. BambooHR users only (n=60). Showing 5%+.</p>
+
+    <h2>What Has Changed Since They Bought</h2>
+    <h3>Evolving Needs<span class="q-cite">Q19: {questionText.Q19}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q19_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill plum" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q19. BambooHR users only (n=60)</p>
+
+    <div class="insight">
+      <p><strong>BambooHR customers are outgrowing the platform.</strong> Leadership now expects data-driven HR decisions (from Q19 data), compensation needs have emerged, and AI features are on the radar. These represent the next wave of requirements that BambooHR must address to retain its base.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: COMPETITIVE POSITION -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">03</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Competitive Position Analysis</span>
+      <span class="accordion-subtitle">Three-vendor head-to-head, BambooHR vs. Gusto, BambooHR vs. Rippling, and the moat assessment</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Three-Vendor Head-to-Head Scorecard</h2>
+    <p>A side-by-side comparison of where each platform wins and loses, based on what its own users and competitors' users say in the data.</p>
+
+    <h3>Selection Factors: Where Each Wins<span class="q-cite">Q14: {questionText.Q14}</span></h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Selection Factor</th>
+            <th>Overall</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q14_comparison.map((c: any) => {
+            const vals = [c.bamboo_pct, c.gusto_pct, c.rippling_pct];
+            const maxV = Math.max(...vals);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td style="text-align:center;font-weight:600">{c.all_pct}%</td>
+                <td class={c.bamboo_pct === maxV && c.bamboo_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.bamboo_pct}%{c.bamboo_sig && <span class="pw-sig">{c.bamboo_sig}</span>}</td>
+                <td class={c.gusto_pct === maxV && c.gusto_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.gusto_pct}%{c.gusto_sig && <span class="pw-sig">{c.gusto_sig}</span>}</td>
+                <td class={c.rippling_pct === maxV && c.rippling_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.rippling_pct}%{c.rippling_sig && <span class="pw-sig">{c.rippling_sig}</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q14. {questionText.Q14} (n=60 per platform). Highest value per row highlighted.</p>
+    <p class="pw-legend">Superscript letters indicate the value is significantly higher (p &lt; 0.05) than: <strong>B</strong> = BambooHR, <strong>G</strong> = Gusto, <strong>R</strong> = Rippling</p>
+
+    <h3>Shortcomings: Where Each Loses<span class="q-cite">Q17: {questionText.Q17}</span></h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Shortcoming</th>
+            <th>Overall</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q17_comparison.map((c: any) => {
+            const vals = [c.bamboo_pct, c.gusto_pct, c.rippling_pct];
+            const maxV = Math.max(...vals);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td style="text-align:center;font-weight:600">{c.all_pct}%</td>
+                <td class={c.bamboo_pct === maxV && c.bamboo_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.bamboo_pct}%{c.bamboo_sig && <span class="pw-sig">{c.bamboo_sig}</span>}</td>
+                <td class={c.gusto_pct === maxV && c.gusto_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.gusto_pct}%{c.gusto_sig && <span class="pw-sig">{c.gusto_sig}</span>}</td>
+                <td class={c.rippling_pct === maxV && c.rippling_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.rippling_pct}%{c.rippling_sig && <span class="pw-sig">{c.rippling_sig}</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q17. {questionText.Q17} (n=60 per platform). Highest value per row highlighted (worst performer).</p>
+    <p class="pw-legend">Superscript letters indicate the value is significantly higher (p &lt; 0.05) than: <strong>B</strong> = BambooHR, <strong>G</strong> = Gusto, <strong>R</strong> = Rippling</p>
+
+    <h2>Deep-Dive: BambooHR vs. Gusto</h2>
+    <p>Gusto is BambooHR's most direct mid-market competitor. Both attract price-sensitive, ease-focused buyers. The battle between them is fought on the margins of feature adequacy and switching cost.</p>
+
+    <div class="bamboo-callout">
+      <p><strong>Where BambooHR wins vs. Gusto:</strong> Intuitive UI (70% vs. 47%, p &lt; 0.05) and workflow automation (27% vs. 8%, p &lt; 0.05) are statistically significant advantages. Structured implementation is higher (45% vs. 38%) but not a significant difference at this sample size.</p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>Where Gusto wins vs. BambooHR:</strong> Reliable payroll (20% vs. 2%, p &lt; 0.05) is a significant advantage. Competitive pricing (67% vs. 63%) is not significantly different between the two platforms; both attract price-sensitive buyers at similar rates. Gusto's integrated payroll remains a structural advantage for buyers who want fewer tools.</p>
+    </div>
+    <div class="opp-callout">
+      <p><strong>The switching cost opening:</strong> {es.switching_cost_factor.gusto_pct}% of Gusto users cited switching costs as a reason they stayed with their current tool. This is inertia-based retention, not satisfaction. A targeted migration program with implementation support and data transfer assistance could unlock a meaningful share of Gusto's base.</p>
+    </div>
+
+    <h2>Deep-Dive: BambooHR vs. Rippling</h2>
+    <p>Rippling represents a fundamentally different competitive archetype. Where BambooHR wins on simplicity, Rippling wins on breadth. These platforms rarely compete head-to-head for the same buyer.</p>
+
+    <div class="bamboo-callout">
+      <p><strong>Where BambooHR wins vs. Rippling:</strong> Intuitive UI (70% vs. 25%, p &lt; 0.05) and competitive pricing (63% vs. 33%, p &lt; 0.05) are both statistically significant. Rippling users who rejected BambooHR cited capability gaps, not price or UX. BambooHR's advantage is with buyers who explicitly do not want a heavyweight platform.</p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>Where Rippling wins vs. BambooHR:</strong> Unified platform (73% vs. 2%, p &lt; 0.05), IT device management (75% vs. 0%, p &lt; 0.05), and 2% fragmented stacks vs. BambooHR's 70%. These are all statistically significant. Rippling users experience dramatically less integration friction because they use one system.</p>
+    </div>
+
+    <h3>Why Others Rejected BambooHR<span class="q-cite">Q15: {questionText.Q15}</span></h3>
+    <p>Of the 180 participants, {d.n_bamboo_rejectors} considered BambooHR during their evaluation but ultimately chose a different platform. Among those {d.n_bamboo_rejectors} rejectors:</p>
+    <div class="bar-chart">
+      {d.q15_bamboo_specific.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q15. Vendor-specific rejection reasons for BambooHR among participants who considered but rejected it (n={d.n_bamboo_rejectors}).</p>
+
+    <div class="insight">
+      <p><strong>"Capability gap" is the primary reason buyers reject BambooHR.</strong> 65% of participants who considered but rejected BambooHR cited its capability gap as the reason. This is consistent with the finding that BambooHR's narrower feature set limits its addressable market at higher company sizes. Implementation complexity (18%) and recruiting module inadequacy (12%) are distant secondary factors.</p>
+    </div>
+
+    <h2>The BambooHR Moat Assessment</h2>
+    <table class="rec-table">
+      <thead><tr><th>Dimension</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>UI/UX moat</td><td>Strong and defensible. 70% concentration, nearly 3x Rippling. This is genuine brand equity built over years.</td></tr>
+        <tr><td>Price position</td><td>Valued but not a differentiator. 63% cite competitive pricing, but this is not significantly different from the 54% overall average. Pricing is broadly important across all platforms.</td></tr>
+        <tr><td>Implementation experience</td><td>Not a differentiator. 45% cite structured implementation, but this is close to the overall average (43%) and not statistically significant. Implementation quality is valued across all platforms, not unique to BambooHR.</td></tr>
+        <tr><td>Reporting capability</td><td>Not defensible. 85% frustrated, 62% say it falls short. This is the most urgent gap to close.</td></tr>
+        <tr><td>Integration / stack</td><td>Not defensible. 70% fragmented stacks. This is BambooHR's biggest structural vulnerability.</td></tr>
+        <tr><td>Scalability ceiling</td><td>Present. BambooHR's base skews to smaller companies in the sample. As companies grow past 500 employees, the platform becomes less competitive.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: MARKETING RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">04</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Marketing Recommendations</span>
+      <span class="accordion-subtitle">Who to target, how to position, trigger-based targeting, and competitive messaging</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Who BambooHR Should Target</h2>
+    <p>Based on the highest-fit cohorts in the data, BambooHR's ideal customer profile is:</p>
+    <table class="rec-table">
+      <thead><tr><th>Dimension</th><th>Ideal Customer Profile</th></tr></thead>
+      <tbody>
+        <tr><td>Company size</td><td>50 to 500 employees. BambooHR's strengths (UI, price, implementation) resonate most strongly in this range. Above 500, capability gaps become deal-breakers.</td></tr>
+        <tr><td>Industry</td><td>Technology, Professional Services, Financial Services. These industries over-index among BambooHR users and value ease-of-use over deep industry-specific compliance features.</td></tr>
+        <tr><td>Buyer archetype</td><td>Ease-first buyers who prioritize UI simplicity, competitive pricing, and onboarding speed over platform breadth. These buyers chose BambooHR for its intuitiveness (70%) and pricing (63%).</td></tr>
+        <tr><td>Evaluation trigger</td><td>Companies experiencing manual process burden (69% trigger) or growth outpacing current tools. Target firms showing growth signals: funding rounds, new HR hires, headcount jumps.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Positioning Recommendation</h2>
+    <div class="bamboo-callout">
+      <p><strong>Lead with "intuitive HR for growing companies."</strong> The data supports a positioning that anchors on BambooHR's genuine UI advantage (70%) while addressing the growth narrative. Do not position on feature parity with Rippling or platform breadth. The market already has that message. BambooHR wins by being the tool that HR leaders actually enjoy using.</p>
+    </div>
+
+    <div class="vuln-callout">
+      <p><strong>Messaging that backfires:</strong> Do not claim "all-in-one" or "unified platform." BambooHR's own users report 70% fragmented stacks. Claiming platform unification will trigger credibility backlash from anyone who has used BambooHR or talked to a current user. Instead, acknowledge the integration challenge and frame it as "we work well with the tools you already use."</p>
+    </div>
+
+    <h2>Trigger-Based Targeting</h2>
+    <p>Use these signals to identify companies entering the evaluation window.</p>
+    <table class="rec-table">
+      <thead><tr><th>Trigger Signal</th><th>Prevalence</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Manual process burden</td><td>69% of all evaluations</td><td>Target growing companies with 50-100 employees making their first dedicated HR hire. Job postings for "HR Manager" or "People Ops" roles are the signal.</td></tr>
+        <tr><td>New HR leadership</td><td>29% of evaluations</td><td>Monitor LinkedIn for new HR Director/VP hires at target companies. New leaders evaluate tools within 3-6 months of starting.</td></tr>
+        <tr><td>Contract renewal</td><td>28% of evaluations</td><td>Most HR tools have annual contracts. Time outreach to reach prospects 60-90 days before likely renewal dates.</td></tr>
+        <tr><td>Growth outpacing tools</td><td>48% of evaluations</td><td>Target companies that have recently received Series A/B funding or announced significant headcount growth.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Competitive Messaging Matrix</h2>
+    <p>How to position against the competitors BambooHR encounters most frequently in deals.</p>
+    <table>
+      <thead><tr><th>Competitor</th><th>What buyers say about them (Q15)</th><th>BambooHR's angle</th><th>What to avoid</th></tr></thead>
+      <tbody>
+        <tr><td>Gusto</td><td>Capability gap, outgrown the platform</td><td>"You've outgrown Gusto. BambooHR gives you the features you need without the complexity you don't."</td><td>Don't attack Gusto's payroll (it's strong)</td></tr>
+        <tr><td>Rippling</td><td>Overbuilt, too complex, priced too high</td><td>"You don't need enterprise complexity. BambooHR is built for how mid-market teams actually work."</td><td>Don't compete on feature breadth</td></tr>
+        <tr><td>ADP</td><td>Overbuilt, aggressive sales, outdated UI</td><td>"Modern HR deserves a modern tool. BambooHR is the ADP alternative that doesn't feel like it was built in 2005."</td><td>Don't underestimate ADP's payroll brand</td></tr>
+        <tr><td>Paylocity/Paycom</td><td>Implementation complexity, overbuilt</td><td>"Simple to set up, simple to use. Your team will be running in weeks, not months."</td><td>Don't engage in feature-by-feature comparison</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Content Pillar Recommendations</h2>
+    <table class="rec-table">
+      <thead><tr><th>Pillar</th><th>Data Anchor</th><th>Content Idea</th></tr></thead>
+      <tbody>
+        <tr><td>Reporting & analytics</td><td>85% frustration (Q9)</td><td>"Why your HR reports fail you" content series. Position BambooHR's reporting roadmap investments as the solution to the #1 frustration in the market.</td></tr>
+        <tr><td>Mid-market fit</td><td>58% say platforms are mis-sized (Q24)</td><td>"Built for the messy middle" campaign. Address the gap between small-business tools and enterprise platforms head-on.</td></tr>
+        <tr><td>Integration simplicity</td><td>41% frustrated with integration (Q9)</td><td>"Your HR stack, simplified" content. Honest messaging about working with the tools you have while reducing friction.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: PRODUCT RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">05</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Product Recommendations</span>
+      <span class="accordion-subtitle">Unmet needs, feature priority ranking, WTP analysis, scalability, AI, and integration</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>The Unmet Needs Landscape</h2>
+    <p>BambooHR's own customers report the following product gaps. These are ranked by prevalence among BambooHR users specifically.</p>
+
+    <h3>Top Product Gaps Among BambooHR Customers<span class="q-cite">Q17: {questionText.Q17}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q17_bamboo.filter((c: any) => c.pct >= 7).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q17. BambooHR users only (n=60). Showing 7%+.</p>
+
+    <div class="insight">
+      <p><strong>Reporting is the universal unmet need.</strong> It appears in BambooHR's frustrations (Q9: 85%), shortcomings (Q17: 62%), biggest frustrations (Q18: 17% + 15% strategic role impact), and broader challenges (Q24). Solving reporting is the single highest-impact product investment BambooHR can make.</p>
+    </div>
+
+    <h2>Feature Priority Ranking</h2>
+    <p>Based on what BambooHR's customers and prospects cite as decision-driving vs. table stakes vs. pain points.</p>
+    <table class="rec-table">
+      <thead><tr><th>Priority</th><th>Feature Area</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Must-have (table stakes)</td><td>Native payroll, multi-state compliance, employee self-service</td><td>Q11: 48% require native payroll, 41% require multi-state compliance, 34% require employee self-service</td></tr>
+        <tr><td>Decision-driver</td><td>Intuitive UI (statistically significant differentiator), competitive pricing, structured implementation</td><td>Q14: 70% chose for UI, significantly above the 47% average. Price (63%) and implementation (45%) are broadly valued but not statistically different from the overall sample.</td></tr>
+        <tr><td>Differentiator candidate</td><td>Reporting & analytics, workflow automation</td><td>Q9: 85% frustrated with reporting. Q14: 27% chose for automation. High pain + emerging selection factor = premium opportunity.</td></tr>
+        <tr><td>Emerging need</td><td>Performance management, compensation management</td><td>Q17: 45% cite perf mgmt gap, 25% cite comp gap. Q19: 32% say compensation needs have emerged since they bought.</td></tr>
+        <tr><td>Monitor</td><td>AI features, platform consolidation</td><td>Q19: AI on radar for a portion of BambooHR users. Not yet a selection driver but moving toward table stakes.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Willingness-to-Pay Analysis</h2>
+    <p>We asked each participant how much they would pay annually to solve their biggest frustrations (Q22). On average, <strong>BambooHR customers would pay $18,714</strong>, <strong>Gusto customers $7,345</strong>, and <strong>Rippling customers $16,589</strong>. But those averages mask important differences in what drives that willingness to pay. Because participants cited multiple frustrations but gave one WTP figure, we ran a linear regression for each vendor to isolate how each frustration independently moves WTP up or down from the baseline. Positive coefficients mean that frustration drives buyers to pay more. Negative coefficients mean it is a commodity complaint that does not increase willingness to pay. Filled dots are statistically significant (p &lt; 0.05).<br/><span class="q-cite">Q18: {questionText.Q18}</span><br/><span class="q-cite">Q22: {questionText.Q22}</span></p>
+    <p class="avg-legend" style="margin-top:-4px;font-size:11px;color:var(--muted);">Note: "Reporting Inadequacy" and "Reporting Gaps Undermining Strategic Role" were combined into a single "Reporting Gaps" predictor due to high collinearity (r = 0.94). Frustrations cited by fewer than 5 participants are excluded.</p>
+
+    {[
+      { title: "BambooHR Customers", reg: d.wtp_reg_bamboo, color: "#73C41D", bgColor: "rgba(115, 196, 29, 0.10)", yMin: -10000, yMax: 2000 },
+      { title: "Gusto Customers", reg: d.wtp_reg_gusto, color: "#3B7DDD", bgColor: "rgba(59, 125, 221, 0.10)", yMin: -4000, yMax: 10000 },
+      { title: "Rippling Customers", reg: d.wtp_reg_rippling, color: "#9B59B6", bgColor: "rgba(155, 89, 182, 0.10)", yMin: -4000, yMax: 8000 },
+    ].map((chart: any) => {
+      const minX = 0;
+      const maxX = 65;
+      const minY = chart.yMin;
+      const maxY = chart.yMax;
+      const pad = { top: 30, right: 40, bottom: 55, left: 80 };
+      const w = 780;
+      const h = 440;
+      const plotW = w - pad.left - pad.right;
+      const plotH = h - pad.top - pad.bottom;
+      const sx = (v: number) => pad.left + ((v - minX) / (maxX - minX)) * plotW;
+      const sy = (v: number) => pad.top + plotH - ((v - minY) / (maxY - minY)) * plotH;
+      const xTicks = [0, 10, 20, 30, 40, 50, 60];
+      // Build Y ticks dynamically based on range
+      const yStep = 2000;
+      const yTicks: number[] = [];
+      for (let t = Math.ceil(minY / yStep) * yStep; t <= maxY; t += yStep) { yTicks.push(t); }
+      return (
+        <Fragment>
+          <h3>{chart.title} (n={chart.reg.n}, R&sup2; = {chart.reg.r2})</h3>
+          <p style="margin:-4px 0 8px;font-size:13px;color:var(--muted);">Average WTP: <strong style="color:var(--ink);font-size:15px;">${chart.reg.intercept.toLocaleString()}</strong> per year. The chart below shows how each frustration moves that baseline up or down.</p>
+          <div class="scatter-wrap">
+            <svg viewBox={`0 0 ${w} ${h}`} class="scatter-svg">
+              {/* Upper half highlight (positive coef region) */}
+              <rect x={sx(20)} y={sy(maxY)} width={sx(maxX) - sx(20)} height={sy(0) - sy(maxY)} fill={chart.bgColor} />
+              {/* Grid lines */}
+              {xTicks.map((t: number) => <line x1={sx(t)} y1={sy(minY)} x2={sx(t)} y2={sy(maxY)} stroke="#e0ddd5" stroke-width="0.5" />)}
+              {yTicks.map((t: number) => <line x1={sx(minX)} y1={sy(t)} x2={sx(maxX)} y2={sy(t)} stroke="#e0ddd5" stroke-width="0.5" />)}
+              {/* Zero line (prominent) */}
+              <line x1={sx(minX)} y1={sy(0)} x2={sx(maxX)} y2={sy(0)} stroke="#0B1F3A" stroke-width="1.5" stroke-dasharray="6,3" />
+              <text x={sx(maxX) + 4} y={sy(0) + 4} font-size="10" fill="#6B6B6B">$0</text>
+              {/* Quadrant labels */}
+              <text x={sx(42)} y={sy(maxY) + 14} text-anchor="middle" font-size="12" font-weight="600" fill={chart.color}>High-Value Opportunities</text>
+              <text x={sx(42)} y={sy(minY) - 6} text-anchor="middle" font-size="11" font-weight="500" fill="#6B6B6B">Commodity Complaints (don't move budget)</text>
+              {/* X-axis tick labels */}
+              {xTicks.map((t: number) => <text x={sx(t)} y={sy(minY) + 16} text-anchor="middle" font-size="11" fill="#6B6B6B">{t}%</text>)}
+              {/* X-axis title */}
+              <text x={sx((minX + maxX) / 2)} y={h - 6} text-anchor="middle" font-size="16" font-weight="600" fill="#0B1F3A">% of Buyers Citing Frustration</text>
+              {/* Y-axis tick labels */}
+              {yTicks.map((t: number) => <text x={pad.left - 8} y={sy(t) + 4} text-anchor="end" font-size="11" fill="#6B6B6B">{t >= 0 ? '+' : ''}${(t / 1000).toFixed(0)}K</text>)}
+              {/* Y-axis title */}
+              <text x="18" y={sy((minY + maxY) / 2)} text-anchor="middle" font-size="16" font-weight="600" fill="#0B1F3A" transform={`rotate(-90, 18, ${sy((minY + maxY) / 2)})`}>Marginal WTP Contribution</text>
+              {/* Axes */}
+              <line x1={sx(minX)} y1={sy(minY)} x2={sx(maxX)} y2={sy(minY)} stroke="#0B1F3A" stroke-width="1" />
+              <line x1={sx(minX)} y1={sy(minY)} x2={sx(minX)} y2={sy(maxY)} stroke="#0B1F3A" stroke-width="1" />
+              {/* Data points (no error bars) */}
+              {chart.reg.points.map((pt: any) => {
+                const cx = sx(Math.min(pt.prevalence, maxX));
+                const coefClamped = Math.max(minY, Math.min(pt.coef, maxY));
+                const cy = sy(coefClamped);
+                const isPositive = pt.coef > 0;
+                const dotColor = pt.sig ? (isPositive ? chart.color : "#B8341B") : "#B0ADA5";
+                const labelAbove = pt.coef >= 0;
+                return (
+                  <Fragment>
+                    <circle cx={cx} cy={cy} r={pt.sig ? 8 : 6} fill={dotColor} opacity={pt.sig ? 0.85 : 0.4} />
+                    <text x={cx + 12} y={labelAbove ? cy - 8 : cy + 16} font-size={pt.sig ? "11" : "10"} fill={pt.sig ? "#0B1F3A" : "#6B6B6B"} font-weight={pt.sig ? "600" : "400"}>{pt.label}</text>
+                    <text x={cx + 12} y={labelAbove ? cy + 4 : cy + 28} font-size="9" fill={pt.sig ? "#0B1F3A" : "#999"}>{pt.coef >= 0 ? '+' : ''}${(pt.coef / 1000).toFixed(1)}K{pt.sig ? '*' : ''}</text>
+                  </Fragment>
+                );
+              })}
+            </svg>
+          </div>
+        </Fragment>
+      );
+    })}
+    <p class="source-note">Source: OLS regression of Q22 (willingness to pay) on Q18 frustration flags. n=60 per platform. *p &lt; 0.05.</p>
+
+    <div class="opp-callout">
+      <p><strong>The frustrations that drive WTP differ sharply by vendor.</strong> BambooHR customers start with the highest baseline WTP ($18.7K), but their most common frustrations (payroll friction, benefits admin) are associated with lower WTP, suggesting these are table-stakes expectations. Gusto customers start low ($7.3K) but reporting gaps (+$6.2K, sig) and onboarding pain (+$6.9K, sig) drive significant WTP increases, representing genuine premium opportunities. Rippling customers have a high baseline ($16.6K) but no individual frustration significantly moves WTP, consistent with a customer base whose complaints are more diffuse.</p>
+    </div>
+
+    <h2>Integration Strategy</h2>
+    <p>Given BambooHR's 70% fragmented-stack customer base, integration is not a nice-to-have. It is the defensive investment that prevents the base from migrating to Rippling.</p>
+    <table class="rec-table">
+      <thead><tr><th>Priority</th><th>Integration Area</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Payroll (native or deep integration)</td><td>67% cite payroll/HRIS friction as a shortcoming (Q17). 52% name it their biggest frustration (Q18). This is the #1 integration priority.</td></tr>
+        <tr><td>2</td><td>Benefits administration</td><td>20% of BambooHR users cite benefits friction (Q17). Separate benefits systems are common in the fragmented stack.</td></tr>
+        <tr><td>3</td><td>Recruiting / ATS</td><td>Recruiting module inadequacy appears in Q17 and Q15 rejections. A native or deeply integrated ATS would close a competitive gap.</td></tr>
+        <tr><td>4</td><td>Performance management</td><td>45% of BambooHR users cite performance management as a gap (Q17). This is an emerging module opportunity.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: SALES RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">06</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Sales Recommendations</span>
+      <span class="accordion-subtitle">Buying committee, evaluation criteria, demo strategy, battle cards, and the Gusto displacement play</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>The Buying Committee Playbook</h2>
+
+    <h3>Decision Stakeholders Among BambooHR Customers<span class="q-cite">Q12: {questionText.Q12}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q12_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill ink" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q12. BambooHR users only (n=60)</p>
+
+    <div class="insight">
+      <p><strong>HR leads, but the CFO decides.</strong> The HR leader runs the evaluation (Q12 participant as primary evaluator), but the CFO holds financial approval authority in the majority of deals. Sales must multithread: the HR evaluator needs workflow demos, while the CFO needs ROI framing and total cost of ownership.</p>
+    </div>
+
+    <h2>The Evaluation Criteria Playbook</h2>
+
+    <h3>Minimum Criteria: BambooHR Customers vs. Market<span class="q-cite">Q11: {questionText.Q11}</span></h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Minimum Criterion</th>
+            <th>Overall</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q11_comparison.map((c: any) => {
+            const vals = [c.bamboo_pct, c.gusto_pct, c.rippling_pct];
+            const maxV = Math.max(...vals);
+            return (
+              <tr>
+                <td style="text-align:left">{formatLabel(c.label)}</td>
+                <td style="text-align:center;font-weight:600">{c.all_pct}%</td>
+                <td class={c.bamboo_pct === maxV && c.bamboo_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.bamboo_pct}%{c.bamboo_sig && <span class="pw-sig">{c.bamboo_sig}</span>}</td>
+                <td class={c.gusto_pct === maxV && c.gusto_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.gusto_pct}%{c.gusto_sig && <span class="pw-sig">{c.gusto_sig}</span>}</td>
+                <td class={c.rippling_pct === maxV && c.rippling_pct > 0 ? 'highlight' : ''} style="text-align:center">{c.rippling_pct}%{c.rippling_sig && <span class="pw-sig">{c.rippling_sig}</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q11. {questionText.Q11} (n=60 per platform)</p>
+    <p class="pw-legend">Superscript letters indicate the value is significantly higher (p &lt; 0.05) than: <strong>B</strong> = BambooHR, <strong>G</strong> = Gusto, <strong>R</strong> = Rippling</p>
+
+    <h2>The Demo and Sales Motion</h2>
+    <div class="insight">
+      <p><strong>22% of overall respondents cited the demo experience as a selection factor (Q14).</strong> Among BambooHR users specifically, 13% cited demo experience. The demo is a conversion point, not a formality. BambooHR's UI advantage should be showcased through a hands-on, workflow-focused demo that mirrors the buyer's actual daily tasks.</p>
+    </div>
+
+    <table class="rec-table">
+      <thead><tr><th>Demo Element</th><th>Recommendation</th></tr></thead>
+      <tbody>
+        <tr><td>Opening</td><td>Start with the buyer's top frustration (likely reporting or integration). Show how BambooHR addresses it within the first 5 minutes.</td></tr>
+        <tr><td>Core walkthrough</td><td>Focus on the UI advantage. Let the buyer click through the interface. The 70% UI selection rate means this is where BambooHR wins deals.</td></tr>
+        <tr><td>Integration</td><td>Be honest about integration constraints. Show existing integrations and the roadmap. Buyers who discover fragmentation post-sale become churn risks.</td></tr>
+        <tr><td>Close</td><td>Address switching costs proactively. Outline the implementation timeline and support. Implementation quality matters broadly across platforms (43% overall), so a clear plan helps BambooHR match or exceed expectations.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>The Gusto Displacement Playbook</h2>
+    <p>The 43% switching-cost retention finding among Gusto users represents BambooHR's single largest near-term revenue opportunity from competitive displacement.</p>
+
+    <div class="opp-callout">
+      <p><strong>The Gusto customers most likely to be persuadable:</strong> Companies that have grown past 100 employees while on Gusto, are experiencing capability gaps (especially in reporting and compliance), and whose HR leader has been in role less than 12 months (new leaders evaluate tools). The trigger signal is a new HR hire at a company using Gusto.</p>
+    </div>
+
+    <table class="rec-table">
+      <thead><tr><th>Element</th><th>Play</th></tr></thead>
+      <tbody>
+        <tr><td>Trigger</td><td>New HR leader hire, funding round, or headcount jump past 100 employees at a known Gusto customer.</td></tr>
+        <tr><td>Opening message</td><td>"Companies at your stage often find they've outgrown their initial HR tool. We help growing teams make that transition without disruption."</td></tr>
+        <tr><td>Objection: switching costs</td><td>Offer a dedicated migration specialist, a data transfer guarantee, and a 90-day parallel-run option. Name the switching-cost barrier directly and neutralize it.</td></tr>
+        <tr><td>Pricing</td><td>Consider a "Gusto migration" promotional pricing tier for the first year to offset perceived switching costs. The LTV of a converted Gusto customer justifies a first-year discount.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: CUSTOMER RETENTION & RISK -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">07</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Customer Retention &amp; Risk</span>
+      <span class="accordion-subtitle">Satisfaction drivers, dissatisfaction signals, switch risk, and retention plays</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Satisfaction Drivers for BambooHR Customers</h2>
+    <p>What BambooHR's current customers say the platform does well.<br/><span class="q-cite">Q16: {questionText.Q16}</span></p>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q16_bamboo.filter((c: any) => c.pct >= 5).map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill teal" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q16. BambooHR users only (n=60). Showing 5%+.</p>
+
+    <h2>Dissatisfaction Signals</h2>
+    <p>The frustrations and shortcomings that erode satisfaction among BambooHR's base.</p>
+
+    <h3>Current Frustrations<span class="q-cite">Q17: {questionText.Q17}</span></h3>
+    <p class="avg-legend"><span class="avg-legend-line"></span> Dashed line = overall average (all 180 participants) &nbsp;|&nbsp; <span class="sig-mark">*</span> = statistically significant difference (p &lt; 0.05)</p>
+    <div class="bar-chart">
+      {d.q17_bamboo.map((c: any) => (
+        <div class="bar-row">
+          <span class="bar-label">{formatLabel(c.label)}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${c.pct}%`}><span class="bar-val">{c.pct}%{c.sig && <span class="sig-mark">*</span>}</span></div>{c.all_pct != null && <div class="bar-avg" style={`left:${c.all_pct}%`}></div>}</div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Source: Q17. BambooHR users only (n=60).</p>
+
+    <div class="vuln-callout">
+      <p><strong>BambooHR's shortcomings cluster around integration and reporting.</strong> Payroll/HRIS integration friction stands out: 67% of BambooHR users cite it as a shortcoming, significantly above the overall average (p &lt; 0.05). Reporting inadequacy (62%) and poor system integration (50%) round out the top three.</p>
+    </div>
+
+    <h2>Switch Risk Profile</h2>
+
+    <h3>Likelihood to Re-Evaluate Within 6 Months<span class="q-cite">Q23: {questionText.Q23}</span></h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Likelihood</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q23_comparison_pw.map((row: any) => {
+            const v1 = row.bamboo_pct;
+            const v2 = row.gusto_pct;
+            const v3 = row.rippling_pct;
+            const maxV = Math.max(v1, v2, v3);
+            return (
+              <tr>
+                <td style="text-align:left">{row.label}</td>
+                <td class={v1 === maxV && v1 > 0 ? 'highlight' : ''} style="text-align:center">{v1}%{row.bamboo_sig && <span class="pw-sig">{row.bamboo_sig}</span>}</td>
+                <td class={v2 === maxV && v2 > 0 ? 'highlight' : ''} style="text-align:center">{v2}%{row.gusto_sig && <span class="pw-sig">{row.gusto_sig}</span>}</td>
+                <td class={v3 === maxV && v3 > 0 ? 'highlight' : ''} style="text-align:center">{v3}%{row.rippling_sig && <span class="pw-sig">{row.rippling_sig}</span>}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q23. {questionText.Q23} (n=60 per platform)</p>
+    <p class="pw-legend">Superscript letters indicate the value is significantly higher (p &lt; 0.05) than: <strong>B</strong> = BambooHR, <strong>G</strong> = Gusto, <strong>R</strong> = Rippling</p>
+
+    <div class="vuln-callout">
+      <p><strong>BambooHR and Gusto users show significantly higher switching intent than Rippling users.</strong> 45% of both BambooHR and Gusto users say they are somewhat likely to re-evaluate within 6 months, compared to just 3% of Rippling users (p &lt; 0.05). Conversely, 42% of Rippling users say they are very unlikely to switch, significantly higher than BambooHR (5%) or Gusto (10%). When combined with the specific frustrations driving this intent (payroll friction, reporting gaps, integration pain), BambooHR has a clear picture of what to fix to prevent churn.</p>
+    </div>
+
+    <h2>Retention Play Recommendations</h2>
+    <table class="rec-table">
+      <thead><tr><th>Risk Signal</th><th>CS Motion</th></tr></thead>
+      <tbody>
+        <tr><td>Payroll/HRIS integration friction (67%)</td><td>Proactive outreach to accounts using BambooHR + a separate payroll provider. Offer integration audit and configuration support. If native payroll is on the roadmap, share timeline with at-risk accounts early.</td></tr>
+        <tr><td>Reporting inadequacy (62%)</td><td>Offer early access to any reporting improvements. Provide custom report templates. Assign a CS rep to help configure existing reporting features that may be underutilized.</td></tr>
+        <tr><td>Performance management gap (45%)</td><td>If performance management is on the roadmap, share beta access. If not, partner with a best-in-class performance tool and offer a bundled integration.</td></tr>
+        <tr><td>Switching intent (45% somewhat likely)</td><td>Implement a quarterly "health check" program for accounts showing engagement decline. Address frustrations before they become RFPs.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Value Perception: BambooHR vs. Competitors<span class="q-cite">Q21: {questionText.Q21}</span></h3>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Value Perception</th>
+            <th>BambooHR</th>
+            <th>Gusto</th>
+            <th>Rippling</th>
+          </tr>
+        </thead>
+        <tbody>
+          {d.q21_comparison.bamboo.categories.map((cat: any) => {
+            const gCat = d.q21_comparison.gusto.categories.find((c: any) => c.label === cat.label);
+            const rCat = d.q21_comparison.rippling.categories.find((c: any) => c.label === cat.label);
+            return (
+              <tr>
+                <td style="text-align:left">{cat.label}</td>
+                <td style="text-align:center">{cat.pct}%</td>
+                <td style="text-align:center">{gCat?.pct ?? 0}%</td>
+                <td style="text-align:center">{rCat?.pct ?? 0}%</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Source: Q21. {questionText.Q21} (n=60 per platform)</p>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: METHODOLOGY -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <span class="accordion-num">08</span>
+    <span class="accordion-text">
+      <span class="accordion-title">Methodology</span>
+      <span class="accordion-subtitle">Sample design, interview structure, coding process, and analytical approach</span>
+    </span>
+    <span class="accordion-icon">+</span>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Sample Design</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">180</div>
+        <div class="stat-label">Participants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24</div>
+        <div class="stat-label">Questions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">153</div>
+        <div class="stat-label">Thematic Codes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Platforms (60 each)</div>
+      </div>
+    </div>
+
+    <p>The sample included 180 HR, People Operations, and Talent Acquisition leaders at companies with 50 to 1,000 employees. Participants were evenly distributed across three current platforms (BambooHR, Gusto, Rippling) and four company-size tiers to enable both platform-level and size-level comparisons.</p>
+
+    <table>
+      <thead><tr><th>Dimension</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Company size tiers</td><td>50-100, 101-250, 251-500, 501-1,000 employees</td></tr>
+        <tr><td>Industries</td><td>Technology, Healthcare, Professional Services, Financial Services, Retail, Education, Manufacturing</td></tr>
+        <tr><td>Seniority</td><td>Manager through C-suite, with concentration at Manager and Director levels</td></tr>
+        <tr><td>Interview format</td><td>Semi-structured qualitative interviews, 24 questions covering the full purchase journey</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Coding Process</h2>
+    <p>Interview transcripts were coded using a dual-coder AI-assisted methodology with human oversight. Two independent coding agents classified each response against a 153-code codebook developed through a multi-pass discovery process (extraction, clustering, validation, dimension architecture). An arbiter resolved disagreements. Inter-rater reliability was assessed using Cohen's weighted Kappa.</p>
+
+    <h3>Inter-Rater Reliability</h3>
+    <div class="stat-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="stat-card">
+        <div class="stat-num">0.935</div>
+        <div class="stat-label">Overall Weighted Kappa</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0.761</div>
+        <div class="stat-label">Lowest Per-Code Kappa</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">82/82</div>
+        <div class="stat-label">Codes Above 0.65 Threshold</div>
+      </div>
+    </div>
+
+    <p>The overall weighted Kappa of <strong>0.935</strong> falls in the "almost perfect" agreement range. By published standards, a Kappa above 0.80 is considered excellent for qualitative content analysis. A stricter threshold of 0.67 is sometimes applied in exploratory studies. Every individual code in this study exceeds that threshold, with the lowest per-code Kappa at 0.761 (Time Savings Enabling Strategic Work). The minimum acceptance threshold for this study was set at 0.65, and all 82 evaluated codes passed.</p>
+
+    <div class="bamboo-callout">
+      <p><strong>What this means for data quality:</strong> The high reliability scores indicate that the coding was applied consistently across all 180 transcripts. The data underlying every chart and cross-tab in this report reflects systematic, reproducible classification, not subjective interpretation. Findings built on these codes can be treated with confidence.</p>
+    </div>
+
+    <h2>Analytical Approach for This Report</h2>
+    <p>All statistics in this report are derived from the coded interview data (n=180). BambooHR-specific analyses filter to the 60 BambooHR users in the sample. Cross-platform comparisons use all 180 participants. Percentages represent the proportion of the relevant sample that was coded as positive for a given thematic code or category.</p>
+
+    <p>This report was produced by BuyerVoice LLC using proprietary qualitative research methods and AI-assisted analytical tools.</p>
+
+  </div>
+</details>
+
+</div> <!-- end container -->
+
+<div class="footer-print">
+  <p>BuyerVoice LLC &bull; BambooHR Strategic Review &bull; April 2026 &bull; Confidential</p>
+</div>
+
+<!-- Verbatim drill-down data -->
+<Fragment set:html={vdScript} />
+<script is:inline define:vars={{ bambooRejectorPids: d.bamboo_rejector_pids, bambooRejectorCodePids: d.bamboo_rejector_code_pids }}>
+  window.__BAMBOO_REJECTOR_PIDS = bambooRejectorPids;
+  window.__BAMBOO_REJECTOR_CODE_PIDS = bambooRejectorCodePids;
+</script>
+
+<!-- Verbatim modal -->
+<div class="vb-overlay" id="vbOverlay">
+  <div class="vb-dialog">
+    <button class="vb-close" id="vbClose">&times;</button>
+    <div class="vb-header">
+      <h3 id="vbTitle"></h3>
+      <p id="vbSubtitle"></p>
+    </div>
+    <div class="vb-body" id="vbBody"></div>
+  </div>
+</div>
+
+<script is:inline>
+(function(){
+  var VD = window.__VD;
+  var VQ = window.__VQ;
+  if (!VD || !VQ) return;
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function annotateCharts() {
+    var sourceNotes = document.querySelectorAll('.source-note');
+    sourceNotes.forEach(function(note) {
+      var m = note.textContent.match(/Source:\s*Q(\d+)\./);
+      if (!m) return;
+      var qid = 'Q' + m[1];
+
+      var thematicQs = ['Q4','Q7','Q8','Q9','Q11','Q12','Q14','Q15','Q16','Q17','Q18','Q19','Q24'];
+      var catQs = ['Q1','Q10','Q13','Q21'];
+
+      var isThematic = thematicQs.indexOf(qid) !== -1;
+      var isCat = catQs.indexOf(qid) !== -1;
+      if (!isThematic && !isCat) return;
+
+      var barChart = note.previousElementSibling;
+      while (barChart && !barChart.classList.contains('bar-chart')) {
+        barChart = barChart.previousElementSibling;
+      }
+      if (!barChart) return;
+
+      // Skip if this bar chart was already annotated by a closer source note
+      if (barChart.getAttribute('data-annotated')) return;
+      barChart.setAttribute('data-annotated', 'true');
+
+      // Detect tool filter from source note text (e.g., "BambooHR users only")
+      var toolFilter = '';
+      var pidFilter = '';
+      var noteText = note.textContent || '';
+      if (noteText.indexOf('considered but rejected') !== -1) pidFilter = 'bamboo_rejectors';
+      else if (noteText.indexOf('BambooHR users only') !== -1) toolFilter = 'BambooHR';
+      else if (noteText.indexOf('Gusto users only') !== -1) toolFilter = 'Gusto';
+      else if (noteText.indexOf('Rippling users only') !== -1) toolFilter = 'Rippling';
+
+      var rows = barChart.querySelectorAll('.bar-row');
+      rows.forEach(function(row) {
+        var labelEl = row.querySelector('.bar-label');
+        if (!labelEl) return;
+        var label = labelEl.textContent.trim();
+        row.setAttribute('data-drilldown', 'true');
+        row.setAttribute('data-q', qid);
+        row.setAttribute('data-code', label);
+        row.setAttribute('data-type', isThematic ? 'code' : 'cat');
+        if (toolFilter) row.setAttribute('data-tool', toolFilter);
+        if (pidFilter) row.setAttribute('data-pid-filter', pidFilter);
+      });
+    });
+  }
+
+  annotateCharts();
+
+  var overlay = document.getElementById('vbOverlay');
+  var titleEl = document.getElementById('vbTitle');
+  var subtitleEl = document.getElementById('vbSubtitle');
+  var bodyEl = document.getElementById('vbBody');
+  var closeBtn = document.getElementById('vbClose');
+
+  var BAMBOO_REJECTOR_PIDS = window.__BAMBOO_REJECTOR_PIDS || [];
+  var BAMBOO_REJECTOR_CODE_PIDS = window.__BAMBOO_REJECTOR_CODE_PIDS || {};
+
+  function normCode(s) {
+    return s.toLowerCase().replace(/-/g, ' ').replace(/_/g, ' ');
+  }
+
+  function openModal(qid, codeName, matchType, toolFilter, pidFilterName) {
+    var normName = normCode(codeName);
+    var allowedPids = null;
+    if (pidFilterName === 'bamboo_rejectors') {
+      // Use per-code PID list: only participants who rejected BambooHR for THIS specific reason
+      allowedPids = BAMBOO_REJECTOR_CODE_PIDS[normName] || BAMBOO_REJECTOR_PIDS;
+    }
+    var matches = [];
+    VD.forEach(function(p) {
+      // Apply PID filter if specified (e.g., BambooHR rejectors only)
+      if (allowedPids && allowedPids.indexOf(p.pid) === -1) return;
+      // Apply tool filter if specified
+      if (toolFilter && p.tool !== toolFilter) return;
+
+      // When using per-code PID filter (e.g., BambooHR rejectors), the PID list
+      // already identifies exactly who to show. Skip code matching because the
+      // verbatim data has general Q15 codes while the CSV has vendor-specific ones.
+      if (allowedPids) {
+        if (p.v[qid]) matches.push(p);
+        return;
+      }
+
+      var hit = false;
+      if (matchType === 'code') {
+        var codes = p.c[qid];
+        if (codes) {
+          for (var i = 0; i < codes.length; i++) {
+            if (normCode(codes[i]) === normName) {
+              hit = true;
+              break;
+            }
+          }
+        }
+      } else {
+        var cat = p.cat[qid];
+        if (cat) {
+          if (Array.isArray(cat)) {
+            for (var j = 0; j < cat.length; j++) {
+              if (normCode(cat[j]) === normName) {
+                hit = true;
+                break;
+              }
+            }
+          } else if (normCode(cat) === normName) {
+            hit = true;
+          }
+        }
+      }
+      if (hit && p.v[qid]) {
+        matches.push(p);
+      }
+    });
+
+    var filterLabel = pidFilterName === 'bamboo_rejectors' ? ' — participants who rejected BambooHR' : (toolFilter ? ' — ' + toolFilter + ' users only' : '');
+    titleEl.textContent = codeName + ' (' + matches.length + ' participant' + (matches.length !== 1 ? 's' : '') + ')' + filterLabel;
+    subtitleEl.textContent = VQ[qid] || '';
+
+    bodyEl.innerHTML = '';
+    if (matches.length === 0) {
+      bodyEl.innerHTML = '<p style="color:#6B6B6B;font-size:13px;">No matching verbatims found.</p>';
+    } else {
+      matches.forEach(function(p) {
+        var card = document.createElement('div');
+        card.className = 'vb-card';
+
+        var fullText = p.v[qid];
+        var truncated = fullText.length > 500;
+        var shortText = truncated ? fullText.substring(0, 500) + '...' : fullText;
+
+        var quoteDiv = document.createElement('div');
+        quoteDiv.className = 'vb-quote';
+        quoteDiv.textContent = shortText;
+        card.appendChild(quoteDiv);
+
+        if (truncated) {
+          var moreBtn = document.createElement('button');
+          moreBtn.className = 'vb-more';
+          moreBtn.textContent = 'Show more';
+          var expanded = false;
+          moreBtn.addEventListener('click', function() {
+            expanded = !expanded;
+            quoteDiv.textContent = expanded ? fullText : shortText;
+            moreBtn.textContent = expanded ? 'Show less' : 'Show more';
+          });
+          card.appendChild(moreBtn);
+        }
+
+        var tagsDiv = document.createElement('div');
+        tagsDiv.className = 'vb-tags';
+        var tags = [p.sen, p.sz, p.ind, p.tool].filter(Boolean);
+        tags.forEach(function(t) {
+          var span = document.createElement('span');
+          span.className = 'vb-tag';
+          span.textContent = t;
+          tagsDiv.appendChild(span);
+        });
+        card.appendChild(tagsDiv);
+
+        bodyEl.appendChild(card);
+      });
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  document.addEventListener('click', function(e) {
+    var row = e.target.closest('[data-drilldown]');
+    if (!row) return;
+    var qid = row.getAttribute('data-q');
+    var code = row.getAttribute('data-code');
+    var type = row.getAttribute('data-type') || 'code';
+    var tool = row.getAttribute('data-tool') || '';
+    var pidFilterName = row.getAttribute('data-pid-filter') || '';
+    openModal(qid, code, type, tool, pidFilterName);
+  });
+})();
+</script>
+
+</body>
+</html>

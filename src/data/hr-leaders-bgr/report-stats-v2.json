@@ -1,0 +1,4375 @@
+{
+  "study": "HR Leaders BGR - BambooHR Strategic Review",
+  "n_total": 180,
+  "n_bamboo": 60,
+  "n_gusto": 60,
+  "n_rippling": 60,
+  "executive_stats": {
+    "ui_ownership": {
+      "bamboo_pct": 70,
+      "gusto_pct": 47,
+      "rippling_pct": 25
+    },
+    "fragmented_stack": {
+      "bamboo_pct": 70,
+      "gusto_pct": 35,
+      "rippling_pct": 2
+    },
+    "reporting_frustration": {
+      "bamboo_pct": 85,
+      "gusto_pct": 78,
+      "rippling_pct": 83
+    },
+    "switching_cost_factor": {
+      "bamboo_pct": 28,
+      "gusto_pct": 43,
+      "rippling_pct": 2
+    }
+  },
+  "bamboo_profile": {
+    "seniority": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Manager",
+          "count": 21,
+          "pct": 35,
+          "all_pct": 33,
+          "sig": false
+        },
+        {
+          "label": "Director",
+          "count": 16,
+          "pct": 27,
+          "all_pct": 33,
+          "sig": false
+        },
+        {
+          "label": "VP or above",
+          "count": 13,
+          "pct": 22,
+          "all_pct": 15,
+          "sig": false
+        },
+        {
+          "label": "Senior Manager",
+          "count": 9,
+          "pct": 15,
+          "all_pct": 16,
+          "sig": false
+        },
+        {
+          "label": "C-suite",
+          "count": 1,
+          "pct": 2,
+          "all_pct": 3,
+          "sig": false
+        }
+      ]
+    },
+    "function": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "HR",
+          "count": 27,
+          "pct": 45
+        },
+        {
+          "label": "People Operations",
+          "count": 25,
+          "pct": 42
+        },
+        {
+          "label": "Talent Acquisition",
+          "count": 8,
+          "pct": 13
+        }
+      ]
+    },
+    "company_size": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "101-250 employees",
+          "count": 26,
+          "pct": 43,
+          "all_pct": 34,
+          "sig": false
+        },
+        {
+          "label": "50-100 employees",
+          "count": 15,
+          "pct": 25,
+          "all_pct": 27,
+          "sig": false
+        },
+        {
+          "label": "501-1,000 employees",
+          "count": 10,
+          "pct": 17,
+          "all_pct": 16,
+          "sig": false
+        },
+        {
+          "label": "251-500 employees",
+          "count": 9,
+          "pct": 15,
+          "all_pct": 23,
+          "sig": false
+        }
+      ]
+    },
+    "industry": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Technology",
+          "count": 15,
+          "pct": 25,
+          "all_pct": 23,
+          "sig": false
+        },
+        {
+          "label": "Professional Services",
+          "count": 9,
+          "pct": 15,
+          "all_pct": 15,
+          "sig": false
+        },
+        {
+          "label": "Retail",
+          "count": 8,
+          "pct": 13,
+          "all_pct": 11,
+          "sig": false
+        },
+        {
+          "label": "Healthcare",
+          "count": 8,
+          "pct": 13,
+          "all_pct": 16,
+          "sig": false
+        },
+        {
+          "label": "Financial Services",
+          "count": 7,
+          "pct": 12,
+          "all_pct": 12,
+          "sig": false
+        },
+        {
+          "label": "Education",
+          "count": 6,
+          "pct": 10,
+          "all_pct": 8,
+          "sig": false
+        },
+        {
+          "label": "Manufacturing",
+          "count": 4,
+          "pct": 7,
+          "all_pct": 8,
+          "sig": false
+        },
+        {
+          "label": "Other",
+          "count": 2,
+          "pct": 3,
+          "all_pct": 7,
+          "sig": false
+        },
+        {
+          "label": "Nonprofit",
+          "count": 1,
+          "pct": 2,
+          "all_pct": 2,
+          "sig": false
+        }
+      ]
+    },
+    "work_model": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Hybrid",
+          "count": 29,
+          "pct": 48
+        },
+        {
+          "label": "Primarily remote",
+          "count": 18,
+          "pct": 30
+        },
+        {
+          "label": "Primarily in-office",
+          "count": 13,
+          "pct": 22
+        }
+      ]
+    },
+    "hr_team_size": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Small team (2-4 people)",
+          "count": 24,
+          "pct": 40
+        },
+        {
+          "label": "Mid-size team (5-10 people)",
+          "count": 17,
+          "pct": 28
+        },
+        {
+          "label": "Solo (just me)",
+          "count": 15,
+          "pct": 25
+        },
+        {
+          "label": "Large team (11+ people)",
+          "count": 4,
+          "pct": 7
+        }
+      ]
+    }
+  },
+  "q4_comparison": [
+    {
+      "code": "Q4_core_hris_platform_identification",
+      "label": "Core Hris Platform Identification",
+      "all_pct": 99,
+      "bamboo_pct": 100,
+      "gusto_pct": 97,
+      "rippling_pct": 100,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 178
+    },
+    {
+      "code": "Q4_point_solution_layered_on_core_platform",
+      "label": "Point Solution Layered On Core Platform",
+      "all_pct": 63,
+      "bamboo_pct": 12,
+      "gusto_pct": 95,
+      "rippling_pct": 82,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "B",
+      "all_count": 113
+    },
+    {
+      "code": "Q4_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "all_pct": 36,
+      "bamboo_pct": 70,
+      "gusto_pct": 35,
+      "rippling_pct": 2,
+      "bamboo_sig": "GR",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 64
+    },
+    {
+      "code": "Q4_separate_benefits_administration_system",
+      "label": "Separate Benefits Administration System",
+      "all_pct": 32,
+      "bamboo_pct": 85,
+      "gusto_pct": 7,
+      "rippling_pct": 5,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 58
+    },
+    {
+      "code": "Q4_separate_payroll_system_from_hris",
+      "label": "Separate Payroll System From Hris",
+      "all_pct": 30,
+      "bamboo_pct": 88,
+      "gusto_pct": 2,
+      "rippling_pct": 0,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 54
+    },
+    {
+      "code": "Q4_poor_system_integration",
+      "label": "Poor System Integration",
+      "all_pct": 14,
+      "bamboo_pct": 20,
+      "gusto_pct": 18,
+      "rippling_pct": 5,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 26
+    },
+    {
+      "code": "Q4_unified_platform_as_system_of_record",
+      "label": "Unified Platform As System Of Record",
+      "all_pct": 12,
+      "bamboo_pct": 0,
+      "gusto_pct": 0,
+      "rippling_pct": 35,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 21
+    },
+    {
+      "code": "Q4_it_device_management_as_differentiator",
+      "label": "It Device Management As Differentiator",
+      "all_pct": 8,
+      "bamboo_pct": 0,
+      "gusto_pct": 0,
+      "rippling_pct": 23,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 14
+    },
+    {
+      "code": "Q4_separate_scheduling_or_time_system",
+      "label": "Separate Scheduling Or Time System",
+      "all_pct": 7,
+      "bamboo_pct": 0,
+      "gusto_pct": 7,
+      "rippling_pct": 15,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "B",
+      "all_count": 13
+    },
+    {
+      "code": "Q4_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "all_pct": 3,
+      "bamboo_pct": 0,
+      "gusto_pct": 3,
+      "rippling_pct": 7,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "B",
+      "all_count": 6
+    }
+  ],
+  "q7_bamboo": [
+    {
+      "code": "Q7_manual_process_burden",
+      "label": "Manual Process Burden",
+      "count": 45,
+      "pct": 75,
+      "all_pct": 69,
+      "sig": false
+    },
+    {
+      "code": "Q7_growth_outpacing_system_capacity",
+      "label": "Growth Outpacing System Capacity",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 48,
+      "sig": false
+    },
+    {
+      "code": "Q7_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "count": 24,
+      "pct": 40,
+      "all_pct": 28,
+      "sig": true
+    },
+    {
+      "code": "Q7_contract_renewal_triggering_evaluation",
+      "label": "Contract Renewal Triggering Evaluation",
+      "count": 22,
+      "pct": 37,
+      "all_pct": 28,
+      "sig": false
+    },
+    {
+      "code": "Q7_poor_system_integration",
+      "label": "Poor System Integration",
+      "count": 20,
+      "pct": 33,
+      "all_pct": 39,
+      "sig": false
+    },
+    {
+      "code": "Q7_executive_pressure_for_modernization",
+      "label": "Executive Pressure For Modernization",
+      "count": 18,
+      "pct": 30,
+      "all_pct": 32,
+      "sig": false
+    },
+    {
+      "code": "Q7_new_leadership_triggering_change",
+      "label": "New Leadership Triggering Change",
+      "count": 18,
+      "pct": 30,
+      "all_pct": 29,
+      "sig": false
+    },
+    {
+      "code": "Q7_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "count": 15,
+      "pct": 25,
+      "all_pct": 28,
+      "sig": false
+    },
+    {
+      "code": "Q7_compliance_scare_triggering_evaluation",
+      "label": "Compliance Scare Triggering Evaluation",
+      "count": 13,
+      "pct": 22,
+      "all_pct": 17,
+      "sig": false
+    },
+    {
+      "code": "Q7_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 16,
+      "sig": false
+    },
+    {
+      "code": "Q7_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 16,
+      "sig": false
+    },
+    {
+      "code": "Q7_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "count": 7,
+      "pct": 12,
+      "all_pct": 18,
+      "sig": false
+    },
+    {
+      "code": "Q7_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "count": 7,
+      "pct": 12,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q7_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 24,
+      "sig": true
+    },
+    {
+      "code": "Q7_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 6,
+      "sig": false
+    }
+  ],
+  "q7_comparison": [
+    {
+      "code": "Q7_manual_process_burden",
+      "label": "Manual Process Burden",
+      "all_pct": 69,
+      "bamboo_pct": 75,
+      "gusto_pct": 70,
+      "rippling_pct": 63,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 125
+    },
+    {
+      "code": "Q7_growth_outpacing_system_capacity",
+      "label": "Growth Outpacing System Capacity",
+      "all_pct": 48,
+      "bamboo_pct": 42,
+      "gusto_pct": 52,
+      "rippling_pct": 52,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 87
+    },
+    {
+      "code": "Q7_poor_system_integration",
+      "label": "Poor System Integration",
+      "all_pct": 39,
+      "bamboo_pct": 33,
+      "gusto_pct": 28,
+      "rippling_pct": 57,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 71
+    },
+    {
+      "code": "Q7_executive_pressure_for_modernization",
+      "label": "Executive Pressure For Modernization",
+      "all_pct": 32,
+      "bamboo_pct": 30,
+      "gusto_pct": 25,
+      "rippling_pct": 40,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 57
+    },
+    {
+      "code": "Q7_new_leadership_triggering_change",
+      "label": "New Leadership Triggering Change",
+      "all_pct": 29,
+      "bamboo_pct": 30,
+      "gusto_pct": 22,
+      "rippling_pct": 37,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 53
+    },
+    {
+      "code": "Q7_contract_renewal_triggering_evaluation",
+      "label": "Contract Renewal Triggering Evaluation",
+      "all_pct": 28,
+      "bamboo_pct": 37,
+      "gusto_pct": 27,
+      "rippling_pct": 22,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 51
+    },
+    {
+      "code": "Q7_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "all_pct": 28,
+      "bamboo_pct": 25,
+      "gusto_pct": 18,
+      "rippling_pct": 40,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 50
+    },
+    {
+      "code": "Q7_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "all_pct": 28,
+      "bamboo_pct": 40,
+      "gusto_pct": 23,
+      "rippling_pct": 20,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 50
+    },
+    {
+      "code": "Q7_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "all_pct": 24,
+      "bamboo_pct": 10,
+      "gusto_pct": 43,
+      "rippling_pct": 20,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 44
+    },
+    {
+      "code": "Q7_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "all_pct": 18,
+      "bamboo_pct": 12,
+      "gusto_pct": 13,
+      "rippling_pct": 30,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 33
+    },
+    {
+      "code": "Q7_compliance_scare_triggering_evaluation",
+      "label": "Compliance Scare Triggering Evaluation",
+      "all_pct": 17,
+      "bamboo_pct": 22,
+      "gusto_pct": 15,
+      "rippling_pct": 15,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 31
+    },
+    {
+      "code": "Q7_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "all_pct": 16,
+      "bamboo_pct": 15,
+      "gusto_pct": 12,
+      "rippling_pct": 22,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 29
+    },
+    {
+      "code": "Q7_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "all_pct": 16,
+      "bamboo_pct": 15,
+      "gusto_pct": 12,
+      "rippling_pct": 20,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 28
+    },
+    {
+      "code": "Q7_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "all_pct": 9,
+      "bamboo_pct": 12,
+      "gusto_pct": 7,
+      "rippling_pct": 8,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 16
+    },
+    {
+      "code": "Q7_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "all_pct": 6,
+      "bamboo_pct": 5,
+      "gusto_pct": 5,
+      "rippling_pct": 8,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 11
+    }
+  ],
+  "q8_bamboo": [
+    {
+      "code": "Q8_executive_pressure_for_modernization",
+      "label": "Executive Pressure For Modernization",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 37,
+      "sig": false
+    },
+    {
+      "code": "Q8_remote_work_driving_infrastructure_needs",
+      "label": "Remote Work Driving Infrastructure Needs",
+      "count": 20,
+      "pct": 33,
+      "all_pct": 28,
+      "sig": false
+    },
+    {
+      "code": "Q8_talent_market_competition_driving_urgency",
+      "label": "Talent Market Competition Driving Urgency",
+      "count": 18,
+      "pct": 30,
+      "all_pct": 33,
+      "sig": false
+    },
+    {
+      "code": "Q8_leadership_expects_data_driven_hr",
+      "label": "Leadership Expects Data Driven Hr",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 15,
+      "sig": false
+    },
+    {
+      "code": "Q8_broader_digital_transformation_context",
+      "label": "Broader Digital Transformation Context",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 27,
+      "sig": false
+    },
+    {
+      "code": "Q8_investor_pressure_for_operational_maturity",
+      "label": "Investor Pressure For Operational Maturity",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 32,
+      "sig": true
+    },
+    {
+      "code": "Q8_new_leadership_triggering_change",
+      "label": "New Leadership Triggering Change",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 6,
+      "sig": false
+    },
+    {
+      "code": "Q8_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q8_compliance_scare_triggering_evaluation",
+      "label": "Compliance Scare Triggering Evaluation",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 3,
+      "sig": false
+    }
+  ],
+  "q9_bamboo": [
+    {
+      "code": "Q9_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "count": 51,
+      "pct": 85,
+      "all_pct": 82,
+      "sig": false
+    },
+    {
+      "code": "Q9_manual_process_burden",
+      "label": "Manual Process Burden",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 37,
+      "sig": false
+    },
+    {
+      "code": "Q9_poor_employee_self_service_experience",
+      "label": "Poor Employee Self Service Experience",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 41,
+      "sig": false
+    },
+    {
+      "code": "Q9_poor_system_integration",
+      "label": "Poor System Integration",
+      "count": 22,
+      "pct": 37,
+      "all_pct": 41,
+      "sig": false
+    },
+    {
+      "code": "Q9_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "count": 21,
+      "pct": 35,
+      "all_pct": 34,
+      "sig": false
+    },
+    {
+      "code": "Q9_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "count": 15,
+      "pct": 25,
+      "all_pct": 19,
+      "sig": false
+    },
+    {
+      "code": "Q9_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "count": 14,
+      "pct": 23,
+      "all_pct": 16,
+      "sig": true
+    },
+    {
+      "code": "Q9_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "count": 13,
+      "pct": 22,
+      "all_pct": 23,
+      "sig": false
+    },
+    {
+      "code": "Q9_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "count": 8,
+      "pct": 13,
+      "all_pct": 10,
+      "sig": false
+    },
+    {
+      "code": "Q9_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 31,
+      "sig": true
+    },
+    {
+      "code": "Q9_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q9_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 6,
+      "sig": false
+    },
+    {
+      "code": "Q9_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q9_recruiting_to_hris_handoff_gap",
+      "label": "Recruiting To Hris Handoff Gap",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 12,
+      "sig": true
+    },
+    {
+      "code": "Q9_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 7,
+      "sig": false
+    }
+  ],
+  "q9_comparison": [
+    {
+      "code": "Q9_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "all_pct": 82,
+      "bamboo_pct": 85,
+      "gusto_pct": 78,
+      "rippling_pct": 83,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 148
+    },
+    {
+      "code": "Q9_poor_system_integration",
+      "label": "Poor System Integration",
+      "all_pct": 41,
+      "bamboo_pct": 37,
+      "gusto_pct": 33,
+      "rippling_pct": 53,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 74
+    },
+    {
+      "code": "Q9_poor_employee_self_service_experience",
+      "label": "Poor Employee Self Service Experience",
+      "all_pct": 41,
+      "bamboo_pct": 42,
+      "gusto_pct": 47,
+      "rippling_pct": 33,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 73
+    },
+    {
+      "code": "Q9_manual_process_burden",
+      "label": "Manual Process Burden",
+      "all_pct": 37,
+      "bamboo_pct": 42,
+      "gusto_pct": 33,
+      "rippling_pct": 35,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 66
+    },
+    {
+      "code": "Q9_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "all_pct": 34,
+      "bamboo_pct": 35,
+      "gusto_pct": 30,
+      "rippling_pct": 38,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 62
+    },
+    {
+      "code": "Q9_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "all_pct": 31,
+      "bamboo_pct": 10,
+      "gusto_pct": 42,
+      "rippling_pct": 42,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "B",
+      "all_count": 56
+    },
+    {
+      "code": "Q9_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "all_pct": 23,
+      "bamboo_pct": 22,
+      "gusto_pct": 25,
+      "rippling_pct": 22,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 41
+    },
+    {
+      "code": "Q9_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "all_pct": 19,
+      "bamboo_pct": 25,
+      "gusto_pct": 10,
+      "rippling_pct": 22,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 34
+    },
+    {
+      "code": "Q9_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "all_pct": 16,
+      "bamboo_pct": 23,
+      "gusto_pct": 7,
+      "rippling_pct": 17,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 28
+    },
+    {
+      "code": "Q9_recruiting_to_hris_handoff_gap",
+      "label": "Recruiting To Hris Handoff Gap",
+      "all_pct": 12,
+      "bamboo_pct": 5,
+      "gusto_pct": 20,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "",
+      "all_count": 22
+    },
+    {
+      "code": "Q9_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "all_pct": 10,
+      "bamboo_pct": 13,
+      "gusto_pct": 7,
+      "rippling_pct": 10,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 18
+    },
+    {
+      "code": "Q9_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "all_pct": 9,
+      "bamboo_pct": 7,
+      "gusto_pct": 10,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 17
+    },
+    {
+      "code": "Q9_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "all_pct": 7,
+      "bamboo_pct": 8,
+      "gusto_pct": 10,
+      "rippling_pct": 3,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 13
+    },
+    {
+      "code": "Q9_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "all_pct": 7,
+      "bamboo_pct": 3,
+      "gusto_pct": 5,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 12
+    },
+    {
+      "code": "Q9_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "all_pct": 6,
+      "bamboo_pct": 7,
+      "gusto_pct": 3,
+      "rippling_pct": 8,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 11
+    }
+  ],
+  "q10_bamboo": [
+    {
+      "code": "Q10_rippling",
+      "label": "Rippling",
+      "count": 52,
+      "pct": 87,
+      "all_pct": 92,
+      "sig": false
+    },
+    {
+      "code": "Q10_lattice",
+      "label": "Lattice",
+      "count": 23,
+      "pct": 38,
+      "all_pct": 21,
+      "sig": true
+    },
+    {
+      "code": "Q10_paylocity",
+      "label": "Paylocity",
+      "count": 17,
+      "pct": 28,
+      "all_pct": 31,
+      "sig": false
+    },
+    {
+      "code": "Q10_gusto",
+      "label": "Gusto",
+      "count": 16,
+      "pct": 27,
+      "all_pct": 36,
+      "sig": false
+    },
+    {
+      "code": "Q10_paycor",
+      "label": "Paycor",
+      "count": 12,
+      "pct": 20,
+      "all_pct": 11,
+      "sig": true
+    },
+    {
+      "code": "Q10_workday",
+      "label": "Workday",
+      "count": 12,
+      "pct": 20,
+      "all_pct": 20,
+      "sig": false
+    },
+    {
+      "code": "Q10_namely",
+      "label": "Namely",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 27,
+      "sig": false
+    },
+    {
+      "code": "Q10_hibob",
+      "label": "Hibob",
+      "count": 10,
+      "pct": 17,
+      "all_pct": 13,
+      "sig": false
+    },
+    {
+      "code": "Q10_ukg",
+      "label": "Ukg",
+      "count": 7,
+      "pct": 12,
+      "all_pct": 12,
+      "sig": false
+    },
+    {
+      "code": "Q10_trinet",
+      "label": "Trinet",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 21,
+      "sig": true
+    },
+    {
+      "code": "Q10_zenefits",
+      "label": "Zenefits",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q10_paychex",
+      "label": "Paychex",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 16,
+      "sig": true
+    },
+    {
+      "code": "Q10_paycom",
+      "label": "Paycom",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q10_adp",
+      "label": "Adp",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 10,
+      "sig": false
+    },
+    {
+      "code": "Q10_ceridian",
+      "label": "Ceridian",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 6,
+      "sig": false
+    },
+    {
+      "code": "Q10_personio",
+      "label": "Personio",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 2,
+      "sig": false
+    },
+    {
+      "code": "Q10_justworks",
+      "label": "Justworks",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 9,
+      "sig": true
+    },
+    {
+      "code": "Q10_isolved",
+      "label": "Isolved",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 1,
+      "sig": false
+    }
+  ],
+  "q10_all": [
+    {
+      "code": "Q10_rippling",
+      "label": "Rippling",
+      "count": 165,
+      "pct": 92
+    },
+    {
+      "code": "Q10_bamboohr",
+      "label": "Bamboohr",
+      "count": 85,
+      "pct": 47
+    },
+    {
+      "code": "Q10_gusto",
+      "label": "Gusto",
+      "count": 64,
+      "pct": 36
+    },
+    {
+      "code": "Q10_paylocity",
+      "label": "Paylocity",
+      "count": 55,
+      "pct": 31
+    },
+    {
+      "code": "Q10_namely",
+      "label": "Namely",
+      "count": 49,
+      "pct": 27
+    },
+    {
+      "code": "Q10_lattice",
+      "label": "Lattice",
+      "count": 37,
+      "pct": 21
+    },
+    {
+      "code": "Q10_trinet",
+      "label": "Trinet",
+      "count": 37,
+      "pct": 21
+    },
+    {
+      "code": "Q10_workday",
+      "label": "Workday",
+      "count": 36,
+      "pct": 20
+    },
+    {
+      "code": "Q10_paychex",
+      "label": "Paychex",
+      "count": 28,
+      "pct": 16
+    },
+    {
+      "code": "Q10_hibob",
+      "label": "Hibob",
+      "count": 24,
+      "pct": 13
+    },
+    {
+      "code": "Q10_ukg",
+      "label": "Ukg",
+      "count": 22,
+      "pct": 12
+    },
+    {
+      "code": "Q10_paycor",
+      "label": "Paycor",
+      "count": 20,
+      "pct": 11
+    },
+    {
+      "code": "Q10_adp",
+      "label": "Adp",
+      "count": 18,
+      "pct": 10
+    },
+    {
+      "code": "Q10_justworks",
+      "label": "Justworks",
+      "count": 17,
+      "pct": 9
+    },
+    {
+      "code": "Q10_zenefits",
+      "label": "Zenefits",
+      "count": 17,
+      "pct": 9
+    },
+    {
+      "code": "Q10_paycom",
+      "label": "Paycom",
+      "count": 16,
+      "pct": 9
+    },
+    {
+      "code": "Q10_deel",
+      "label": "Deel",
+      "count": 15,
+      "pct": 8
+    },
+    {
+      "code": "Q10_ceridian",
+      "label": "Ceridian",
+      "count": 11,
+      "pct": 6
+    },
+    {
+      "code": "Q10_personio",
+      "label": "Personio",
+      "count": 3,
+      "pct": 2
+    },
+    {
+      "code": "Q10_isolved",
+      "label": "Isolved",
+      "count": 1,
+      "pct": 1
+    }
+  ],
+  "q11_bamboo": [
+    {
+      "code": "Q11_required_onboarding_automation",
+      "label": "Required Onboarding Automation",
+      "count": 28,
+      "pct": 47,
+      "all_pct": 28,
+      "sig": true
+    },
+    {
+      "code": "Q11_required_native_payroll",
+      "label": "Required Native Payroll",
+      "count": 26,
+      "pct": 43,
+      "all_pct": 48,
+      "sig": false
+    },
+    {
+      "code": "Q11_required_employee_self_service",
+      "label": "Required Employee Self Service",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 34,
+      "sig": false
+    },
+    {
+      "code": "Q11_budget_constraint_on_evaluation",
+      "label": "Budget Constraint On Evaluation",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 32,
+      "sig": false
+    },
+    {
+      "code": "Q11_required_implementation_support",
+      "label": "Required Implementation Support",
+      "count": 21,
+      "pct": 35,
+      "all_pct": 28,
+      "sig": false
+    },
+    {
+      "code": "Q11_required_multi_state_payroll_compliance",
+      "label": "Required Multi State Payroll Compliance",
+      "count": 16,
+      "pct": 27,
+      "all_pct": 41,
+      "sig": true
+    },
+    {
+      "code": "Q11_required_reporting_capabilities",
+      "label": "Required Reporting Capabilities",
+      "count": 13,
+      "pct": 22,
+      "all_pct": 20,
+      "sig": false
+    },
+    {
+      "code": "Q11_required_sso_security_compliance",
+      "label": "Required Sso Security Compliance",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 19,
+      "sig": false
+    }
+  ],
+  "q11_comparison": [
+    {
+      "code": "Q11_required_native_payroll",
+      "label": "Required Native Payroll",
+      "all_pct": 48,
+      "bamboo_pct": 43,
+      "gusto_pct": 37,
+      "rippling_pct": 65,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 87
+    },
+    {
+      "code": "Q11_required_multi_state_payroll_compliance",
+      "label": "Required Multi State Payroll Compliance",
+      "all_pct": 41,
+      "bamboo_pct": 27,
+      "gusto_pct": 47,
+      "rippling_pct": 48,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "B",
+      "all_count": 73
+    },
+    {
+      "code": "Q11_required_employee_self_service",
+      "label": "Required Employee Self Service",
+      "all_pct": 34,
+      "bamboo_pct": 42,
+      "gusto_pct": 28,
+      "rippling_pct": 33,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 62
+    },
+    {
+      "code": "Q11_budget_constraint_on_evaluation",
+      "label": "Budget Constraint On Evaluation",
+      "all_pct": 32,
+      "bamboo_pct": 42,
+      "gusto_pct": 42,
+      "rippling_pct": 13,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 58
+    },
+    {
+      "code": "Q11_required_onboarding_automation",
+      "label": "Required Onboarding Automation",
+      "all_pct": 28,
+      "bamboo_pct": 47,
+      "gusto_pct": 17,
+      "rippling_pct": 22,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 51
+    },
+    {
+      "code": "Q11_required_implementation_support",
+      "label": "Required Implementation Support",
+      "all_pct": 28,
+      "bamboo_pct": 35,
+      "gusto_pct": 20,
+      "rippling_pct": 28,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 50
+    },
+    {
+      "code": "Q11_required_reporting_capabilities",
+      "label": "Required Reporting Capabilities",
+      "all_pct": 20,
+      "bamboo_pct": 22,
+      "gusto_pct": 25,
+      "rippling_pct": 13,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 36
+    },
+    {
+      "code": "Q11_required_sso_security_compliance",
+      "label": "Required Sso Security Compliance",
+      "all_pct": 19,
+      "bamboo_pct": 15,
+      "gusto_pct": 18,
+      "rippling_pct": 25,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 35
+    }
+  ],
+  "q12_bamboo": [
+    {
+      "code": "Q12_participant_as_primary_evaluator",
+      "label": "Participant As Primary Evaluator",
+      "count": 60,
+      "pct": 100,
+      "all_pct": 94,
+      "sig": true
+    },
+    {
+      "code": "Q12_cross_functional_decision_process",
+      "label": "Cross Functional Decision Process",
+      "count": 51,
+      "pct": 85,
+      "all_pct": 91,
+      "sig": false
+    },
+    {
+      "code": "Q12_cfo_financial_approval_role",
+      "label": "Cfo Financial Approval Role",
+      "count": 39,
+      "pct": 65,
+      "all_pct": 74,
+      "sig": false
+    },
+    {
+      "code": "Q12_it_stakeholder_involvement",
+      "label": "It Stakeholder Involvement",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 52,
+      "sig": true
+    }
+  ],
+  "q12_comparison": [
+    {
+      "code": "Q12_participant_as_primary_evaluator",
+      "label": "Participant As Primary Evaluator",
+      "all_pct": 94,
+      "bamboo_pct": 100,
+      "gusto_pct": 93,
+      "rippling_pct": 88,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 169
+    },
+    {
+      "code": "Q12_cross_functional_decision_process",
+      "label": "Cross Functional Decision Process",
+      "all_pct": 91,
+      "bamboo_pct": 85,
+      "gusto_pct": 87,
+      "rippling_pct": 100,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 163
+    },
+    {
+      "code": "Q12_cfo_financial_approval_role",
+      "label": "Cfo Financial Approval Role",
+      "all_pct": 74,
+      "bamboo_pct": 65,
+      "gusto_pct": 73,
+      "rippling_pct": 83,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "B",
+      "all_count": 133
+    },
+    {
+      "code": "Q12_it_stakeholder_involvement",
+      "label": "It Stakeholder Involvement",
+      "all_pct": 52,
+      "bamboo_pct": 42,
+      "gusto_pct": 37,
+      "rippling_pct": 78,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 94
+    }
+  ],
+  "q13_comparison": {
+    "bamboo": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Switched to a new tool",
+          "count": 43,
+          "pct": 72
+        },
+        {
+          "label": "Stayed with existing tool",
+          "count": 17,
+          "pct": 28
+        }
+      ]
+    },
+    "gusto": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Switched to a new tool",
+          "count": 34,
+          "pct": 57
+        },
+        {
+          "label": "Stayed with existing tool",
+          "count": 26,
+          "pct": 43
+        }
+      ]
+    },
+    "rippling": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Switched to a new tool",
+          "count": 59,
+          "pct": 98
+        },
+        {
+          "label": "Stayed with existing tool",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "q14_bamboo": [
+    {
+      "code": "Q14_intuitive_user_interface",
+      "label": "Intuitive User Interface",
+      "count": 42,
+      "pct": 70,
+      "all_pct": 47,
+      "sig": true
+    },
+    {
+      "code": "Q14_competitive_pricing_as_selection_factor",
+      "label": "Competitive Pricing As Selection Factor",
+      "count": 38,
+      "pct": 63,
+      "all_pct": 54,
+      "sig": false
+    },
+    {
+      "code": "Q14_structured_implementation_experience",
+      "label": "Structured Implementation Experience",
+      "count": 27,
+      "pct": 45,
+      "all_pct": 43,
+      "sig": false
+    },
+    {
+      "code": "Q14_switching_cost_barrier",
+      "label": "Switching Cost Barrier",
+      "count": 17,
+      "pct": 28,
+      "all_pct": 24,
+      "sig": false
+    },
+    {
+      "code": "Q14_workflow_automation_value",
+      "label": "Workflow Automation Value",
+      "count": 16,
+      "pct": 27,
+      "all_pct": 29,
+      "sig": false
+    },
+    {
+      "code": "Q14_responsive_sales_experience",
+      "label": "Responsive Sales Experience",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 26,
+      "sig": false
+    },
+    {
+      "code": "Q14_demo_experience_built_confidence",
+      "label": "Demo Experience Built Confidence",
+      "count": 8,
+      "pct": 13,
+      "all_pct": 22,
+      "sig": false
+    },
+    {
+      "code": "Q14_negotiated_renewal_retention",
+      "label": "Negotiated Renewal Retention",
+      "count": 8,
+      "pct": 13,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q14_unified_platform_as_system_of_record",
+      "label": "Unified Platform As System Of Record",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 26,
+      "sig": true
+    },
+    {
+      "code": "Q14_reliable_payroll_processing",
+      "label": "Reliable Payroll Processing",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 9,
+      "sig": true
+    },
+    {
+      "code": "Q14_multi_state_compliance_capability",
+      "label": "Multi State Compliance Capability",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 10,
+      "sig": true
+    },
+    {
+      "code": "Q14_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 11,
+      "sig": true
+    }
+  ],
+  "q14_comparison": [
+    {
+      "code": "Q14_competitive_pricing_as_selection_factor",
+      "label": "Competitive Pricing As Selection Factor",
+      "all_pct": 54,
+      "bamboo_pct": 63,
+      "gusto_pct": 67,
+      "rippling_pct": 33,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 98
+    },
+    {
+      "code": "Q14_intuitive_user_interface",
+      "label": "Intuitive User Interface",
+      "all_pct": 47,
+      "bamboo_pct": 70,
+      "gusto_pct": 47,
+      "rippling_pct": 25,
+      "bamboo_sig": "GR",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 85
+    },
+    {
+      "code": "Q14_structured_implementation_experience",
+      "label": "Structured Implementation Experience",
+      "all_pct": 43,
+      "bamboo_pct": 45,
+      "gusto_pct": 38,
+      "rippling_pct": 47,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 78
+    },
+    {
+      "code": "Q14_workflow_automation_value",
+      "label": "Workflow Automation Value",
+      "all_pct": 29,
+      "bamboo_pct": 27,
+      "gusto_pct": 8,
+      "rippling_pct": 53,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 53
+    },
+    {
+      "code": "Q14_unified_platform_as_system_of_record",
+      "label": "Unified Platform As System Of Record",
+      "all_pct": 26,
+      "bamboo_pct": 2,
+      "gusto_pct": 2,
+      "rippling_pct": 73,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 46
+    },
+    {
+      "code": "Q14_it_device_management_as_differentiator",
+      "label": "It Device Management As Differentiator",
+      "all_pct": 26,
+      "bamboo_pct": 0,
+      "gusto_pct": 2,
+      "rippling_pct": 75,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 46
+    },
+    {
+      "code": "Q14_responsive_sales_experience",
+      "label": "Responsive Sales Experience",
+      "all_pct": 26,
+      "bamboo_pct": 18,
+      "gusto_pct": 15,
+      "rippling_pct": 43,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 46
+    },
+    {
+      "code": "Q14_switching_cost_barrier",
+      "label": "Switching Cost Barrier",
+      "all_pct": 24,
+      "bamboo_pct": 28,
+      "gusto_pct": 43,
+      "rippling_pct": 2,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 44
+    },
+    {
+      "code": "Q14_demo_experience_built_confidence",
+      "label": "Demo Experience Built Confidence",
+      "all_pct": 22,
+      "bamboo_pct": 13,
+      "gusto_pct": 13,
+      "rippling_pct": 38,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 39
+    },
+    {
+      "code": "Q14_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "all_pct": 11,
+      "bamboo_pct": 2,
+      "gusto_pct": 8,
+      "rippling_pct": 23,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 20
+    },
+    {
+      "code": "Q14_multi_state_compliance_capability",
+      "label": "Multi State Compliance Capability",
+      "all_pct": 10,
+      "bamboo_pct": 2,
+      "gusto_pct": 13,
+      "rippling_pct": 15,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "B",
+      "all_count": 18
+    },
+    {
+      "code": "Q14_negotiated_renewal_retention",
+      "label": "Negotiated Renewal Retention",
+      "all_pct": 9,
+      "bamboo_pct": 13,
+      "gusto_pct": 15,
+      "rippling_pct": 0,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 17
+    },
+    {
+      "code": "Q14_reliable_payroll_processing",
+      "label": "Reliable Payroll Processing",
+      "all_pct": 9,
+      "bamboo_pct": 2,
+      "gusto_pct": 20,
+      "rippling_pct": 5,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 16
+    }
+  ],
+  "q15_bamboo": [
+    {
+      "code": "Q15_competitor_overbuilt_for_needs",
+      "label": "Competitor Overbuilt For Needs",
+      "count": 57,
+      "pct": 95
+    },
+    {
+      "code": "Q15_implementation_complexity_as_barrier",
+      "label": "Implementation Complexity As Barrier",
+      "count": 44,
+      "pct": 73
+    },
+    {
+      "code": "Q15_competitor_priced_too_high",
+      "label": "Competitor Priced Too High",
+      "count": 43,
+      "pct": 72
+    },
+    {
+      "code": "Q15_competitor_capability_gap",
+      "label": "Competitor Capability Gap",
+      "count": 41,
+      "pct": 68
+    },
+    {
+      "code": "Q15_rippling_competitor_overbuilt_for_needs",
+      "label": "Rippling Competitor Overbuilt For Needs",
+      "count": 36,
+      "pct": 60
+    },
+    {
+      "code": "Q15_rippling_implementation_complexity_as_barrier",
+      "label": "Rippling Implementation Complexity As Barrier",
+      "count": 32,
+      "pct": 53
+    },
+    {
+      "code": "Q15_rippling_competitor_priced_too_high",
+      "label": "Rippling Competitor Priced Too High",
+      "count": 29,
+      "pct": 48
+    },
+    {
+      "code": "Q15_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "count": 17,
+      "pct": 28
+    },
+    {
+      "code": "Q15_lattice_competitor_capability_gap",
+      "label": "Lattice Competitor Capability Gap",
+      "count": 14,
+      "pct": 23
+    },
+    {
+      "code": "Q15_gusto_competitor_capability_gap",
+      "label": "Gusto Competitor Capability Gap",
+      "count": 12,
+      "pct": 20
+    }
+  ],
+  "q15_comparison": [
+    {
+      "code": "Q15_competitor_overbuilt_for_needs",
+      "label": "Competitor Overbuilt For Needs",
+      "all_pct": 82,
+      "bamboo_pct": 95,
+      "gusto_pct": 83,
+      "rippling_pct": 68,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 148
+    },
+    {
+      "code": "Q15_competitor_capability_gap",
+      "label": "Competitor Capability Gap",
+      "all_pct": 76,
+      "bamboo_pct": 68,
+      "gusto_pct": 68,
+      "rippling_pct": 92,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 137
+    },
+    {
+      "code": "Q15_competitor_priced_too_high",
+      "label": "Competitor Priced Too High",
+      "all_pct": 72,
+      "bamboo_pct": 72,
+      "gusto_pct": 80,
+      "rippling_pct": 63,
+      "bamboo_sig": "",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 129
+    },
+    {
+      "code": "Q15_implementation_complexity_as_barrier",
+      "label": "Implementation Complexity As Barrier",
+      "all_pct": 71,
+      "bamboo_pct": 73,
+      "gusto_pct": 63,
+      "rippling_pct": 77,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 128
+    },
+    {
+      "code": "Q15_rippling_competitor_priced_too_high",
+      "label": "Rippling Competitor Priced Too High",
+      "all_pct": 39,
+      "bamboo_pct": 48,
+      "gusto_pct": 70,
+      "rippling_pct": 0,
+      "bamboo_sig": "R",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 71
+    },
+    {
+      "code": "Q15_outdated_user_interface",
+      "label": "Outdated User Interface",
+      "all_pct": 38,
+      "bamboo_pct": 28,
+      "gusto_pct": 42,
+      "rippling_pct": 43,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 68
+    },
+    {
+      "code": "Q15_rippling_competitor_overbuilt_for_needs",
+      "label": "Rippling Competitor Overbuilt For Needs",
+      "all_pct": 37,
+      "bamboo_pct": 60,
+      "gusto_pct": 52,
+      "rippling_pct": 0,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 67
+    },
+    {
+      "code": "Q15_rippling_implementation_complexity_as_barrier",
+      "label": "Rippling Implementation Complexity As Barrier",
+      "all_pct": 34,
+      "bamboo_pct": 53,
+      "gusto_pct": 48,
+      "rippling_pct": 0,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 61
+    },
+    {
+      "code": "Q15_workday_competitor_overbuilt_for_needs",
+      "label": "Workday Competitor Overbuilt For Needs",
+      "all_pct": 16,
+      "bamboo_pct": 20,
+      "gusto_pct": 5,
+      "rippling_pct": 23,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 29
+    },
+    {
+      "code": "Q15_workday_competitor_priced_too_high",
+      "label": "Workday Competitor Priced Too High",
+      "all_pct": 16,
+      "bamboo_pct": 17,
+      "gusto_pct": 3,
+      "rippling_pct": 27,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 28
+    }
+  ],
+  "q15_bamboo_specific": [
+    {
+      "label": "Competitor Capability Gap",
+      "count": 22,
+      "pct": 65
+    },
+    {
+      "label": "Implementation Complexity As Barrier",
+      "count": 6,
+      "pct": 18
+    },
+    {
+      "label": "Recruiting Module Inadequacy",
+      "count": 4,
+      "pct": 12
+    },
+    {
+      "label": "Competitor Priced Too High",
+      "count": 2,
+      "pct": 6
+    },
+    {
+      "label": "Outdated User Interface",
+      "count": 1,
+      "pct": 3
+    }
+  ],
+  "n_bamboo_rejectors": 34,
+  "bamboo_rejector_pids": [
+    6,
+    28,
+    30,
+    32,
+    44,
+    45,
+    53,
+    55,
+    56,
+    61,
+    66,
+    83,
+    85,
+    87,
+    96,
+    108,
+    111,
+    117,
+    129,
+    131,
+    133,
+    134,
+    137,
+    139,
+    144,
+    149,
+    153,
+    156,
+    157,
+    167,
+    173,
+    174,
+    176,
+    177
+  ],
+  "bamboo_rejector_code_pids": {
+    "competitor capability gap": [
+      28,
+      32,
+      44,
+      45,
+      53,
+      56,
+      61,
+      66,
+      85,
+      108,
+      111,
+      129,
+      133,
+      139,
+      144,
+      149,
+      153,
+      156,
+      157,
+      167,
+      173,
+      174
+    ],
+    "competitor priced too high": [
+      96,
+      131
+    ],
+    "implementation complexity as barrier": [
+      6,
+      87,
+      96,
+      117,
+      134,
+      137
+    ],
+    "outdated user interface": [
+      149
+    ],
+    "recruiting module inadequacy": [
+      53,
+      55,
+      83,
+      176
+    ]
+  },
+  "competitor_rejections": {
+    "gusto": [
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 12,
+        "bamboo_pct": 20,
+        "all_count": 22,
+        "all_pct": 12
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Recruiting Module Inadequacy",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 2,
+        "all_pct": 1
+      }
+    ],
+    "rippling": [
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 29,
+        "bamboo_pct": 48,
+        "all_count": 71,
+        "all_pct": 39
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 36,
+        "bamboo_pct": 60,
+        "all_count": 67,
+        "all_pct": 37
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 32,
+        "bamboo_pct": 53,
+        "all_count": 61,
+        "all_pct": 34
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 3,
+        "bamboo_pct": 5,
+        "all_count": 5,
+        "all_pct": 3
+      },
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 1,
+        "all_pct": 1
+      },
+      {
+        "label": "Recruiting Module Inadequacy",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 1,
+        "all_pct": 1
+      }
+    ],
+    "adp": [
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 9,
+        "all_pct": 5
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 6,
+        "all_pct": 3
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 5,
+        "all_pct": 3
+      },
+      {
+        "label": "Outdated User Interface",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 2,
+        "all_pct": 1
+      },
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 1,
+        "all_pct": 1
+      }
+    ],
+    "paychex": [
+      {
+        "label": "Outdated User Interface",
+        "bamboo_count": 3,
+        "bamboo_pct": 5,
+        "all_count": 22,
+        "all_pct": 12
+      },
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 3,
+        "all_pct": 2
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 3,
+        "all_pct": 2
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 3,
+        "all_pct": 2
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 1,
+        "all_pct": 1
+      }
+    ],
+    "paylocity": [
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 7,
+        "bamboo_pct": 12,
+        "all_count": 21,
+        "all_pct": 12
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 14,
+        "all_pct": 8
+      },
+      {
+        "label": "Outdated User Interface",
+        "bamboo_count": 5,
+        "bamboo_pct": 8,
+        "all_count": 14,
+        "all_pct": 8
+      },
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 12,
+        "all_pct": 7
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 6,
+        "bamboo_pct": 10,
+        "all_count": 12,
+        "all_pct": 7
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 3,
+        "bamboo_pct": 5,
+        "all_count": 5,
+        "all_pct": 3
+      },
+      {
+        "label": "Recruiting Module Inadequacy",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 5,
+        "all_pct": 3
+      }
+    ],
+    "paycom": [
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 7,
+        "all_pct": 4
+      },
+      {
+        "label": "Outdated User Interface",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 6,
+        "all_pct": 3
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 3,
+        "all_pct": 2
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 2,
+        "all_pct": 1
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 2,
+        "all_pct": 1
+      }
+    ],
+    "namely": [
+      {
+        "label": "Outdated User Interface",
+        "bamboo_count": 7,
+        "bamboo_pct": 12,
+        "all_count": 20,
+        "all_pct": 11
+      },
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 18,
+        "all_pct": 10
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 3,
+        "bamboo_pct": 5,
+        "all_count": 15,
+        "all_pct": 8
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 2,
+        "bamboo_pct": 3,
+        "all_count": 7,
+        "all_pct": 4
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 5,
+        "all_pct": 3
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 2,
+        "all_pct": 1
+      }
+    ],
+    "hibob": [
+      {
+        "label": "Competitor Capability Gap",
+        "bamboo_count": 8,
+        "bamboo_pct": 13,
+        "all_count": 16,
+        "all_pct": 9
+      },
+      {
+        "label": "Competitor Priced Too High",
+        "bamboo_count": 3,
+        "bamboo_pct": 5,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Implementation Complexity As Barrier",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 4,
+        "all_pct": 2
+      },
+      {
+        "label": "Recruiting Module Inadequacy",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 2,
+        "all_pct": 1
+      },
+      {
+        "label": "Aggressive Sales Experience",
+        "bamboo_count": 1,
+        "bamboo_pct": 2,
+        "all_count": 1,
+        "all_pct": 1
+      },
+      {
+        "label": "Competitor Overbuilt For Needs",
+        "bamboo_count": 0,
+        "bamboo_pct": 0,
+        "all_count": 1,
+        "all_pct": 1
+      }
+    ]
+  },
+  "q16_bamboo": [
+    {
+      "code": "Q16_employee_self_service_reducing_workload",
+      "label": "Employee Self Service Reducing Workload",
+      "count": 46,
+      "pct": 77,
+      "all_pct": 69,
+      "sig": false
+    },
+    {
+      "code": "Q16_platform_does_fundamentals_well",
+      "label": "Platform Does Fundamentals Well",
+      "count": 44,
+      "pct": 73,
+      "all_pct": 42,
+      "sig": true
+    },
+    {
+      "code": "Q16_workflow_automation_value",
+      "label": "Workflow Automation Value",
+      "count": 36,
+      "pct": 60,
+      "all_pct": 57,
+      "sig": false
+    },
+    {
+      "code": "Q16_reporting_improved_over_previous_state",
+      "label": "Reporting Improved Over Previous State",
+      "count": 24,
+      "pct": 40,
+      "all_pct": 24,
+      "sig": true
+    },
+    {
+      "code": "Q16_intuitive_user_interface",
+      "label": "Intuitive User Interface",
+      "count": 21,
+      "pct": 35,
+      "all_pct": 28,
+      "sig": false
+    },
+    {
+      "code": "Q16_reliable_payroll_processing",
+      "label": "Reliable Payroll Processing",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 62,
+      "sig": true
+    },
+    {
+      "code": "Q16_customer_support_quality",
+      "label": "Customer Support Quality",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 9,
+      "sig": false
+    },
+    {
+      "code": "Q16_effective_cross_system_integration",
+      "label": "Effective Cross System Integration",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 12,
+      "sig": true
+    },
+    {
+      "code": "Q16_unified_platform_as_system_of_record",
+      "label": "Unified Platform As System Of Record",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 18,
+      "sig": true
+    },
+    {
+      "code": "Q16_benefits_enrollment_improvement",
+      "label": "Benefits Enrollment Improvement",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 27,
+      "sig": true
+    },
+    {
+      "code": "Q16_time_savings_enabling_strategic_work",
+      "label": "Time Savings Enabling Strategic Work",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 4,
+      "sig": false
+    }
+  ],
+  "q16_comparison": [
+    {
+      "code": "Q16_employee_self_service_reducing_workload",
+      "label": "Employee Self Service Reducing Workload",
+      "all_pct": 69,
+      "bamboo_pct": 77,
+      "gusto_pct": 87,
+      "rippling_pct": 43,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 124
+    },
+    {
+      "code": "Q16_reliable_payroll_processing",
+      "label": "Reliable Payroll Processing",
+      "all_pct": 62,
+      "bamboo_pct": 10,
+      "gusto_pct": 100,
+      "rippling_pct": 75,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "B",
+      "all_count": 111
+    },
+    {
+      "code": "Q16_workflow_automation_value",
+      "label": "Workflow Automation Value",
+      "all_pct": 57,
+      "bamboo_pct": 60,
+      "gusto_pct": 18,
+      "rippling_pct": 93,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 103
+    },
+    {
+      "code": "Q16_platform_does_fundamentals_well",
+      "label": "Platform Does Fundamentals Well",
+      "all_pct": 42,
+      "bamboo_pct": 73,
+      "gusto_pct": 50,
+      "rippling_pct": 2,
+      "bamboo_sig": "GR",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 75
+    },
+    {
+      "code": "Q16_intuitive_user_interface",
+      "label": "Intuitive User Interface",
+      "all_pct": 28,
+      "bamboo_pct": 35,
+      "gusto_pct": 40,
+      "rippling_pct": 8,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 50
+    },
+    {
+      "code": "Q16_benefits_enrollment_improvement",
+      "label": "Benefits Enrollment Improvement",
+      "all_pct": 27,
+      "bamboo_pct": 3,
+      "gusto_pct": 63,
+      "rippling_pct": 15,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "B",
+      "all_count": 49
+    },
+    {
+      "code": "Q16_reporting_improved_over_previous_state",
+      "label": "Reporting Improved Over Previous State",
+      "all_pct": 24,
+      "bamboo_pct": 40,
+      "gusto_pct": 0,
+      "rippling_pct": 33,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 44
+    },
+    {
+      "code": "Q16_multi_state_compliance_capability",
+      "label": "Multi State Compliance Capability",
+      "all_pct": 18,
+      "bamboo_pct": 0,
+      "gusto_pct": 22,
+      "rippling_pct": 33,
+      "bamboo_sig": "",
+      "gusto_sig": "B",
+      "rippling_sig": "B",
+      "all_count": 33
+    },
+    {
+      "code": "Q16_unified_platform_as_system_of_record",
+      "label": "Unified Platform As System Of Record",
+      "all_pct": 18,
+      "bamboo_pct": 3,
+      "gusto_pct": 2,
+      "rippling_pct": 48,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 32
+    },
+    {
+      "code": "Q16_it_device_management_as_differentiator",
+      "label": "It Device Management As Differentiator",
+      "all_pct": 14,
+      "bamboo_pct": 0,
+      "gusto_pct": 0,
+      "rippling_pct": 43,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 26
+    },
+    {
+      "code": "Q16_effective_cross_system_integration",
+      "label": "Effective Cross System Integration",
+      "all_pct": 12,
+      "bamboo_pct": 5,
+      "gusto_pct": 10,
+      "rippling_pct": 20,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "B",
+      "all_count": 21
+    },
+    {
+      "code": "Q16_customer_support_quality",
+      "label": "Customer Support Quality",
+      "all_pct": 9,
+      "bamboo_pct": 8,
+      "gusto_pct": 18,
+      "rippling_pct": 2,
+      "bamboo_sig": "",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 17
+    },
+    {
+      "code": "Q16_time_savings_enabling_strategic_work",
+      "label": "Time Savings Enabling Strategic Work",
+      "all_pct": 4,
+      "bamboo_pct": 2,
+      "gusto_pct": 0,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 8
+    }
+  ],
+  "q17_bamboo": [
+    {
+      "code": "Q17_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "count": 40,
+      "pct": 67,
+      "all_pct": 22,
+      "sig": true
+    },
+    {
+      "code": "Q17_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "count": 37,
+      "pct": 62,
+      "all_pct": 67,
+      "sig": false
+    },
+    {
+      "code": "Q17_poor_system_integration",
+      "label": "Poor System Integration",
+      "count": 30,
+      "pct": 50,
+      "all_pct": 41,
+      "sig": false
+    },
+    {
+      "code": "Q17_performance_management_gap",
+      "label": "Performance Management Gap",
+      "count": 27,
+      "pct": 45,
+      "all_pct": 38,
+      "sig": false
+    },
+    {
+      "code": "Q17_compensation_management_gap",
+      "label": "Compensation Management Gap",
+      "count": 15,
+      "pct": 25,
+      "all_pct": 17,
+      "sig": true
+    },
+    {
+      "code": "Q17_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "count": 12,
+      "pct": 20,
+      "all_pct": 22,
+      "sig": false
+    },
+    {
+      "code": "Q17_recruiting_module_inadequacy",
+      "label": "Recruiting Module Inadequacy",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 12,
+      "sig": false
+    },
+    {
+      "code": "Q17_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q17_platform_scalability_ceiling",
+      "label": "Platform Scalability Ceiling",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 12,
+      "sig": false
+    },
+    {
+      "code": "Q17_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 8,
+      "sig": false
+    },
+    {
+      "code": "Q17_hourly_workforce_management_gap",
+      "label": "Hourly Workforce Management Gap",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 6,
+      "sig": false
+    },
+    {
+      "code": "Q17_vendor_roadmap_dissatisfaction",
+      "label": "Vendor Roadmap Dissatisfaction",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 4,
+      "sig": false
+    },
+    {
+      "code": "Q17_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 18,
+      "sig": true
+    },
+    {
+      "code": "Q17_recruiting_to_hris_handoff_gap",
+      "label": "Recruiting To Hris Handoff Gap",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 9,
+      "sig": true
+    },
+    {
+      "code": "Q17_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 2,
+      "sig": false
+    },
+    {
+      "code": "Q17_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 3,
+      "sig": false
+    }
+  ],
+  "q17_comparison": [
+    {
+      "code": "Q17_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "all_pct": 67,
+      "bamboo_pct": 62,
+      "gusto_pct": 92,
+      "rippling_pct": 47,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 120
+    },
+    {
+      "code": "Q17_poor_system_integration",
+      "label": "Poor System Integration",
+      "all_pct": 41,
+      "bamboo_pct": 50,
+      "gusto_pct": 48,
+      "rippling_pct": 23,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 73
+    },
+    {
+      "code": "Q17_performance_management_gap",
+      "label": "Performance Management Gap",
+      "all_pct": 38,
+      "bamboo_pct": 45,
+      "gusto_pct": 42,
+      "rippling_pct": 27,
+      "bamboo_sig": "R",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 68
+    },
+    {
+      "code": "Q17_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "all_pct": 22,
+      "bamboo_pct": 67,
+      "gusto_pct": 0,
+      "rippling_pct": 0,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 40
+    },
+    {
+      "code": "Q17_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "all_pct": 22,
+      "bamboo_pct": 20,
+      "gusto_pct": 12,
+      "rippling_pct": 33,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 39
+    },
+    {
+      "code": "Q17_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "all_pct": 18,
+      "bamboo_pct": 2,
+      "gusto_pct": 3,
+      "rippling_pct": 50,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 33
+    },
+    {
+      "code": "Q17_compensation_management_gap",
+      "label": "Compensation Management Gap",
+      "all_pct": 17,
+      "bamboo_pct": 25,
+      "gusto_pct": 12,
+      "rippling_pct": 13,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 30
+    },
+    {
+      "code": "Q17_recruiting_module_inadequacy",
+      "label": "Recruiting Module Inadequacy",
+      "all_pct": 12,
+      "bamboo_pct": 7,
+      "gusto_pct": 5,
+      "rippling_pct": 25,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 22
+    },
+    {
+      "code": "Q17_platform_scalability_ceiling",
+      "label": "Platform Scalability Ceiling",
+      "all_pct": 12,
+      "bamboo_pct": 7,
+      "gusto_pct": 28,
+      "rippling_pct": 2,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 22
+    },
+    {
+      "code": "Q17_recruiting_to_hris_handoff_gap",
+      "label": "Recruiting To Hris Handoff Gap",
+      "all_pct": 9,
+      "bamboo_pct": 2,
+      "gusto_pct": 22,
+      "rippling_pct": 3,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 16
+    },
+    {
+      "code": "Q17_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "all_pct": 8,
+      "bamboo_pct": 5,
+      "gusto_pct": 7,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 14
+    },
+    {
+      "code": "Q17_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "all_pct": 7,
+      "bamboo_pct": 7,
+      "gusto_pct": 10,
+      "rippling_pct": 5,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 13
+    },
+    {
+      "code": "Q17_hourly_workforce_management_gap",
+      "label": "Hourly Workforce Management Gap",
+      "all_pct": 6,
+      "bamboo_pct": 5,
+      "gusto_pct": 3,
+      "rippling_pct": 8,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 10
+    },
+    {
+      "code": "Q17_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "all_pct": 5,
+      "bamboo_pct": 0,
+      "gusto_pct": 15,
+      "rippling_pct": 0,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 9
+    },
+    {
+      "code": "Q17_vendor_roadmap_dissatisfaction",
+      "label": "Vendor Roadmap Dissatisfaction",
+      "all_pct": 4,
+      "bamboo_pct": 3,
+      "gusto_pct": 5,
+      "rippling_pct": 5,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 8
+    }
+  ],
+  "q18_bamboo": [
+    {
+      "code": "Q18_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "count": 31,
+      "pct": 52,
+      "all_pct": 18,
+      "sig": true
+    },
+    {
+      "code": "Q18_poor_system_integration",
+      "label": "Poor System Integration",
+      "count": 26,
+      "pct": 43,
+      "all_pct": 24,
+      "sig": true
+    },
+    {
+      "code": "Q18_manual_process_burden",
+      "label": "Manual Process Burden",
+      "count": 19,
+      "pct": 32,
+      "all_pct": 25,
+      "sig": false
+    },
+    {
+      "code": "Q18_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "count": 10,
+      "pct": 17,
+      "all_pct": 32,
+      "sig": true
+    },
+    {
+      "code": "Q18_reporting_gaps_undermining_strategic_role",
+      "label": "Reporting Gaps Undermining Strategic Role",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 23,
+      "sig": false
+    },
+    {
+      "code": "Q18_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "count": 7,
+      "pct": 12,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q18_performance_management_gap",
+      "label": "Performance Management Gap",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 4,
+      "sig": true
+    },
+    {
+      "code": "Q18_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 6,
+      "sig": false
+    },
+    {
+      "code": "Q18_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 2,
+      "sig": true
+    },
+    {
+      "code": "Q18_compensation_management_gap",
+      "label": "Compensation Management Gap",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 5,
+      "sig": false
+    },
+    {
+      "code": "Q18_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "count": 3,
+      "pct": 5,
+      "all_pct": 4,
+      "sig": false
+    },
+    {
+      "code": "Q18_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 14,
+      "sig": true
+    }
+  ],
+  "q18_comparison": [
+    {
+      "code": "Q18_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "all_pct": 32,
+      "bamboo_pct": 17,
+      "gusto_pct": 60,
+      "rippling_pct": 20,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 58
+    },
+    {
+      "code": "Q18_manual_process_burden",
+      "label": "Manual Process Burden",
+      "all_pct": 25,
+      "bamboo_pct": 32,
+      "gusto_pct": 25,
+      "rippling_pct": 18,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 45
+    },
+    {
+      "code": "Q18_poor_system_integration",
+      "label": "Poor System Integration",
+      "all_pct": 24,
+      "bamboo_pct": 43,
+      "gusto_pct": 8,
+      "rippling_pct": 22,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 44
+    },
+    {
+      "code": "Q18_reporting_gaps_undermining_strategic_role",
+      "label": "Reporting Gaps Undermining Strategic Role",
+      "all_pct": 23,
+      "bamboo_pct": 15,
+      "gusto_pct": 37,
+      "rippling_pct": 18,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 42
+    },
+    {
+      "code": "Q18_payroll_hris_integration_friction",
+      "label": "Payroll Hris Integration Friction",
+      "all_pct": 18,
+      "bamboo_pct": 52,
+      "gusto_pct": 0,
+      "rippling_pct": 2,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 32
+    },
+    {
+      "code": "Q18_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "all_pct": 14,
+      "bamboo_pct": 3,
+      "gusto_pct": 0,
+      "rippling_pct": 38,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 25
+    },
+    {
+      "code": "Q18_benefits_administration_friction",
+      "label": "Benefits Administration Friction",
+      "all_pct": 7,
+      "bamboo_pct": 12,
+      "gusto_pct": 5,
+      "rippling_pct": 3,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 12
+    },
+    {
+      "code": "Q18_recruiting_analytics_limitations",
+      "label": "Recruiting Analytics Limitations",
+      "all_pct": 6,
+      "bamboo_pct": 8,
+      "gusto_pct": 2,
+      "rippling_pct": 7,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 10
+    },
+    {
+      "code": "Q18_recruiting_to_hris_handoff_gap",
+      "label": "Recruiting To Hris Handoff Gap",
+      "all_pct": 5,
+      "bamboo_pct": 0,
+      "gusto_pct": 15,
+      "rippling_pct": 0,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 9
+    },
+    {
+      "code": "Q18_compensation_management_gap",
+      "label": "Compensation Management Gap",
+      "all_pct": 5,
+      "bamboo_pct": 5,
+      "gusto_pct": 3,
+      "rippling_pct": 7,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 9
+    },
+    {
+      "code": "Q18_compliance_tracking_gap",
+      "label": "Compliance Tracking Gap",
+      "all_pct": 4,
+      "bamboo_pct": 5,
+      "gusto_pct": 7,
+      "rippling_pct": 2,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 8
+    },
+    {
+      "code": "Q18_performance_management_gap",
+      "label": "Performance Management Gap",
+      "all_pct": 4,
+      "bamboo_pct": 8,
+      "gusto_pct": 2,
+      "rippling_pct": 2,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 7
+    },
+    {
+      "code": "Q18_manual_onboarding_process_pain",
+      "label": "Manual Onboarding Process Pain",
+      "all_pct": 3,
+      "bamboo_pct": 0,
+      "gusto_pct": 10,
+      "rippling_pct": 0,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 6
+    },
+    {
+      "code": "Q18_payroll_errors_eroding_trust",
+      "label": "Payroll Errors Eroding Trust",
+      "all_pct": 2,
+      "bamboo_pct": 7,
+      "gusto_pct": 0,
+      "rippling_pct": 0,
+      "bamboo_sig": "GR",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 4
+    },
+    {
+      "code": "Q18_vendor_roadmap_dissatisfaction",
+      "label": "Vendor Roadmap Dissatisfaction",
+      "all_pct": 2,
+      "bamboo_pct": 0,
+      "gusto_pct": 3,
+      "rippling_pct": 3,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 4
+    }
+  ],
+  "q19_bamboo": [
+    {
+      "code": "Q19_leadership_expects_data_driven_hr",
+      "label": "Leadership Expects Data Driven Hr",
+      "count": 25,
+      "pct": 42,
+      "all_pct": 43,
+      "sig": false
+    },
+    {
+      "code": "Q19_compensation_needs_emerged",
+      "label": "Compensation Needs Emerged",
+      "count": 24,
+      "pct": 40,
+      "all_pct": 32,
+      "sig": false
+    },
+    {
+      "code": "Q19_ai_features_on_radar",
+      "label": "Ai Features On Radar",
+      "count": 21,
+      "pct": 35,
+      "all_pct": 37,
+      "sig": false
+    },
+    {
+      "code": "Q19_performance_management_gap",
+      "label": "Performance Management Gap",
+      "count": 12,
+      "pct": 20,
+      "all_pct": 18,
+      "sig": false
+    },
+    {
+      "code": "Q19_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 16,
+      "sig": false
+    },
+    {
+      "code": "Q19_platform_scalability_ceiling",
+      "label": "Platform Scalability Ceiling",
+      "count": 11,
+      "pct": 18,
+      "all_pct": 16,
+      "sig": false
+    },
+    {
+      "code": "Q19_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "count": 8,
+      "pct": 13,
+      "all_pct": 7,
+      "sig": true
+    },
+    {
+      "code": "Q19_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q19_restructuring_shifted_priorities",
+      "label": "Restructuring Shifted Priorities",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 10,
+      "sig": false
+    },
+    {
+      "code": "Q19_lean_team_needs_efficiency_tools",
+      "label": "Lean Team Needs Efficiency Tools",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 4,
+      "sig": false
+    }
+  ],
+  "q19_comparison": [
+    {
+      "code": "Q19_leadership_expects_data_driven_hr",
+      "label": "Leadership Expects Data Driven Hr",
+      "all_pct": 43,
+      "bamboo_pct": 42,
+      "gusto_pct": 45,
+      "rippling_pct": 42,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 77
+    },
+    {
+      "code": "Q19_ai_features_on_radar",
+      "label": "Ai Features On Radar",
+      "all_pct": 37,
+      "bamboo_pct": 35,
+      "gusto_pct": 28,
+      "rippling_pct": 47,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "G",
+      "all_count": 66
+    },
+    {
+      "code": "Q19_compensation_needs_emerged",
+      "label": "Compensation Needs Emerged",
+      "all_pct": 32,
+      "bamboo_pct": 40,
+      "gusto_pct": 30,
+      "rippling_pct": 27,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 58
+    },
+    {
+      "code": "Q19_performance_management_gap",
+      "label": "Performance Management Gap",
+      "all_pct": 18,
+      "bamboo_pct": 20,
+      "gusto_pct": 18,
+      "rippling_pct": 17,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 33
+    },
+    {
+      "code": "Q19_multi_state_compliance_complexity",
+      "label": "Multi State Compliance Complexity",
+      "all_pct": 16,
+      "bamboo_pct": 18,
+      "gusto_pct": 15,
+      "rippling_pct": 15,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 29
+    },
+    {
+      "code": "Q19_platform_scalability_ceiling",
+      "label": "Platform Scalability Ceiling",
+      "all_pct": 16,
+      "bamboo_pct": 18,
+      "gusto_pct": 18,
+      "rippling_pct": 10,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 28
+    },
+    {
+      "code": "Q19_restructuring_shifted_priorities",
+      "label": "Restructuring Shifted Priorities",
+      "all_pct": 10,
+      "bamboo_pct": 7,
+      "gusto_pct": 10,
+      "rippling_pct": 13,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 18
+    },
+    {
+      "code": "Q19_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "all_pct": 7,
+      "bamboo_pct": 7,
+      "gusto_pct": 8,
+      "rippling_pct": 7,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 13
+    },
+    {
+      "code": "Q19_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "all_pct": 7,
+      "bamboo_pct": 13,
+      "gusto_pct": 7,
+      "rippling_pct": 2,
+      "bamboo_sig": "R",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 13
+    },
+    {
+      "code": "Q19_lean_team_needs_efficiency_tools",
+      "label": "Lean Team Needs Efficiency Tools",
+      "all_pct": 4,
+      "bamboo_pct": 7,
+      "gusto_pct": 5,
+      "rippling_pct": 2,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 8
+    },
+    {
+      "code": "Q19_investor_pressure_for_operational_maturity",
+      "label": "Investor Pressure For Operational Maturity",
+      "all_pct": 2,
+      "bamboo_pct": 0,
+      "gusto_pct": 0,
+      "rippling_pct": 5,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 3
+    }
+  ],
+  "q20_bamboo": {
+    "n": 60,
+    "categories": [
+      {
+        "label": "$20K to $50K",
+        "count": 21,
+        "pct": 35
+      },
+      {
+        "label": "$50K to $100K ($50-100K to $50-100K)",
+        "count": 13,
+        "pct": 22
+      },
+      {
+        "label": "$50K to $100K",
+        "count": 10,
+        "pct": 17
+      },
+      {
+        "label": "$20K to $50K ($20-50K to $20-50K)",
+        "count": 7,
+        "pct": 12
+      },
+      {
+        "label": "$100K to $250K",
+        "count": 4,
+        "pct": 7
+      },
+      {
+        "label": "$5K to $20K",
+        "count": 3,
+        "pct": 5
+      },
+      {
+        "label": "$5K to $20K ($5-20K to $5-20K)",
+        "count": 1,
+        "pct": 2
+      },
+      {
+        "label": "$100K to $250K ($100-250K to $100-250K)",
+        "count": 1,
+        "pct": 2
+      }
+    ]
+  },
+  "q20_comparison": {
+    "bamboo": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "$20K to $50K",
+          "count": 21,
+          "pct": 35
+        },
+        {
+          "label": "$50K to $100K ($50-100K to $50-100K)",
+          "count": 13,
+          "pct": 22
+        },
+        {
+          "label": "$50K to $100K",
+          "count": 10,
+          "pct": 17
+        },
+        {
+          "label": "$20K to $50K ($20-50K to $20-50K)",
+          "count": 7,
+          "pct": 12
+        },
+        {
+          "label": "$100K to $250K",
+          "count": 4,
+          "pct": 7
+        },
+        {
+          "label": "$5K to $20K",
+          "count": 3,
+          "pct": 5
+        },
+        {
+          "label": "$5K to $20K ($5-20K to $5-20K)",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "label": "$100K to $250K ($100-250K to $100-250K)",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    },
+    "gusto": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "$20K to $50K",
+          "count": 22,
+          "pct": 37
+        },
+        {
+          "label": "$20K to $50K ($20-50K to $20-50K)",
+          "count": 11,
+          "pct": 18
+        },
+        {
+          "label": "$5K to $20K",
+          "count": 10,
+          "pct": 17
+        },
+        {
+          "label": "$50K to $100K ($50-100K to $50-100K)",
+          "count": 7,
+          "pct": 12
+        },
+        {
+          "label": "$50K to $100K",
+          "count": 5,
+          "pct": 8
+        },
+        {
+          "label": "$100K to $250K",
+          "count": 4,
+          "pct": 7
+        },
+        {
+          "label": "More than $250K",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    },
+    "rippling": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "$100K to $250K",
+          "count": 20,
+          "pct": 33
+        },
+        {
+          "label": "$50K to $100K ($50-100K to $50-100K)",
+          "count": 14,
+          "pct": 23
+        },
+        {
+          "label": "$50K to $100K",
+          "count": 13,
+          "pct": 22
+        },
+        {
+          "label": "$20K to $50K",
+          "count": 7,
+          "pct": 12
+        },
+        {
+          "label": "$100K to $250K ($100-250K to $100-250K)",
+          "count": 3,
+          "pct": 5
+        },
+        {
+          "label": "More than $250K ($250K+ to $250K+)",
+          "count": 2,
+          "pct": 3
+        },
+        {
+          "label": "$20K to $50K ($20-50K to $20-50K)",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "q21_bamboo": {
+    "n": 60,
+    "categories": [
+      {
+        "label": "Somewhat yes / mostly reasonable with caveats",
+        "count": 48,
+        "pct": 80
+      },
+      {
+        "label": "Somewhat no / not really reasonable",
+        "count": 12,
+        "pct": 20
+      }
+    ]
+  },
+  "q21_comparison": {
+    "bamboo": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat yes / mostly reasonable with caveats",
+          "count": 48,
+          "pct": 80
+        },
+        {
+          "label": "Somewhat no / not really reasonable",
+          "count": 12,
+          "pct": 20
+        }
+      ]
+    },
+    "gusto": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat yes / mostly reasonable with caveats",
+          "count": 52,
+          "pct": 87
+        },
+        {
+          "label": "Somewhat no / not really reasonable",
+          "count": 7,
+          "pct": 12
+        },
+        {
+          "label": "Yes, clearly reasonable",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    },
+    "rippling": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat yes / mostly reasonable with caveats",
+          "count": 59,
+          "pct": 98
+        },
+        {
+          "label": "Somewhat no / not really reasonable",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "q22_bamboo": {
+    "n": 60,
+    "categories": [
+      {
+        "label": "$10K to $25K",
+        "count": 26,
+        "pct": 43
+      },
+      {
+        "label": "$5K to $10K",
+        "count": 13,
+        "pct": 22
+      },
+      {
+        "label": "$10K to $25K ($10-25K to $10-25K)",
+        "count": 9,
+        "pct": 15
+      },
+      {
+        "label": "$5K to $10K ($5-10K to $5-10K)",
+        "count": 5,
+        "pct": 8
+      },
+      {
+        "label": "Under $5K",
+        "count": 2,
+        "pct": 3
+      },
+      {
+        "label": "$25K to $50K ($25-50K to $25-50K)",
+        "count": 2,
+        "pct": 3
+      },
+      {
+        "label": "$25K to $50K",
+        "count": 2,
+        "pct": 3
+      },
+      {
+        "label": "More than $50K ($50K+ to $50K+)",
+        "count": 1,
+        "pct": 2
+      }
+    ]
+  },
+  "wtp_reg_bamboo": {
+    "intercept": 18714,
+    "r2": 0.312,
+    "n": 60,
+    "points": [
+      {
+        "label": "Payroll Hris Integration Friction",
+        "prevalence": 52,
+        "coef": -5002,
+        "ci_low": -9772,
+        "ci_high": -232,
+        "sig": true,
+        "n_cited": 31
+      },
+      {
+        "label": "Poor System Integration",
+        "prevalence": 43,
+        "coef": -677,
+        "ci_low": -4369,
+        "ci_high": 3014,
+        "sig": false,
+        "n_cited": 26
+      },
+      {
+        "label": "Manual Process Burden",
+        "prevalence": 32,
+        "coef": 856,
+        "ci_low": -2157,
+        "ci_high": 3869,
+        "sig": false,
+        "n_cited": 19
+      },
+      {
+        "label": "Reporting Gaps",
+        "prevalence": 17,
+        "coef": 1586,
+        "ci_low": -3396,
+        "ci_high": 6568,
+        "sig": false,
+        "n_cited": 10
+      },
+      {
+        "label": "Benefits Administration Friction",
+        "prevalence": 12,
+        "coef": -8407,
+        "ci_low": -13630,
+        "ci_high": -3185,
+        "sig": true,
+        "n_cited": 7
+      },
+      {
+        "label": "Performance Management Gap",
+        "prevalence": 8,
+        "coef": -7649,
+        "ci_low": -13795,
+        "ci_high": -1504,
+        "sig": true,
+        "n_cited": 5
+      },
+      {
+        "label": "Recruiting Analytics Limitations",
+        "prevalence": 8,
+        "coef": -8237,
+        "ci_low": -13828,
+        "ci_high": -2645,
+        "sig": true,
+        "n_cited": 5
+      }
+    ]
+  },
+  "wtp_reg_gusto": {
+    "intercept": 7345,
+    "r2": 0.285,
+    "n": 60,
+    "points": [
+      {
+        "label": "Reporting Gaps",
+        "prevalence": 60,
+        "coef": 6181,
+        "ci_low": 2813,
+        "ci_high": 9548,
+        "sig": true,
+        "n_cited": 36
+      },
+      {
+        "label": "Manual Process Burden",
+        "prevalence": 25,
+        "coef": 1116,
+        "ci_low": -1880,
+        "ci_high": 4113,
+        "sig": false,
+        "n_cited": 15
+      },
+      {
+        "label": "Recruiting To Hris Handoff Gap",
+        "prevalence": 15,
+        "coef": -278,
+        "ci_low": -4527,
+        "ci_high": 3971,
+        "sig": false,
+        "n_cited": 9
+      },
+      {
+        "label": "Manual Onboarding Process Pain",
+        "prevalence": 10,
+        "coef": 6908,
+        "ci_low": 2180,
+        "ci_high": 11636,
+        "sig": true,
+        "n_cited": 6
+      },
+      {
+        "label": "Poor System Integration",
+        "prevalence": 8,
+        "coef": -1074,
+        "ci_low": -5925,
+        "ci_high": 3776,
+        "sig": false,
+        "n_cited": 5
+      }
+    ]
+  },
+  "wtp_reg_rippling": {
+    "intercept": 16589,
+    "r2": 0.108,
+    "n": 60,
+    "points": [
+      {
+        "label": "Vendor Support Frustration",
+        "prevalence": 38,
+        "coef": -611,
+        "ci_low": -5159,
+        "ci_high": 3936,
+        "sig": false,
+        "n_cited": 23
+      },
+      {
+        "label": "Poor System Integration",
+        "prevalence": 22,
+        "coef": 5062,
+        "ci_low": -134,
+        "ci_high": 10258,
+        "sig": false,
+        "n_cited": 13
+      },
+      {
+        "label": "Reporting Gaps",
+        "prevalence": 20,
+        "coef": 697,
+        "ci_low": -4401,
+        "ci_high": 5795,
+        "sig": false,
+        "n_cited": 12
+      },
+      {
+        "label": "Manual Process Burden",
+        "prevalence": 18,
+        "coef": -271,
+        "ci_low": -5872,
+        "ci_high": 5330,
+        "sig": false,
+        "n_cited": 11
+      }
+    ]
+  },
+  "q23_bamboo": {
+    "n": 60,
+    "categories": [
+      {
+        "label": "Somewhat unlikely to switch ( to )",
+        "count": 30,
+        "pct": 50
+      },
+      {
+        "label": "Somewhat likely to switch ( to )",
+        "count": 27,
+        "pct": 45
+      },
+      {
+        "label": "Very unlikely to switch ( to )",
+        "count": 3,
+        "pct": 5
+      }
+    ]
+  },
+  "q23_comparison": {
+    "bamboo": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat unlikely to switch ( to )",
+          "count": 30,
+          "pct": 50
+        },
+        {
+          "label": "Somewhat likely to switch ( to )",
+          "count": 27,
+          "pct": 45
+        },
+        {
+          "label": "Very unlikely to switch ( to )",
+          "count": 3,
+          "pct": 5
+        }
+      ]
+    },
+    "gusto": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat likely to switch ( to )",
+          "count": 27,
+          "pct": 45
+        },
+        {
+          "label": "Somewhat unlikely to switch ( to )",
+          "count": 27,
+          "pct": 45
+        },
+        {
+          "label": "Very unlikely to switch ( to )",
+          "count": 6,
+          "pct": 10
+        }
+      ]
+    },
+    "rippling": {
+      "n": 60,
+      "categories": [
+        {
+          "label": "Somewhat unlikely to switch ( to )",
+          "count": 33,
+          "pct": 55
+        },
+        {
+          "label": "Very unlikely to switch ( to )",
+          "count": 25,
+          "pct": 42
+        },
+        {
+          "label": "Somewhat likely to switch ( to )",
+          "count": 2,
+          "pct": 3
+        }
+      ]
+    }
+  },
+  "q23_comparison_pw": [
+    {
+      "label": "Very unlikely to switch",
+      "bamboo_pct": 5,
+      "gusto_pct": 10,
+      "rippling_pct": 42,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG"
+    },
+    {
+      "label": "Somewhat unlikely to switch",
+      "bamboo_pct": 50,
+      "gusto_pct": 45,
+      "rippling_pct": 55,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": ""
+    },
+    {
+      "label": "Somewhat likely to switch",
+      "bamboo_pct": 45,
+      "gusto_pct": 45,
+      "rippling_pct": 3,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": ""
+    }
+  ],
+  "q24_bamboo": [
+    {
+      "code": "Q24_mid_market_platform_capability_gap",
+      "label": "Mid Market Platform Capability Gap",
+      "count": 38,
+      "pct": 63,
+      "all_pct": 58,
+      "sig": false
+    },
+    {
+      "code": "Q24_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "count": 35,
+      "pct": 58,
+      "all_pct": 51,
+      "sig": false
+    },
+    {
+      "code": "Q24_lean_team_needs_efficiency_tools",
+      "label": "Lean Team Needs Efficiency Tools",
+      "count": 24,
+      "pct": 40,
+      "all_pct": 28,
+      "sig": true
+    },
+    {
+      "code": "Q24_sales_to_production_reality_gap",
+      "label": "Sales To Production Reality Gap",
+      "count": 21,
+      "pct": 35,
+      "all_pct": 26,
+      "sig": false
+    },
+    {
+      "code": "Q24_industry_specific_platform_mismatch",
+      "label": "Industry Specific Platform Mismatch",
+      "count": 14,
+      "pct": 23,
+      "all_pct": 26,
+      "sig": false
+    },
+    {
+      "code": "Q24_reporting_gaps_undermining_strategic_role",
+      "label": "Reporting Gaps Undermining Strategic Role",
+      "count": 9,
+      "pct": 15,
+      "all_pct": 19,
+      "sig": false
+    },
+    {
+      "code": "Q24_switching_cost_barrier",
+      "label": "Switching Cost Barrier",
+      "count": 7,
+      "pct": 12,
+      "all_pct": 7,
+      "sig": false
+    },
+    {
+      "code": "Q24_ai_hype_skepticism",
+      "label": "Ai Hype Skepticism",
+      "count": 6,
+      "pct": 10,
+      "all_pct": 18,
+      "sig": false
+    },
+    {
+      "code": "Q24_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "count": 5,
+      "pct": 8,
+      "all_pct": 16,
+      "sig": false
+    },
+    {
+      "code": "Q24_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 8,
+      "sig": false
+    },
+    {
+      "code": "Q24_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "count": 4,
+      "pct": 7,
+      "all_pct": 11,
+      "sig": false
+    },
+    {
+      "code": "Q24_hourly_workforce_management_gap",
+      "label": "Hourly Workforce Management Gap",
+      "count": 2,
+      "pct": 3,
+      "all_pct": 8,
+      "sig": false
+    },
+    {
+      "code": "Q24_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "count": 1,
+      "pct": 2,
+      "all_pct": 11,
+      "sig": true
+    }
+  ],
+  "q24_comparison": [
+    {
+      "code": "Q24_mid_market_platform_capability_gap",
+      "label": "Mid Market Platform Capability Gap",
+      "all_pct": 58,
+      "bamboo_pct": 63,
+      "gusto_pct": 75,
+      "rippling_pct": 35,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 104
+    },
+    {
+      "code": "Q24_fragmented_multi_tool_stack",
+      "label": "Fragmented Multi Tool Stack",
+      "all_pct": 51,
+      "bamboo_pct": 58,
+      "gusto_pct": 57,
+      "rippling_pct": 38,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 92
+    },
+    {
+      "code": "Q24_lean_team_needs_efficiency_tools",
+      "label": "Lean Team Needs Efficiency Tools",
+      "all_pct": 28,
+      "bamboo_pct": 40,
+      "gusto_pct": 20,
+      "rippling_pct": 25,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 51
+    },
+    {
+      "code": "Q24_sales_to_production_reality_gap",
+      "label": "Sales To Production Reality Gap",
+      "all_pct": 26,
+      "bamboo_pct": 35,
+      "gusto_pct": 18,
+      "rippling_pct": 25,
+      "bamboo_sig": "G",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 47
+    },
+    {
+      "code": "Q24_industry_specific_platform_mismatch",
+      "label": "Industry Specific Platform Mismatch",
+      "all_pct": 26,
+      "bamboo_pct": 23,
+      "gusto_pct": 20,
+      "rippling_pct": 35,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 47
+    },
+    {
+      "code": "Q24_reporting_gaps_undermining_strategic_role",
+      "label": "Reporting Gaps Undermining Strategic Role",
+      "all_pct": 19,
+      "bamboo_pct": 15,
+      "gusto_pct": 22,
+      "rippling_pct": 20,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 34
+    },
+    {
+      "code": "Q24_ai_hype_skepticism",
+      "label": "Ai Hype Skepticism",
+      "all_pct": 18,
+      "bamboo_pct": 10,
+      "gusto_pct": 15,
+      "rippling_pct": 28,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "B",
+      "all_count": 32
+    },
+    {
+      "code": "Q24_reporting_inadequacy_frustration",
+      "label": "Reporting Inadequacy Frustration",
+      "all_pct": 16,
+      "bamboo_pct": 8,
+      "gusto_pct": 27,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "BR",
+      "rippling_sig": "",
+      "all_count": 28
+    },
+    {
+      "code": "Q24_platform_consolidation_motivation",
+      "label": "Platform Consolidation Motivation",
+      "all_pct": 11,
+      "bamboo_pct": 7,
+      "gusto_pct": 8,
+      "rippling_pct": 18,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 20
+    },
+    {
+      "code": "Q24_vendor_support_frustration",
+      "label": "Vendor Support Frustration",
+      "all_pct": 11,
+      "bamboo_pct": 2,
+      "gusto_pct": 2,
+      "rippling_pct": 28,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 19
+    },
+    {
+      "code": "Q24_healthcare_specific_compliance_needs",
+      "label": "Healthcare Specific Compliance Needs",
+      "all_pct": 8,
+      "bamboo_pct": 7,
+      "gusto_pct": 7,
+      "rippling_pct": 12,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "",
+      "all_count": 15
+    },
+    {
+      "code": "Q24_hourly_workforce_management_gap",
+      "label": "Hourly Workforce Management Gap",
+      "all_pct": 8,
+      "bamboo_pct": 3,
+      "gusto_pct": 3,
+      "rippling_pct": 17,
+      "bamboo_sig": "",
+      "gusto_sig": "",
+      "rippling_sig": "BG",
+      "all_count": 14
+    },
+    {
+      "code": "Q24_switching_cost_barrier",
+      "label": "Switching Cost Barrier",
+      "all_pct": 7,
+      "bamboo_pct": 12,
+      "gusto_pct": 8,
+      "rippling_pct": 0,
+      "bamboo_sig": "R",
+      "gusto_sig": "R",
+      "rippling_sig": "",
+      "all_count": 12
+    }
+  ]
+}

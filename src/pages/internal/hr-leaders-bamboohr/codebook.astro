@@ -1,0 +1,539 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+let dataAvailable = true;
+let dataScript = '';
+try {
+  const dataPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/HR Leaders BambooHR/A4 Coded Interview Data - Simulated/codebook_page_data.json');
+  const DATA = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  dataScript = '<script>window.__CB=' + JSON.stringify(DATA).replace(/<\//g, '<\\/') + ';<' + '/script>';
+} catch {
+  dataAvailable = false;
+}
+---
+{!dataAvailable && (
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow" /><title>Data Not Available</title></head>
+<body style="font-family:system-ui;padding:4rem;text-align:center;color:#333">
+<h1 style="margin-bottom:1rem">Codebook data not available</h1>
+<p>This page requires research data files that are not present in this deployment.</p>
+<p style="margin-top:1rem"><a href="/internal/hr-leaders-bamboohr/">Back to Study</a></p>
+</body></html>
+)}
+{dataAvailable && (
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+<title>Codebook Review — HR Leaders BambooHR (Simulated)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.6; background: var(--paper); }
+.container { max-width: 980px; margin: 0 auto; padding: 0 32px; }
+
+/* Header */
+.page-header { padding: 40px 0 32px; border-bottom: 2px solid var(--border); }
+.logo { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 24px; }
+.page-header h1 { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.page-header .sub { font-size: 15px; color: var(--muted); }
+.track-badge { display: inline-block; background: #EEF2FF; color: #4F46E5; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; margin-left: 10px; vertical-align: middle; }
+
+/* Nav */
+.page-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+.page-nav a { padding: 14px 20px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.page-nav a:hover { color: var(--ink); }
+.page-nav a.active { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+
+/* Stats grid */
+.stats-section { padding: 40px 0 32px; border-bottom: 1px solid var(--border); }
+.section-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+.stat-grid-2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.stat-card { padding: 20px 16px; background: var(--card-bg); border-radius: 10px; text-align: center; }
+.stat-num { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+.stat-num.amber { color: #D97706; }
+.stat-num.red { color: #DC2626; }
+.stat-num.blue { color: #2563EB; }
+.stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+
+/* Reliability table section */
+.rel-section { padding: 40px 0 32px; border-bottom: 1px solid var(--border); }
+.filter-row { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-row input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 2px; font-size: 13px; font-family: var(--sans); width: 260px; }
+.filter-row input:focus { outline: none; border-color: var(--ink); }
+.filter-btn { padding: 7px 14px; border: 1px solid var(--border); border-radius: 2px; font-size: 12px; font-weight: 500; cursor: pointer; background: var(--paper); color: var(--rule); }
+.filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.rel-table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; }
+th:hover { color: var(--rule); }
+th .sort-arrow { margin-left: 4px; opacity: 0.4; }
+th.sorted .sort-arrow { opacity: 1; color: var(--ink); }
+td { padding: 9px 12px; border-bottom: 1px solid #F0F0F0; vertical-align: middle; }
+tr:hover td { background: #F9FAFB; }
+tr.low-kappa td { background: #FEF2F2; }
+tr.low-kappa:hover td { background: #FEE2E2; }
+.kappa-badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-weight: 700; }
+.kappa-badge.green { background: rgba(184, 52, 27, 0.08); color: #166534; }
+.kappa-badge.yellow { background: #FEF9C3; color: #854D0E; }
+.kappa-badge.red { background: #FEE2E2; color: #991B1B; }
+.kappa-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.kappa-bar-track { width: 80px; height: 8px; background: #F0F0F0; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+.kappa-bar-fill { height: 100%; border-radius: 2px; }
+.kappa-val { font-size: 12px; font-weight: 600; color: var(--rule); }
+.result-count { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+/* Low kappa deep dive */
+.deep-section { padding: 40px 0 0; }
+.deep-code { margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+.deep-code:last-child { border-bottom: none; }
+.code-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.code-name { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); }
+.kappa-pill { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.kappa-big { font-size: 22px; font-weight: 700; color: #DC2626; font-family: var(--serif); }
+.kappa-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.code-def { background: var(--card-bg); border-radius: 2px; padding: 16px 20px; margin-bottom: 16px; }
+.def-row { margin-bottom: 8px; }
+.def-row:last-child { margin-bottom: 0; }
+.def-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 2px; }
+.def-text { font-size: 13px; color: var(--rule); }
+.def-text.include { color: #166534; }
+.def-text.exclude { color: #991B1B; }
+.code-stats { display: flex; gap: 24px; margin-bottom: 20px; }
+.cstat { text-align: center; padding: 12px 20px; background: var(--card-bg); border-radius: 2px; min-width: 90px; }
+.cstat-num { font-size: 22px; font-weight: 700; font-family: var(--serif); color: var(--rule); }
+.cstat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-top: 2px; }
+
+/* Disagreement table */
+.disag-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.disag-title { font-size: 14px; font-weight: 600; color: var(--rule); }
+.expand-all-btn { font-size: 12px; color: var(--ink); background: none; border: none; cursor: pointer; font-weight: 500; }
+.disag-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.disag-table th { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
+.disag-table td { padding: 10px 12px; border-bottom: 1px solid #F0F0F0; vertical-align: top; }
+.disag-row:hover .disag-table td { background: #F9FAFB; }
+.response-cell { max-width: 320px; }
+.response-text { font-size: 12px; color: var(--rule); line-height: 1.5; }
+.q-label { font-size: 10px; color: #9CA3AF; margin-bottom: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+.demo-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.demo-tag { font-size: 10px; background: #F3F4F6; color: var(--muted); padding: 1px 6px; border-radius: 10px; }
+.vote-cell { text-align: center; }
+.vote { display: inline-block; width: 28px; height: 28px; border-radius: 50%; line-height: 28px; font-size: 12px; font-weight: 700; }
+.vote.yes { background: rgba(184, 52, 27, 0.08); color: #166534; }
+.vote.no { background: #F3F4F6; color: #9CA3AF; }
+.final-cell { text-align: center; }
+.final-yes { display: inline-block; background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; }
+.final-no { display: inline-block; background: #F3F4F6; color: #9CA3AF; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; }
+.expand-btn { background: none; border: 1px solid var(--border); border-radius: 2px; padding: 4px 10px; font-size: 11px; cursor: pointer; color: var(--muted); white-space: nowrap; font-family: var(--sans); }
+.expand-btn:hover { border-color: var(--ink); color: var(--ink); }
+.reasoning-row td { padding: 0; border-bottom: 1px solid #F0F0F0; }
+.reasoning-inner { padding: 12px 12px 16px; background: #FAFAFA; display: none; }
+.reasoning-inner.open { display: block; }
+.reasoning-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.reasoning-box { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 12px 14px; }
+.reasoning-box.a1 { border-top: 3px solid #3B82F6; }
+.reasoning-box.a2 { border-top: 3px solid #8B5CF6; }
+.reasoning-box.a3 { border-top: 3px solid var(--ink); }
+.r-agent { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; }
+.r-agent.a1 { color: #3B82F6; }
+.r-agent.a2 { color: #8B5CF6; }
+.r-agent.a3 { color: var(--ink); }
+.r-text { font-size: 12px; color: var(--rule); line-height: 1.5; }
+.r-verdict { margin-top: 8px; padding-top: 8px; border-top: 1px solid #F0F0F0; font-size: 11px; font-weight: 600; }
+.favored-a { color: #3B82F6; }
+.favored-b { color: #8B5CF6; }
+.favored-neither { color: var(--muted); }
+
+/* Overline */
+.overline { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); margin-bottom: 4px; }
+
+/* Print */
+@media print {
+  .filter-row, .expand-all-btn, .expand-btn, .page-nav { display: none !important; }
+  .reasoning-inner { display: block !important; }
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .stat-grid, .stat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .reasoning-grid { grid-template-columns: 1fr; }
+  .code-header { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="bv-logo" aria-label="BuyerVoice.AI" style="display:inline-block;font-family:var(--serif);line-height:1;margin:0 auto 48px;"><span style="font-size:44px;font-weight:600;color:var(--ink);letter-spacing:-0.03em;">BuyerVoice</span><span style="font-size:30px;font-weight:500;color:var(--signal);letter-spacing:-0.02em;margin-left:2px;">.AI</span></div>
+    <div class="overline">HR Leaders BambooHR Study</div>
+    <h1>Codebook Review <span class="track-badge">Simulated Track</span></h1>
+    <div class="sub">Inter-rater reliability report and low-kappa code analysis &mdash; April 5, 2026</div>
+  </div>
+
+  <nav class="page-nav">
+    <a href="#summary" class="active">Summary</a>
+    <a href="#reliability">All Codes</a>
+    <a href="#deep-dive">Low-Kappa Deep Dive</a>
+  </nav>
+
+  <!-- Summary Stats -->
+  <section class="stats-section" id="summary">
+    <div class="overline">Run Summary</div>
+    <div class="section-title">Coding Quality Overview</div>
+    <div class="section-sub">3-agent application pipeline: Agent 1 (Inclusive Coder) + Agent 2 (Conservative Coder) coded independently; Agent 3 (Neutral Arbiter) resolved all disagreements.</div>
+    <div class="stat-grid" id="stat-grid-1">
+      <div class="stat-card">
+        <div class="stat-num" id="s-kappa">0.909</div>
+        <div class="stat-label">Overall Kappa</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-segments">4,500</div>
+        <div class="stat-label">Segments Coded</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-participants">180</div>
+        <div class="stat-label">Participants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-codes">88</div>
+        <div class="stat-label">Codes Evaluated</div>
+      </div>
+    </div>
+    <div class="stat-grid-2" style="margin-top:16px" id="stat-grid-2">
+      <div class="stat-card">
+        <div class="stat-num blue" id="s-disag">1,152</div>
+        <div class="stat-label">Disagreements Resolved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num amber" id="s-flagged">898</div>
+        <div class="stat-label">Ambiguous Flags</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num red" id="s-low">4</div>
+        <div class="stat-label">Codes Below &kappa; 0.65</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-agree">74.4%</div>
+        <div class="stat-label">Agent 1 vs 2 Agreement</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Reliability Table -->
+  <section class="rel-section" id="reliability">
+    <div class="overline">Inter-Rater Reliability</div>
+    <div class="section-title">All Codes — Kappa by Code</div>
+    <div class="section-sub">Threshold for client-ready coding: &kappa; &ge; 0.65. Codes below threshold are highlighted and should have definitions tightened before the next study.</div>
+    <div class="filter-row">
+      <input type="text" id="code-search" placeholder="Search code name..." oninput="filterTable()">
+      <button class="filter-btn active" id="btn-all" onclick="setFilter('all')">All codes</button>
+      <button class="filter-btn" id="btn-low" onclick="setFilter('low')">Below threshold</button>
+      <button class="filter-btn" id="btn-warn" onclick="setFilter('warn')">Below 0.80</button>
+    </div>
+    <div class="rel-table-wrap">
+      <table id="rel-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable('name')" id="th-name">Code Name <span class="sort-arrow">&#8597;</span></th>
+            <th onclick="sortTable('kappa')" id="th-kappa" class="sorted">Kappa <span class="sort-arrow">&#8593;</span></th>
+            <th onclick="sortTable('agree')" id="th-agree">Agreement % <span class="sort-arrow">&#8597;</span></th>
+            <th onclick="sortTable('n_disagree')" id="th-n_disagree">Disagreements <span class="sort-arrow">&#8597;</span></th>
+            <th onclick="sortTable('a1_count')" id="th-a1_count">A1 Count <span class="sort-arrow">&#8597;</span></th>
+            <th onclick="sortTable('a2_count')" id="th-a2_count">A2 Count <span class="sort-arrow">&#8597;</span></th>
+          </tr>
+        </thead>
+        <tbody id="rel-tbody">
+        </tbody>
+      </table>
+    </div>
+    <div class="result-count" id="result-count"></div>
+  </section>
+
+  <!-- Low-Kappa Deep Dive -->
+  <section class="deep-section" id="deep-dive">
+    <div class="overline">Reliability Deep Dive</div>
+    <div class="section-title" style="margin-bottom:6px">Low-Kappa Code Analysis</div>
+    <div class="section-sub" style="margin-bottom:40px">For each code below the &kappa; 0.65 threshold: definition, inter-rater disagreements, and Agent 3&rsquo;s arbitration reasoning. Use this to identify where definition language needs tightening.</div>
+    <div id="deep-container"></div>
+  </section>
+
+</div>
+
+<Fragment set:html={dataScript} />
+
+<script is:inline>
+const D = window.__CB;
+
+// ---- Reliability Table ----
+let tableData = D.rel_table.map(r => ({...r}));
+let sortKey = 'kappa';
+let sortDir = 1; // 1 = asc
+let filterMode = 'all';
+
+function kappaBgColor(k) {
+  if (k >= 0.80) return 'var(--ink)';
+  if (k >= 0.65) return '#F59E0B';
+  return '#DC2626';
+}
+function kappaBadgeClass(k) {
+  if (k >= 0.80) return 'green';
+  if (k >= 0.65) return 'yellow';
+  return 'red';
+}
+
+function renderTable() {
+  const search = document.getElementById('code-search').value.toLowerCase();
+  let rows = tableData.filter(r => {
+    if (search && !r.name.toLowerCase().includes(search)) return false;
+    if (filterMode === 'low') return r.kappa < 0.65;
+    if (filterMode === 'warn') return r.kappa < 0.80;
+    return true;
+  });
+  rows.sort((a, b) => {
+    let va = a[sortKey], vb = b[sortKey];
+    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
+    return sortDir * (va - vb);
+  });
+
+  const tbody = document.getElementById('rel-tbody');
+  tbody.innerHTML = rows.map(r => {
+    const pct = Math.round(r.kappa * 100);
+    const isLow = r.kappa < 0.65;
+    return `<tr class="${isLow ? 'low-kappa' : ''}">
+      <td><strong style="font-size:13px">${r.name}</strong></td>
+      <td>
+        <div class="kappa-bar-wrap">
+          <div class="kappa-bar-track"><div class="kappa-bar-fill" style="width:${pct}%;background:${kappaBgColor(r.kappa)}"></div></div>
+          <span class="kappa-badge ${kappaBadgeClass(r.kappa)}">${r.kappa.toFixed(3)}</span>
+        </div>
+      </td>
+      <td>${r.agree_pct.toFixed(1)}%</td>
+      <td>${r.n_disagree}</td>
+      <td>${r.a1_count}</td>
+      <td>${r.a2_count}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('result-count').textContent = `Showing ${rows.length} of ${tableData.length} codes`;
+}
+
+function sortTable(key) {
+  if (sortKey === key) { sortDir *= -1; }
+  else { sortKey = key; sortDir = key === 'name' ? 1 : 1; }
+  document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
+  const thEl = document.getElementById('th-' + key);
+  if (thEl) {
+    thEl.classList.add('sorted');
+    thEl.querySelector('.sort-arrow').innerHTML = sortDir === 1 ? '&#8593;' : '&#8595;';
+  }
+  renderTable();
+}
+
+function filterTable() { renderTable(); }
+
+function setFilter(mode) {
+  filterMode = mode;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + mode).classList.add('active');
+  renderTable();
+}
+
+// ---- Deep Dive ----
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderDeepDive() {
+  const container = document.getElementById('deep-container');
+  const html = D.low_kappa.map((code, ci) => {
+    const disags = code.disagreements;
+    const rows = disags.map((d, di) => {
+      const id = `c${ci}_d${di}`;
+      const a1yes = d.a1;
+      const a2yes = d.a2;
+      const finalyes = d.final;
+      const favLabel = d.favored === 'A' ? 'Favored Coder A' : d.favored === 'B' ? 'Favored Coder B' : 'Neither (split decision)';
+      const favClass = d.favored === 'A' ? 'favored-a' : d.favored === 'B' ? 'favored-b' : 'favored-neither';
+      const demoTags = [d.demo.seniority, d.demo.function, d.demo.company_size, d.demo.industry, d.demo.current_tool]
+        .filter(Boolean).map(t => `<span class="demo-tag">${esc(t)}</span>`).join('');
+      const responsePreview = esc(d.response.length > 300 ? d.response.slice(0,300) + '...' : d.response);
+
+      return `
+        <tr class="disag-row" id="row-${id}">
+          <td class="response-cell">
+            <div class="q-label">${esc(d.qid)}</div>
+            <div class="response-text">${responsePreview}</div>
+            <div class="demo-tags">${demoTags}</div>
+          </td>
+          <td class="vote-cell"><span class="vote ${a1yes ? 'yes' : 'no'}">${a1yes ? 'Y' : 'N'}</span></td>
+          <td class="vote-cell"><span class="vote ${a2yes ? 'yes' : 'no'}">${a2yes ? 'Y' : 'N'}</span></td>
+          <td class="final-cell"><span class="${finalyes ? 'final-yes' : 'final-no'}">${finalyes ? 'Coded' : 'Not coded'}</span></td>
+          <td><button class="expand-btn" onclick="toggleReasoning('${id}')">Reasoning +</button></td>
+        </tr>
+        <tr class="reasoning-row" id="reasoning-${id}">
+          <td colspan="5">
+            <div class="reasoning-inner" id="inner-${id}">
+              <div class="reasoning-grid">
+                <div class="reasoning-box a1">
+                  <div class="r-agent a1">Agent 1 &mdash; Inclusive Coder <span style="float:right;font-weight:400;color:var(--rule)">${a1yes ? 'CODED' : 'NOT CODED'}</span></div>
+                  <div class="r-text">${esc(d.r1) || '<em style="color:#9CA3AF">No reasoning captured for this code</em>'}</div>
+                </div>
+                <div class="reasoning-box a2">
+                  <div class="r-agent a2">Agent 2 &mdash; Conservative Coder <span style="float:right;font-weight:400;color:var(--rule)">${a2yes ? 'CODED' : 'NOT CODED'}</span></div>
+                  <div class="r-text">${esc(d.r2) || '<em style="color:#9CA3AF">No reasoning captured for this code</em>'}</div>
+                </div>
+                <div class="reasoning-box a3">
+                  <div class="r-agent a3">Agent 3 &mdash; Neutral Arbiter <span style="float:right;font-weight:400;color:var(--rule)">${finalyes ? 'CODED' : 'NOT CODED'}</span></div>
+                  <div class="r-text">${esc(d.r3) || '<em style="color:#9CA3AF">No reasoning captured</em>'}</div>
+                  <div class="r-verdict ${favClass}">${esc(favLabel)}</div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+
+    const pctA1 = Math.round((code.a1_count / D.n_segments) * 100 * 10) / 10;
+    const pctA2 = Math.round((code.a2_count / D.n_segments) * 100 * 10) / 10;
+
+    return `
+      <div class="deep-code" id="code-${ci}">
+        <div class="code-header">
+          <div>
+            <div class="overline">Code ${ci+1} of ${D.low_kappa.length}</div>
+            <div class="code-name">${esc(code.name)}</div>
+          </div>
+          <div class="kappa-pill">
+            <div>
+              <div class="kappa-big">&kappa; ${code.kappa.toFixed(3)}</div>
+              <div class="kappa-label">Below 0.65 threshold</div>
+            </div>
+          </div>
+        </div>
+        <div class="code-def">
+          <div class="def-row">
+            <div class="def-label">Definition</div>
+            <div class="def-text">${esc(code.definition)}</div>
+          </div>
+          <div class="def-row">
+            <div class="def-label">Include when</div>
+            <div class="def-text include">${esc(code.inclusion)}</div>
+          </div>
+          <div class="def-row">
+            <div class="def-label">Exclude when</div>
+            <div class="def-text exclude">${esc(code.exclusion)}</div>
+          </div>
+        </div>
+        <div class="code-stats">
+          <div class="cstat">
+            <div class="cstat-num">${disags.length}</div>
+            <div class="cstat-lbl">Disagreements</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-num">${code.a1_count}</div>
+            <div class="cstat-lbl">A1 Applied (${pctA1}%)</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-num">${code.a2_count}</div>
+            <div class="cstat-lbl">A2 Applied (${pctA2}%)</div>
+          </div>
+          <div class="cstat">
+            <div class="cstat-num">${Math.round((disags.filter(d=>d.final).length/disags.length)*100)}%</div>
+            <div class="cstat-lbl">Arbiter: Coded</div>
+          </div>
+        </div>
+        <div class="disag-header">
+          <div class="disag-title">Segments where Agent 1 and Agent 2 disagreed about this code</div>
+          <button class="expand-all-btn" onclick="expandAll('${ci}')">Expand all reasoning</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="disag-table" id="disag-table-${ci}">
+            <thead>
+              <tr>
+                <th style="width:40%">Participant Response</th>
+                <th>A1 Coded?</th>
+                <th>A2 Coded?</th>
+                <th>Arbiter Final</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+function toggleReasoning(id) {
+  const inner = document.getElementById('inner-' + id);
+  const btn = document.querySelector(`[onclick="toggleReasoning('${id}')"]`);
+  if (!inner) return;
+  const isOpen = inner.classList.contains('open');
+  inner.classList.toggle('open');
+  if (btn) btn.textContent = isOpen ? 'Reasoning +' : 'Reasoning \u2212';
+}
+
+function expandAll(ci) {
+  const table = document.getElementById('disag-table-' + ci);
+  if (!table) return;
+  table.querySelectorAll('.reasoning-inner').forEach(el => el.classList.add('open'));
+  table.querySelectorAll('.expand-btn').forEach(btn => btn.textContent = 'Reasoning \u2212');
+}
+
+// Nav smooth scroll + active state
+document.querySelectorAll('.page-nav a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.page-nav a').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Intersection observer for nav
+const sections = ['summary','reliability','deep-dive'];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.page-nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+sections.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+
+// Init
+renderTable();
+renderDeepDive();
+</script>
+</body>
+</html>
+)}

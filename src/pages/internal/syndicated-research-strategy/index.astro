@@ -1,0 +1,2217 @@
+---
+import InternalLayout from '../../../layouts/InternalLayout.astro';
+---
+
+<InternalLayout title="Syndicated Research Strategy" description="Competitive landscape, panel providers, cost estimates, and operational workflow for BuyerVoice syndicated interview studies.">
+  <div class="strategy-page">
+
+    <!-- Hero header -->
+    <header class="page-header">
+      <p class="page-label">Methodology</p>
+      <h1>Syndicated Research Strategy</h1>
+      <p class="page-subtitle">Competitive landscape, panel provider analysis, cost modeling, and operational workflow for BuyerVoice syndicated interview studies.</p>
+      <p class="page-date">Last updated: April 22, 2026</p>
+    </header>
+
+    <!-- Table of contents -->
+    <nav class="toc" aria-label="Table of contents">
+      <h2 class="toc-heading">Contents</h2>
+      <ol class="toc-list">
+        <li><a href="#model">The Two-Sided Syndicated Model</a></li>
+        <li><a href="#competitive-landscape">Competitive Landscape</a></li>
+        <li><a href="#differentiation">Where BuyerVoice Is Different</a></li>
+        <li><a href="#b2c-assessment">B2C Assessment (Not Recommended)</a></li>
+        <li><a href="#panel-providers">Panel Providers</a></li>
+        <li><a href="#cost-estimates">Cost Estimates</a></li>
+        <li><a href="#study-workflow">Study Workflow</a></li>
+        <li><a href="#quality-control">Automated Quality Control</a></li>
+        <li><a href="#revenue-model">Revenue Model and Pricing</a></li>
+        <li><a href="#category-selection">Category Selection</a></li>
+        <li><a href="#participant-profiles">Interview Participant Profiles</a></li>
+        <li><a href="#strategic-questions">Open Questions</a></li>
+      </ol>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- SECTION 1: The Model -->
+    <!-- ============================================ -->
+    <section id="model">
+      <h2>The Two-Sided Syndicated Model</h2>
+      <p>BuyerVoice syndicated studies serve two buyer segments from the same underlying research:</p>
+
+      <div class="two-col">
+        <div class="model-card vendor">
+          <h3>Vendor Side</h3>
+          <p class="model-example">e.g., 3 HR software brands included in a study</p>
+          <p>"Here's how 200 HR leaders actually talk about your category, your brand, and your competitors."</p>
+          <ul>
+            <li>Competitive perception data</li>
+            <li>Messaging gap analysis</li>
+            <li>Switching drivers and barriers</li>
+          </ul>
+          <p class="model-note">Vendors pay a premium. This is the primary revenue source.</p>
+        </div>
+        <div class="model-card buyer">
+          <h3>Buyer Side</h3>
+          <p class="model-example">e.g., HR leaders evaluating software</p>
+          <p>"Here's an independent, interview-based guide to help you make a better purchasing decision."</p>
+          <ul>
+            <li>Decision criteria from real buyers</li>
+            <li>User experience comparisons</li>
+            <li>Switching analysis frameworks</li>
+          </ul>
+          <p class="model-note">Lower-cost add-on, lead gen vehicle, or credibility builder.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Same data, different cuts.</strong> The vendor report emphasizes competitive positioning and messaging effectiveness. The buyer report emphasizes decision criteria and comparison frameworks. This is efficient and commercially smart.
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 2: Competitive Landscape -->
+    <!-- ============================================ -->
+    <section id="competitive-landscape">
+      <h2>Competitive Landscape</h2>
+
+      <h3>How G2 Actually Works</h3>
+      <p>G2 is the platform most people compare to when they hear "B2B software research." But it operates very differently from what BuyerVoice is building.</p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Data Collection</h4>
+          <ul>
+            <li>Users write reviews (min ~150 words) for <strong>$25 gift cards</strong></li>
+            <li>10,000+ gift cards distributed monthly</li>
+            <li>Reviews are self-reported, incentivized, and vendor-prompted</li>
+            <li>No structured interview methodology, no follow-up probing</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>Revenue (~$100M+ ARR)</h4>
+          <ul>
+            <li>~85% from vendor subscriptions ($15K-$100K+/year)</li>
+            <li>Badge licensing (Leader, High Performer)</li>
+            <li>Buyer intent data and market intelligence</li>
+            <li>Buyers access G2 for <strong>free</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <p><strong>G2 is a review aggregation platform, not a research firm.</strong> No study design, no switching analysis, no marketing science applied to the data. Useful as a comparison tool, but fundamentally different data quality from 200 structured interviews analyzed through a codebook.</p>
+
+      <h3>Full Competitive Map</h3>
+
+      <h4>Tier 1: Research-Based, Sold to Vendors</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Player</th><th>What They Do</th><th>Revenue/Scale</th><th>How They Differ</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Forrester</strong></td>
+              <td>Syndicated analyst reports (Wave). Analyst opinion + vendor briefings + customer reference calls.</td>
+              <td>$432M (2024), declining 10% YoY</td>
+              <td>Analyst-driven, not data-driven. Expensive ($25-40K/year per seat), slow.</td>
+            </tr>
+            <tr>
+              <td><strong>Gartner</strong></td>
+              <td>Magic Quadrant reports. $30-50K+/year per seat subscriptions.</td>
+              <td>$6.5B (2025). ~70% from buyers.</td>
+              <td>Same model as Forrester but larger. No systematic buyer interviews.</td>
+            </tr>
+            <tr>
+              <td><strong>IDC</strong></td>
+              <td>Market sizing, forecasting, vendor evaluations.</td>
+              <td>Private, est. $500M+</td>
+              <td>Quantitative market data focus, not qualitative buyer perception.</td>
+            </tr>
+            <tr>
+              <td><strong>Wynter</strong></td>
+              <td>On-demand B2B research. Panel of 60K+ verified professionals. Surveys and message tests in 12-48 hours.</td>
+              <td>Pricing from ~$199/test</td>
+              <td>Fast, lightweight, survey-oriented. Not deep interviews. Not syndicated.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Tier 2: Review/Evidence Platforms</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Player</th><th>What They Do</th><th>Scale</th><th>How They Differ</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>G2</strong></td>
+              <td>Incentivized review aggregation. Free for buyers.</td>
+              <td>2M+ reviews, $100M+ ARR</td>
+              <td>Shallow data. No study design. Massive scale but low depth.</td>
+            </tr>
+            <tr>
+              <td><strong>TrustRadius</strong></td>
+              <td>Longer-form reviews (~400 words avg). No incentivization.</td>
+              <td>~$30K/product/year</td>
+              <td>Higher quality than G2 but still self-reported, not structured interviews.</td>
+            </tr>
+            <tr>
+              <td><strong>Gartner Peer Insights</strong></td>
+              <td>Anonymous verified reviews tied to Magic Quadrant categories.</td>
+              <td>780K+ ratings</td>
+              <td>Part of Gartner's ecosystem. Not independently purchasable.</td>
+            </tr>
+            <tr>
+              <td><strong>PeerSpot</strong></td>
+              <td>Community-driven enterprise tech reviews. Triple-validated.</td>
+              <td>749K members, 600-word avg</td>
+              <td>Detailed but still user-generated, not researcher-designed.</td>
+            </tr>
+            <tr>
+              <td><strong>UserEvidence</strong></td>
+              <td>Customer evidence platform for vendors.</td>
+              <td>Series A stage</td>
+              <td>Vendor marketing tool, not independent research.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Tier 3: Buyer-Side Decision Platforms</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Player</th><th>What They Do</th><th>Scale</th><th>How They Differ</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Gartner Digital Markets</strong></td>
+              <td>Capterra, GetApp, Software Advice. Vendors pay for placement.</td>
+              <td>100M+ B2B buyers</td>
+              <td>Lead generation play, not research.</td>
+            </tr>
+            <tr>
+              <td><strong>CB Insights</strong></td>
+              <td>Market intelligence, company data, funding analysis.</td>
+              <td>$25-50K/year</td>
+              <td>Company-level data, not buyer perception.</td>
+            </tr>
+            <tr>
+              <td><strong>AlphaSense</strong></td>
+              <td>AI search across filings, transcripts, research.</td>
+              <td>$500M ARR, $4B valuation</td>
+              <td>Document search tool, not primary research.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 3: Differentiation -->
+    <!-- ============================================ -->
+    <section id="differentiation">
+      <h2>Where BuyerVoice Is Different</h2>
+
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-number">1</div>
+          <h4>Depth + Scale in the Same Product</h4>
+          <p>G2 has scale (millions of reviews) but shallow data. Forrester has depth (analyst judgment) but tiny sample sizes. BuyerVoice produces 200 structured interviews per study: a genuine middle ground nobody occupies.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-number">2</div>
+          <h4>Researcher-Designed Methodology</h4>
+          <p>Every other platform either lets users self-report (G2, TrustRadius) or relies on analyst opinion (Gartner, Forrester). BuyerVoice applies an actual research design: controlled sample, structured interview guide, switching analysis, codebook-based thematic analysis, and segmentation.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-number">3</div>
+          <h4>Switching Analysis as Core Method</h4>
+          <p>Nobody in this landscape systematically studies WHY buyers switched, considered switching, or rejected alternatives. G2 reviews are from current users. BuyerVoice captures the decision itself, which is what vendors need to improve win rates.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-number">4</div>
+          <h4>Two-Sided Monetization</h4>
+          <p>Vendor report: competitive positioning, perception gaps, messaging effectiveness. Buyer report: decision criteria, real user experiences, comparison frameworks. Same data, different cuts.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-number">5</div>
+          <h4>No Vendor Influence on the Research</h4>
+          <p>G2 reviews are vendor-prompted. Gartner evaluations involve vendor briefings and vendor-selected references. BuyerVoice recruits independently and applies a consistent methodology. The independence is a selling point to both sides.</p>
+        </div>
+      </div>
+
+      <h3>Key Risks</h3>
+      <div class="risk-grid">
+        <div class="risk-card">
+          <h4>Credibility at Launch</h4>
+          <p>Gartner, Forrester, and G2 have brand recognition. The first 2-3 studies may need aggressive pricing or partial self-funding to build proof.</p>
+        </div>
+        <div class="risk-card">
+          <h4>Sample Recruitment Cost</h4>
+          <p>200 qualified professionals per study is a real operational cost. AI moderation helps with scale but does not eliminate the cost of finding and incentivizing qualified participants.</p>
+        </div>
+        <div class="risk-card">
+          <h4>Syndicated vs Custom Sell</h4>
+          <p>Some vendors will love benchmarking; others will want exclusivity. Product packaging needs to be clear about what is shared vs proprietary.</p>
+        </div>
+        <div class="risk-card">
+          <h4>Buyer-Side Distribution</h4>
+          <p>G2 wins on the buyer side because it is where people already go. The buyer report needs a distribution strategy (SEO, partnerships, gated content).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 4: B2C Assessment -->
+    <!-- ============================================ -->
+    <section id="b2c-assessment">
+      <h2>B2C Assessment</h2>
+
+      <div class="callout callout-warning">
+        <strong>Not recommended.</strong> The syndicated model depends on four structural conditions that hold in B2B but break in B2C.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Condition</th><th>B2B Software</th><th>B2C Consumer</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Buyers will pay for research</td>
+              <td class="cell-pass">Yes. VPs evaluating $50K-$500K platforms pay $500-$2,000 for a report.</td>
+              <td class="cell-fail">No. Consumers expect comparison content for free (Wirecutter, YouTube, Reddit).</td>
+            </tr>
+            <tr>
+              <td>Vendors have high WTP and few alternatives</td>
+              <td class="cell-pass">Yes. G2 is shallow, Gartner is expensive, nobody does interviews at scale.</td>
+              <td class="cell-fail">No. JD Power, NielsenIQ ($4.5B), Kantar (~$4B), Ipsos already serve this.</td>
+            </tr>
+            <tr>
+              <td>Interview depth produces rich data</td>
+              <td class="cell-pass">Yes. B2B decisions are complex, multi-stakeholder, high-stakes.</td>
+              <td class="cell-fail">Diminished. Consumer decisions are simpler. Depth advantage shrinks.</td>
+            </tr>
+            <tr>
+              <td>Clear competitive gap</td>
+              <td class="cell-pass">Yes. Nobody does structured interviews at scale for B2B software.</td>
+              <td class="cell-fail">No. JD Power has done syndicated consumer research for decades.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Keep the focus on B2B software categories where the model's structural advantages are strongest.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 5: Panel Providers -->
+    <!-- ============================================ -->
+    <section id="panel-providers">
+      <h2>Panel Providers</h2>
+
+      <p>Each syndicated study requires ~200 participants from a specific B2B persona. BuyerVoice is building a custom AI moderator platform. From the panel's perspective, participants click a link, complete the interview asynchronously, and get paid. This qualifies as <strong>unmoderated</strong> research.</p>
+
+      <h3>Tier 1: Recommended</h3>
+
+      <div class="provider-card primary">
+        <div class="provider-header">
+          <h4>Respondent.io</h4>
+          <span class="badge badge-primary">Primary Recommendation</span>
+        </div>
+        <div class="provider-grid">
+          <div class="provider-stat">
+            <span class="stat-label">B2B Panel Size</span>
+            <span class="stat-value">4M+ participants</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">B2B Unmoderated (PAYG)</span>
+            <span class="stat-value">$40/session</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">B2B Unmoderated (Bundle)</span>
+            <span class="stat-value">$34/session</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">Fraud Rate</span>
+            <span class="stat-value">&lt;1%</span>
+          </div>
+        </div>
+        <div class="provider-details">
+          <p><strong>Quality checks:</strong> Phone verification, IP monitoring, B2B email domain validation (re-verified every 90 days), profile locks, screener consistency checks, bank-grade ID verification for high-risk applicants, human fraud review team.</p>
+          <p><strong>Incentives:</strong> Built-in Tremendous integration. Participants choose their reward (Visa prepaid, Amazon, etc.). No separate Tremendous account needed.</p>
+          <p><strong>Integration:</strong> Supports external study links via Completion Confirmation URL. Custom platforms redirect participants back on completion.</p>
+          <p><strong>API:</strong> Full API for platform partners: participant status updates, messaging, webhooks, payout management.</p>
+        </div>
+      </div>
+
+      <div class="provider-card secondary">
+        <div class="provider-header">
+          <h4>User Interviews</h4>
+          <span class="badge badge-secondary">Secondary</span>
+        </div>
+        <div class="provider-grid">
+          <div class="provider-stat">
+            <span class="stat-label">B2B Panel Size</span>
+            <span class="stat-value">6M+ participants</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">B2B Base Pricing</span>
+            <span class="stat-value">$72-$98/session</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">Advanced B2B Targeting</span>
+            <span class="stat-value">+$20-$49/session</span>
+          </div>
+          <div class="provider-stat">
+            <span class="stat-label">Verification</span>
+            <span class="stat-value">LinkedIn + corp email</span>
+          </div>
+        </div>
+        <div class="provider-details">
+          <p><strong>When to use:</strong> If Respondent's quality proves insufficient for sensitive audiences (C-suite targets). Stronger verification but roughly 1.5-1.7x the cost.</p>
+          <p><strong>Incentives:</strong> Also uses Tremendous. Auto-distribute option with 3% processing fee.</p>
+        </div>
+      </div>
+
+      <h3>Tier 2: Viable Alternatives</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Provider</th><th>Panel</th><th>Pricing</th><th>Quality</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Prolific</strong></td>
+              <td>20K+ professionals</td>
+              <td>Reward + 42.8% fee</td>
+              <td>50+ checks, but self-reported titles</td>
+              <td>General professional audiences, less niche targets</td>
+            </tr>
+            <tr>
+              <td><strong>NewtonX</strong></td>
+              <td>Scans 1.1B+ (custom-recruits)</td>
+              <td>~$165/survey, $400-$700/IDI</td>
+              <td>Best in class. 100% two-step verified.</td>
+              <td>Premium custom engagements, not syndicated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tier 3: Enterprise (Quote-Based)</h3>
+      <div class="tier3-list">
+        <p><strong>Dynata:</strong> Largest global panel. B2B validation against third-party databases. Custom incidence-based pricing. Enterprise-oriented.</p>
+        <p><strong>Sago (formerly Schlesinger Group):</strong> 55 years in the industry. Strong qualitative recruitment. Full-service. Quote-based.</p>
+        <p><strong>InnovateMR (+ Ivy Exec):</strong> ISO-certified. 50+ quality checks. LinkedIn API + resume verification. Good for C-suite audiences.</p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 6: Cost Estimates -->
+    <!-- ============================================ -->
+    <section id="cost-estimates">
+      <h2>Cost Estimates</h2>
+      <p>Based on 200 B2B participants, 20-minute unmoderated study, US IT managers/directors, using Respondent bundle rate ($34/session).</p>
+
+      <h3>How Respondent Pricing Works</h3>
+      <div class="info-grid three-col">
+        <div class="info-card">
+          <h4>Recruiting Fee</h4>
+          <p>Flat per-session charge. Affected by: B2B vs B2C, moderated vs unmoderated, plan tier.</p>
+          <p><strong>NOT affected by:</strong> duration, video requirements, audience specificity.</p>
+        </div>
+        <div class="info-card">
+          <h4>Incentive</h4>
+          <p>Set by researcher. One flat amount per project. Affected by: seniority, duration, recording type, fill speed needed.</p>
+        </div>
+        <div class="info-card">
+          <h4>Tremendous Fee</h4>
+          <p>5% deducted from the participant's incentive. Paid by participant, not researcher.</p>
+        </div>
+      </div>
+
+      <h3>Incentive Levels by Scenario</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Target Audience</th><th>Est. Hourly Rate</th><th>Audio-Only (20 min)</th><th>Audio + Video (20 min)</th><th>Video Premium</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IT Managers</td>
+              <td>$55-$65/hr</td>
+              <td>$45-$55</td>
+              <td>$55-$65</td>
+              <td>+$10/participant</td>
+            </tr>
+            <tr>
+              <td>IT Directors</td>
+              <td>$75-$90/hr</td>
+              <td>$60-$75</td>
+              <td>$75-$90</td>
+              <td>+$15/participant</td>
+            </tr>
+            <tr>
+              <td>Mixed</td>
+              <td></td>
+              <td>$50-$65</td>
+              <td>$65-$80</td>
+              <td>+$10-15/participant</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Full Cost Scenarios</h3>
+
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-label">Scenario A</div>
+          <h4>Audio-only, flat incentive</h4>
+          <div class="scenario-details">
+            <div class="scenario-line"><span>Recruiting fee</span><span>200 &times; $34 = $6,800</span></div>
+            <div class="scenario-line"><span>Incentives</span><span>200 &times; $55 = $11,000</span></div>
+            <div class="scenario-total"><span>Total</span><span>$17,800</span></div>
+            <p class="scenario-per">$89 per participant</p>
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label">Scenario B</div>
+          <h4>Audio + Video, flat incentive</h4>
+          <div class="scenario-details">
+            <div class="scenario-line"><span>Recruiting fee</span><span>200 &times; $34 = $6,800</span></div>
+            <div class="scenario-line"><span>Incentives</span><span>200 &times; $70 = $14,000</span></div>
+            <div class="scenario-total"><span>Total</span><span>$20,800</span></div>
+            <p class="scenario-per">$104 per participant</p>
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label">Scenario C</div>
+          <h4>Audio-only, split by seniority</h4>
+          <div class="scenario-details">
+            <div class="scenario-line"><span>100 Managers</span><span>$3,400 + $4,500 = $7,900</span></div>
+            <div class="scenario-line"><span>100 Directors</span><span>$3,400 + $6,500 = $9,900</span></div>
+            <div class="scenario-total"><span>Total</span><span>$17,800</span></div>
+            <p class="scenario-per">$89 per participant</p>
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label">Scenario D</div>
+          <h4>Audio + Video, split by seniority</h4>
+          <div class="scenario-details">
+            <div class="scenario-line"><span>100 Managers</span><span>$3,400 + $5,500 = $8,900</span></div>
+            <div class="scenario-line"><span>100 Directors</span><span>$3,400 + $8,000 = $11,400</span></div>
+            <div class="scenario-total"><span>Total</span><span>$20,300</span></div>
+            <p class="scenario-per">$102 per participant</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Incremental cost of adding video: ~$2,500-$3,000 per study.</strong> Entirely driven by higher incentives. Zero change in Respondent's recruiting fees. Recommendation: start with audio-only and add video if quality issues emerge.
+      </div>
+
+      <h3>Incentive Structure: How It Works</h3>
+      <p>You set <strong>one flat incentive amount per project.</strong> All participants who complete that project receive the same amount. To set different incentives by seniority, run two separate Respondent projects (e.g., "IT Managers" at $50 and "IT Directors" at $75). This gives precise quotas per seniority level and avoids overpaying managers or underpaying directors.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 7: Study Workflow -->
+    <!-- ============================================ -->
+    <section id="study-workflow">
+      <h2>Study Workflow</h2>
+      <p>BuyerVoice is building a custom AI moderator application (not a third-party interview tool). This gives full control over the interview experience, recording requirements, screener logic, transcript format, and data pipeline.</p>
+
+      <h3>End-to-End Flow</h3>
+
+      <div class="workflow">
+        <div class="workflow-phase">
+          <h4>Setup Phase</h4>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <span class="step-num">1</span>
+              <div>
+                <strong>Create Respondent project</strong>
+                <p>Select "Unmoderated" methodology. Write 2-20 screener questions. Set incentive. Provide BuyerVoice interview URL with dynamic participant ID parameter. Configure Completion Confirmation URL.</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">2</span>
+              <div>
+                <strong>Respondent displays study to panelists</strong>
+                <p>Matching B2B panelists see the description, duration, and incentive amount. Interested panelists fill out screener questions (unpaid).</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Review and invite</strong>
+                <p>Review screener responses in the dashboard (or via API). Invite qualified participants. Disqualify unqualified (no charge, no notification).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-phase">
+          <h4>Interview Phase</h4>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <span class="step-num">4</span>
+              <div>
+                <strong>Participant clicks study link</strong>
+                <p>URL includes their Respondent ID as a parameter:<br />
+                <code>https://interview.buyervoice.ai/study/XYZ?rid=RESPONDENT_ID</code></p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">5</span>
+              <div>
+                <strong>Platform-side screening (optional)</strong>
+                <p>Verify domain knowledge. If they fail, session ends, no Completion URL triggered, no charge.</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">6</span>
+              <div>
+                <strong>AI-moderated interview</strong>
+                <p>Audio or audio+video recording. Platform transcribes and saves to JSON with the Respondent participant ID.</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">7</span>
+              <div>
+                <strong>Completion redirect</strong>
+                <p>BuyerVoice platform redirects to Respondent's Completion Confirmation URL. Auto-marks participant as "completed."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-phase">
+          <h4>Data Merge and Quality Phase</h4>
+          <div class="workflow-steps">
+            <div class="workflow-step">
+              <span class="step-num">8</span>
+              <div>
+                <strong>Merge screener + interview data</strong>
+                <p>Pull screener answers from Respondent (CSV or API). Match to interview JSON using participant ID. One merged JSON per participant.</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">9</span>
+              <div>
+                <strong>Quality agent review</strong>
+                <p>Checks response length, domain knowledge, consistency. Flags low-quality participants.</p>
+              </div>
+            </div>
+            <div class="workflow-step">
+              <span class="step-num">10</span>
+              <div>
+                <strong>Approve or reject</strong>
+                <p>Within 48 hours of completion. PASS: confirm, auto-pay fires. FAIL: mark No Show via dashboard or API, no charge.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Participant ID Integration</h3>
+      <p>The critical integration point: embedding each participant's Respondent ID into the BuyerVoice interview URL so the two datasets can be matched.</p>
+      <div class="code-block">
+        <code>https://interview.buyervoice.ai/study/hr-leaders-2026?rid=&#123;RESPONDENT_PARTICIPANT_ID&#125;</code>
+      </div>
+      <p>When a participant clicks "Start Project" in Respondent, they are redirected to this URL with their unique ID filled in. The BuyerVoice platform reads the <code>rid</code> parameter and stores it alongside interview data.</p>
+
+      <h3>Merged Data Format</h3>
+      <p>After merging, each participant produces one JSON file containing screener data, demographics, and the full interview transcript. This feeds directly into the coding pipeline with screener data available as descriptor and criterion variables.</p>
+      <div class="code-block">
+<pre>&#123;
+  "participant_id": "resp_ABC123",
+  "study": "hr-leaders-2026",
+  "screener": &#123;
+    "job_title": "IT Director",
+    "company_size": "500-1000 employees",
+    "current_platform": "ServiceNow",
+    "years_in_role": "5-10"
+  &#125;,
+  "demographics": &#123;
+    "location": "United States",
+    "industry": "Financial Services"
+  &#125;,
+  "interview": &#123;
+    "duration_seconds": 1180,
+    "recording_type": "audio",
+    "quality_status": "approved",
+    "transcript": [...]
+  &#125;
+&#125;</pre>
+      </div>
+
+      <h3>Two-Layer Screening</h3>
+      <div class="two-col">
+        <div class="info-card">
+          <h4>Layer 1: Respondent Screener</h4>
+          <p>2-20 questions on Respondent's platform, answered unpaid. You review and invite. Rejected applicants cost nothing.</p>
+        </div>
+        <div class="info-card">
+          <h4>Layer 2: Platform Screening</h4>
+          <p>Additional verification at the start of the BuyerVoice interview. If they fail, no Completion URL triggered, no charge.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 8: Automated Quality Control -->
+    <!-- ============================================ -->
+    <section id="quality-control">
+      <h2>Automated Quality Control</h2>
+
+      <h3>The Problem</h3>
+      <p>The main quality risk is <strong>low-effort participation</strong>: people who technically qualify but rush through the interview giving one-sentence answers to collect their incentive. At 200 participants per study, manually reviewing every transcript is time-consuming.</p>
+
+      <h3>Respondent API Capabilities</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>What the API Supports</h4>
+          <ul>
+            <li>Participant status updates</li>
+            <li>Messaging API (required before marking No Show)</li>
+            <li>Webhooks for real-time notifications</li>
+            <li>Payout management</li>
+            <li>Screener question and response retrieval</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>Access Requirement</h4>
+          <p>API is designed for <strong>platform partners</strong>, not individual researchers. BuyerVoice should apply as a research platform. Benefits: programmatic management, wholesale rates, webhook integration. Timeline: ~2 weeks.</p>
+        </div>
+      </div>
+
+      <h3>Automated Pipeline</h3>
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <div class="pipeline-icon">1</div>
+          <p>Participant completes interview on BuyerVoice platform, redirected to Completion URL</p>
+        </div>
+        <div class="pipeline-arrow">&darr;</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">2</div>
+          <p>Respondent webhook fires. System pulls transcript and merges with screener data.</p>
+        </div>
+        <div class="pipeline-arrow">&darr;</div>
+        <div class="pipeline-step">
+          <div class="pipeline-icon">3</div>
+          <p><strong>Quality agent checks:</strong> response length, domain knowledge, consistency, AI-generated filler, screener match</p>
+        </div>
+        <div class="pipeline-arrow">&darr;</div>
+        <div class="pipeline-step pass">
+          <div class="pipeline-icon">&#10003;</div>
+          <p><strong>PASS:</strong> Mark completed via API. Incentive payout triggered.</p>
+        </div>
+        <div class="pipeline-step fail">
+          <div class="pipeline-icon">&#10007;</div>
+          <p><strong>FAIL:</strong> API sends message explaining why. Status updated to No Show. No charge, no incentive.</p>
+        </div>
+      </div>
+
+      <h3>Without API Access (Fallback)</h3>
+      <ol class="fallback-list">
+        <li>Run quality agent locally against all transcripts after the study</li>
+        <li>Agent produces a "reject list" with participant IDs and reasons</li>
+        <li>Manually process rejections in Respondent dashboard (~30 minutes per study)</li>
+      </ol>
+
+      <h3>Payment Options for Problem Participants</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Action</th><th>Cost to BuyerVoice</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fake credentials or zero-effort responses</td>
+              <td>Mark as <strong>No Show</strong></td>
+              <td>No recruiting fee, no incentive</td>
+            </tr>
+            <tr>
+              <td>Legitimate but mediocre effort</td>
+              <td><strong>Partial incentive</strong> (contact Respondent support)</td>
+              <td>Recruiting fee applies, reduced incentive</td>
+            </tr>
+            <tr>
+              <td>Minor issues but usable data</td>
+              <td><strong>Full payment</strong></td>
+              <td>Full recruiting fee + full incentive</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Critical timing:</strong> Auto-pay fires 48 hours after completion. Researcher is billed at 72 hours. Recommendation: turn off auto-pay for syndicated studies and manually approve after quality review, or run quality checks within the 48-hour window.
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 9: Revenue Model and Pricing -->
+    <!-- ============================================ -->
+    <section id="revenue-model">
+      <h2>Revenue Model and Pricing</h2>
+
+      <h3>Four Target Audiences</h3>
+      <p>Each study produces a single dataset (200 interviews) that gets repackaged into different report editions. The marginal cost of each additional audience version is low once the core analysis exists.</p>
+
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-header vendor-bg">
+            <h4>Vendors</h4>
+            <span class="price-range">$15,000 - $30,000</span>
+          </div>
+          <div class="audience-body">
+            <p class="audience-desc">The 3-5 platforms with deep data in each study. They want competitive positioning, buyer perception of their platform, switching triggers, and win/loss analysis.</p>
+            <div class="tier-list">
+              <div class="tier-item"><strong>Standard ($15K):</strong> Category findings + platform perception profile + competitive comparison</div>
+              <div class="tier-item"><strong>Premium ($25K):</strong> + buyer segmentation, switching analysis, curated verbatim evidence</div>
+              <div class="tier-item"><strong>Enterprise ($30K):</strong> + live briefing, custom analysis request, early access</div>
+            </div>
+            <p class="anchor-text"><strong>Anchor:</strong> Custom 200-interview study costs $75K-$200K through an agency. Even at $30K, BuyerVoice is a fraction of the alternative.</p>
+          </div>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-header buyer-bg">
+            <h4>Buyers</h4>
+            <span class="price-range">$2,500 - $5,000</span>
+          </div>
+          <div class="audience-body">
+            <p class="audience-desc">Companies evaluating software in the category. They want peer satisfaction data, decision frameworks, implementation experiences, and platform comparisons.</p>
+            <div class="tier-list">
+              <div class="tier-item"><strong>Standard ($2,500):</strong> Category overview, platform comparison, decision framework, curated quotes</div>
+              <div class="tier-item"><strong>Premium ($4,500):</strong> + segment-specific recommendations, full satisfaction data tables</div>
+            </div>
+            <p class="anchor-text"><strong>Anchor:</strong> Gartner/Forrester reports cost $2K-$5K each. BuyerVoice offers actual buyer voices, not analyst opinions.</p>
+          </div>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-header investor-bg">
+            <h4>Investors (PE/VC)</h4>
+            <span class="price-range">$8,000 - $20,000</span>
+          </div>
+          <div class="audience-body">
+            <p class="audience-desc">Firms evaluating potential investments. They want market dynamics, satisfaction as a leading indicator of churn, switching cost analysis, and competitive vulnerability.</p>
+            <div class="tier-list">
+              <div class="tier-item"><strong>Standard ($8K):</strong> Market dynamics, positioning map, loyalty indicators, growth signals</div>
+              <div class="tier-item"><strong>Premium ($15K):</strong> + segment attractiveness, vulnerability assessment, data tables</div>
+              <div class="tier-item"><strong>Enterprise ($20K):</strong> + briefing call, one custom data cut</div>
+            </div>
+            <p class="anchor-text"><strong>Anchor:</strong> Expert network calls cost $500-$1,500/hour. A due diligence package costs $10K-$50K.</p>
+          </div>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-header consult-bg">
+            <h4>Consultancies</h4>
+            <span class="price-range">$5,000 - $12,000</span>
+          </div>
+          <div class="audience-body">
+            <p class="audience-desc">Advisory firms advising on digital transformation or tech stack selection.</p>
+            <div class="tier-list">
+              <div class="tier-item"><strong>Single-use ($5K):</strong> Use data/findings in one client engagement</div>
+              <div class="tier-item"><strong>Annual ($12K):</strong> Use across all client engagements for one year</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Price discrimination is standard practice.</strong> Gartner is free for some buyers but charges vendors $50K-$250K for reprint rights. G2 is free for buyers but $15K-$100K+ for vendors. The Robinson-Patman Act applies only to physical commodities, not information products. BuyerVoice sells genuinely different report editions to each audience.
+      </div>
+
+      <h3>Industry Pricing Benchmarks</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Comparable Product</th><th>Buyer Price</th><th>Vendor Price</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gartner reports</td><td>$2K-$5K each; $30K-$100K+/yr sub</td><td>Reprint rights: $50K-$250K</td></tr>
+            <tr><td>Forrester reports</td><td>$2K-$5K each; $25K-$40K+/yr sub</td><td>Wave reprint: $75K+</td></tr>
+            <tr><td>G2 access</td><td>Free</td><td>$15K-$100K+/yr subscription</td></tr>
+            <tr><td>TrustRadius</td><td>Free</td><td>$15K-$75K/yr vendor packages</td></tr>
+            <tr><td>IDC syndicated studies</td><td>$4K-$8K per seat</td><td>Higher for included vendors</td></tr>
+            <tr><td>Expert networks (GLG, AlphaSense)</td><td>$500-$1,500/hour</td><td>N/A</td></tr>
+            <tr><td>Custom qualitative research (agency)</td><td>N/A</td><td>$75K-$200K per study</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Additional Revenue Streams</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Reprint/Citation Rights</h4>
+          <p><strong>$5K-$15K.</strong> Vendors cite third-party research in their marketing materials.</p>
+        </div>
+        <div class="info-card">
+          <h4>Webinar/Presentations</h4>
+          <p><strong>$5K-$10K.</strong> Present findings at industry events or vendor webinars.</p>
+        </div>
+        <div class="info-card">
+          <h4>Custom Add-On Analysis</h4>
+          <p><strong>$5K-$15K.</strong> Deeper dive into a specific segment or competitor.</p>
+        </div>
+        <div class="info-card">
+          <h4>Category Sponsorship</h4>
+          <p><strong>$40K-$75K.</strong> One vendor sponsors the study. Gets Enterprise tier, co-branding, early access. Can fund nearly the entire study cost.</p>
+        </div>
+      </div>
+
+      <h3>Annual Revenue Model</h3>
+      <p><strong>Cost per study: ~$27,000</strong> ($19,000 panel fees + ~$8,000 platform, analysis, overhead)</p>
+
+      <h4>Per-Study Revenue by Scenario</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Revenue Line</th><th>Conservative</th><th>Moderate</th><th>Optimistic</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Vendor reports (avg $20K)</td><td>1 = $20K</td><td>2 = $40K</td><td>3 = $60K</td></tr>
+            <tr><td>Buyer reports (avg $3K)</td><td>3 = $9K</td><td>8 = $24K</td><td>15 = $45K</td></tr>
+            <tr><td>Investor reports (avg $12K)</td><td>0 = $0</td><td>1 = $12K</td><td>2 = $24K</td></tr>
+            <tr><td>Consultancy licenses (avg $5K)</td><td>0 = $0</td><td>1 = $5K</td><td>2 = $10K</td></tr>
+            <tr><td>Add-ons (reprints, briefings)</td><td>$0</td><td>$5K</td><td>$15K</td></tr>
+            <tr class="total-row"><td><strong>Total per study</strong></td><td><strong>$29K</strong></td><td><strong>$86K</strong></td><td><strong>$154K</strong></td></tr>
+            <tr class="total-row"><td><strong>Gross profit per study</strong></td><td><strong>$2K</strong></td><td><strong>$59K</strong></td><td><strong>$127K</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Annual Projections (Year 1)</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Studies/yr</th><th>Revenue</th><th>Total Cost</th><th>Gross Profit</th><th>Margin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Conservative</td><td>2</td><td>$58K</td><td>$54K</td><td>$4K</td><td>7%</td></tr>
+            <tr><td>Moderate</td><td>3</td><td>$258K</td><td>$81K</td><td>$177K</td><td>69%</td></tr>
+            <tr><td>Optimistic</td><td>4</td><td>$616K</td><td>$108K</td><td>$508K</td><td>82%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Breakeven: 2 vendor reports per study.</strong> At $27K cost, selling 2 vendor reports at $20K average ($40K) already puts the study in profit. Every buyer, investor, and add-on sale after that is nearly pure margin. The $27K study cost is incurred whether you sell 1 report or 20.
+      </div>
+
+      <h3>Pricing Models</h3>
+      <div class="info-grid">
+        <div class="info-card">
+          <h4>Tiered Per-Report (Year 1)</h4>
+          <p>Simplest to sell. No long-term commitment. Lets you establish pricing benchmarks. <strong>Recommended for launch.</strong></p>
+        </div>
+        <div class="info-card">
+          <h4>Annual Subscription (Year 2+)</h4>
+          <p>Vendor: $40K-$75K/yr. Buyer: $8K-$15K/yr. Creates recurring revenue and reduces per-study sales effort.</p>
+        </div>
+        <div class="info-card">
+          <h4>Category Sponsorship</h4>
+          <p>One vendor per category for $40K-$75K. Gets Enterprise access + co-branding. De-risks studies by funding upfront.</p>
+        </div>
+        <div class="info-card">
+          <h4>Data Licensing (Longer-Term)</h4>
+          <p>License anonymized data to platforms like G2 or intelligence firms. $10K-$30K per data set.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 10: Category Selection -->
+    <!-- ============================================ -->
+    <section id="category-selection">
+      <h2>Category Selection</h2>
+
+      <h3>Mid-Market Focus: Why 50-1,000 Employees</h3>
+      <p>BuyerVoice syndicated studies should target companies with <strong>50-1,000 employees</strong>. Three data points support this:</p>
+
+      <div class="info-grid three-col">
+        <div class="info-card">
+          <h4>More Companies</h4>
+          <p>~286,000-340,000 US firms have 50-1,000 employees (US Census Bureau/SBA). Large enough that any software category has thousands of potential buyer-report customers.</p>
+        </div>
+        <div class="info-card">
+          <h4>More Vendors Competing</h4>
+          <p>Enterprise markets concentrate around a few dominant vendors. Mid-market is where the fragmentation is. Top 5 vendors hold ~41% market share; 59% is mid-tier and emerging players fighting for share.</p>
+        </div>
+        <div class="info-card">
+          <h4>Fastest SaaS Growth</h4>
+          <p>Mid-market SaaS spending growing <strong>40% YoY</strong> (Zylo 2025). Companies use 32-61 SaaS apps and evaluate new tools every 1-2 years, not 3-5 like enterprises.</p>
+        </div>
+      </div>
+
+      <h3>US Company Size Distribution</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Size Class</th><th>Number of Firms</th><th>% of Total</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Under 20 employees</td><td>~5,430,000</td><td>89.0%</td></tr>
+            <tr><td>20-99 employees</td><td>~555,000</td><td>9.1%</td></tr>
+            <tr><td>100-499 employees</td><td>~98,000</td><td>1.6%</td></tr>
+            <tr><td>500+ employees</td><td>~20,868</td><td>0.3%</td></tr>
+            <tr class="total-row"><td><strong>Total employer firms</strong></td><td><strong>~6,100,000</strong></td><td><strong>100%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source-note">Source: US Census Bureau SUSB 2022; SBA Office of Advocacy 2024</p>
+
+      <h3>G2 Vendor Counts by Category</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Total G2 Products (2026)</th><th>Est. Serious Mid-Market Vendors</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>CRM</td><td>785</td><td>15-25</td></tr>
+            <tr><td>Project Management</td><td>2,004</td><td>15-25</td></tr>
+            <tr><td>Marketing Automation</td><td>423</td><td>10-15</td></tr>
+            <tr><td>ERP</td><td>4,389</td><td>8-12</td></tr>
+            <tr><td>HR (all subcategories)</td><td>8,951</td><td>15-20</td></tr>
+            <tr><td>ATS / Recruiting</td><td>300+</td><td>10-15</td></tr>
+            <tr><td>Help Desk / Support</td><td>200+</td><td>10-15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source-note">Source: G2 category pages (April 2026); G2 Spring 2025 Reports</p>
+
+      <h3>Category Tier Rankings</h3>
+      <p>Scored on: vendor density, buyer evaluation frequency, switching complexity, vendor marketing budgets, and PE/VC deal activity.</p>
+
+      <h4>Tier 1: Highest Potential</h4>
+      <div class="category-grid">
+        <div class="category-card tier1">
+          <div class="category-score">9/10</div>
+          <h4>HRIS / Core HR</h4>
+          <p><strong>Vendors:</strong> Rippling, BambooHR, Gusto, Paycor, Paylocity, Paycom, HiBob, Deel, Namely (15-20 serious vendors)</p>
+          <p><strong>Switching complexity:</strong> HIGH. Payroll, benefits, compliance data.</p>
+          <p><strong>Investor activity:</strong> Very high. Rippling raised $1.2B+, HiBob $400M+, Deel $679M.</p>
+          <p><strong>Why start here:</strong> Accessible persona, existing HR interview experience, high vendor density, strong investor interest.</p>
+        </div>
+        <div class="category-card tier1">
+          <div class="category-score">8.5/10</div>
+          <h4>CRM</h4>
+          <p><strong>Vendors:</strong> HubSpot, Pipedrive, Zoho, Freshsales, Close, Monday CRM, Copper, Insightly (15-25 serious vendors)</p>
+          <p><strong>Switching complexity:</strong> MEDIUM-HIGH. Data migration is painful.</p>
+          <p><strong>Investor activity:</strong> High. CRM market projected at $128B+ by 2030.</p>
+          <p><strong>Caveat:</strong> G2 already provides extensive CRM data. Differentiation must be clear.</p>
+        </div>
+        <div class="category-card tier1">
+          <div class="category-score">8/10</div>
+          <h4>Project Management</h4>
+          <p><strong>Vendors:</strong> Monday.com, Asana, ClickUp, Wrike, Smartsheet, Jira, Linear, Notion (15-25 serious vendors)</p>
+          <p><strong>Switching complexity:</strong> MEDIUM. Data portability improving.</p>
+          <p><strong>Vendor budgets:</strong> Monday.com ($700M+ rev), Asana ($500M+). Heavy spenders.</p>
+        </div>
+      </div>
+
+      <h4>Tier 2: Strong Potential</h4>
+      <div class="category-grid">
+        <div class="category-card tier2">
+          <div class="category-score">7.5/10</div>
+          <h4>Marketing Automation</h4>
+          <p>HubSpot, ActiveCampaign, Mailchimp, Brevo, Klaviyo (10-15 vendors). Vendors spend heavily because their buyers are marketers.</p>
+        </div>
+        <div class="category-card tier2">
+          <div class="category-score">7.5/10</div>
+          <h4>Help Desk / Support</h4>
+          <p>Zendesk, Freshdesk, Intercom, Help Scout, Front (10-15 vendors). Zendesk alone is $2B+ revenue.</p>
+        </div>
+        <div class="category-card tier2">
+          <div class="category-score">7/10</div>
+          <h4>ATS / Recruiting</h4>
+          <p>Greenhouse, Lever, Ashby, Workable, JazzHR (10-15 vendors). Pairs naturally with HRIS studies.</p>
+        </div>
+      </div>
+
+      <h4>Tier 3: Lower Priority</h4>
+      <div class="category-grid">
+        <div class="category-card tier3">
+          <div class="category-score">6.5/10</div>
+          <h4>Sales Engagement</h4>
+          <p>Outreach, SalesLoft, Apollo, Gong (8-12 vendors). Overlaps with CRM buyer persona.</p>
+        </div>
+        <div class="category-card tier3">
+          <div class="category-score">6/10</div>
+          <h4>Accounting / ERP</h4>
+          <p>NetSuite, Sage Intacct, Acumatica (8-12 vendors). Fewer evaluation cycles due to high switching costs.</p>
+        </div>
+      </div>
+
+      <h3>Recommended Study Sequence</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Study</th><th>Category</th><th>Rationale</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td>HRIS / Core HR</td><td>Lowest risk: accessible persona, existing experience, high vendor density, strong investor interest</td></tr>
+            <tr><td><strong>2</strong></td><td>CRM</td><td>Largest vendor market, highest buyer report demand</td></tr>
+            <tr><td><strong>3</strong></td><td>Project Mgmt or Marketing Automation</td><td>Choose based on sales signal from Study 1-2</td></tr>
+            <tr><td><strong>4</strong></td><td>Combined HR Tech (HRIS + ATS)</td><td>Natural expansion of Study 1; same persona, broader coverage</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Revenue Impact of Category Choice</h3>
+      <div class="two-col">
+        <div class="info-card">
+          <h4>Tier 1 Category (e.g., HRIS)</h4>
+          <p>3 vendor reports ($60K) + 12 buyer reports ($36K) + 2 investor reports ($24K) + add-ons ($10K) = <strong>$130,000 revenue</strong> on $27K cost.</p>
+          <p class="model-note"><strong>382% ROI</strong></p>
+        </div>
+        <div class="info-card">
+          <h4>Tier 3 Category (e.g., Accounting)</h4>
+          <p>1 vendor report ($20K) + 5 buyer reports ($15K) + 1 investor report ($12K) = <strong>$47,000-$60,000 revenue</strong> on $27K cost.</p>
+          <p class="model-note">Still profitable, but dramatically lower upside.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 11: Interview Participant Profiles -->
+    <!-- ============================================ -->
+    <section id="participant-profiles">
+      <h2>Interview Participant Profiles</h2>
+
+      <p>For each study, participants must simultaneously be: (a) the customer vendors are selling to, (b) a mirror of the buyer-report reader, and (c) someone with opinions on multiple platforms. Company size is <strong>50-1,000 employees</strong> across all categories.</p>
+
+      <h3>Why 50-1,000 (Not 50-500)</h3>
+      <div class="info-grid three-col">
+        <div class="info-card">
+          <h4>50-199: "First Real Purchase"</h4>
+          <p>Graduating from spreadsheets to professional tools. Highest evaluation volume, most vendors competing.</p>
+        </div>
+        <div class="info-card">
+          <h4>200-499: "Upgrade or Switch"</h4>
+          <p>Outgrowing first tool. Most active competitive battles happen here.</p>
+        </div>
+        <div class="info-card">
+          <h4>500-1,000: "Enterprise-Adjacent"</h4>
+          <p>Most sophisticated mid-market buyers. Vendors here have the largest marketing budgets and are most likely to buy a $20K+ vendor report.</p>
+        </div>
+      </div>
+
+      <h3>Standard Quotas (200 Participants)</h3>
+      <div class="two-col">
+        <div>
+          <h4>Company Size</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Size Band</th><th>Target</th><th>%</th></tr></thead>
+              <tbody>
+                <tr><td>50-199 employees</td><td>80</td><td>40%</td></tr>
+                <tr><td>200-499 employees</td><td>70</td><td>35%</td></tr>
+                <tr><td>500-1,000 employees</td><td>50</td><td>25%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h4>Seniority</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Level</th><th>Target</th><th>%</th></tr></thead>
+              <tbody>
+                <tr><td>Manager</td><td>60</td><td>30%</td></tr>
+                <tr><td>Director</td><td>90</td><td>45%</td></tr>
+                <tr><td>VP+</td><td>50</td><td>25%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Universal qualification:</strong> Must have evaluated, selected, or been actively involved in the purchase decision for the relevant category in the past 18 months. Each participant expected to discuss ~3 platforms they've evaluated or used.
+      </div>
+
+      <h3>Tier 1: Detailed Profiles</h3>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <h4>Study 1: HRIS / Core HR</h4>
+          <span class="badge badge-primary">Recommended First</span>
+        </div>
+        <div class="profile-body">
+          <div class="two-col">
+            <div>
+              <strong>Target Titles (priority order)</strong>
+              <ol>
+                <li>Director of People / HR / People Operations</li>
+                <li>VP of People / HR / Human Resources</li>
+                <li>Head of People / HR</li>
+                <li>HR Manager (at 50-200 cos, often the senior HR person)</li>
+                <li>Director/Manager of HR Operations or HRIS</li>
+              </ol>
+            </div>
+            <div>
+              <strong>Do NOT include</strong>
+              <ul>
+                <li>CHRO (rare in mid-market, more enterprise)</li>
+                <li>HR Coordinators / Specialists (too junior)</li>
+                <li>IT leaders (don't drive HRIS selection in mid-market)</li>
+              </ul>
+              <strong>Quotas</strong>
+              <p>Standard size (40/35/25) and seniority (30/45/25). No industry quotas needed.</p>
+            </div>
+          </div>
+          <p><strong>Expected vendor coverage (15+ mentions):</strong> Rippling, BambooHR, Gusto, Paycor, Paylocity, Paycom, HiBob. <strong>Moderate (5-15):</strong> Deel, Namely, JustWorks, TriNet, ADP Workforce Now.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <h4>Study 2: CRM</h4>
+        </div>
+        <div class="profile-body">
+          <div class="two-col">
+            <div>
+              <strong>Target Titles</strong>
+              <ol>
+                <li>Director of Sales / Sales Director</li>
+                <li>VP of Sales</li>
+                <li>Head of Sales / Head of Revenue</li>
+                <li>Director/Manager of Sales Operations</li>
+                <li>Director/Manager of Revenue Operations</li>
+              </ol>
+            </div>
+            <div>
+              <strong>Additional filter:</strong> B2B companies only (or B2B-dominant revenue).
+              <p><strong>Quotas:</strong> Standard size and seniority. No department quotas needed.</p>
+            </div>
+          </div>
+          <p><strong>Expected coverage:</strong> HubSpot CRM, Salesforce, Pipedrive, Zoho CRM, Freshsales, Monday CRM, Close, Copper, Insightly.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <h4>Study 3: Project Management</h4>
+          <span class="badge badge-secondary">Requires Department Quotas</span>
+        </div>
+        <div class="profile-body">
+          <p><strong>Critical difference:</strong> PM tools are bought by different departments (Operations, Engineering, Product, Marketing). Without department quotas, you risk a sample skewed toward one tool cluster.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Department</th><th>Target</th><th>%</th><th>Tools Covered</th></tr></thead>
+              <tbody>
+                <tr><td>Operations / PMO</td><td>70</td><td>35%</td><td>Monday, Asana, Smartsheet, Wrike</td></tr>
+                <tr><td>Engineering / Product</td><td>60</td><td>30%</td><td>Jira, Linear, Shortcut, Height</td></tr>
+                <tr><td>Marketing / Sales / Other</td><td>40</td><td>20%</td><td>Monday, Asana, ClickUp, Notion</td></tr>
+                <tr><td>Executive (COO, VP)</td><td>30</td><td>15%</td><td>Strategic-level decisions</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3>Tier 2-3: Summary Profiles</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Primary Persona</th><th>Seniority Sweet Spot</th><th>Special Quotas</th><th>Key Vendors</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marketing Automation</td>
+              <td>Marketing leaders (B2B only)</td>
+              <td>Director (45%)</td>
+              <td>None</td>
+              <td>HubSpot, ActiveCampaign, Mailchimp, Brevo, Klaviyo</td>
+            </tr>
+            <tr>
+              <td>Help Desk</td>
+              <td>Support / CS leaders</td>
+              <td>Director (40%)</td>
+              <td>None</td>
+              <td>Zendesk, Freshdesk, Intercom, Help Scout, Front</td>
+            </tr>
+            <tr>
+              <td>ATS / Recruiting</td>
+              <td>TA / HR leaders</td>
+              <td>Director (40%)</td>
+              <td>None; pairs with HRIS</td>
+              <td>Greenhouse, Lever, Ashby, Workable, JazzHR</td>
+            </tr>
+            <tr>
+              <td>Sales Engagement</td>
+              <td>Sales / RevOps (B2B only)</td>
+              <td>Director (40%)</td>
+              <td>Overlaps with CRM</td>
+              <td>Outreach, SalesLoft, Apollo, Gong</td>
+            </tr>
+            <tr>
+              <td>Accounting / ERP</td>
+              <td>Finance leaders</td>
+              <td>Director/VP (skew senior)</td>
+              <td>Size quotas shifted to 200+</td>
+              <td>NetSuite, Sage Intacct, Xero, Acumatica</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION 12: Open Questions -->
+    <!-- ============================================ -->
+    <section id="strategic-questions">
+      <h2>Open Questions</h2>
+      <div class="questions-list">
+        <div class="question-item">
+          <span class="question-num">1</span>
+          <div>
+            <strong>Which category first?</strong>
+            <p>The HR software study is a natural pilot. What are the next 2-3 categories with enough vendor concentration and buyer demand?</p>
+          </div>
+        </div>
+        <div class="question-item">
+          <span class="question-num">2</span>
+          <div>
+            <strong>Minimum viable vendor commitment</strong>
+            <p>Do all vendors need to commit before running the study, or self-fund first and sell access after?</p>
+          </div>
+        </div>
+        <div class="question-item">
+          <span class="question-num">3</span>
+          <div>
+            <strong>Buyer-side product format</strong>
+            <p>Full downloadable report? Interactive web page? Gated or ungated? This affects both revenue and distribution.</p>
+          </div>
+        </div>
+        <div class="question-item">
+          <span class="question-num">4</span>
+          <div>
+            <strong>Recurring cadence</strong>
+            <p>Syndicated reports gain value when repeated (annual or semi-annual). Vendors want to track perception over time.</p>
+          </div>
+        </div>
+        <div class="question-item">
+          <span class="question-num">5</span>
+          <div>
+            <strong>Respondent API partner access</strong>
+            <p>Apply early so the automated quality pipeline is ready before the first full syndicated study.</p>
+          </div>
+        </div>
+        <div class="question-item">
+          <span class="question-num">6</span>
+          <div>
+            <strong>Pilot study</strong>
+            <p>Run 10-20 participants on Respondent to validate fill rate, data quality, and rejection process before committing to 200.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</InternalLayout>
+
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  /* ============================================
+     PAGE-LEVEL STYLES
+     ============================================ */
+  .strategy-page {
+    max-width: 920px;
+  }
+
+  .strategy-page section {
+    margin-bottom: 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .strategy-page section:last-child {
+    border-bottom: none;
+  }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .page-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  .page-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .toc-heading {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    counter-reset: toc;
+    padding: 0;
+  }
+
+  .toc-list li {
+    counter-increment: toc;
+    margin-bottom: 0.4rem;
+  }
+
+  .toc-list li a {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .toc-list li a::before {
+    content: counter(toc) ". ";
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .toc-list li a:hover {
+    color: var(--signal);
+  }
+
+  /* Section headings */
+  .strategy-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .strategy-page h3 {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .strategy-page h4 {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .strategy-page p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+    max-width: 720px;
+  }
+
+  .strategy-page ul, .strategy-page ol {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+    padding-left: 1.25rem;
+  }
+
+  .strategy-page li {
+    margin-bottom: 0.3rem;
+  }
+
+  .strategy-page code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    background: rgba(11, 31, 58, 0.06);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+  }
+
+  /* Two-column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Model cards */
+  .model-card {
+    background: var(--paper);
+    border-radius: 2px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .model-card h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .model-card.vendor {
+    border-left: 3px solid var(--signal);
+  }
+
+  .model-card.buyer {
+    border-left: 3px solid var(--ink);
+  }
+
+  .model-example {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .model-note {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  /* Callout */
+  .callout {
+    background: rgba(11, 31, 58, 0.04);
+    border-left: 3px solid var(--ink);
+    padding: 1rem 1.25rem;
+    border-radius: 0 4px 4px 0;
+    margin: 1.25rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .callout-warning {
+    background: rgba(184, 52, 27, 0.05);
+    border-left-color: var(--signal);
+  }
+
+  /* Info grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .info-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 700px) {
+    .info-grid, .info-grid.three-col { grid-template-columns: 1fr; }
+  }
+
+  .info-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .info-card h4 {
+    font-size: 0.88rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-card p, .info-card ul {
+    font-size: 0.85rem;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    background: var(--paper);
+  }
+
+  th {
+    font-family: var(--sans);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cell-pass {
+    background: rgba(34, 139, 34, 0.06);
+  }
+
+  .cell-fail {
+    background: rgba(184, 52, 27, 0.06);
+  }
+
+  /* Differentiation grid */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .diff-grid { grid-template-columns: 1fr; }
+  }
+
+  .diff-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+    position: relative;
+  }
+
+  .diff-number {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--signal);
+    opacity: 0.3;
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+  }
+
+  .diff-card h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    padding-right: 1.5rem;
+  }
+
+  .diff-card p {
+    font-size: 0.85rem;
+  }
+
+  /* Risk grid */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .risk-grid { grid-template-columns: 1fr; }
+  }
+
+  .risk-card {
+    background: rgba(184, 52, 27, 0.03);
+    border: 1px solid rgba(184, 52, 27, 0.12);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .risk-card h4 {
+    font-size: 0.88rem;
+    margin-top: 0;
+    margin-bottom: 0.35rem;
+    color: var(--signal);
+  }
+
+  .risk-card p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+
+  /* Provider cards */
+  .provider-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .provider-card.primary {
+    border-left: 3px solid var(--signal);
+  }
+
+  .provider-card.secondary {
+    border-left: 3px solid var(--muted);
+  }
+
+  .provider-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .provider-header h4 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .badge {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+
+  .badge-primary {
+    background: var(--signal);
+    color: #fff;
+  }
+
+  .badge-secondary {
+    background: rgba(11, 31, 58, 0.08);
+    color: var(--muted);
+  }
+
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (max-width: 700px) {
+    .provider-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .provider-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stat-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-value {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .provider-details p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tier3-list p {
+    font-size: 0.88rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Scenario cards */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+  }
+
+  .scenario-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .scenario-label {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .scenario-card h4 {
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .scenario-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.84rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .scenario-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 0.5rem 0 0.25rem;
+    border-top: 2px solid var(--ink);
+    margin-top: 0.25rem;
+  }
+
+  .scenario-per {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-align: right;
+    margin-bottom: 0;
+  }
+
+  /* Workflow */
+  .workflow {
+    margin: 1.5rem 0;
+  }
+
+  .workflow-phase {
+    margin-bottom: 1.5rem;
+  }
+
+  .workflow-phase h4 {
+    font-size: 0.9rem;
+    color: var(--signal);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .workflow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .workflow-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1rem 1.25rem;
+  }
+
+  .step-num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--signal);
+    min-width: 1.5rem;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .workflow-step strong {
+    display: block;
+    font-size: 0.88rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .workflow-step p {
+    font-size: 0.84rem;
+    margin-bottom: 0;
+    color: var(--muted);
+  }
+
+  /* Code blocks */
+  .code-block {
+    background: var(--ink);
+    color: #e0e0e0;
+    padding: 1rem 1.25rem;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    margin: 0.75rem 0 1rem;
+    line-height: 1.6;
+  }
+
+  .code-block code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .code-block pre {
+    margin: 0;
+    white-space: pre;
+  }
+
+  /* Pipeline */
+  .pipeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 1.5rem 0;
+  }
+
+  .pipeline-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.75rem 1.25rem;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .pipeline-step.pass {
+    background: rgba(34, 139, 34, 0.06);
+    border-color: rgba(34, 139, 34, 0.2);
+  }
+
+  .pipeline-step.fail {
+    background: rgba(184, 52, 27, 0.05);
+    border-color: rgba(184, 52, 27, 0.15);
+  }
+
+  .pipeline-icon {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--signal);
+    min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .pipeline-step.pass .pipeline-icon {
+    color: #228B22;
+  }
+
+  .pipeline-step.fail .pipeline-icon {
+    color: var(--signal);
+  }
+
+  .pipeline-step p {
+    font-size: 0.84rem;
+    margin-bottom: 0;
+  }
+
+  .pipeline-arrow {
+    font-size: 1.2rem;
+    color: var(--muted);
+    padding: 0.2rem 0;
+  }
+
+  /* Fallback list */
+  .fallback-list {
+    padding-left: 1.5rem;
+  }
+
+  .fallback-list li {
+    font-size: 0.88rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Questions list */
+  .questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .question-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1rem 1.25rem;
+  }
+
+  .question-num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--signal);
+    opacity: 0.4;
+    min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .question-item strong {
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .question-item p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  /* Audience cards */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.25rem 0 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .audience-grid { grid-template-columns: 1fr; }
+  }
+
+  .audience-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .audience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    color: #fff;
+  }
+
+  .audience-header h4 {
+    font-size: 0.92rem;
+    margin: 0;
+    color: #fff;
+  }
+
+  .price-range {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .vendor-bg { background: var(--signal); }
+  .buyer-bg { background: var(--ink); }
+  .investor-bg { background: #2e5a3e; }
+  .consult-bg { background: #5a4e2e; }
+
+  .audience-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .audience-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tier-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tier-item {
+    font-size: 0.82rem;
+    padding: 0.4rem 0.6rem;
+    background: rgba(11, 31, 58, 0.03);
+    border-radius: 3px;
+    line-height: 1.5;
+  }
+
+  .anchor-text {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0;
+  }
+
+  /* Total row in tables */
+  .total-row td {
+    background: rgba(11, 31, 58, 0.04);
+    font-weight: 600;
+  }
+
+  /* Source notes */
+  .source-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: -0.5rem;
+  }
+
+  /* Category cards */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .category-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+    position: relative;
+  }
+
+  .category-card.tier1 { border-top: 3px solid var(--signal); }
+  .category-card.tier2 { border-top: 3px solid var(--ink); }
+  .category-card.tier3 { border-top: 3px solid var(--muted); }
+
+  .category-score {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: rgba(11, 31, 58, 0.06);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  .category-card h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+    padding-right: 3.5rem;
+  }
+
+  .category-card p {
+    font-size: 0.82rem;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Profile cards */
+  .profile-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(11, 31, 58, 0.03);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .profile-header h4 {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .profile-body {
+    padding: 1.25rem;
+  }
+
+  .profile-body ol, .profile-body ul {
+    font-size: 0.84rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .profile-body p {
+    font-size: 0.84rem;
+  }
+</style>

@@ -1,0 +1,1274 @@
+{
+  "study_name": "Retinol Switching",
+  "study_type": "B2C",
+  "track": "simulated",
+  "n_total": 240,
+  "n_arm1": 120,
+  "n_arm2": 120,
+  "alpha": 0.1,
+  "test_two_tailed": true,
+  "cover_stats": {
+    "interviews": 240,
+    "avgLengthMin": 10,
+    "wordsAnalyzedK": 362,
+    "thematicCodes": 68
+  },
+  "q1_likes": [
+    {
+      "code": "Gentle Tolerability Appreciated",
+      "arm1_pct": 85,
+      "arm1_n": 101,
+      "arm2_pct": 90,
+      "arm2_n": 107,
+      "p_value": 0.2546,
+      "claim_tier": "tier3",
+      "delta_pp": 5
+    },
+    {
+      "code": "Overall Positive Retinol 24 Experience",
+      "arm1_pct": 95,
+      "arm1_n": 114,
+      "arm2_pct": 64,
+      "arm2_n": 76,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -31
+    },
+    {
+      "code": "Early Visible Skin Improvements",
+      "arm1_pct": 82,
+      "arm1_n": 98,
+      "arm2_pct": 65,
+      "arm2_n": 77,
+      "p_value": 0.0023,
+      "claim_tier": "tier1",
+      "delta_pp": -17
+    },
+    {
+      "code": "Affordable Price as Decision Factor",
+      "arm1_pct": 66,
+      "arm1_n": 79,
+      "arm2_pct": 61,
+      "arm2_n": 73,
+      "p_value": 0.4216,
+      "claim_tier": "tier3",
+      "delta_pp": -5
+    },
+    {
+      "code": "Retail Availability as Decision Factor",
+      "arm1_pct": 46,
+      "arm1_n": 55,
+      "arm2_pct": 51,
+      "arm2_n": 61,
+      "p_value": 0.4383,
+      "claim_tier": "tier3",
+      "delta_pp": 5
+    }
+  ],
+  "q1_dislikes": [
+    {
+      "code": "Efficacy Plateau After Initial Improvement",
+      "arm1_pct": 83,
+      "arm1_n": 99,
+      "arm2_pct": 68,
+      "arm2_n": 81,
+      "p_value": 0.0073,
+      "claim_tier": "tier1",
+      "delta_pp": -15
+    },
+    {
+      "code": "Unresolved Skin Concerns Persisting",
+      "arm1_pct": 42,
+      "arm1_n": 50,
+      "arm2_pct": 53,
+      "arm2_n": 63,
+      "p_value": 0.0927,
+      "claim_tier": "tier1",
+      "delta_pp": 11
+    },
+    {
+      "code": "Desire for Stronger Retinoid Efficacy",
+      "arm1_pct": 54,
+      "arm1_n": 64,
+      "arm2_pct": 40,
+      "arm2_n": 48,
+      "p_value": 0.0384,
+      "claim_tier": "tier1",
+      "delta_pp": -14
+    },
+    {
+      "code": "Jar Packaging Hygiene Concern",
+      "arm1_pct": 39,
+      "arm1_n": 46,
+      "arm2_pct": 41,
+      "arm2_n": 49,
+      "p_value": 0.6921,
+      "claim_tier": "tier3",
+      "delta_pp": 2
+    },
+    {
+      "code": "Jar Packaging Oxidation Concern",
+      "arm1_pct": 39,
+      "arm1_n": 46,
+      "arm2_pct": 40,
+      "arm2_n": 48,
+      "p_value": 0.7914,
+      "claim_tier": "tier3",
+      "delta_pp": 1
+    },
+    {
+      "code": "Jar Packaging Practical Inconvenience",
+      "arm1_pct": 15,
+      "arm1_n": 18,
+      "arm2_pct": 14,
+      "arm2_n": 16,
+      "p_value": 0.7112,
+      "claim_tier": "tier3",
+      "delta_pp": -1
+    }
+  ],
+  "trigger_taxonomy": [
+    {
+      "code": "Multiple Factors Converging Simultaneously",
+      "arm1_pct": 71,
+      "arm1_n": 85,
+      "arm2_pct": 75,
+      "arm2_n": 90,
+      "p_value": 0.4677,
+      "claim_tier": "tier3",
+      "delta_pp": 4,
+      "display_label": "Multiple factors converging"
+    },
+    {
+      "code": "Social Media Content as Switching Catalyst",
+      "arm1_pct": 31,
+      "arm1_n": 37,
+      "arm2_pct": 73,
+      "arm2_n": 87,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 42,
+      "display_label": "Content-driven discovery"
+    },
+    {
+      "code": "Age-Related Skincare Urgency",
+      "arm1_pct": 48,
+      "arm1_n": 57,
+      "arm2_pct": 44,
+      "arm2_n": 52,
+      "p_value": 0.5168,
+      "claim_tier": "tier3",
+      "delta_pp": -4,
+      "display_label": "Life event / milestone birthday"
+    },
+    {
+      "code": "Visual Self-Confrontation Trigger",
+      "arm1_pct": 46,
+      "arm1_n": 55,
+      "arm2_pct": 34,
+      "arm2_n": 40,
+      "p_value": 0.0477,
+      "claim_tier": "tier1",
+      "delta_pp": -12,
+      "display_label": "Visual self-confrontation (photo, mirror, Zoom)"
+    },
+    {
+      "code": "Efficacy Plateau After Initial Improvement",
+      "arm1_pct": 52,
+      "arm1_n": 62,
+      "arm2_pct": 25,
+      "arm2_n": 30,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -27,
+      "display_label": "Product dissatisfaction (plateau)"
+    },
+    {
+      "code": "Unresolved Skin Concerns Persisting",
+      "arm1_pct": 20,
+      "arm1_n": 23,
+      "arm2_pct": 30,
+      "arm2_n": 36,
+      "p_value": 0.0513,
+      "claim_tier": "tier1",
+      "delta_pp": 10,
+      "display_label": "Product dissatisfaction (specific concerns)"
+    },
+    {
+      "code": "Within-Brand Upgrade as Logical Step",
+      "arm1_pct": 49,
+      "arm1_n": 58,
+      "arm2_pct": 0,
+      "arm2_n": 0,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -49,
+      "display_label": "Aspirational pull (graduation logic)"
+    },
+    {
+      "code": "Gradual Dissatisfaction Without Dramatic Trigger",
+      "arm1_pct": 19,
+      "arm1_n": 22,
+      "arm2_pct": 10,
+      "arm2_n": 11,
+      "p_value": 0.0392,
+      "claim_tier": "tier1",
+      "delta_pp": -9,
+      "display_label": "Gradual accumulation"
+    },
+    {
+      "code": "Personal Recommendation as Decision Factor",
+      "arm1_pct": 11,
+      "arm1_n": 13,
+      "arm2_pct": 17,
+      "arm2_n": 20,
+      "p_value": 0.1895,
+      "claim_tier": "tier3",
+      "delta_pp": 6,
+      "display_label": "External recommendation (friend, family)"
+    },
+    {
+      "code": "Dermatologist Recommendation as Decision Factor",
+      "arm1_pct": 5,
+      "arm1_n": 6,
+      "arm2_pct": 20,
+      "arm2_n": 23,
+      "p_value": 0.0008,
+      "claim_tier": "tier1",
+      "delta_pp": 15,
+      "display_label": "External recommendation (dermatologist)"
+    },
+    {
+      "code": "In-Store Discovery of Alternative",
+      "arm1_pct": 20,
+      "arm1_n": 23,
+      "arm2_pct": 1,
+      "arm2_n": 1,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -19,
+      "display_label": "In-store discovery"
+    },
+    {
+      "code": "Seasonal Reset as Decision Timing",
+      "arm1_pct": 12,
+      "arm1_n": 14,
+      "arm2_pct": 5,
+      "arm2_n": 5,
+      "p_value": 0.0314,
+      "claim_tier": "tier1",
+      "delta_pp": -7,
+      "display_label": "Seasonal / January reset"
+    }
+  ],
+  "info_channels": [
+    {
+      "code": "Reddit as Research Channel",
+      "arm1_pct": 43,
+      "arm1_n": 51,
+      "arm2_pct": 85,
+      "arm2_n": 101,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 42,
+      "display_label": "Reddit / discussion forums"
+    },
+    {
+      "code": "Personal Recommendation as Decision Factor",
+      "arm1_pct": 49,
+      "arm1_n": 58,
+      "arm2_pct": 37,
+      "arm2_n": 44,
+      "p_value": 0.0675,
+      "claim_tier": "tier1",
+      "delta_pp": -12,
+      "display_label": "Personal recommendation (friend, family)"
+    },
+    {
+      "code": "Avoided Specific Research Channels",
+      "arm1_pct": 22,
+      "arm1_n": 26,
+      "arm2_pct": 22,
+      "arm2_n": 26,
+      "p_value": 1.0,
+      "claim_tier": "tier3",
+      "delta_pp": 0,
+      "display_label": "Avoided social media for research"
+    },
+    {
+      "code": "TikTok Dermatologist Content as Trusted Source",
+      "arm1_pct": 4,
+      "arm1_n": 4,
+      "arm2_pct": 25,
+      "arm2_n": 30,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 21,
+      "display_label": "TikTok dermatologist content"
+    },
+    {
+      "code": "Dermatologist Recommendation as Decision Factor",
+      "arm1_pct": 8,
+      "arm1_n": 9,
+      "arm2_pct": 18,
+      "arm2_n": 21,
+      "p_value": 0.0192,
+      "claim_tier": "tier1",
+      "delta_pp": 10,
+      "display_label": "Dermatologist consultation"
+    }
+  ],
+  "consideration_set": [
+    {
+      "product": "Olay Retinol 24 MAX",
+      "arm1_pct": 80,
+      "arm1_n": 96,
+      "arm2_pct": 59,
+      "arm2_n": 70,
+      "p_value": 0.0003,
+      "claim_tier": "tier1"
+    },
+    {
+      "product": "CeraVe Resurfacing Retinol Serum",
+      "arm1_pct": 21,
+      "arm1_n": 25,
+      "arm2_pct": 71,
+      "arm2_n": 85,
+      "p_value": 0.0,
+      "claim_tier": "tier1"
+    },
+    {
+      "product": "La Roche-Posay Pure Retinol B3 Serum",
+      "arm1_pct": 5,
+      "arm1_n": 5,
+      "arm2_pct": 11,
+      "arm2_n": 13,
+      "p_value": 0.0499,
+      "claim_tier": "tier1"
+    }
+  ],
+  "arm2_considered_max": {
+    "n": 70,
+    "pct": 59,
+    "denom": 120
+  },
+  "decision_factors_all": [
+    {
+      "code": "Affordable Price as Decision Factor",
+      "arm1_pct": 80,
+      "arm1_n": 95,
+      "arm2_pct": 80,
+      "arm2_n": 95,
+      "p_value": 1.0,
+      "claim_tier": "tier3",
+      "delta_pp": 0
+    },
+    {
+      "code": "Brand Trust From Established Tolerance",
+      "arm1_pct": 100,
+      "arm1_n": 119,
+      "arm2_pct": 10,
+      "arm2_n": 11,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -90
+    },
+    {
+      "code": "Within-Brand Upgrade as Logical Step",
+      "arm1_pct": 94,
+      "arm1_n": 112,
+      "arm2_pct": 0,
+      "arm2_n": 0,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -94
+    },
+    {
+      "code": "Targeted Ingredient Combination Appeal",
+      "arm1_pct": 14,
+      "arm1_n": 16,
+      "arm2_pct": 58,
+      "arm2_n": 69,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 44
+    },
+    {
+      "code": "Retail Availability as Decision Factor",
+      "arm1_pct": 40,
+      "arm1_n": 47,
+      "arm2_pct": 13,
+      "arm2_n": 15,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -27
+    },
+    {
+      "code": "Skin Type Specific Decision Logic",
+      "arm1_pct": 21,
+      "arm1_n": 25,
+      "arm2_pct": 23,
+      "arm2_n": 27,
+      "p_value": 0.754,
+      "claim_tier": "tier3",
+      "delta_pp": 2
+    },
+    {
+      "code": "Serum Format Preference Over Moisturizer",
+      "arm1_pct": 0,
+      "arm1_n": 0,
+      "arm2_pct": 43,
+      "arm2_n": 51,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 43
+    },
+    {
+      "code": "Dermatologist-Developed Brand Positioning",
+      "arm1_pct": 0,
+      "arm1_n": 0,
+      "arm2_pct": 41,
+      "arm2_n": 49,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 41
+    },
+    {
+      "code": "Premium Price as Barrier",
+      "arm1_pct": 27,
+      "arm1_n": 32,
+      "arm2_pct": 12,
+      "arm2_n": 14,
+      "p_value": 0.0032,
+      "claim_tier": "tier1",
+      "delta_pp": -15
+    },
+    {
+      "code": "Ingredient Transparency as Decision Driver",
+      "arm1_pct": 4,
+      "arm1_n": 4,
+      "arm2_pct": 33,
+      "arm2_n": 39,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 29
+    },
+    {
+      "code": "Past Bad Reaction Driving Caution",
+      "arm1_pct": 29,
+      "arm1_n": 34,
+      "arm2_pct": 7,
+      "arm2_n": 8,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -22
+    },
+    {
+      "code": "Melanin-Rich Skin Sensitivity Considerations",
+      "arm1_pct": 18,
+      "arm1_n": 21,
+      "arm2_pct": 10,
+      "arm2_n": 12,
+      "p_value": 0.0916,
+      "claim_tier": "tier1",
+      "delta_pp": -8
+    },
+    {
+      "code": "Desire for Stronger Retinoid Efficacy",
+      "arm1_pct": 21,
+      "arm1_n": 25,
+      "arm2_pct": 5,
+      "arm2_n": 5,
+      "p_value": 0.0001,
+      "claim_tier": "tier1",
+      "delta_pp": -16
+    },
+    {
+      "code": "Personal Recommendation as Decision Factor",
+      "arm1_pct": 10,
+      "arm1_n": 11,
+      "arm2_pct": 15,
+      "arm2_n": 18,
+      "p_value": 0.1656,
+      "claim_tier": "tier3",
+      "delta_pp": 5
+    },
+    {
+      "code": "TikTok Dermatologist Content as Trusted Source",
+      "arm1_pct": 0,
+      "arm1_n": 0,
+      "arm2_pct": 25,
+      "arm2_n": 30,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 25
+    },
+    {
+      "code": "Dermatologist Recommendation as Decision Factor",
+      "arm1_pct": 2,
+      "arm1_n": 2,
+      "arm2_pct": 19,
+      "arm2_n": 22,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 17
+    },
+    {
+      "code": "Existing Brand Trust Extended to New Product",
+      "arm1_pct": 6,
+      "arm1_n": 7,
+      "arm2_pct": 15,
+      "arm2_n": 17,
+      "p_value": 0.0314,
+      "claim_tier": "tier1",
+      "delta_pp": 9
+    }
+  ],
+  "decision_factors_top_arm1": [
+    {
+      "code": "Brand Trust From Established Tolerance",
+      "arm1_pct": 100,
+      "arm1_n": 119,
+      "arm2_pct": 10,
+      "arm2_n": 11,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -90
+    },
+    {
+      "code": "Within-Brand Upgrade as Logical Step",
+      "arm1_pct": 94,
+      "arm1_n": 112,
+      "arm2_pct": 0,
+      "arm2_n": 0,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -94
+    },
+    {
+      "code": "Affordable Price as Decision Factor",
+      "arm1_pct": 80,
+      "arm1_n": 95,
+      "arm2_pct": 80,
+      "arm2_n": 95,
+      "p_value": 1.0,
+      "claim_tier": "tier3",
+      "delta_pp": 0
+    },
+    {
+      "code": "Retail Availability as Decision Factor",
+      "arm1_pct": 40,
+      "arm1_n": 47,
+      "arm2_pct": 13,
+      "arm2_n": 15,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -27
+    },
+    {
+      "code": "Past Bad Reaction Driving Caution",
+      "arm1_pct": 29,
+      "arm1_n": 34,
+      "arm2_pct": 7,
+      "arm2_n": 8,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": -22
+    }
+  ],
+  "decision_factors_top_arm2": [
+    {
+      "code": "Affordable Price as Decision Factor",
+      "arm1_pct": 80,
+      "arm1_n": 95,
+      "arm2_pct": 80,
+      "arm2_n": 95,
+      "p_value": 1.0,
+      "claim_tier": "tier3",
+      "delta_pp": 0
+    },
+    {
+      "code": "Targeted Ingredient Combination Appeal",
+      "arm1_pct": 14,
+      "arm1_n": 16,
+      "arm2_pct": 58,
+      "arm2_n": 69,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 44
+    },
+    {
+      "code": "Serum Format Preference Over Moisturizer",
+      "arm1_pct": 0,
+      "arm1_n": 0,
+      "arm2_pct": 43,
+      "arm2_n": 51,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 43
+    },
+    {
+      "code": "Dermatologist-Developed Brand Positioning",
+      "arm1_pct": 0,
+      "arm1_n": 0,
+      "arm2_pct": 41,
+      "arm2_n": 49,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 41
+    },
+    {
+      "code": "Ingredient Transparency as Decision Driver",
+      "arm1_pct": 4,
+      "arm1_n": 4,
+      "arm2_pct": 33,
+      "arm2_n": 39,
+      "p_value": 0.0,
+      "claim_tier": "tier1",
+      "delta_pp": 29
+    }
+  ],
+  "awareness": {
+    "Olay Retinol 24 MAX": {
+      "n": 238,
+      "pct": 100
+    },
+    "CeraVe Resurfacing Retinol Serum": {
+      "n": 239,
+      "pct": 100
+    },
+    "La Roche-Posay Pure Retinol B3 Serum": {
+      "n": 239,
+      "pct": 100
+    }
+  },
+  "trial": {
+    "Olay Retinol 24 MAX": {
+      "n": 170,
+      "pct": 71
+    },
+    "CeraVe Resurfacing Retinol Serum": {
+      "n": 136,
+      "pct": 57
+    },
+    "La Roche-Posay Pure Retinol B3 Serum": {
+      "n": 112,
+      "pct": 47
+    }
+  },
+  "awareness_to_trial_conversion_pct": {
+    "Olay Retinol 24 MAX": 71,
+    "CeraVe Resurfacing Retinol Serum": 57,
+    "La Roche-Posay Pure Retinol B3 Serum": 47
+  },
+  "perceptions": {
+    "ingredient_quality": {
+      "label": "Conveys high-quality ingredients",
+      "all": {
+        "Olay Retinol 24 MAX": {
+          "n": 0,
+          "pct": 0
+        },
+        "CeraVe Resurfacing Retinol Serum": {
+          "n": 5,
+          "pct": 3
+        },
+        "La Roche-Posay Pure Retinol B3 Serum": {
+          "n": 235,
+          "pct": 98
+        },
+        "None / about the same": {
+          "n": 0,
+          "pct": 0
+        },
+        "_total_n": 240
+      },
+      "by_arm": {
+        "Arm 1: Internal upgrader": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 0,
+          "La Roche-Posay Pure Retinol B3 Serum": 100,
+          "None / about the same": 0,
+          "_total_n": 120
+        },
+        "Arm 2: External defector": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 5,
+          "La Roche-Posay Pure Retinol B3 Serum": 96,
+          "None / about the same": 0,
+          "_total_n": 120
+        }
+      }
+    },
+    "perceived_price": {
+      "label": "Suggests it costs more",
+      "all": {
+        "Olay Retinol 24 MAX": {
+          "n": 0,
+          "pct": 0
+        },
+        "CeraVe Resurfacing Retinol Serum": {
+          "n": 0,
+          "pct": 0
+        },
+        "La Roche-Posay Pure Retinol B3 Serum": {
+          "n": 240,
+          "pct": 100
+        },
+        "None / about the same": {
+          "n": 0,
+          "pct": 0
+        },
+        "_total_n": 240
+      },
+      "by_arm": {
+        "Arm 1: Internal upgrader": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 0,
+          "La Roche-Posay Pure Retinol B3 Serum": 100,
+          "None / about the same": 0,
+          "_total_n": 120
+        },
+        "Arm 2: External defector": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 0,
+          "La Roche-Posay Pure Retinol B3 Serum": 100,
+          "None / about the same": 0,
+          "_total_n": 120
+        }
+      }
+    },
+    "derm_recommended": {
+      "label": "Suggests dermatologist would recommend",
+      "all": {
+        "Olay Retinol 24 MAX": {
+          "n": 0,
+          "pct": 0
+        },
+        "CeraVe Resurfacing Retinol Serum": {
+          "n": 183,
+          "pct": 77
+        },
+        "La Roche-Posay Pure Retinol B3 Serum": {
+          "n": 54,
+          "pct": 23
+        },
+        "None / about the same": {
+          "n": 3,
+          "pct": 2
+        },
+        "_total_n": 240
+      },
+      "by_arm": {
+        "Arm 1: Internal upgrader": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 73,
+          "La Roche-Posay Pure Retinol B3 Serum": 27,
+          "None / about the same": 1,
+          "_total_n": 120
+        },
+        "Arm 2: External defector": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 80,
+          "La Roche-Posay Pure Retinol B3 Serum": 19,
+          "None / about the same": 2,
+          "_total_n": 120
+        }
+      }
+    },
+    "identity_fit": {
+      "label": "Designed for a woman like me",
+      "all": {
+        "Olay Retinol 24 MAX": {
+          "n": 111,
+          "pct": 47
+        },
+        "CeraVe Resurfacing Retinol Serum": {
+          "n": 65,
+          "pct": 28
+        },
+        "La Roche-Posay Pure Retinol B3 Serum": {
+          "n": 37,
+          "pct": 16
+        },
+        "None / about the same": {
+          "n": 27,
+          "pct": 12
+        },
+        "_total_n": 240
+      },
+      "by_arm": {
+        "Arm 1: Internal upgrader": {
+          "Olay Retinol 24 MAX": 93,
+          "CeraVe Resurfacing Retinol Serum": 0,
+          "La Roche-Posay Pure Retinol B3 Serum": 7,
+          "None / about the same": 1,
+          "_total_n": 120
+        },
+        "Arm 2: External defector": {
+          "Olay Retinol 24 MAX": 0,
+          "CeraVe Resurfacing Retinol Serum": 55,
+          "La Roche-Posay Pure Retinol B3 Serum": 25,
+          "None / about the same": 22,
+          "_total_n": 120
+        }
+      }
+    }
+  },
+  "trajectory": [
+    {
+      "code": "Routine Expansion Not Replacement Mindset",
+      "arm1_pct": 88,
+      "arm1_n": 105,
+      "arm2_pct": 90,
+      "arm2_n": 108,
+      "p_value": 0.54,
+      "claim_tier": "tier3",
+      "delta_pp": 2
+    },
+    {
+      "code": "Prescription Tretinoin as Future Goal",
+      "arm1_pct": 37,
+      "arm1_n": 44,
+      "arm2_pct": 47,
+      "arm2_n": 56,
+      "p_value": 0.1161,
+      "claim_tier": "tier3",
+      "delta_pp": 10
+    },
+    {
+      "code": "Desire for Stronger Retinoid Efficacy",
+      "arm1_pct": 29,
+      "arm1_n": 34,
+      "arm2_pct": 45,
+      "arm2_n": 53,
+      "p_value": 0.0107,
+      "claim_tier": "tier1",
+      "delta_pp": 16
+    },
+    {
+      "code": "Firmness as Emerging Age Concern",
+      "arm1_pct": 27,
+      "arm1_n": 32,
+      "arm2_pct": 22,
+      "arm2_n": 26,
+      "p_value": 0.3656,
+      "claim_tier": "tier3",
+      "delta_pp": -5
+    },
+    {
+      "code": "Hyperpigmentation as Primary Skin Focus",
+      "arm1_pct": 15,
+      "arm1_n": 17,
+      "arm2_pct": 12,
+      "arm2_n": 14,
+      "p_value": 0.5637,
+      "claim_tier": "tier3",
+      "delta_pp": -3
+    },
+    {
+      "code": "SPF Consistency as Recognized Gap",
+      "arm1_pct": 13,
+      "arm1_n": 15,
+      "arm2_pct": 10,
+      "arm2_n": 12,
+      "p_value": 0.54,
+      "claim_tier": "tier3",
+      "delta_pp": -3
+    },
+    {
+      "code": "Unresolved Skin Concerns Persisting",
+      "arm1_pct": 11,
+      "arm1_n": 13,
+      "arm2_pct": 10,
+      "arm2_n": 12,
+      "p_value": 0.8326,
+      "claim_tier": "tier3",
+      "delta_pp": -1
+    },
+    {
+      "code": "Retinoid Graduation Ladder Frame",
+      "arm1_pct": 5,
+      "arm1_n": 6,
+      "arm2_pct": 15,
+      "arm2_n": 18,
+      "p_value": 0.0098,
+      "claim_tier": "tier1",
+      "delta_pp": 10
+    },
+    {
+      "code": "In-Office Procedures Ruled Out by Cost",
+      "arm1_pct": 10,
+      "arm1_n": 11,
+      "arm2_pct": 10,
+      "arm2_n": 12,
+      "p_value": 0.8264,
+      "claim_tier": "tier3",
+      "delta_pp": 0
+    },
+    {
+      "code": "Age-Related Skincare Urgency",
+      "arm1_pct": 10,
+      "arm1_n": 11,
+      "arm2_pct": 5,
+      "arm2_n": 6,
+      "p_value": 0.2084,
+      "claim_tier": "tier3",
+      "delta_pp": -5
+    },
+    {
+      "code": "Preference for Simple Targeted Routine",
+      "arm1_pct": 6,
+      "arm1_n": 7,
+      "arm2_pct": 6,
+      "arm2_n": 7,
+      "p_value": 1.0,
+      "claim_tier": "tier3",
+      "delta_pp": 0
+    },
+    {
+      "code": "Budget-Driven Risk Aversion",
+      "arm1_pct": 5,
+      "arm1_n": 6,
+      "arm2_pct": 4,
+      "arm2_n": 4,
+      "p_value": 0.5182,
+      "claim_tier": "tier3",
+      "delta_pp": -1
+    }
+  ],
+  "radar": [
+    {
+      "code": "Peptide Interest as Next Ingredient",
+      "arm1_pct": 78,
+      "arm1_n": 93,
+      "arm2_pct": 73,
+      "arm2_n": 87,
+      "p_value": 0.3711,
+      "claim_tier": "tier3",
+      "delta_pp": -5
+    },
+    {
+      "code": "Hyperpigmentation-Targeted Ingredient Interest",
+      "arm1_pct": 48,
+      "arm1_n": 57,
+      "arm2_pct": 71,
+      "arm2_n": 85,
+      "p_value": 0.0002,
+      "claim_tier": "tier1",
+      "delta_pp": 23
+    },
+    {
+      "code": "Retinaldehyde as Intermediate Step Interest",
+      "arm1_pct": 43,
+      "arm1_n": 51,
+      "arm2_pct": 55,
+      "arm2_n": 66,
+      "p_value": 0.0527,
+      "claim_tier": "tier1",
+      "delta_pp": 12
+    },
+    {
+      "code": "Emerging Ingredient Curiosity",
+      "arm1_pct": 39,
+      "arm1_n": 46,
+      "arm2_pct": 43,
+      "arm2_n": 51,
+      "p_value": 0.5107,
+      "claim_tier": "tier3",
+      "delta_pp": 4
+    },
+    {
+      "code": "Prescription Tretinoin as Future Goal",
+      "arm1_pct": 5,
+      "arm1_n": 6,
+      "arm2_pct": 11,
+      "arm2_n": 13,
+      "p_value": 0.0942,
+      "claim_tier": "tier1",
+      "delta_pp": 6
+    },
+    {
+      "code": "Preference for Simple Targeted Routine",
+      "arm1_pct": 8,
+      "arm1_n": 9,
+      "arm2_pct": 4,
+      "arm2_n": 4,
+      "p_value": 0.1539,
+      "claim_tier": "tier3",
+      "delta_pp": -4
+    }
+  ],
+  "verbatim_library": {
+    "Olay Retinol 24 MAX": [
+      {
+        "pid": 116,
+        "quote": "I'd say it's the grown-up version of the drugstore retinol you already know, and it actually does more without making your face angry about it.",
+        "age": "41-43",
+        "income": "$50K-$99K",
+        "ethnicity": "Black/African American"
+      },
+      {
+        "pid": 73,
+        "quote": "Effective, no-nonsense skincare that you don't have to overthink. It's not a luxury experience but the results are real and the price doesn't make you wince.",
+        "age": "41-43",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 212,
+        "quote": "I'd say it's a solid, no-fuss brand that actually delivers on the retinol front without costing a fortune or requiring a prescription. Trustworthy and easy to find.",
+        "age": "35-37",
+        "income": "$50K-$99K",
+        "ethnicity": "Other/Multiracial"
+      },
+      {
+        "pid": 202,
+        "quote": "I'd say it's a reliable upgrade — the same brand you already trust but actually formulated for women who want more visible results. It doesn't overcomplicate things.",
+        "age": "41-43",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      }
+    ],
+    "RoC": [
+      {
+        "pid": 158,
+        "quote": "I'd say RoC is the real deal for people who actually want results without spending a fortune. It's not fancy, it doesn't have pretty packaging, but it's been around forever and there's a reason for that. I'd tell a friend it's like the brand your mom probably told you about, and your mom was probably right.",
+        "age": "35-37",
+        "income": "Under $50K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 49,
+        "quote": "I'd say RoC is the brand that takes retinol seriously. It's not trying to be a trendy all-in-one skincare brand — it has a clear focus and a long history with this specific ingredient. I'd tell a friend it feels like a purposeful choice rather than just grabbing whatever's popular. It's the brand that does the work without a lot of noise around it.",
+        "age": "38-40",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 59,
+        "quote": "I'd say it's the quiet workhorse of retinol — like it's not trying to be glamorous or get Instagram attention, it just has decades of experience with this one ingredient and it shows. It's unpretentious and really focused. I'd tell a friend to try it if they want actual retinol results without paying prestige prices or dealing with a brand that's chasing trends.",
+        "age": "35-37",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      }
+    ],
+    "Differin": [
+      {
+        "pid": 99,
+        "quote": "Differin is prescription-grade science in a box you can buy at CVS. It's the serious, clinical option for people who've been dealing with the same skin stuff for years and are finally ready to use what actually works for it.",
+        "age": "41-43",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 222,
+        "quote": "I'd say it's the product you graduate to when you're done pretending drugstore moisturizers are going to cut it. It's a clinical-grade treatment in a no-fuss tube that used to require a doctor's visit, and now you can just buy it at Walgreens. It's serious skincare that doesn't charge you for the fancy packaging.",
+        "age": "41-43",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 189,
+        "quote": "I'd say it's no-nonsense skincare that was originally developed for acne but turns out to be one of the most evidence-based anti-aging options on the market, and the fact that it costs less than ten dollars is either a secret or just not talked about enough. It's the kind of product that makes you feel smart for using it.",
+        "age": "35-37",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 127,
+        "quote": "I'd say Differin is kind of a prescription-grade retinoid that you can now get over the counter, and it's the real thing — not just a cosmetic product with retinol in it. It's what dermatologists used to prescribe for acne but it turns out it works for wrinkles too. It's a little more serious than what you'd normally think of as drugstore skincare.",
+        "age": "41-43",
+        "income": "Under $50K",
+        "ethnicity": "White (non-Hispanic)"
+      }
+    ],
+    "CeraVe": [
+      {
+        "pid": 177,
+        "quote": "No-nonsense, dermatologist-backed, and honest about what it is. It doesn't try to be fancy. It's the brand you use when you actually want results and you're not paying for packaging.",
+        "age": "35-37",
+        "income": "$150K+",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 204,
+        "quote": "I'd tell her it's the brand your dermatologist would choose if she shopped at the drugstore. It's clinical but not cold, effective without being fussy. It punches above its price tag.",
+        "age": "41-43",
+        "income": "$150K+",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 225,
+        "quote": "I'd say it's the brand that takes the guesswork out of it — dermatologists trust it, it's at every Target and CVS, and it actually has the ingredients that do something without making your skin angry about it.",
+        "age": "35-37",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 182,
+        "quote": "I'd say it's the one dermatologists actually stand behind, and it's not going to break the bank. Like, it's no-frills in the packaging but serious about the formulation. It's for someone who wants results without drama.",
+        "age": "38-40",
+        "income": "$100K-$149K",
+        "ethnicity": "Black/African American"
+      }
+    ],
+    "Naturium": [
+      {
+        "pid": 119,
+        "quote": "I'd describe Naturium as the brand that finally connected the dots between good ingredients and a reasonable price without making you feel like you're compromising either one. It's like the skincare equivalent of a really great value wine — it over-delivers for what it costs.",
+        "age": "38-40",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 37,
+        "quote": "I'd tell them it's like a smarter drugstore brand — ingredient-forward, honest about what it is and what it does, and priced in a way that doesn't feel like you're paying for a logo. It's the kind of thing that nerdy skincare people recommend but that doesn't require being a nerd to use.",
+        "age": "38-40",
+        "income": "$150K+",
+        "ethnicity": "Asian/Pacific Islander"
+      },
+      {
+        "pid": 239,
+        "quote": "I'd say it's the skincare equivalent of a really well-edited wardrobe — nothing fussy, everything intentional, and it manages to look expensive without actually being expensive. I'd tell her it's ingredient-first but also just genuinely nice to use and look at, which for me is the full package.",
+        "age": "35-37",
+        "income": "$100K-$149K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 190,
+        "quote": "I'd say it's the brand for people who are done being marketed to and just want to know what's actually in the bottle and why. It's ingredient-forward, honest about what it can and can't do, and priced like they actually want you to be able to afford it. It's what I wish more skincare felt like, honestly.",
+        "age": "41-43",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      }
+    ],
+    "The Ordinary": [
+      {
+        "pid": 25,
+        "quote": "I'd say it's the brand that proves you don't have to spend a lot to get real ingredients. I'd tell a friend it's no-frills, kind of science-nerdy in how it presents itself, and genuinely affordable in a way that most skincare brands aren't.",
+        "age": "35-37",
+        "income": "Under $50K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 236,
+        "quote": "I'd say it's the no-nonsense, science-first brand. Like, you're not paying for fancy packaging or a celebrity name — you're just paying for the ingredient. It's kind of demystifying skincare in a way that I think a lot of people find really refreshing.",
+        "age": "35-37",
+        "income": "$150K+",
+        "ethnicity": "Hispanic/Latina"
+      },
+      {
+        "pid": 12,
+        "quote": "I'd say it's like the no-frills store brand of skincare, but in a good way. You're paying for what's actually in the bottle, not the box it comes in or the influencer who posted about it. It's for people who've done enough research to know what they actually need and don't want to pay extra for the story.",
+        "age": "41-43",
+        "income": "Under $50K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 63,
+        "quote": "I'd call it the no-nonsense option for people who've done their homework. It's not pretty, it's not luxurious, but you know exactly what you're getting and you're getting a lot of it for very little money. I usually say it's for people who care more about what's inside the bottle than what the bottle looks like.",
+        "age": "38-40",
+        "income": "$100K-$149K",
+        "ethnicity": "Hispanic/Latina"
+      }
+    ],
+    "La Roche-Posay": [
+      {
+        "pid": 137,
+        "quote": "I'd say it's a dermatologist-trusted French brand that takes ingredients seriously. It's not the cheapest option but it feels worth it. Kind of like the grown-up version of what I was using before.",
+        "age": "35-37",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 146,
+        "quote": "I'd say it's the brand that dermatologists actually use themselves, not just recommend. It's clinical without being cold. The packaging is clean and unfussy, and you know exactly what you're getting.",
+        "age": "41-43",
+        "income": "$150K+",
+        "ethnicity": "Asian/Pacific Islander"
+      },
+      {
+        "pid": 185,
+        "quote": "I'd say it's the kind of thing your dermatologist actually reaches for — not the flashiest packaging in the aisle but clearly made by people who know what they're doing. It feels like grown-up skincare, I guess. Serious without being intimidating.",
+        "age": "38-40",
+        "income": "$50K-$99K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 126,
+        "quote": "I'd probably say something like, it's a French pharmacy brand that dermatologists actually recommend, and it's more serious than what you'd normally grab at the drugstore but it's not like a luxury spa brand either. It's kind of the sweet spot between trustworthy and accessible.",
+        "age": "38-40",
+        "income": "Under $50K",
+        "ethnicity": "Asian/Pacific Islander"
+      }
+    ],
+    "Neutrogena": [
+      {
+        "pid": 21,
+        "quote": "I'd say it's like the dependable, no-drama option. It's not fancy but it's not trying to be. I'd tell a friend it's straightforward, it does what it says, and you can find it anywhere without having to plan ahead or pay shipping.",
+        "age": "35-37",
+        "income": "$100K-$149K",
+        "ethnicity": "Hispanic/Latina"
+      },
+      {
+        "pid": 206,
+        "quote": "I'd say it's like a workhorse brand. It's not fancy but it gets the job done. I'd tell her it's reliable, affordable, and they actually put real active ingredients in there without charging you a premium just for the name. It feels like a practical choice for someone who wants results without overthinking it.",
+        "age": "41-43",
+        "income": "$50K-$99K",
+        "ethnicity": "Black/African American"
+      },
+      {
+        "pid": 230,
+        "quote": "I'd say it's the brand you've always known and trusted, but now it's actually doing something serious for your skin. Like it's not trying to be fancy — it's Neutrogena, it's just at the drugstore — but the retinol stuff feels like they actually put some effort into making it work. It's dependable without being boring.",
+        "age": "38-40",
+        "income": "Under $50K",
+        "ethnicity": "White (non-Hispanic)"
+      },
+      {
+        "pid": 83,
+        "quote": "I'd say Neutrogena is the brand that shows up for you without asking you to spend a lot of money or go to a specialty store. It's clinically credible without being snobbish about it. The Rapid Wrinkle Repair serum specifically I'd describe as a workhorse — it does what it says, it layers well under moisturizer, and it doesn't make your skin freak out while it works. I'd tell a friend it's a good step up from a basic retinol cream if you're ready to get a little more serious but you're not ready to go full prescription territory.",
+        "age": "35-37",
+        "income": "$100K-$149K",
+        "ethnicity": "Hispanic/Latina"
+      }
+    ]
+  },
+  "migration": [
+    {
+      "destination": "CeraVe",
+      "n": 52,
+      "pct": 44
+    },
+    {
+      "destination": "La Roche-Posay",
+      "n": 19,
+      "pct": 16
+    },
+    {
+      "destination": "Naturium",
+      "n": 15,
+      "pct": 13
+    },
+    {
+      "destination": "Differin",
+      "n": 13,
+      "pct": 11
+    },
+    {
+      "destination": "The Ordinary",
+      "n": 10,
+      "pct": 9
+    },
+    {
+      "destination": "Neutrogena",
+      "n": 6,
+      "pct": 5
+    },
+    {
+      "destination": "RoC",
+      "n": 5,
+      "pct": 5
+    }
+  ]
+}

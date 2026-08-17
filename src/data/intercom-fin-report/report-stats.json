@@ -1,0 +1,2809 @@
+{
+  "study_name": "Intercom Fin-on-Top",
+  "generated_at": "2026-05-05",
+  "alpha": 0.1,
+  "cohort_metadata": {
+    "n_total": 180,
+    "n_wave_1_adopters": 60,
+    "n_wave_2_non_adopters": 120,
+    "w1_zendesk": 30,
+    "w1_salesforce": 30,
+    "w1_size_1k_3k": 40,
+    "w1_size_3k_5k": 20,
+    "w2_zendesk": 60,
+    "w2_salesforce": 60,
+    "w2_size_1k_3k": 60,
+    "w2_size_3k_5k": 60,
+    "industries": [
+      "Digital Services/Digital Media",
+      "Ecommerce/Retail",
+      "Fintech/Financial Services",
+      "Online Marketplace",
+      "Software/SaaS"
+    ],
+    "platforms": [
+      "Salesforce Service Cloud",
+      "Zendesk"
+    ]
+  },
+  "executive_hero": {
+    "interviews": 180,
+    "fin_adopters": 60,
+    "non_adopters": 120,
+    "industries": 5,
+    "platforms": 2,
+    "replatform_against_pct": 0.6,
+    "replatform_against_n": 36,
+    "replatform_likely_pct": 0.18333333333333332,
+    "adoption_leaning_pct": 0.975,
+    "fin_likely_choice_pct": 0.7083333333333334,
+    "fin_likely_choice_n": 85,
+    "agentforce_likely_pct": 0.09166666666666666,
+    "zendesk_ai_likely_pct": 0.125
+  },
+  "customer_insights": {
+    "firmographics": {
+      "w1_adopters": {
+        "platform": {
+          "Zendesk": 30,
+          "Salesforce Service Cloud": 30
+        },
+        "industry": {
+          "Fintech/Financial Services": 12,
+          "Ecommerce/Retail": 12,
+          "Software/SaaS": 12,
+          "Digital Services/Digital Media": 12,
+          "Online Marketplace": 12
+        },
+        "company_size_band": {
+          "2,001-3,000 employees": 18,
+          "3,001-4,000 employees": 9,
+          "4,001-5,000 employees": 11,
+          "1,000-2,000 employees": 22
+        },
+        "role_seniority": {
+          "VP / Head": 24,
+          "Director": 23,
+          "Senior Manager": 6,
+          "Chief Customer Officer": 7
+        },
+        "functional_role": {
+          "Customer Operations / Support Operations": 14,
+          "Customer Support / Customer Service": 18,
+          "Customer Experience (CX)": 26,
+          "Chief Customer Officer": 2
+        }
+      },
+      "w2_non_adopters": {
+        "platform": {
+          "Zendesk": 60,
+          "Salesforce Service Cloud": 60
+        },
+        "industry": {
+          "Online Marketplace": 24,
+          "Fintech/Financial Services": 24,
+          "Software/SaaS": 24,
+          "Digital Services/Digital Media": 24,
+          "Ecommerce/Retail": 24
+        },
+        "company_size_band": {
+          "3,001-5,000 employees": 60,
+          "1,000-3,000 employees": 60
+        },
+        "role_seniority": {
+          "VP / Head": 55,
+          "Director": 52,
+          "Senior Manager": 10,
+          "Chief Customer Officer": 3
+        },
+        "functional_role": {
+          "Chief Customer Officer": 10,
+          "Customer Experience (CX)": 24,
+          "Customer Support / Customer Service": 57,
+          "Customer Operations / Support Operations": 29
+        }
+      }
+    },
+    "push_forces_cross_wave": {
+      "self_service_capability_gap": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 29,
+          "rate": 0.48333333333333334
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 56,
+          "rate": 0.4666666666666667
+        }
+      },
+      "knowledge_base_content_dependency": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 24,
+          "rate": 0.4
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 15,
+          "rate": 0.125
+        }
+      },
+      "knowledge_base_tooling_limitations": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 10,
+          "rate": 0.16666666666666666
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 51,
+          "rate": 0.425
+        }
+      },
+      "reporting_limitations": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 26,
+          "rate": 0.43333333333333335
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 57,
+          "rate": 0.475
+        }
+      },
+      "admin_dependency_bottleneck": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 8,
+          "rate": 0.13333333333333333
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 49,
+          "rate": 0.4083333333333333
+        }
+      },
+      "agent_desktop_experience_friction": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 11,
+          "rate": 0.18333333333333332
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 40,
+          "rate": 0.3333333333333333
+        }
+      },
+      "platform_licensing_cost_pressure": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 11,
+          "rate": 0.18333333333333332
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 38,
+          "rate": 0.31666666666666665
+        }
+      },
+      "native_ai_inadequacy": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 55,
+          "rate": 0.9166666666666666
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 72,
+          "rate": 0.6
+        }
+      },
+      "native_ai_perceived_as_bolt_on": {
+        "w1_q2": {
+          "n": 60,
+          "n_pos": 4,
+          "rate": 0.06666666666666667
+        },
+        "w2_q2": {
+          "n": 120,
+          "n_pos": 15,
+          "rate": 0.125
+        }
+      }
+    },
+    "macro_pressures_cross_wave": {
+      "executive_ai_mandate": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 29,
+          "rate": 0.48333333333333334
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 41,
+          "rate": 0.3416666666666667
+        }
+      },
+      "headcount_constraint_mandate": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 21,
+          "rate": 0.35
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 45,
+          "rate": 0.375
+        }
+      },
+      "volume_growth_outpacing_headcount": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 23,
+          "rate": 0.38333333333333336
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 55,
+          "rate": 0.4583333333333333
+        }
+      },
+      "cost_per_contact_pressure": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 25,
+          "rate": 0.4166666666666667
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 41,
+          "rate": 0.3416666666666667
+        }
+      },
+      "competitive_ai_pressure": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 40,
+          "rate": 0.6666666666666666
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 42,
+          "rate": 0.35
+        }
+      },
+      "customer_expectation_shift": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 7,
+          "rate": 0.11666666666666667
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 50,
+          "rate": 0.4166666666666667
+        }
+      },
+      "support_quality_as_revenue_lever": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 10,
+          "rate": 0.16666666666666666
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 48,
+          "rate": 0.4
+        }
+      },
+      "regulatory_compliance_constraint": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 5,
+          "rate": 0.08333333333333333
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 19,
+          "rate": 0.15833333333333333
+        }
+      },
+      "acute_volume_spike_trigger": {
+        "w1_q3": {
+          "n": 60,
+          "n_pos": 0,
+          "rate": 0.0
+        },
+        "w2_q3": {
+          "n": 120,
+          "n_pos": 8,
+          "rate": 0.06666666666666667
+        }
+      }
+    }
+  },
+  "competitive_position": {
+    "vendor_likely_choice_w2": {
+      "Zendesk AI Agents": 15,
+      "Intercom Fin": 85,
+      "Salesforce Agentforce": 11,
+      "Undecided": 4,
+      "Internal build": 1
+    },
+    "vendor_rejection_signature": {},
+    "native_ai_critique_cross_wave": {
+      "native_ai_inadequacy": {
+        "w1": {
+          "n": 60,
+          "n_pos": 56,
+          "rate": 0.9333333333333333
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 79,
+          "rate": 0.6583333333333333
+        }
+      },
+      "native_ai_maturity_gap": {
+        "w1": {
+          "n": 60,
+          "n_pos": 29,
+          "rate": 0.48333333333333334
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 63,
+          "rate": 0.525
+        }
+      },
+      "native_ai_perceived_as_bolt_on": {
+        "w1": {
+          "n": 60,
+          "n_pos": 18,
+          "rate": 0.3
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 39,
+          "rate": 0.325
+        }
+      }
+    },
+    "fin_pull_cross_wave": {
+      "no_replatform_deployment_appeal": {
+        "w1": {
+          "n": 60,
+          "n_pos": 45,
+          "rate": 0.75
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 120,
+          "rate": 1.0
+        }
+      },
+      "fin_resolution_rate_performance": {
+        "w1": {
+          "n": 60,
+          "n_pos": 60,
+          "rate": 1.0
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 60,
+          "rate": 0.5
+        }
+      },
+      "fin_conversational_quality": {
+        "w1": {
+          "n": 60,
+          "n_pos": 45,
+          "rate": 0.75
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 69,
+          "rate": 0.575
+        }
+      },
+      "fin_pricing_model_appeal": {
+        "w1": {
+          "n": 60,
+          "n_pos": 19,
+          "rate": 0.31666666666666665
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 28,
+          "rate": 0.23333333333333334
+        }
+      },
+      "fin_deployment_speed_advantage": {
+        "w1": {
+          "n": 60,
+          "n_pos": 51,
+          "rate": 0.85
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 14,
+          "rate": 0.11666666666666667
+        }
+      },
+      "fin_as_purpose_built_ai_product": {
+        "w1": {
+          "n": 60,
+          "n_pos": 24,
+          "rate": 0.4
+        },
+        "w2": {
+          "n": 120,
+          "n_pos": 68,
+          "rate": 0.5666666666666667
+        }
+      }
+    }
+  },
+  "replatform_thesis": {
+    "n_w1": 60,
+    "overall_distribution": {
+      "very likely": 0,
+      "somewhat likely": 11,
+      "undecided": 12,
+      "somewhat unlikely": 31,
+      "very unlikely": 5
+    },
+    "by_platform": {
+      "Zendesk": {
+        "n": 30,
+        "distribution": {
+          "very likely": 0,
+          "somewhat likely": 9,
+          "undecided": 12,
+          "somewhat unlikely": 9,
+          "very unlikely": 0
+        }
+      },
+      "Salesforce Service Cloud": {
+        "n": 30,
+        "distribution": {
+          "very likely": 0,
+          "somewhat likely": 2,
+          "undecided": 0,
+          "somewhat unlikely": 22,
+          "very unlikely": 5
+        }
+      }
+    },
+    "threshold_themes": [
+      {
+        "theme": "Replatform Functional Threshold",
+        "n_pos": 60,
+        "n": 60,
+        "rate": 1.0
+      },
+      {
+        "theme": "Replatform Commercial Trigger",
+        "n_pos": 59,
+        "n": 60,
+        "rate": 0.9833333333333333
+      },
+      {
+        "theme": "Peer Reference Requirement",
+        "n_pos": 33,
+        "n": 60,
+        "rate": 0.55
+      },
+      {
+        "theme": "Switching Cost Barrier",
+        "n_pos": 27,
+        "n": 60,
+        "rate": 0.45
+      },
+      {
+        "theme": "Regulatory Compliance Constraint",
+        "n_pos": 10,
+        "n": 60,
+        "rate": 0.16666666666666666
+      },
+      {
+        "theme": "Replatform Unlikely Assessment",
+        "n_pos": 7,
+        "n": 60,
+        "rate": 0.11666666666666667
+      },
+      {
+        "theme": "Dual Vendor Cost Concern",
+        "n_pos": 6,
+        "n": 60,
+        "rate": 0.1
+      }
+    ],
+    "switching_cost_themes": [
+      {
+        "theme": "Switching Cost Barrier",
+        "n_pos": 60,
+        "n": 60,
+        "rate": 1.0
+      },
+      {
+        "theme": "No Replatform Deployment Appeal",
+        "n_pos": 41,
+        "n": 60,
+        "rate": 0.6833333333333333
+      },
+      {
+        "theme": "Crm Ecosystem Integration Value",
+        "n_pos": 20,
+        "n": 60,
+        "rate": 0.3333333333333333
+      },
+      {
+        "theme": "Replatform Unlikely Assessment",
+        "n_pos": 18,
+        "n": 60,
+        "rate": 0.3
+      }
+    ],
+    "sf_vs_zd_against_test": {
+      "p": 2.10143595591461e-06,
+      "z": 4.74341649025257,
+      "rate_pooled": 0.6,
+      "diff_pp": 60.00000000000001,
+      "test": "z",
+      "expected_min": 12.0,
+      "degenerate": false,
+      "significant": true,
+      "rate_subgroup": 0.9,
+      "rate_other": 0.3,
+      "rate_pooled_overall": 0.6
+    }
+  },
+  "leading_indicators": {
+    "n_w2": 120,
+    "likelihood_distribution": {
+      "very likely": 41,
+      "somewhat likely": 76,
+      "undecided": 0,
+      "somewhat unlikely": 3,
+      "very unlikely": 0
+    },
+    "likely_choice_distribution": {
+      "Intercom Fin": 85,
+      "Salesforce Agentforce": 11,
+      "Salesforce Einstein": 0,
+      "Zendesk AI Agents": 15,
+      "Ada": 0,
+      "Sierra": 0,
+      "Decagon": 0,
+      "Forethought": 0,
+      "Maven AGI": 0,
+      "Internal build": 1,
+      "Other vendor": 0,
+      "Undecided": 4,
+      "unparsed": 4
+    },
+    "likelihood_x_choice_crosstab": {
+      "very likely": {
+        "Intercom Fin": 36,
+        "Salesforce Agentforce": 3,
+        "Zendesk AI Agents": 2,
+        "Other": 0
+      },
+      "somewhat likely": {
+        "Intercom Fin": 48,
+        "Salesforce Agentforce": 8,
+        "Zendesk AI Agents": 13,
+        "Other": 7
+      },
+      "undecided": {
+        "Intercom Fin": 0,
+        "Salesforce Agentforce": 0,
+        "Zendesk AI Agents": 0,
+        "Other": 0
+      },
+      "somewhat unlikely": {
+        "Intercom Fin": 1,
+        "Salesforce Agentforce": 0,
+        "Zendesk AI Agents": 0,
+        "Other": 2
+      },
+      "very unlikely": {
+        "Intercom Fin": 0,
+        "Salesforce Agentforce": 0,
+        "Zendesk AI Agents": 0,
+        "Other": 0
+      }
+    },
+    "high_intent_profile": {
+      "n": 36,
+      "pct_of_w2": 0.3,
+      "by_platform": {
+        "Salesforce Service Cloud": 20,
+        "Zendesk": 16
+      },
+      "by_company_size_band": {
+        "1,000-3,000 employees": 17,
+        "3,001-5,000 employees": 19
+      },
+      "by_industry": {
+        "Online Marketplace": 9,
+        "Fintech/Financial Services": 3,
+        "Ecommerce/Retail": 7,
+        "Digital Services/Digital Media": 11,
+        "Software/SaaS": 6
+      },
+      "by_role_seniority": {
+        "Director": 11,
+        "VP / Head": 20,
+        "Senior Manager": 2,
+        "Chief Customer Officer": 3
+      },
+      "by_awareness_tier": {
+        "researched_in_depth": 12,
+        "general_understanding": 9,
+        "piloted_or_trialed": 2,
+        "formally_evaluated": 13
+      },
+      "by_native_ai_status": {
+        "not_yet_evaluated": 7,
+        "explicitly_turned_off": 6,
+        "access_but_not_deployed": 23
+      }
+    }
+  },
+  "marketing": {
+    "icp_high_intent": {
+      "n": 41,
+      "pct_of_w2": 0.3416666666666667,
+      "by_platform": {
+        "Salesforce Service Cloud": 23,
+        "Zendesk": 18
+      },
+      "by_company_size_band": {
+        "1,000-3,000 employees": 18,
+        "3,001-5,000 employees": 23
+      },
+      "by_industry": {
+        "Online Marketplace": 10,
+        "Fintech/Financial Services": 4,
+        "Ecommerce/Retail": 8,
+        "Digital Services/Digital Media": 11,
+        "Software/SaaS": 8
+      },
+      "by_role_seniority": {
+        "Director": 14,
+        "VP / Head": 22,
+        "Senior Manager": 2,
+        "Chief Customer Officer": 3
+      },
+      "by_awareness_tier": {
+        "researched_in_depth": 14,
+        "general_understanding": 11,
+        "piloted_or_trialed": 2,
+        "formally_evaluated": 14
+      },
+      "by_native_ai_status": {
+        "not_yet_evaluated": 9,
+        "explicitly_turned_off": 6,
+        "access_but_not_deployed": 26
+      },
+      "by_ai_discussion_status": {
+        "discussed_not_evaluated": 21,
+        "actively_evaluated": 20
+      }
+    },
+    "fin_appeal_by_platform_w2": {
+      "Zendesk": {
+        "n": 60,
+        "no_replatform_deployment_appeal": {
+          "rate": 0.9166666666666666,
+          "n_pos": 55,
+          "n": 60
+        },
+        "fin_resolution_rate_performance": {
+          "rate": 0.3,
+          "n_pos": 18,
+          "n": 60
+        },
+        "fin_conversational_quality": {
+          "rate": 0.48333333333333334,
+          "n_pos": 29,
+          "n": 60
+        },
+        "fin_pricing_model_appeal": {
+          "rate": 0.21666666666666667,
+          "n_pos": 13,
+          "n": 60
+        },
+        "fin_deployment_speed_advantage": {
+          "rate": 0.05,
+          "n_pos": 3,
+          "n": 60
+        },
+        "fin_as_purpose_built_ai_product": {
+          "rate": 0.25,
+          "n_pos": 15,
+          "n": 60
+        },
+        "fin_escalation_behavior": {
+          "rate": 0.1,
+          "n_pos": 6,
+          "n": 60
+        }
+      },
+      "Salesforce": {
+        "n": 60,
+        "no_replatform_deployment_appeal": {
+          "rate": 0.95,
+          "n_pos": 57,
+          "n": 60
+        },
+        "fin_resolution_rate_performance": {
+          "rate": 0.4166666666666667,
+          "n_pos": 25,
+          "n": 60
+        },
+        "fin_conversational_quality": {
+          "rate": 0.38333333333333336,
+          "n_pos": 23,
+          "n": 60
+        },
+        "fin_pricing_model_appeal": {
+          "rate": 0.2,
+          "n_pos": 12,
+          "n": 60
+        },
+        "fin_deployment_speed_advantage": {
+          "rate": 0.18333333333333332,
+          "n_pos": 11,
+          "n": 60
+        },
+        "fin_as_purpose_built_ai_product": {
+          "rate": 0.38333333333333336,
+          "n_pos": 23,
+          "n": 60
+        },
+        "fin_escalation_behavior": {
+          "rate": 0.2,
+          "n_pos": 12,
+          "n": 60
+        }
+      }
+    },
+    "trigger_themes_w1": [
+      {
+        "theme": "acute_volume_spike_trigger",
+        "n_pos": 28,
+        "n": 60,
+        "rate": 0.4666666666666667
+      }
+    ]
+  },
+  "product": {
+    "promise_vs_delivery_crosswalk": [
+      {
+        "code": "fin_escalation_behavior",
+        "n_q6_selected_for": 13,
+        "n_q10_disappointed": 30,
+        "n_regret": 6,
+        "regret_rate": 0.46153846153846156
+      },
+      {
+        "code": "no_replatform_deployment_appeal",
+        "n_q6_selected_for": 10,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      },
+      {
+        "code": "fin_resolution_rate_performance",
+        "n_q6_selected_for": 31,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      },
+      {
+        "code": "fin_conversational_quality",
+        "n_q6_selected_for": 33,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      },
+      {
+        "code": "fin_pricing_model_appeal",
+        "n_q6_selected_for": 19,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      },
+      {
+        "code": "fin_deployment_speed_advantage",
+        "n_q6_selected_for": 50,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      },
+      {
+        "code": "fin_as_purpose_built_ai_product",
+        "n_q6_selected_for": 6,
+        "n_q10_disappointed": 0,
+        "n_regret": 0,
+        "regret_rate": 0.0
+      }
+    ],
+    "deployment_friction_by_platform": {
+      "Zendesk": {
+        "n": 30,
+        "themes": {
+          "knowledge_base_content_dependency": {
+            "n_pos": 8,
+            "n": 30,
+            "rate": 0.26666666666666666
+          },
+          "dual_platform_reporting_fragmentation": {
+            "n_pos": 18,
+            "n": 30,
+            "rate": 0.6
+          },
+          "dual_platform_agent_workflow_friction": {
+            "n_pos": 16,
+            "n": 30,
+            "rate": 0.5333333333333333
+          },
+          "dual_platform_handoff_friction": {
+            "n_pos": 10,
+            "n": 30,
+            "rate": 0.3333333333333333
+          },
+          "dual_platform_operational_overhead": {
+            "n_pos": 23,
+            "n": 30,
+            "rate": 0.7666666666666667
+          },
+          "dual_vendor_cost_concern": {
+            "n_pos": 1,
+            "n": 30,
+            "rate": 0.03333333333333333
+          }
+        }
+      },
+      "Salesforce": {
+        "n": 30,
+        "themes": {
+          "knowledge_base_content_dependency": {
+            "n_pos": 5,
+            "n": 30,
+            "rate": 0.16666666666666666
+          },
+          "dual_platform_reporting_fragmentation": {
+            "n_pos": 14,
+            "n": 30,
+            "rate": 0.4666666666666667
+          },
+          "dual_platform_agent_workflow_friction": {
+            "n_pos": 17,
+            "n": 30,
+            "rate": 0.5666666666666667
+          },
+          "dual_platform_handoff_friction": {
+            "n_pos": 14,
+            "n": 30,
+            "rate": 0.4666666666666667
+          },
+          "dual_platform_operational_overhead": {
+            "n_pos": 22,
+            "n": 30,
+            "rate": 0.7333333333333333
+          },
+          "dual_vendor_cost_concern": {
+            "n_pos": 0,
+            "n": 30,
+            "rate": 0.0
+          }
+        }
+      }
+    },
+    "replatform_threshold_features": [
+      {
+        "feature": "replatform_functional_threshold",
+        "n_pos": 60,
+        "n": 60,
+        "rate": 1.0
+      },
+      {
+        "feature": "replatform_commercial_trigger",
+        "n_pos": 59,
+        "n": 60,
+        "rate": 0.9833333333333333
+      },
+      {
+        "feature": "peer_reference_requirement",
+        "n_pos": 33,
+        "n": 60,
+        "rate": 0.55
+      },
+      {
+        "feature": "switching_cost_barrier",
+        "n_pos": 27,
+        "n": 60,
+        "rate": 0.45
+      },
+      {
+        "feature": "regulatory_compliance_constraint",
+        "n_pos": 10,
+        "n": 60,
+        "rate": 0.16666666666666666
+      },
+      {
+        "feature": "replatform_unlikely_assessment",
+        "n_pos": 7,
+        "n": 60,
+        "rate": 0.11666666666666667
+      },
+      {
+        "feature": "dual_vendor_cost_concern",
+        "n_pos": 6,
+        "n": 60,
+        "rate": 0.1
+      }
+    ]
+  },
+  "sales": {
+    "by_platform": {
+      "Zendesk": {
+        "n": 60,
+        "fin_likely_choice_n": 43,
+        "fin_likely_choice_rate": 0.7166666666666667,
+        "concerns": {
+          "fin_pricing_predictability_concern": {
+            "n_pos": 40,
+            "n": 60,
+            "rate": 0.6666666666666666
+          },
+          "fin_integration_depth_concern": {
+            "n_pos": 23,
+            "n": 60,
+            "rate": 0.38333333333333336
+          },
+          "hallucination_risk_concern": {
+            "n_pos": 13,
+            "n": 60,
+            "rate": 0.21666666666666667
+          },
+          "peer_reference_requirement": {
+            "n_pos": 9,
+            "n": 60,
+            "rate": 0.15
+          },
+          "fin_integration_documentation_need": {
+            "n_pos": 0,
+            "n": 60,
+            "rate": 0.0
+          }
+        }
+      },
+      "Salesforce": {
+        "n": 60,
+        "fin_likely_choice_n": 42,
+        "fin_likely_choice_rate": 0.7,
+        "concerns": {
+          "fin_pricing_predictability_concern": {
+            "n_pos": 23,
+            "n": 60,
+            "rate": 0.38333333333333336
+          },
+          "fin_integration_depth_concern": {
+            "n_pos": 47,
+            "n": 60,
+            "rate": 0.7833333333333333
+          },
+          "hallucination_risk_concern": {
+            "n_pos": 25,
+            "n": 60,
+            "rate": 0.4166666666666667
+          },
+          "peer_reference_requirement": {
+            "n_pos": 16,
+            "n": 60,
+            "rate": 0.26666666666666666
+          },
+          "fin_integration_documentation_need": {
+            "n_pos": 0,
+            "n": 60,
+            "rate": 0.0
+          }
+        }
+      }
+    },
+    "by_size_band": {
+      "1k-3k": {
+        "n": 60,
+        "very_likely_n": 18,
+        "very_likely_rate": 0.3,
+        "somewhat_likely_rate": 0.6666666666666666,
+        "fin_choice_rate": 0.7833333333333333,
+        "agentforce_choice_rate": 0.05,
+        "zendesk_ai_choice_rate": 0.11666666666666667
+      },
+      "3k-5k": {
+        "n": 60,
+        "very_likely_n": 23,
+        "very_likely_rate": 0.38333333333333336,
+        "somewhat_likely_rate": 0.6,
+        "fin_choice_rate": 0.6333333333333333,
+        "agentforce_choice_rate": 0.13333333333333333,
+        "zendesk_ai_choice_rate": 0.13333333333333333
+      }
+    },
+    "objection_map": [
+      {
+        "objection": "fin_integration_depth_concern",
+        "n_pos": 70,
+        "n": 120,
+        "rate": 0.5833333333333334
+      },
+      {
+        "objection": "fin_pricing_predictability_concern",
+        "n_pos": 63,
+        "n": 120,
+        "rate": 0.525
+      },
+      {
+        "objection": "fin_escalation_behavior",
+        "n_pos": 46,
+        "n": 120,
+        "rate": 0.38333333333333336
+      },
+      {
+        "objection": "hallucination_risk_concern",
+        "n_pos": 38,
+        "n": 120,
+        "rate": 0.31666666666666665
+      },
+      {
+        "objection": "knowledge_base_content_dependency",
+        "n_pos": 37,
+        "n": 120,
+        "rate": 0.30833333333333335
+      },
+      {
+        "objection": "regulatory_compliance_constraint",
+        "n_pos": 26,
+        "n": 120,
+        "rate": 0.21666666666666667
+      },
+      {
+        "objection": "peer_reference_requirement",
+        "n_pos": 25,
+        "n": 120,
+        "rate": 0.20833333333333334
+      },
+      {
+        "objection": "marketplace_complexity_challenge",
+        "n_pos": 21,
+        "n": 120,
+        "rate": 0.175
+      },
+      {
+        "objection": "dual_vendor_cost_concern",
+        "n_pos": 20,
+        "n": 120,
+        "rate": 0.16666666666666666
+      }
+    ]
+  },
+  "retention": {
+    "n_w1_only": 60,
+    "scope_note": "All charts and analyses in Section 09 use only the 60 Wave 1 Fin Adopter participants. Wave 2 Non-Adopters are excluded because they have not yet deployed Fin and therefore cannot exhibit retention or post-deployment dissatisfaction signals.",
+    "promise_gap_themes": [
+      {
+        "theme": "fin_promise_delivery_gap",
+        "n_pos": 51,
+        "n": 60,
+        "rate": 0.85
+      },
+      {
+        "theme": "dual_platform_reporting_fragmentation",
+        "n_pos": 32,
+        "n": 60,
+        "rate": 0.5333333333333333
+      },
+      {
+        "theme": "fin_escalation_behavior",
+        "n_pos": 30,
+        "n": 60,
+        "rate": 0.5
+      },
+      {
+        "theme": "knowledge_base_content_dependency",
+        "n_pos": 25,
+        "n": 60,
+        "rate": 0.4166666666666667
+      },
+      {
+        "theme": "dual_platform_handoff_friction",
+        "n_pos": 25,
+        "n": 60,
+        "rate": 0.4166666666666667
+      },
+      {
+        "theme": "marketplace_complexity_challenge",
+        "n_pos": 4,
+        "n": 60,
+        "rate": 0.06666666666666667
+      }
+    ],
+    "dual_platform_friction": [
+      {
+        "theme": "dual_platform_operational_overhead",
+        "n_pos": 45,
+        "n": 60,
+        "rate": 0.75
+      },
+      {
+        "theme": "dual_platform_agent_workflow_friction",
+        "n_pos": 33,
+        "n": 60,
+        "rate": 0.55
+      },
+      {
+        "theme": "dual_platform_reporting_fragmentation",
+        "n_pos": 32,
+        "n": 60,
+        "rate": 0.5333333333333333
+      },
+      {
+        "theme": "dual_platform_handoff_friction",
+        "n_pos": 24,
+        "n": 60,
+        "rate": 0.4
+      },
+      {
+        "theme": "knowledge_base_content_dependency",
+        "n_pos": 13,
+        "n": 60,
+        "rate": 0.21666666666666667
+      },
+      {
+        "theme": "dual_vendor_cost_concern",
+        "n_pos": 1,
+        "n": 60,
+        "rate": 0.016666666666666666
+      }
+    ],
+    "promise_gaps_by_replatform_likelihood": {
+      "somewhat likely": {
+        "n": 11,
+        "top_gaps": [
+          {
+            "theme": "fin_promise_delivery_gap",
+            "n_pos": 10,
+            "n": 11,
+            "rate": 0.9090909090909091
+          },
+          {
+            "theme": "knowledge_base_content_dependency",
+            "n_pos": 6,
+            "n": 11,
+            "rate": 0.5454545454545454
+          },
+          {
+            "theme": "dual_platform_reporting_fragmentation",
+            "n_pos": 6,
+            "n": 11,
+            "rate": 0.5454545454545454
+          },
+          {
+            "theme": "fin_escalation_behavior",
+            "n_pos": 5,
+            "n": 11,
+            "rate": 0.45454545454545453
+          },
+          {
+            "theme": "dual_platform_handoff_friction",
+            "n_pos": 2,
+            "n": 11,
+            "rate": 0.18181818181818182
+          }
+        ]
+      },
+      "undecided": {
+        "n": 12,
+        "top_gaps": [
+          {
+            "theme": "fin_promise_delivery_gap",
+            "n_pos": 12,
+            "n": 12,
+            "rate": 1.0
+          },
+          {
+            "theme": "fin_escalation_behavior",
+            "n_pos": 7,
+            "n": 12,
+            "rate": 0.5833333333333334
+          },
+          {
+            "theme": "dual_platform_reporting_fragmentation",
+            "n_pos": 6,
+            "n": 12,
+            "rate": 0.5
+          },
+          {
+            "theme": "dual_platform_handoff_friction",
+            "n_pos": 5,
+            "n": 12,
+            "rate": 0.4166666666666667
+          },
+          {
+            "theme": "knowledge_base_content_dependency",
+            "n_pos": 4,
+            "n": 12,
+            "rate": 0.3333333333333333
+          }
+        ]
+      },
+      "somewhat unlikely": {
+        "n": 31,
+        "top_gaps": [
+          {
+            "theme": "fin_promise_delivery_gap",
+            "n_pos": 24,
+            "n": 31,
+            "rate": 0.7741935483870968
+          },
+          {
+            "theme": "dual_platform_reporting_fragmentation",
+            "n_pos": 19,
+            "n": 31,
+            "rate": 0.6129032258064516
+          },
+          {
+            "theme": "fin_escalation_behavior",
+            "n_pos": 17,
+            "n": 31,
+            "rate": 0.5483870967741935
+          },
+          {
+            "theme": "dual_platform_handoff_friction",
+            "n_pos": 15,
+            "n": 31,
+            "rate": 0.4838709677419355
+          },
+          {
+            "theme": "knowledge_base_content_dependency",
+            "n_pos": 12,
+            "n": 31,
+            "rate": 0.3870967741935484
+          }
+        ]
+      },
+      "very unlikely": {
+        "n": 5,
+        "top_gaps": [
+          {
+            "theme": "fin_promise_delivery_gap",
+            "n_pos": 4,
+            "n": 5,
+            "rate": 0.8
+          },
+          {
+            "theme": "knowledge_base_content_dependency",
+            "n_pos": 3,
+            "n": 5,
+            "rate": 0.6
+          },
+          {
+            "theme": "dual_platform_handoff_friction",
+            "n_pos": 3,
+            "n": 5,
+            "rate": 0.6
+          },
+          {
+            "theme": "fin_escalation_behavior",
+            "n_pos": 1,
+            "n": 5,
+            "rate": 0.2
+          },
+          {
+            "theme": "dual_platform_reporting_fragmentation",
+            "n_pos": 1,
+            "n": 5,
+            "rate": 0.2
+          }
+        ]
+      }
+    }
+  },
+  "by_platform_charts": {
+    "push_forces_w1": [
+      {
+        "label": "Native AI inadequacy",
+        "code": "native_ai_inadequacy",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 29,
+            "rate": 0.9666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 26,
+            "rate": 0.8666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 55,
+            "rate": 0.9166666666666666
+          }
+        }
+      },
+      {
+        "label": "Native AI perceived as bolt-on",
+        "code": "native_ai_perceived_as_bolt_on",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 3,
+            "rate": 0.1
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 1,
+            "rate": 0.03333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 4,
+            "rate": 0.06666666666666667
+          }
+        }
+      },
+      {
+        "label": "Self-service capability gap",
+        "code": "self_service_capability_gap",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 13,
+            "rate": 0.43333333333333335
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          }
+        }
+      },
+      {
+        "label": "Knowledge base content dependency",
+        "code": "knowledge_base_content_dependency",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 13,
+            "rate": 0.43333333333333335
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 11,
+            "rate": 0.36666666666666664
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 24,
+            "rate": 0.4
+          }
+        }
+      },
+      {
+        "label": "Knowledge base tooling limitations",
+        "code": "knowledge_base_tooling_limitations",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 4,
+            "rate": 0.13333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 6,
+            "rate": 0.2
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 10,
+            "rate": 0.16666666666666666
+          }
+        }
+      },
+      {
+        "label": "Reporting limitations",
+        "code": "reporting_limitations",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 10,
+            "rate": 0.3333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 26,
+            "rate": 0.43333333333333335
+          }
+        }
+      },
+      {
+        "label": "Admin dependency bottleneck",
+        "code": "admin_dependency_bottleneck",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 0,
+            "rate": 0.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 8,
+            "rate": 0.26666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 8,
+            "rate": 0.13333333333333333
+          }
+        }
+      },
+      {
+        "label": "Agent desktop experience friction",
+        "code": "agent_desktop_experience_friction",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 3,
+            "rate": 0.1
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 8,
+            "rate": 0.26666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          }
+        }
+      },
+      {
+        "label": "Platform licensing cost pressure",
+        "code": "platform_licensing_cost_pressure",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 2,
+            "rate": 0.06666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 9,
+            "rate": 0.3
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          }
+        }
+      }
+    ],
+    "push_forces_w2": [
+      {
+        "label": "Native AI inadequacy",
+        "code": "native_ai_inadequacy",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 43,
+            "rate": 0.7166666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 72,
+            "rate": 0.6
+          }
+        }
+      },
+      {
+        "label": "Native AI perceived as bolt-on",
+        "code": "native_ai_perceived_as_bolt_on",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 4,
+            "rate": 0.06666666666666667
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 15,
+            "rate": 0.125
+          }
+        }
+      },
+      {
+        "label": "Self-service capability gap",
+        "code": "self_service_capability_gap",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 27,
+            "rate": 0.45
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 56,
+            "rate": 0.4666666666666667
+          }
+        }
+      },
+      {
+        "label": "Knowledge base content dependency",
+        "code": "knowledge_base_content_dependency",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 8,
+            "rate": 0.13333333333333333
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 7,
+            "rate": 0.11666666666666667
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 15,
+            "rate": 0.125
+          }
+        }
+      },
+      {
+        "label": "Knowledge base tooling limitations",
+        "code": "knowledge_base_tooling_limitations",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 22,
+            "rate": 0.36666666666666664
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 51,
+            "rate": 0.425
+          }
+        }
+      },
+      {
+        "label": "Reporting limitations",
+        "code": "reporting_limitations",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 40,
+            "rate": 0.6666666666666666
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 17,
+            "rate": 0.2833333333333333
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 57,
+            "rate": 0.475
+          }
+        }
+      },
+      {
+        "label": "Admin dependency bottleneck",
+        "code": "admin_dependency_bottleneck",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 2,
+            "rate": 0.03333333333333333
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 47,
+            "rate": 0.7833333333333333
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 49,
+            "rate": 0.4083333333333333
+          }
+        }
+      },
+      {
+        "label": "Agent desktop experience friction",
+        "code": "agent_desktop_experience_friction",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 14,
+            "rate": 0.23333333333333334
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 26,
+            "rate": 0.43333333333333335
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 40,
+            "rate": 0.3333333333333333
+          }
+        }
+      },
+      {
+        "label": "Platform licensing cost pressure",
+        "code": "platform_licensing_cost_pressure",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 19,
+            "rate": 0.31666666666666665
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 19,
+            "rate": 0.31666666666666665
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 38,
+            "rate": 0.31666666666666665
+          }
+        }
+      }
+    ],
+    "native_ai_critique_by_platform": [
+      {
+        "label": "Native AI inadequacy",
+        "code": "native_ai_inadequacy",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 26,
+            "rate": 0.8666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 56,
+            "rate": 0.9333333333333333
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 48,
+            "rate": 0.8
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 30,
+            "rate": 0.5
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 78,
+            "rate": 0.65
+          }
+        }
+      },
+      {
+        "label": "Native AI maturity gap",
+        "code": "native_ai_maturity_gap",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 7,
+            "rate": 0.23333333333333334
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 22,
+            "rate": 0.7333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 40,
+            "rate": 0.6666666666666666
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 63,
+            "rate": 0.525
+          }
+        }
+      },
+      {
+        "label": "Native AI perceived as bolt-on",
+        "code": "native_ai_perceived_as_bolt_on",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 13,
+            "rate": 0.43333333333333335
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 5,
+            "rate": 0.16666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 18,
+            "rate": 0.3
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 10,
+            "rate": 0.16666666666666666
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 39,
+            "rate": 0.325
+          }
+        }
+      }
+    ],
+    "fin_pull_by_platform": [
+      {
+        "label": "No-replatform deployment appeal",
+        "code": "no_replatform_deployment_appeal",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 6,
+            "rate": 0.2
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 4,
+            "rate": 0.13333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 10,
+            "rate": 0.16666666666666666
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 60,
+            "rate": 1.0
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 60,
+            "rate": 1.0
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 120,
+            "rate": 1.0
+          }
+        }
+      },
+      {
+        "label": "Fin resolution rate performance",
+        "code": "fin_resolution_rate_performance",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 60,
+            "rate": 1.0
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 34,
+            "rate": 0.5666666666666667
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 59,
+            "rate": 0.49166666666666664
+          }
+        }
+      },
+      {
+        "label": "Fin conversational quality",
+        "code": "fin_conversational_quality",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 17,
+            "rate": 0.5666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 20,
+            "rate": 0.6666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 37,
+            "rate": 0.6166666666666667
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 29,
+            "rate": 0.48333333333333334
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 52,
+            "rate": 0.43333333333333335
+          }
+        }
+      },
+      {
+        "label": "Fin escalation behavior",
+        "code": "fin_escalation_behavior",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 14,
+            "rate": 0.4666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 13,
+            "rate": 0.43333333333333335
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 27,
+            "rate": 0.45
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 6,
+            "rate": 0.1
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 12,
+            "rate": 0.2
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 18,
+            "rate": 0.15
+          }
+        }
+      },
+      {
+        "label": "Fin deployment speed advantage",
+        "code": "fin_deployment_speed_advantage",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 21,
+            "rate": 0.7
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 29,
+            "rate": 0.9666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 50,
+            "rate": 0.8333333333333334
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 3,
+            "rate": 0.05
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 14,
+            "rate": 0.11666666666666667
+          }
+        }
+      },
+      {
+        "label": "Fin pricing model appeal",
+        "code": "fin_pricing_model_appeal",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 7,
+            "rate": 0.23333333333333334
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 12,
+            "rate": 0.4
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 19,
+            "rate": 0.31666666666666665
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 16,
+            "rate": 0.26666666666666666
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 12,
+            "rate": 0.2
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 28,
+            "rate": 0.23333333333333334
+          }
+        }
+      },
+      {
+        "label": "Fin as purpose-built AI product",
+        "code": "fin_as_purpose_built_ai_product",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 2,
+            "rate": 0.06666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 4,
+            "rate": 0.13333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 6,
+            "rate": 0.1
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 15,
+            "rate": 0.25
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 38,
+            "rate": 0.31666666666666665
+          }
+        }
+      }
+    ],
+    "objection_map_by_platform": [
+      {
+        "label": "Fin integration depth concern",
+        "code": "fin_integration_depth_concern",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 47,
+            "rate": 0.7833333333333333
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 70,
+            "rate": 0.5833333333333334
+          }
+        }
+      },
+      {
+        "label": "Fin pricing predictability concern",
+        "code": "fin_pricing_predictability_concern",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 40,
+            "rate": 0.6666666666666666
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 63,
+            "rate": 0.525
+          }
+        }
+      },
+      {
+        "label": "Fin escalation behavior",
+        "code": "fin_escalation_behavior",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 28,
+            "rate": 0.4666666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 18,
+            "rate": 0.3
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 46,
+            "rate": 0.38333333333333336
+          }
+        }
+      },
+      {
+        "label": "Hallucination risk concern",
+        "code": "hallucination_risk_concern",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 13,
+            "rate": 0.21666666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 38,
+            "rate": 0.31666666666666665
+          }
+        }
+      },
+      {
+        "label": "Knowledge base content dependency",
+        "code": "knowledge_base_content_dependency",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 12,
+            "rate": 0.2
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 37,
+            "rate": 0.30833333333333335
+          }
+        }
+      },
+      {
+        "label": "Regulatory compliance constraint",
+        "code": "regulatory_compliance_constraint",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 15,
+            "rate": 0.25
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 26,
+            "rate": 0.21666666666666667
+          }
+        }
+      },
+      {
+        "label": "Peer reference requirement",
+        "code": "peer_reference_requirement",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 9,
+            "rate": 0.15
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 16,
+            "rate": 0.26666666666666666
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 25,
+            "rate": 0.20833333333333334
+          }
+        }
+      },
+      {
+        "label": "Marketplace complexity challenge",
+        "code": "marketplace_complexity_challenge",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 11,
+            "rate": 0.18333333333333332
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 10,
+            "rate": 0.16666666666666666
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 21,
+            "rate": 0.175
+          }
+        }
+      },
+      {
+        "label": "Dual vendor cost concern",
+        "code": "dual_vendor_cost_concern",
+        "cells": {
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 8,
+            "rate": 0.13333333333333333
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 12,
+            "rate": 0.2
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 20,
+            "rate": 0.16666666666666666
+          }
+        }
+      }
+    ],
+    "promise_gaps_by_platform": [
+      {
+        "label": "Fin promise delivery gap",
+        "code": "fin_promise_delivery_gap",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 25,
+            "rate": 0.8333333333333334
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 26,
+            "rate": 0.8666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 51,
+            "rate": 0.85
+          }
+        }
+      },
+      {
+        "label": "Dual platform reporting fragmentation",
+        "code": "dual_platform_reporting_fragmentation",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 15,
+            "rate": 0.5
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 17,
+            "rate": 0.5666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 32,
+            "rate": 0.5333333333333333
+          }
+        }
+      },
+      {
+        "label": "Fin escalation behavior",
+        "code": "fin_escalation_behavior",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 14,
+            "rate": 0.4666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 30,
+            "rate": 0.5
+          }
+        }
+      },
+      {
+        "label": "Dual platform handoff friction",
+        "code": "dual_platform_handoff_friction",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 10,
+            "rate": 0.3333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 15,
+            "rate": 0.5
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          }
+        }
+      },
+      {
+        "label": "Knowledge base content dependency",
+        "code": "knowledge_base_content_dependency",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 14,
+            "rate": 0.4666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 11,
+            "rate": 0.36666666666666664
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          }
+        }
+      },
+      {
+        "label": "Marketplace complexity challenge",
+        "code": "marketplace_complexity_challenge",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 1,
+            "rate": 0.03333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 3,
+            "rate": 0.1
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 4,
+            "rate": 0.06666666666666667
+          }
+        }
+      }
+    ],
+    "dual_platform_friction_by_platform": [
+      {
+        "label": "Dual platform operational overhead",
+        "code": "dual_platform_operational_overhead",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 23,
+            "rate": 0.7666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 22,
+            "rate": 0.7333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 45,
+            "rate": 0.75
+          }
+        }
+      },
+      {
+        "label": "Dual platform agent workflow friction",
+        "code": "dual_platform_agent_workflow_friction",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 17,
+            "rate": 0.5666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 33,
+            "rate": 0.55
+          }
+        }
+      },
+      {
+        "label": "Dual platform reporting fragmentation",
+        "code": "dual_platform_reporting_fragmentation",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 18,
+            "rate": 0.6
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 14,
+            "rate": 0.4666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 32,
+            "rate": 0.5333333333333333
+          }
+        }
+      },
+      {
+        "label": "Dual platform handoff friction",
+        "code": "dual_platform_handoff_friction",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 10,
+            "rate": 0.3333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 14,
+            "rate": 0.4666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 24,
+            "rate": 0.4
+          }
+        }
+      },
+      {
+        "label": "Knowledge base content dependency",
+        "code": "knowledge_base_content_dependency",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 8,
+            "rate": 0.26666666666666666
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 5,
+            "rate": 0.16666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 13,
+            "rate": 0.21666666666666667
+          }
+        }
+      },
+      {
+        "label": "Dual vendor cost concern",
+        "code": "dual_vendor_cost_concern",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 1,
+            "rate": 0.03333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 0,
+            "rate": 0.0
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 1,
+            "rate": 0.016666666666666666
+          }
+        }
+      }
+    ],
+    "replatform_thresholds_by_platform": [
+      {
+        "label": "Replatform functional threshold",
+        "code": "replatform_functional_threshold",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 60,
+            "rate": 1.0
+          }
+        }
+      },
+      {
+        "label": "Replatform commercial trigger",
+        "code": "replatform_commercial_trigger",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 30,
+            "rate": 1.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 29,
+            "rate": 0.9666666666666667
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 59,
+            "rate": 0.9833333333333333
+          }
+        }
+      },
+      {
+        "label": "Peer reference requirement",
+        "code": "peer_reference_requirement",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 17,
+            "rate": 0.5666666666666667
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 33,
+            "rate": 0.55
+          }
+        }
+      },
+      {
+        "label": "Switching cost barrier",
+        "code": "switching_cost_barrier",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 11,
+            "rate": 0.36666666666666664
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 16,
+            "rate": 0.5333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 27,
+            "rate": 0.45
+          }
+        }
+      },
+      {
+        "label": "Regulatory compliance constraint",
+        "code": "regulatory_compliance_constraint",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 6,
+            "rate": 0.2
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 4,
+            "rate": 0.13333333333333333
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 10,
+            "rate": 0.16666666666666666
+          }
+        }
+      },
+      {
+        "label": "Replatform unlikely assessment",
+        "code": "replatform_unlikely_assessment",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 0,
+            "rate": 0.0
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 7,
+            "rate": 0.23333333333333334
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 7,
+            "rate": 0.11666666666666667
+          }
+        }
+      },
+      {
+        "label": "Dual vendor cost concern",
+        "code": "dual_vendor_cost_concern",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 6,
+            "rate": 0.2
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 0,
+            "rate": 0.0
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 6,
+            "rate": 0.1
+          }
+        }
+      }
+    ],
+    "macro_pressures_compressed": [
+      {
+        "label": "Competitive AI pressure",
+        "code": "competitive_ai_pressure",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 20,
+            "rate": 0.6666666666666666
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 20,
+            "rate": 0.6666666666666666
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 40,
+            "rate": 0.6666666666666666
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 19,
+            "rate": 0.31666666666666665
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 42,
+            "rate": 0.35
+          }
+        }
+      },
+      {
+        "label": "Customer expectation shift",
+        "code": "customer_expectation_shift",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 1,
+            "rate": 0.03333333333333333
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 6,
+            "rate": 0.2
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 7,
+            "rate": 0.11666666666666667
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 26,
+            "rate": 0.43333333333333335
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 24,
+            "rate": 0.4
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 50,
+            "rate": 0.4166666666666667
+          }
+        }
+      },
+      {
+        "label": "Volume growth outpacing headcount",
+        "code": "volume_growth_outpacing_headcount",
+        "cells": {
+          "w1_zendesk": {
+            "n": 30,
+            "n_pos": 11,
+            "rate": 0.36666666666666664
+          },
+          "w1_salesforce": {
+            "n": 30,
+            "n_pos": 12,
+            "rate": 0.4
+          },
+          "w1_overall": {
+            "n": 60,
+            "n_pos": 23,
+            "rate": 0.38333333333333336
+          },
+          "w2_zendesk": {
+            "n": 60,
+            "n_pos": 25,
+            "rate": 0.4166666666666667
+          },
+          "w2_salesforce": {
+            "n": 60,
+            "n_pos": 30,
+            "rate": 0.5
+          },
+          "w2_overall": {
+            "n": 120,
+            "n_pos": 55,
+            "rate": 0.4583333333333333
+          }
+        }
+      }
+    ],
+    "likely_choice_panels": {
+      "zendesk": {
+        "n": 60,
+        "choices": {
+          "Zendesk AI Agents": 15,
+          "Intercom Fin": 43,
+          "Internal build": 1
+        }
+      },
+      "salesforce": {
+        "n": 60,
+        "choices": {
+          "Intercom Fin": 42,
+          "Salesforce Agentforce": 11,
+          "Undecided": 4
+        }
+      }
+    }
+  },
+  "methodology": {
+    "alpha": 0.1,
+    "test_default": "two-proportion z-test",
+    "test_fallback": "Fisher's exact (when any expected cell count < 5)",
+    "thematic_kappa": 0.929,
+    "direction_kappa": 0.927,
+    "intensity_kappa": 0.259,
+    "intensity_collapse_rule": "Per magnitude-coding-framework Section 5.7: kappa < 0.6, collapse to binary (high=2+3, low=1) for analysis. Intensity stacking not used in this report due to heavily skewed binary distribution.",
+    "n_codes": 55,
+    "n_codes_below_threshold": 0,
+    "kappa_threshold": 0.65,
+    "n_segments_coded": 2100,
+    "n_codes_above_kappa_threshold": 55,
+    "segmentation_finding": "Both wave-specific psychographic segmentations (W1 Adopters n=60; W2 Non-Adopters n=120) produced k=2 solutions with Jaccard stability below the 0.60 'do-not-publish' threshold (Hennig 2007). The 60 Adopters and 120 Non-Adopters are too homogeneous within their respective cohort identities to split into stable psychographic clusters at this sample size. Cohort splits in this report use the criterion variables (wave, replatform_likelihood_band, adoption_likelihood_band, likely_choice) and firmographic dimensions (platform, company_size_band) as direct categorical cuts, which are publishable directly.",
+    "study_type": "B2B"
+  }
+}

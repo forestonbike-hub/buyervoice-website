@@ -1,0 +1,30 @@
+---
+// Public page for the Retinol Switching study report.
+// Same ReportBody as the internal page; analytics enabled, indexable.
+//   - includeAnalytics={true}   → GA + GTM
+//   - noindex omitted            → indexable
+//   - URL: /retinol-switching-report/  (gated by KV flag in worker)
+import ReportLayout from '../../components/report/ReportLayout.astro';
+import ReportBody from '../../components/retinol-switching-report/ReportBody.astro';
+import reportStats from '../../data/retinol-switching/report-stats.json';
+
+const d: any = reportStats;
+---
+<ReportLayout
+  studyName="The Retinol Graduation Moment"
+  client="Heritage skincare brand (illustrative)"
+  preparedOn="May 2026"
+  scope="Interviews with US women aged 35 to 43 who recently switched from Olay Regenerist Retinol 24"
+  hideClientOnCover={true}
+  stats={{
+    interviews: d.cover_stats.interviews,
+    avgLengthMin: d.cover_stats.avgLengthMin,
+    wordsAnalyzedK: d.cover_stats.wordsAnalyzedK,
+    thematicCodes: d.cover_stats.thematicCodes,
+  }}
+  includeAnalytics={true}
+  noindex={false}
+  title="The Retinol Graduation Moment | BuyerVoice.AI"
+>
+  <ReportBody />
+</ReportLayout>

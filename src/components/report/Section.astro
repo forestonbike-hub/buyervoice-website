@@ -1,0 +1,41 @@
+---
+// Section.astro — wraps a report section as a <details> accordion
+// with the correct header, subtitle, and plus-icon convention.
+// ReportLayout.astro auto-numbers these based on DOM order.
+//
+// Usage:
+//   <Section title="Executive Summary" subtitle="Top findings and recommendations">
+//     <p>...</p>
+//     <h3>Findings</h3>
+//     ...
+//   </Section>
+//
+// Set `open` to default-expand a particular section (usually reserved
+// for the Executive Summary). Default is collapsed, matching the
+// framework rule ("all accordion sections collapsed on page load").
+interface Props {
+  title: string;
+  subtitle?: string;
+  open?: boolean;
+  id?: string;
+}
+const { title, subtitle, open = false, id } = Astro.props;
+---
+
+<details class="accordion" {...(open ? { open: true } : {})} id={id}>
+  <summary class="accordion-header">
+    <div style="flex: 1;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        {/* accordion-num is injected by ReportLayout */}
+        <div style="flex: 1;">
+          <h2 class="accordion-title">{title}</h2>
+          {subtitle && <p class="accordion-subtitle">{subtitle}</p>}
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+    <slot />
+  </div>
+</details>

@@ -1,0 +1,1704 @@
+---
+import Section from '../report/Section.astro';
+import Chart from '../report/Chart.astro';
+import BarCell from './BarCell.astro';
+import reportStats from '../../data/intercom-fin-report/report-stats.json';
+import verbatimExemplars from '../../data/intercom-fin-report/verbatim-exemplars.json';
+
+const s = reportStats;
+const vxScript = '<script>window.__VX=' + JSON.stringify(verbatimExemplars).replace(/<\//g, '<\\/') + ';<' + '/script>';
+const ceil = (n: number) => Math.ceil(n * 100);
+const fmt = (rate: number) => `${ceil(rate)}%`;
+
+const meta = s.cohort_metadata;
+const hero = s.executive_hero;
+const ci   = s.customer_insights;
+const cp   = s.competitive_position;
+const rt   = s.replatform_thesis;
+const li   = s.leading_indicators;
+const mk   = s.marketing;
+const pr   = s.product;
+const sa   = s.sales;
+const re   = s.retention;
+const me   = s.methodology;
+const bp   = s.by_platform_charts;
+
+// Derived hero stats: replatform-open rates per platform (somewhat likely + undecided)
+const zdDist = rt.by_platform.Zendesk?.distribution ?? {};
+const sfDist = rt.by_platform["Salesforce Service Cloud"]?.distribution ?? {};
+const zdOpenN = (zdDist["very likely"] ?? 0) + (zdDist["somewhat likely"] ?? 0) + (zdDist["undecided"] ?? 0);
+const sfOpenN = (sfDist["very likely"] ?? 0) + (sfDist["somewhat likely"] ?? 0) + (sfDist["undecided"] ?? 0);
+const zdN = rt.by_platform.Zendesk?.n ?? 30;
+const sfN = rt.by_platform["Salesforce Service Cloud"]?.n ?? 30;
+const zdOpenPct = ceil(zdOpenN / zdN);
+const sfOpenPct = ceil(sfOpenN / sfN);
+
+const titleCase = (s: string) => s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+---
+
+<div class="ifr-report">
+
+<!-- ======================================================================== -->
+<!-- 01. EXECUTIVE SUMMARY                                                    -->
+<!-- ======================================================================== -->
+<Section title="Executive Summary" subtitle="Strategic synthesis: hero numbers, key findings, four recommended moves">
+
+<div class="stat-grid">
+  <div class="stat-card" style="background: rgba(11, 31, 58, 0.07);">
+    <div class="stat-value">{zdOpenPct}%</div>
+    <div class="stat-label">of <strong>Zendesk</strong> Fin Adopters are open or undecided about full replatform to Intercom</div>
+  </div>
+  <div class="stat-card" style="background: rgba(184, 52, 27, 0.08);">
+    <div class="stat-value" style="color: var(--signal);">{sfOpenPct}%</div>
+    <div class="stat-label">of <strong>Salesforce</strong> Fin Adopters are open or undecided about full replatform to Intercom</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{ceil(hero.adoption_leaning_pct)}%</div>
+    <div class="stat-label">of aware Non-Adopters likely to adopt an AI agent within 12 months</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{ceil(hero.fin_likely_choice_pct)}%</div>
+    <div class="stat-label">of aware Non-Adopters name Intercom Fin as their likely AI-agent choice</div>
+  </div>
+</div>
+
+<div class="insight" style="border-left-color: var(--ink); background: rgba(11, 31, 58, 0.05);">
+  <p style="margin: 0 0 8px;"><strong style="color: var(--ink);">What "Fin-on-Top" means.</strong></p>
+  <p style="margin: 0;">"Fin-on-Top" is the deployment pattern where a customer-support team keeps their existing helpdesk platform (Zendesk or Salesforce Service Cloud) and adds Intercom Fin, Intercom's AI agent, in front of it as a deflection layer. Tickets continue to flow through the existing helpdesk for human agents; Fin sits at the front and resolves what it can before escalation. The strategic question this study answers is whether Fin-on-Top is a stepping-stone to a full Intercom replatform, or a durable co-existence pattern that lets Intercom monetize accounts without ever replacing the underlying helpdesk.</p>
+</div>
+
+<h3>Strategic Position</h3>
+
+<div class="insight" style="border-left-color: var(--ink); background: rgba(11, 31, 58, 0.04);">
+  <p style="font-family: var(--serif); font-size: 16px; line-height: 1.5; margin: 0;"><strong>Fin-on-Top is two distinct strategic stories: a genuine replatform funnel on the Zendesk side, and a durable permanent revenue layer on the Salesforce side.</strong></p>
+</div>
+
+<p>Intercom Fin owns the no-replatform AI-agent category among customer-support leaders on Zendesk and Salesforce Service Cloud, with {ceil(hero.fin_likely_choice_pct)}% of aware Non-Adopters naming Fin as their likely AI-agent choice within the next 12 months. The central strategic question of this study is whether Fin-on-Top converts to a full Intercom replatform, and <strong>the answer splits sharply by parent platform</strong>. Among Zendesk-based Adopters, {zdOpenPct}% are in play (somewhat likely or undecided about replatform); the replatform funnel is genuine and addressable. Among Salesforce-based Adopters, only {sfOpenPct}% are in play, with 17% saying "very unlikely" outright; the replatform door is structurally closed by Sales Cloud, Commerce Cloud, and Financial Services Cloud sunk cost plus existing IT-security clearance. Sales motion, customer-success investment, and product roadmap priorities should be set differently for each platform.</p>
+
+<h3>Key Findings</h3>
+
+<div class="vuln-callout">
+  <p><strong>1. Replatform Thesis splits sharply by parent platform; this is the most important finding in the study.</strong> Among Zendesk-based Adopters, {zdOpenPct}% are in play for replatform (somewhat likely + undecided). Among Salesforce-based Adopters, only {sfOpenPct}% are. All four aggregated comparisons (open, undecided, lean against, strongly against) are statistically significant. The replatform funnel is real and addressable on the Zendesk side; structurally closed on the Salesforce side. <em>Owner: Strategy / Sales.</em></p>
+</div>
+
+<div class="insight">
+  <p><strong>2. Fin dominates the engaged Non-Adopter consideration set ({ceil(hero.fin_likely_choice_pct)}%).</strong> Salesforce Agentforce ({ceil(hero.agentforce_likely_pct)}%) and Zendesk AI Agents ({ceil(hero.zendesk_ai_likely_pct)}%) trail materially despite native-platform integration advantages. Within each platform, the native option is the actual runner-up. <em>Owner: Marketing.</em></p>
+</div>
+
+<div class="insight">
+  <p><strong>3. "Native AI is inadequate" is the strongest cross-wave shared theme.</strong> Both Adopters (in their pre-Fin frustrations) and Non-Adopters (in their current platform critique) describe Einstein, Zendesk Answer Bot, and Zendesk AI Agents as "checkbox features" with single-digit-to-low-teens containment. This is the entry to every Fin sale. <em>Owner: Marketing / Sales.</em></p>
+</div>
+
+<div class="opp-callout">
+  <p><strong>4. {ceil(hero.adoption_leaning_pct)}% of aware Non-Adopters are adoption-leaning within 12 months</strong> with most signaling decision timelines this quarter or next. The buying window is wide open. The bottleneck for Fin is commercial-terms negotiation (per-resolution pricing predictability) and integration documentation, not capability gaps. <em>Owner: Sales / Product.</em></p>
+</div>
+
+<div class="vuln-callout">
+  <p><strong>5. Promise-vs-delivery gaps among Adopters are concentrated in three areas:</strong> knowledge base content effort larger than expected, integration depth limitations with the parent platform on customer-account-specific queries, and escalation rates exceeding initial projections on edge cases (loyalty exceptions, pricing disputes, complex returns). <em>Owner: Product.</em></p>
+</div>
+
+<div class="opp-callout">
+  <p><strong>6. Both 1,000-3,000 and 3,001-5,000-employee bands are attractive Fin targets; the smaller band over-indexes slightly more strongly.</strong> Fin is named the likely AI-agent choice by 78% of 1,000-3,000-employee Non-Adopters and 63% of 3,001-5,000-employee Non-Adopters. Both rates are strong, both bands belong in the in-market ICP, and outbound capacity should cover both. The mid-market band over-indexes by about 15 percentage points, so when forced to prioritize, lead with the 1,000-3,000 cohort first; in the upper-mid-market band, expect Salesforce Agentforce to be a more present competitor and resolution-rate framing to land slightly less strongly. <em>Owner: Sales / Marketing.</em></p>
+</div>
+
+<h3>Four Recommended Moves</h3>
+
+<table class="rec-table">
+  <thead>
+    <tr><th style="width: 28%;">Move</th><th>Detail</th><th style="width: 24%;">Owner &amp; data anchor</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Bifurcate the Fin-on-Top GTM by parent platform with separate funnels and KPIs.</strong></td>
+      <td>Stand up two distinct motions with separate KPIs. The Zendesk-side motion is a replatform-conversion funnel: identify the 21 currently in-play Zendesk Adopter accounts (70% of the Zendesk Adopter base), nurture them through renewal-aligned outreach and feature-parity proof points, measure qualified-conversation-to-replatform conversion at 12 and 24 months. The Salesforce-side motion is a customer-success expansion funnel: maximize durable on-top revenue through queue expansion, channel expansion, and AI-task expansion, and treat replatform conversion as upside rather than a target metric. Compensation, quotas, customer-success investment, and product roadmap priorities should be set differently for each motion.</td>
+      <td><em>Owner: Strategy / RevOps. 70% of Zendesk Adopters open or undecided about replatform vs. 7% of Salesforce Adopters; statistically significant on every aggregation cut.</em></td>
+    </tr>
+    <tr>
+      <td><strong>2. Build platform-specific objection libraries and battle cards.</strong></td>
+      <td>The top sales objection inverts by platform. Pricing predictability is the #1 Zendesk-side concern (67%) but the #4 Salesforce-side concern (39%). Integration depth is the #1 Salesforce-side concern (79%) but the #3 Zendesk-side concern (39%). Hallucination risk is twice as common a concern on Salesforce (42% vs. 22%). Reps walking into a Zendesk discovery call and a Salesforce discovery call are facing different conversations, but the current sales motion is undifferentiated. Build two distinct opening discovery scripts, two objection-response toolkits, and two battle-card sets, one per platform. The Zendesk-side battle card leads with pricing-floor structures and contractual containment-rate benchmarks; the Salesforce-side battle card leads with production-validated architecture documents and Agentforce-vs-Fin capability proof points.</td>
+      <td><em>Owner: Sales Enablement. 30+ percentage point platform gaps on the top three Fin objections.</em></td>
+    </tr>
+    <tr>
+      <td><strong>3. Close the deal-blocker triangle: peer references, pricing predictability, and integration documentation.</strong></td>
+      <td>Three commercial-terms requirements appear unprompted in 55%+ of Non-Adopter responses to "what would need to change for you to seriously consider Fin." Peer references appear in 80% of responses, pricing predictability in 56%, and integration documentation in 55%. None of these are capability gaps; they are sales-enablement and customer-success deliverables. Producing them is faster and cheaper than additional product investment, and they unlock the buying window that 98% of Non-Adopters say is open in the next 12 months. Specifically: a peer reference program with industry-and-size-matched customers (highest-leverage move; addresses the single most-cited unlock condition); a pricing-predictability artifact with floor structures and contractual benchmarks (closes 56% of pricing concerns); and a production-validated integration architecture document set (closes the 79% Salesforce-side integration depth concern). All three are deliverable in 60-90 days.</td>
+      <td><em>Owner: Marketing / Sales / Customer Success jointly. Peer reference need: 80%; pricing predictability concern: 56%; integration documentation need: 55%.</em></td>
+    </tr>
+    <tr>
+      <td><strong>4. Defend the Salesforce upper-mid-market cell with differentiated positioning and procurement support.</strong></td>
+      <td>The Salesforce 3,001-5,000-employee segment is the single most competitive cell in the dataset. Within this 27-account cohort, Agentforce captures 30% of likely-choice mentions vs. 5% in the rest of the Non-Adopter base. This is also where Salesforce's installed-base advantage is strongest (Sales Cloud, Commerce Cloud, Financial Services Cloud sunk cost) and where procurement-and-IT-security comfort with a third-party AI vendor is the highest barrier. Treat this cell as a named-account motion with differentiated positioning (lead with deployment-speed and purpose-built-AI proof points rather than the no-replatform pitch that dominates elsewhere), the most aggressive integration documentation, and explicit procurement-and-IT-security playbooks. The other three platform-by-size cells are higher-conversion and don't need this level of investment; this one does.</td>
+      <td><em>Owner: Sales / Marketing. Salesforce 3,001-5,000 cohort named Agentforce 30% of the time vs. 5% elsewhere; Salesforce-side integration depth concern at 79%.</em></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<h3>Report Navigation</h3>
+
+<table class="rec-table">
+  <thead>
+    <tr><th>Section</th><th>Primary audience</th><th>Key question answered</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>02. Marketing Playbook</td><td>Marketing</td><td>What are the top moves, ICP, per-platform positioning, and trigger calendar?</td></tr>
+    <tr><td>03. Product Playbook</td><td>Product</td><td>What are the top roadmap moves, promise-vs-delivery gaps, and per-platform priorities?</td></tr>
+    <tr><td>04. Sales Playbook</td><td>Sales</td><td>What are the top sales moves, per-platform motion, objection map, and replatform expansion play?</td></tr>
+    <tr><td>05. Customer Insights</td><td>Marketing</td><td>Who are Fin-on-Top buyers and what shapes their thinking?</td></tr>
+    <tr><td>06. Competitive Position</td><td>Marketing / Sales</td><td>How does Fin compare to Zendesk AI, Agentforce, and emerging vendors?</td></tr>
+    <tr><td>07. The Replatform Thesis</td><td>Strategy / Exec</td><td>Does Fin-on-Top convert to full Intercom replatform?</td></tr>
+    <tr><td>08. Methodology</td><td>All</td><td>Sample design, coding reliability, statistical conventions</td></tr>
+  </tbody>
+</table>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 02. MARKETING PLAYBOOK                                                   -->
+<!-- ======================================================================== -->
+<Section title="Marketing Playbook" subtitle="At-a-glance, top three moves, high-intent cohort, ICP, per-platform positioning, trigger calendar, messaging that backfires">
+
+<h3>At a Glance</h3>
+
+<p>The Fin marketing motion is materially different on each platform. Below: the one-screen comparison marketing leaders should internalize before going further into the per-platform detail.</p>
+
+<table class="rec-table">
+  <thead>
+    <tr><th></th><th>Zendesk-base messaging</th><th>Salesforce-base messaging</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Lead message</strong></td><td>Capability gap demonstration ("better AI, no replatform")</td><td>Deployment speed + purpose-built AI ("AI-first product, weeks not quarters")</td></tr>
+    <tr><td><strong>Top appeal</strong></td><td>Conversational quality (49%) + resolution rate</td><td>Resolution rate (57%) + deployment speed (19%) + purpose-built AI (39%)</td></tr>
+    <tr><td><strong>Top backfire to avoid</strong></td><td>Generic per-resolution pricing pitch without performance guarantees</td><td>Framing Fin as a stepping-stone to full replatform</td></tr>
+    <tr><td><strong>Trigger calendar</strong></td><td>Incident-driven; CFO mandate-driven; cost-cycle aligned</td><td>External signal-driven; peer announcement-driven; renewal-window aligned</td></tr>
+    <tr><td><strong>Per-platform pricing concern</strong></td><td>67% of Zendesk Non-Adopters cite pricing predictability as a Fin objection (#1 Zendesk-side concern)</td><td>39% of Salesforce Non-Adopters cite the same theme (#4 Salesforce-side concern, where integration depth dominates instead)</td></tr>
+  </tbody>
+</table>
+
+<h3>Top Three Marketing Moves</h3>
+
+<div class="insight">
+  <p><strong>1. Build a peer reference program prioritized by industry-and-size match.</strong> 80% of Non-Adopters cite peer references as a precondition for serious Fin consideration, the single most-cited unlock condition in the entire study. The current absence of industry-matched and size-matched references is the largest deal-blocker the marketing team can directly address. The peer reference program should produce 8-12 published references covering each of the five qualifying industries (SaaS, Fintech, Ecommerce, Marketplaces, Digital Services) at both the 1,000-3,000 and 3,001-5,000 employee bands, on both Zendesk and Salesforce parent helpdesks. Each reference should include before/after deflection metrics, cost-per-resolution data, and a named contact for prospect outreach. The investment is procurement, not capability, and it unlocks deals already won on capability terms.</p>
+</div>
+
+<div class="insight">
+  <p><strong>2. Run platform-specific positioning campaigns with divergent messages.</strong> The Zendesk audience leads with capability appeal (conversational quality at 49%, resolution-rate proof points). The Salesforce audience leads with deployment speed (19% vs. 5% on Zendesk) and purpose-built-AI positioning (39% vs. 25%). The cross-platform "AI-first vs. bolt-on" pitch is becoming less differentiating month over month and should not lead. The Per-platform Fin appeal rates chart below shows the full divergence; campaigns, ad creative, and content should be developed as two parallel tracks rather than one cross-platform track.</p>
+</div>
+
+<div class="insight">
+  <p><strong>3. Time outbound campaigns against the platform-specific trigger calendar.</strong> Zendesk-side triggers skew incident-driven and CFO-mandate-driven (47% volume spikes; 33% specific incidents; 30% cost mandates). Salesforce-side triggers skew external-signal-driven and renewal-driven (60% volume spikes; 17% peer benchmarks; 10% contract renewal moments). Intent-data plays that surface volume growth, headcount pressure, or service-quality deterioration are the highest-yield outbound signals across the entire ICP, but the secondary signals diverge: pair Zendesk-side outbound with cost-pressure language and Salesforce-side outbound with renewal-window timing and peer-announcement reaction. The Trigger-based targeting signals section below documents the full per-platform pattern.</p>
+</div>
+
+
+<h3>Adoption-likelihood × likely-choice cross-tab</h3>
+
+<p>The cross-tab below is the operational segmentation map for outbound prioritization, lifted from the Leading Indicators analysis. The "very likely + Intercom Fin" cell is the highest-priority sales motion; "somewhat likely + Intercom Fin" is the high-volume nurture cohort; native-AI cells are competitive defense priorities.</p>
+
+<p>The cross-tab below is the operational cohort breakdown for sales and marketing prioritization. The "very likely + Intercom Fin" cell is the highest-priority sales motion; "somewhat likely + Intercom Fin" is the high-volume nurture cohort; native-AI cells are competitive defense priorities.</p>
+
+<table class="crosstab">
+  <thead>
+    <tr><th>Likelihood</th><th>Intercom Fin</th><th>Salesforce Agentforce</th><th>Zendesk AI Agents</th><th>Other / Undecided</th><th>Row total</th></tr>
+  </thead>
+  <tbody>
+    {["very likely","somewhat likely","undecided","somewhat unlikely","very unlikely"].map(band => {
+      const row = li.likelihood_x_choice_crosstab[band] || {};
+      const total = (row["Intercom Fin"]||0) + (row["Salesforce Agentforce"]||0) + (row["Zendesk AI Agents"]||0) + (row["Other"]||0);
+      const cls = (v: number, threshold = 0.30) => total > 0 && (v/total) >= threshold ? "highlight" : "";
+      return (
+        <tr>
+          <td>{titleCase(band)}</td>
+          <td class={cls(row["Intercom Fin"]||0)}>{total>0 ? ceil((row["Intercom Fin"]||0)/total) : 0}%</td>
+          <td class={cls(row["Salesforce Agentforce"]||0)}>{total>0 ? ceil((row["Salesforce Agentforce"]||0)/total) : 0}%</td>
+          <td class={cls(row["Zendesk AI Agents"]||0)}>{total>0 ? ceil((row["Zendesk AI Agents"]||0)/total) : 0}%</td>
+          <td>{total>0 ? ceil((row["Other"]||0)/total) : 0}%</td>
+          <td><strong>{total}</strong></td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+<p class="q-cite">Source question: same as above. Highlighted cells are ≥30% of row total. Percentages computed within each likelihood-band row.</p>
+
+<div class="insight">
+  <p><strong>Key takeaways from this section.</strong></p>
+  <ul style="margin: 6px 0 0 0;">
+    <li>The buying window is wide open: roughly half of aware Non-Adopters say they are very-likely or somewhat-likely to adopt an AI agent within 12 months.</li>
+    <li>Fin's competitive position is strongest in the highest-intent rows of the cross-tab. The "very likely + Intercom Fin" cell is the highest-priority sales motion; "somewhat likely + Intercom Fin" is the high-volume nurture cohort.</li>
+    <li>Native-AI choices (Agentforce, Zendesk AI Agents) become more competitive as intent moderates, especially among undecided and somewhat-unlikely respondents (the cohorts where positioning and proof points matter most for Fin to defend its lead).</li>
+  </ul>
+</div>
+
+<h3>Ideal Customer Profile (very-likely cohort)</h3>
+
+<p>The ICP for short-term Fin acquisition is the very-likely-to-adopt Non-Adopter cohort: n={mk.icp_high_intent.n} of {meta.n_wave_2_non_adopters} ({ceil(mk.icp_high_intent.pct_of_w2)}% of aware Non-Adopters). Compared with the broader Non-Adopter base, the highest-intent cohort over-indexes on the dimensions below; these are the targeting signals Marketing should weight in account scoring and outbound prioritization.</p>
+
+<div class="insight" style="border-left-color: #2A7A6E; background: rgba(42, 122, 110, 0.06);">
+  <p style="margin: 0 0 8px;"><strong style="color: #2A7A6E;">Where the very-likely cohort over-indexes (target these signals).</strong></p>
+  <ul style="margin: 0;">
+    <li><strong>Native AI is in production-but-disappointed status</strong> rather than not deployed at all. Adopters who already tried Einstein, Answer Bot, or Zendesk AI and hit the capability ceiling are ready to act, not still evaluating whether AI is real.</li>
+    <li><strong>Active internal discussion of AI strategy</strong>, ideally with executive sponsorship surfaced (CFO cost mandate, CCO support-quality mandate, board-level deflection target). Stalled-conversation accounts are not in this cohort.</li>
+    <li><strong>Company size: 1,000-5,000 employees.</strong> Both size bands are ideal targets, but 1,000-3,000-employee companies are notably more captive to Fin (78% Fin-likely-choice rate vs 63% at 3,001-5,000; see Section 08). Treat both bands as in-market and prioritize the mid-market band first.</li>
+  </ul>
+</div>
+
+<h3>Per-platform Fin appeal rates</h3>
+
+<p>Both Zendesk and Salesforce Non-Adopters cite Fin's appeal in the same major themes, but the mix differs in instructive ways. Sorted by total prevalence below.</p>
+
+<div class="gbc" data-drilldown-chart="fin-appeal-w2">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin appeal themes among Non-Adopters, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={mk.fin_appeal_by_platform_w2.Zendesk?.n})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={mk.fin_appeal_by_platform_w2.Salesforce?.n})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {Object.keys(mk.fin_appeal_by_platform_w2.Zendesk || {})
+      .filter(k => k !== "n")
+      .map(code => {
+        const zd = (mk.fin_appeal_by_platform_w2.Zendesk as any)[code];
+        const sf = (mk.fin_appeal_by_platform_w2.Salesforce as any)?.[code] || {rate: 0, n_pos: 0, n: 0};
+        const total = (zd?.n_pos ?? 0) + (sf?.n_pos ?? 0);
+        return { code, zd, sf, total };
+      })
+      .sort((a, b) => b.total - a.total)
+      .map(({code, zd, sf}) => (
+        <div class="gbc-row">
+          <span class="gbc-label">{titleCase(code)}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(zd.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+<p class="q-cite">Source question: "What appeals to you about Fin as an option for your team? What aspects sound interesting or valuable?" Asked of Non-Adopters, split by parent platform. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+<div class="insight">
+  <p style="margin: 0 0 10px;"><strong>What "no-replatform deployment appeal" actually sounds like.</strong> The dominant Fin appeal theme on both platforms is the no-replatform deployment model. It's nearly universal among aware Non-Adopters (97% Zendesk, 98% Salesforce), but the language Marketing should test in messaging is concrete and platform-specific. Two representative verbatims below.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px;">
+    <div style="border-left: 3px solid var(--ink); background: rgba(11, 31, 58, 0.04); padding: 12px 14px; border-radius: 0 6px 6px 0;">
+      <p style="font-style: italic; font-size: 13px; line-height: 1.55; margin: 0 0 6px;">"Intercom has made a decision to let you deploy Fin without migrating to Intercom's full platform, which is a meaningful strategic choice that removes the biggest barrier for companies like ours. I'm not going to rip out Zendesk, that's a multi-year project. But I can add an AI layer on top without doing that."</p>
+      <p style="font-size: 11px; color: var(--muted); margin: 0;"><strong style="color: var(--ink);">Zendesk Non-Adopter</strong> · Online Marketplace · 1,000-3,000 employees</p>
+    </div>
+    <div style="border-left: 3px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 12px 14px; border-radius: 0 6px 6px 0;">
+      <p style="font-style: italic; font-size: 13px; line-height: 1.55; margin: 0 0 6px;">"What makes the positioning interesting is that Intercom is marketing it as something you can deploy on top of your existing helpdesk, so you don't have to leave Service Cloud to get access to it. The containment claim I've seen is in the seventies percentage-wise. I think the positioning is basically: better AI capability without the switching cost."</p>
+      <p style="font-size: 11px; color: var(--muted); margin: 0;"><strong style="color: var(--signal);">Salesforce Non-Adopter</strong> · Online Marketplace · 1,000-3,000 employees</p>
+    </div>
+  </div>
+</div>
+
+<h3>Trigger-based targeting signals</h3>
+
+<p>Fin Adopters were asked what specific moment pushed them from passive interest to active evaluation. Reading the verbatim responses surfaces seven recurring trigger patterns. The chart shows prevalence by parent platform; the patterns Marketing should target with intent data, ad creative, and outbound timing fall into two natural groupings (operational pressure triggers and external-signal triggers).</p>
+
+{(() => {
+  const triggers = [
+    { label: "Acute volume spike or seasonal surge",        zd: 47, sf: 60 },
+    { label: "Specific incident or CX failure",              zd: 33, sf: 13 },
+    { label: "CFO / executive cost mandate",                 zd: 30, sf: 20 },
+    { label: "Operational pain (handle time, response time)",zd: 23, sf: 17 },
+    { label: "Peer or industry benchmark moment",            zd:  7, sf: 17 },
+    { label: "CSAT or quality decline",                      zd:  7, sf: 13 },
+    { label: "Contract renewal moment",                      zd:  0, sf: 10 },
+  ];
+  return (
+    <div class="gbc" data-drilldown-chart="triggers-w1">
+      <div class="gbc-header">
+        <h4 class="gbc-title">Trigger events that pushed Fin Adopters from passive interest to active evaluation, by platform</h4>
+        <div class="gbc-legend">
+          <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk Adopters (n={meta.w1_zendesk})</span>
+          <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce Adopters (n={meta.w1_salesforce})</span>
+        </div>
+      </div>
+      <div class="gbc-rows">
+        {triggers.map(t => (
+          <div class="gbc-row">
+            <span class="gbc-label">{t.label}</span>
+            <div class="gbc-pair">
+              <div class="gbc-bar"><div class="gbc-track"><BarCell pct={t.zd} color="zd" variant="gbc" /></div></div>
+              <div class="gbc-bar"><div class="gbc-track"><BarCell pct={t.sf} color="sf" variant="gbc" /></div></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+})()}
+<p class="q-cite">Source question: "Was there a specific moment, incident, or event that pushed you from 'this is something we should look at eventually' to 'we need to act on this now'? If so, please describe it." Asked of current Fin Adopters (n=60). Trigger categories derived from the verbatim responses; a single response can surface more than one trigger so cohort percentages are not exclusive. <span class="vb-hint">Click a trigger theme to read participant quotes.</span></p>
+
+<div class="insight">
+  <p style="margin: 0 0 6px;"><strong>How to read this for outbound and intent targeting.</strong></p>
+  <ul style="margin: 0;">
+    <li><strong>Volume-driven triggers dominate both platforms.</strong> Acute volume spikes, operational-pain signals (handle time, response time slippage), and CSAT decline together explain more than half of the timing on each side. Intent-data plays that surface volume growth, headcount pressure, or service-quality deterioration are the highest-yield outbound signals across the entire ICP.</li>
+    <li><strong>Zendesk-side triggers skew incident-driven and cost-driven.</strong> Zendesk Adopters are about 2.5x more likely than Salesforce Adopters to cite a specific CX incident as the trigger (33% vs 13%) and 1.5x more likely to cite a CFO / executive cost mandate (30% vs 20%). Outbound to Zendesk-base accounts should pair operational-pressure intent signals with cost-pressure language ("cost-per-resolution," "headcount-leverage," "renewal-cycle ROI").</li>
+    <li><strong>Salesforce-side triggers skew external-signal and renewal-driven.</strong> Salesforce Adopters are more than 2x more likely to cite peer or industry benchmarks (17% vs 7%) and uniquely cite contract-renewal moments (10% vs 0%). Outbound to Salesforce-base accounts should be timed against published peer announcements (RFPs, industry conferences, Agentforce-customer case studies) and against Service Cloud renewal windows visible in vendor data.</li>
+  </ul>
+</div>
+
+<h3>Messaging that backfires</h3>
+
+<div class="vuln-callout">
+  <p><strong>Avoid framing Fin as a path to full Intercom replatform, but only on the Salesforce side.</strong> Among Salesforce Adopters, 90% lean against full replatform and 17% are firmly closed; positioning Fin-on-Top as a "first step" or "wedge" toward Intercom adoption is heard as a vendor migration agenda rather than a partnership offer. <strong>On the Zendesk side, however, 70% are in play for replatform</strong>; Zendesk-base prospects are partly open to that framing as long as it's anchored in the value of full replatform rather than presented as a forced migration. Marketing language should diverge by platform.</p>
+</div>
+
+<div class="vuln-callout">
+  <p><strong>Avoid leading with the "purpose-built AI" framing alone (cross-platform).</strong> Both Zendesk AI and Agentforce are now investing heavily in their own AI stacks; the "we are AI-first vs they are bolt-on" pitch is becoming less differentiating month over month. Pair it with concrete capability proof points (resolution rate references, conversational quality demonstrations). This concern is roughly even across both platforms.</p>
+</div>
+
+<div class="vuln-callout">
+  <p><strong>Avoid generic per-resolution pricing pitches without performance guarantees, especially on the Zendesk side.</strong> Pricing predictability is the dominant Fin objection on the Zendesk side ({(() => { const rate = bp.objection_map_by_platform.find((o: any) => o.code === "fin_pricing_predictability_concern")?.cells?.w2_zendesk?.rate ?? 0; return ceil(rate); })()}% vs {(() => { const rate = bp.objection_map_by_platform.find((o: any) => o.code === "fin_pricing_predictability_concern")?.cells?.w2_salesforce?.rate ?? 0; return ceil(rate); })()}% on Salesforce). The pricing model is appealing in concept but raises CFO scrutiny on Zendesk-side prospects when not paired with floor structures and contractual benchmarks. On the Salesforce side, integration depth is the dominant concern instead.</p>
+</div>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 03. PRODUCT PLAYBOOK                                                     -->
+<!-- ======================================================================== -->
+<Section title="Product Playbook" subtitle="At-a-glance, top three moves, promise-vs-delivery, deployment friction, replatform thresholds, retention plays">
+
+<h3>At a Glance</h3>
+
+<p>The Product roadmap implications are platform-specific. Below: the one-screen comparison product leaders should internalize before going further into the per-platform detail.</p>
+
+<table class="rec-table">
+  <thead>
+    <tr><th></th><th>Zendesk-side priorities</th><th>Salesforce-side priorities</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Top deployment friction</strong></td><td>Reporting fragmentation (60%)</td><td>Handoff friction (47%) + integration depth concern (79%)</td></tr>
+    <tr><td><strong>Highest-leverage roadmap investment</strong></td><td>Unified reporting / BI templates</td><td>Salesforce integration depth + production architecture documentation</td></tr>
+    <tr><td><strong>Promise-vs-delivery focus</strong></td><td>Escalation behavior (universal across platforms)</td><td>Escalation behavior + integration parity proof points</td></tr>
+    <tr><td><strong>Replatform unlock conditions (most addressable)</strong></td><td>Functional threshold + commercial trigger; dual vendor cost concern (20%)</td><td>Functional threshold + switching cost barrier (54%) + regulatory compliance (14%)</td></tr>
+  </tbody>
+</table>
+
+<h3>Top Three Product Moves</h3>
+
+<div class="insight">
+  <p><strong>1. Fix Fin escalation behavior, the only selection driver that flips into a frustration.</strong> 22% of Adopters chose Fin partly for its escalation handling; 50% of Adopters cite escalation behavior as a place Fin fell short of expectations. The 47% within-cohort regret rate is the largest promise-vs-delivery gap in the study. Resolution rate, conversational quality, and deployment speed are all delivering on the promise; escalation is the single product-side fix that moves the most retention dial. The specific patterns Adopters describe are: incomplete context-pass to the human agent (the agent re-asks diagnostic questions Fin already covered), poorly-tuned escalation thresholds on edge cases (loyalty exceptions, pricing disputes, complex returns), and unclear confidence signaling when Fin should hand off proactively. The Promise-vs-delivery crosswalk below documents this as the single inversion in an otherwise-delivering product.</p>
+</div>
+
+<div class="insight">
+  <p><strong>2. Build a unified reporting layer spanning Fin and the parent helpdesk.</strong> 54% of Adopters cite reporting fragmentation between Fin and Zendesk/Salesforce as a daily friction; the gap is concentrated on the Zendesk side (60% vs. 47% on Salesforce). Adopters describe maintaining parallel data pipelines into Looker or Tableau to produce coherent operational reports, and the friction is the single most-common dual-platform complaint. A unified reporting product (or pre-built BI templates joining Fin metrics + parent metrics) is the single highest-leverage product investment for Adopter retention. The recurring asks are: one dashboard with both layers, a coherent customer-journey view spanning self-service / Fin / human agent, and cross-platform CSAT attribution (was the resolution Fin's or the agent's). The Per-platform deployment-on-top friction section below documents the full pattern.</p>
+</div>
+
+<div class="insight">
+  <p><strong>3. Prioritize Salesforce integration depth on the roadmap over Zendesk integration depth.</strong> 79% of Salesforce Non-Adopters cite integration depth as a primary Fin concern, vs. 39% on the Zendesk side, a 40 percentage point gap, the largest in the objection map. Salesforce-side Adopters also report more handoff friction (47% vs. 34%). Production-validated architecture documents close the perception gap (a Move 3 deliverable for the broader team), but the underlying product depth on Salesforce-side integrations, Service Cloud object model coverage, APEX customization compatibility, Salesforce-admin tooling alignment, and named integration patterns for Sales Cloud and Commerce Cloud co-existence, is a Product team responsibility. Treat Salesforce integration depth as the higher-priority roadmap investment for the next 2-4 quarters.</p>
+</div>
+
+
+<h3>Promise-vs-delivery crosswalk</h3>
+
+<p>For each Fin selection driver (the reasons Adopters originally chose Fin), the chart pairs the prevalence of the theme as a <strong>selection driver (pre-purchase)</strong> against the prevalence of the same theme as a <strong>frustration (post-purchase)</strong>. Most of the dominant selection drivers do <strong>not</strong> reappear as frustrations. The exception is Fin escalation behavior, pinned at the top of the chart because it is the one selection driver that flips into a frustration.</p>
+
+<div class="gbc" data-drilldown-chart="promise-vs-delivery">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin selection drivers vs post-deployment frustrations among current Fin Adopters (n={meta.n_wave_1_adopters})</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Selection driver (pre-purchase)</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Frustration (post-purchase)</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {(() => {
+      const rows = pr.promise_vs_delivery_crosswalk.map((c: any) => ({
+        code: c.code,
+        selPct: ceil(c.n_q6_selected_for / meta.n_wave_1_adopters),
+        frusPct: ceil(c.n_q10_disappointed / meta.n_wave_1_adopters),
+      }));
+      // Pin Fin escalation behavior at the top; sort the rest by selection
+      // driver percentage descending.
+      const escalation = rows.filter((r: any) => r.code === "fin_escalation_behavior");
+      const others = rows.filter((r: any) => r.code !== "fin_escalation_behavior").sort((a: any, b: any) => b.selPct - a.selPct);
+      return [...escalation, ...others];
+    })().map((r: any) => (
+      <div class="gbc-row">
+        <span class="gbc-label">{titleCase(r.code)}</span>
+        <div class="gbc-pair">
+          <div class="gbc-bar"><div class="gbc-track"><BarCell pct={r.selPct} color="zd" variant="gbc" /></div></div>
+          <div class="gbc-bar"><div class="gbc-track"><BarCell pct={r.frusPct} color="sf" variant="gbc" /></div></div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+<p class="q-cite">Source questions: "Why did you specifically choose Fin over the alternatives you considered?" (selection drivers, asked when Adopters had been on Fin 3-12 months) and "Where has Fin fallen short of what you expected when you adopted it? What hasn't lived up to the promise?" (post-deployment frustrations). Both asked of current Adopters, n={meta.n_wave_1_adopters}. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+<div class="insight">
+  <p><strong>How to read this chart.</strong> Three of Fin's selection drivers, <strong>resolution rate performance</strong>, <strong>conversational quality</strong>, and <strong>deployment speed advantage</strong>, were named by more than half of Adopters as a reason for choosing Fin AND show essentially no echo as a post-deployment frustration. Fin is delivering on its three biggest promises. The single area where the selected-vs-frustrated pattern flips is <strong>Fin escalation behavior</strong>: a meaningful share of Adopters chose Fin partly for its escalation-handling story and a similar share later cite it as falling short of expectations. Escalation behavior is the place product investment will move the most retention-side dial; the rest is delivery, not gap.</p>
+</div>
+
+
+
+<h3>Per-platform deployment-on-top friction</h3>
+
+<p>Where the Promise-vs-delivery crosswalk above asks "what did Fin promise vs deliver?", this section asks the more specific operational question: <strong>what does running Fin on top of Zendesk or Salesforce feel like day-to-day?</strong> The themes here are the dual-platform deployment-model frictions (workflow, handoff, reporting, operational overhead) that don't surface in the crosswalk because they're about the <em>on-top</em> architecture rather than Fin's standalone capability. Salesforce-side Adopters report more reporting-fragmentation and handoff-friction; Zendesk-side reports a thinner overall friction profile but with KB content dependency as the dominant theme. The product roadmap implication: Salesforce-side integration depth is the higher product-priority gap, even though absolute Zendesk-side friction prevalence is meaningful too.</p>
+
+<div class="gbc" data-drilldown-chart="deployment-friction">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Deploy-on-top day-to-day friction among current Fin Adopters, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={pr.deployment_friction_by_platform.Zendesk?.n})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={pr.deployment_friction_by_platform.Salesforce?.n})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {Object.keys(pr.deployment_friction_by_platform.Zendesk?.themes || {})
+      .map(theme => {
+        const zd = (pr.deployment_friction_by_platform.Zendesk?.themes as any)?.[theme];
+        const sf = (pr.deployment_friction_by_platform.Salesforce?.themes as any)?.[theme];
+        const total = (zd?.n_pos ?? 0) + (sf?.n_pos ?? 0);
+        return { theme, zd, sf, total };
+      })
+      .filter(r => r.total > 0)
+      .sort((a, b) => b.total - a.total)
+      .map(({theme, zd, sf}) => (
+        <div class="gbc-row">
+          <span class="gbc-label">{titleCase(theme)}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(zd?.rate ?? 0)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf?.rate ?? 0)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+<p class="q-cite">Source question: "How does running Fin on top of [Zendesk / Salesforce Service Cloud] feel day-to-day? Any friction, integration issues, or surprises about the deployment model itself?" Asked of current Fin Adopters, split by parent platform. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+<div class="subtheme-block">
+  <h4 class="subtheme-block-title">What's inside the top three deploy-on-top friction themes</h4>
+  <p class="subtheme-block-intro">"Operational overhead", "agent workflow friction", and "reporting fragmentation" are the three highest-prevalence friction themes Adopters cite about running Fin alongside their existing helpdesk. Sub-patterns from the underlying verbatims below.</p>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Operational overhead</div>
+    <div class="subtheme-detail">
+      <p>The recurring sub-pattern is <strong>ongoing content governance and threshold-tuning effort</strong>. Adopters report being surprised by how much continuous attention Fin requires post-deployment: monitoring resolution rates by inquiry category, adjusting confidence thresholds, content freshness audits, intent re-tuning when the parent platform's policies change. Several explicitly say they assumed Fin would be more autonomous than it has been: "I had assumed that once we loaded our help center content, Fin would be fairly autonomous. But the quality of its outputs is sensitive to content freshness, and we're a product that ships frequently." A secondary sub-pattern is <strong>content-sync lag</strong> between the parent helpdesk's KB (Zendesk Guide or Salesforce Knowledge) and Fin's index, which can produce slightly outdated answers in the gap.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Agent workflow friction</div>
+    <div class="subtheme-detail">
+      <p>This is essentially the <strong>two-console problem</strong>: Fin has its own configuration and analytics environment, the parent helpdesk has another, and supervisors / AI-ops staff move between them constantly. The friction is most pronounced when a Fin conversation escalates to a human agent in the parent helpdesk: the conversation context that Fin passes is described as "useful but not perfect" and "sometimes truncated". Agents end up re-asking diagnostic questions the bot already covered. Most Adopters have built custom field mappings or trigger logic to bridge the gap, but several note this took more engineering time than the sales process implied.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Reporting fragmentation</div>
+    <div class="subtheme-detail">
+      <p>Fin's analytics live inside Intercom's reporting environment; everything else (ticket volume, handle time, CSAT, agent productivity, parent-platform metrics) lives in Zendesk Explore or Salesforce reporting. Producing a unified weekly operations report requires manual reconciliation. The recurring asks are: <strong>one dashboard with both layers</strong>, <strong>a coherent customer-journey view</strong> spanning self-service / Fin / human agent, and <strong>cross-platform CSAT attribution</strong> (was the resolution Fin's or the agent's). Many Adopters have built parallel data pipelines into Looker or Tableau to address this, which adds maintenance burden but works.</p>
+    </div>
+  </div>
+</div>
+
+<h3>Replatform threshold features (what would unlock full migration), by platform</h3>
+
+<p>The features and conditions Adopters would need to see before considering full Intercom replatform. The chart is split by parent platform because the threshold conditions differ in weight between Zendesk-side and Salesforce-side Adopters.</p>
+
+<div class="gbc" data-drilldown-chart="replatform-thresholds">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Replatform threshold conditions among current Fin Adopters, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w1_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w1_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.replatform_thresholds_by_platform.slice(0, 8).map((row: any) => {
+      const z = row.cells.w1_zendesk; const sf = row.cells.w1_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+<p class="q-cite">Source question: "What would have to be true for you to decide to replatform your entire support stack to Intercom? What conditions, capabilities, or events would push you to make that move?" Asked of current Fin Adopters, split by parent platform. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+
+<h3>Retention plays</h3>
+
+<p>Customer Success-led plays that inform product roadmap priorities. Every play below uses only the {meta.n_wave_1_adopters} Fin Adopters; Non-Adopters are excluded since they have not yet deployed Fin and therefore cannot exhibit retention or post-deployment dissatisfaction signals.</p>
+
+<table class="rec-table">
+  <thead><tr><th>Risk theme</th><th>Recommended play</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Knowledge-base content authoring effort larger than expected</td>
+      <td>Customer success playbook for KB content audit + structured-authoring guidance pre-deployment. Plays roughly evenly on both platforms; prioritize for any new Adopter onboarding.</td>
+    </tr>
+    <tr>
+      <td>Reporting fragmentation between Fin and parent platform</td>
+      <td>Unified-reporting product investment (or pre-built BI templates joining Fin metrics + parent metrics). <strong>Plays harder for Zendesk-base Adopters</strong> (60% vs 47% on Salesforce in the dual-platform friction chart above).</td>
+    </tr>
+    <tr>
+      <td>Handoff friction between Fin and parent helpdesk</td>
+      <td>Field tickets / context-pass templates per parent platform. <strong>Plays harder for Salesforce-base Adopters</strong> (47% vs 34% on Zendesk).</td>
+    </tr>
+    <tr>
+      <td>Escalation rate exceeding initial projections on edge cases</td>
+      <td>Pre-deployment edge-case audit (loyalty exceptions, pricing disputes, complex returns) with realistic escalation-rate forecasts. Sets expectations correctly at sales and prevents churn-language in months 6-12.</td>
+    </tr>
+    <tr>
+      <td>"Mentally halfway out the door" (Zendesk Adopters leaning toward replatform)</td>
+      <td><strong>Zendesk-side specific</strong>: account-level executive review at month 9 surfacing strategic Fin-on-Top expansion (more queues, more channels) ahead of contract renewal. The 70%-in-play Zendesk Adopter cohort is the addressable replatform expansion pipeline.</td>
+    </tr>
+  </tbody>
+</table>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 04. SALES PLAYBOOK                                                       -->
+<!-- ======================================================================== -->
+<Section title="Sales Playbook" subtitle="Two playbooks at a glance, top three moves, per-platform motion, per-size motion, objection map, replatform expansion play">
+
+<h3>Two playbooks at a glance</h3>
+
+<p>The Fin sales motion is materially different on each platform. Below: the one-screen comparison sales leaders should internalize before going further into the per-platform detail.</p>
+
+<div class="playbooks">
+  <div class="playbook zd">
+    <div class="playbook-title">Zendesk-base playbook</div>
+    <div class="playbook-n">n = {sa.by_platform.Zendesk?.n} aware Non-Adopters</div>
+    <div class="playbook-row"><span class="pb-key">Top objection</span><span class="pb-val">Pricing predictability ({(() => { const rate = bp.objection_map_by_platform.find((o: any) => o.code === "fin_pricing_predictability_concern")?.cells?.w2_zendesk?.rate ?? 0; return ceil(rate); })()}%)</span></div>
+    <div class="playbook-row"><span class="pb-key">Top appeal</span><span class="pb-val">Conversational quality + resolution rate</span></div>
+    <div class="playbook-row"><span class="pb-key">Motion</span><span class="pb-val">Lighter-touch closing; commercial terms (pricing floor, performance benchmarks); native AI is a real competitive threat (28% pick Zendesk AI Agents)</span></div>
+    <div class="playbook-row"><span class="pb-key">Replatform play</span><span class="pb-val"><strong>Active</strong>: 70% of current Zendesk Adopters are open or undecided about full replatform; nurture the {zdOpenN}-account in-play cohort.</span></div>
+  </div>
+  <div class="playbook sf">
+    <div class="playbook-title">Salesforce-base playbook</div>
+    <div class="playbook-n">n = {sa.by_platform.Salesforce?.n} aware Non-Adopters</div>
+    <div class="playbook-row"><span class="pb-key">Top objection</span><span class="pb-val">Integration depth ({(() => { const rate = bp.objection_map_by_platform.find((o: any) => o.code === "fin_integration_depth_concern")?.cells?.w2_salesforce?.rate ?? 0; return ceil(rate); })()}%)</span></div>
+    <div class="playbook-row"><span class="pb-key">Top appeal</span><span class="pb-val">Deployment speed + purpose-built AI positioning</span></div>
+    <div class="playbook-row"><span class="pb-key">Motion</span><span class="pb-val">Deeper proof points; production-validated architecture docs; procurement-and-IT-security comfort with a separate AI vendor; Agentforce is the runner-up</span></div>
+    <div class="playbook-row"><span class="pb-key">Replatform play</span><span class="pb-val"><strong>Long-tail only</strong>: 7% of current Salesforce Adopters are open. Treat as customer-success expansion, not active replatform sales.</span></div>
+  </div>
+</div>
+
+<h3>Top Three Sales Moves</h3>
+
+<div class="insight">
+  <p><strong>1. Bifurcate the sales motion (and ideally compensation/quota structure) by parent platform.</strong> The top objection, top appeal, and replatform-funnel viability all differ between Zendesk and Salesforce accounts. A Zendesk-side rep is closing a lighter-touch deal with a real replatform expansion path (70% of accounts in play). A Salesforce-side rep is closing a deeper proof-points deal where Agentforce is the runner-up and replatform is structurally closed (7% in play). The two motions need different opening scripts, different battle cards, different proof-point libraries, and ideally different quota structures. The Two-playbooks-at-a-glance block above and the Per-platform sales motion section below document the full divergence.</p>
+</div>
+
+<div class="insight">
+  <p><strong>2. Target the 21 in-play Zendesk Adopter accounts for renewal-aligned replatform expansion.</strong> 9 Zendesk Adopters are somewhat-likely toward replatform; 12 more are undecided. All 12 undecided Adopters are on Zendesk; 0 are on Salesforce. The qualified-conversation pipeline for replatform expansion is essentially a Zendesk-side play targeting these 21 accounts with renewal-aligned outreach (timed to Zendesk contract renewal windows, typically 12-24 months out) and feature-parity proof points (especially around dual-platform reporting fragmentation and replatform functional threshold). The corresponding Salesforce-side replatform pipeline tops out at 2 accounts and should be treated as long-tail customer-success work, not active sales motion. The Replatform expansion play section below details the Zendesk-side execution plan.</p>
+</div>
+
+<div class="insight">
+  <p><strong>3. Apply a named-account motion with differentiated positioning to the Salesforce upper-mid-market cell.</strong> This 27-account cohort is where Agentforce gets 30% of likely-choice mentions vs. 5% elsewhere, the single most competitive cell in the data. Lead with deployment speed and purpose-built-AI capability rather than the no-replatform pitch, prepare the most aggressive integration documentation, and add explicit procurement-and-IT-security playbooks for the third-party-AI-vendor objection. The other three platform-by-size cells (Zendesk 1k-3k, Zendesk 3k-5k, Salesforce 1k-3k) are higher-conversion and don't require this level of named-account investment. The Per-size-tier sales motion section below documents the underlying signals.</p>
+</div>
+
+<h3>Per-platform sales motion: Fin choice rate and concern signature</h3>
+
+<p>Zendesk accounts have a higher Fin-selection rate and a thinner overall concern profile. Salesforce accounts split more evenly with Agentforce and carry a more demanding integration-documentation expectation. Sorted with Fin choice rate first (the headline number for each cohort), then concerns.</p>
+
+<div class="gbc" data-drilldown-chart="sales-motion-concerns">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin likely-choice rate and Fin concerns among Non-Adopters, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={sa.by_platform.Zendesk?.n})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={sa.by_platform.Salesforce?.n})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    <div class="gbc-row" data-no-drill style="border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 6px;">
+      <span class="gbc-label"><strong>Fin likely-choice rate</strong></span>
+      <div class="gbc-pair">
+        <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sa.by_platform.Zendesk?.fin_likely_choice_rate)} color="zd" variant="gbc" /></div></div>
+        <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sa.by_platform.Salesforce?.fin_likely_choice_rate)} color="sf" variant="gbc" /></div></div>
+      </div>
+    </div>
+    {Object.keys(sa.by_platform.Zendesk?.concerns || {})
+      .map(concern => {
+        const zd = (sa.by_platform.Zendesk?.concerns as any)?.[concern];
+        const sf = (sa.by_platform.Salesforce?.concerns as any)?.[concern];
+        const total = (zd?.n_pos ?? 0) + (sf?.n_pos ?? 0);
+        return { concern, zd, sf, total };
+      })
+      .filter(r => r.total > 0)
+      .sort((a, b) => b.total - a.total)
+      .map(({concern, zd, sf}) => (
+        <div class="gbc-row">
+          <span class="gbc-label">Concern: {titleCase(concern)}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(zd?.rate ?? 0)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf?.rate ?? 0)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+<p class="q-cite">Source questions: "Looking ahead over the next 12 months, how likely is it that your team will adopt an AI agent...? Which option are you most likely to go with?" and "What concerns, hesitations, or reservations do you have about Fin?". Both asked of Non-Adopters, split by parent platform. Concern rows omitted where both platforms show 0%. <span class="vb-hint">Click a concern theme to read participant quotes.</span></p>
+
+<h3>Per-size-tier sales motion</h3>
+
+<div class="vuln-callout">
+  <p><strong>The single largest segment-level finding in the study is a Fin-choice gap by company size.</strong> Among engaged Non-Adopters, Fin is named the likely AI-agent choice by 78% of mid-market (1,000-3,000-employee) prospects but only 63% of upper-mid-market (3,001-5,000-employee) prospects. The 15-percentage-point gap is statistically significant. The corresponding Agentforce-as-likely-choice rate rises from 5% in mid-market to 13% in upper-mid-market. Sales motion should treat the two size tiers as different conversion problems: mid-market needs lighter-touch closing, upper-mid-market needs differentiated positioning + commercial-terms work to peel from Agentforce.</p>
+</div>
+
+<p>Mid-market (1,000-3,000 employees) and upper-mid-market (3,001-5,000) Non-Adopters show different signal profiles. Upper-mid-market has slightly higher very-likely-to-adopt concentration; mid-market has higher Fin-choice concentration overall.</p>
+
+<table class="rec-table">
+  <thead><tr><th>Sales metric</th><th>1,000-3,000 employees (n={sa.by_size_band["1k-3k"]?.n})</th><th>3,001-5,000 employees (n={sa.by_size_band["3k-5k"]?.n})</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Very-likely-to-adopt rate</td>
+      <td>{ceil(sa.by_size_band["1k-3k"]?.very_likely_rate)}%</td>
+      <td>{ceil(sa.by_size_band["3k-5k"]?.very_likely_rate)}%</td>
+    </tr>
+    <tr class="highlight-row">
+      <td><strong>Fin-likely-choice rate</strong></td>
+      <td><strong>{ceil(sa.by_size_band["1k-3k"]?.fin_choice_rate)}% *</strong></td>
+      <td><strong>{ceil(sa.by_size_band["3k-5k"]?.fin_choice_rate)}%</strong></td>
+    </tr>
+    <tr>
+      <td>Agentforce-likely-choice rate</td>
+      <td>{ceil(sa.by_size_band["1k-3k"]?.agentforce_choice_rate)}%</td>
+      <td>{ceil(sa.by_size_band["3k-5k"]?.agentforce_choice_rate)}%</td>
+    </tr>
+    <tr>
+      <td>Zendesk AI-likely-choice rate</td>
+      <td>{ceil(sa.by_size_band["1k-3k"]?.zendesk_ai_choice_rate)}%</td>
+      <td>{ceil(sa.by_size_band["3k-5k"]?.zendesk_ai_choice_rate)}%</td>
+    </tr>
+  </tbody>
+</table>
+<p class="q-cite">Source question: same as the Leading Indicators charts ("Looking ahead over the next 12 months, how likely is it that your team will adopt an AI agent...?"). Asterisk on the Fin-likely-choice rate row indicates the gap between size bands is statistically significant at α &lt; 0.10.</p>
+
+<div class="opp-callout">
+  <p><strong>Per-size-tier sales motion implications:</strong> for 1,000-3,000-employee accounts, Fin's competitive position is dominant; sales should focus on commercial terms (pricing predictability, performance benchmarks) rather than competitive differentiation. For 3,001-5,000-employee accounts, Salesforce-side prospects are leaning Agentforce; sales should lead with Agentforce-vs-Fin capability proof points and address procurement-and-IT-security comfort with a separate AI vendor.</p>
+</div>
+
+<h4>Volume-growth pressure also splits by size</h4>
+
+<p>The macro context driving AI-agent evaluation differs between the two size tiers. Mid-market Non-Adopters cite volume growth outpacing headcount as the dominant pressure (53% vs 38% in upper-mid), suggesting they feel the capacity squeeze more acutely. Upper-mid-market accounts have either more headcount runway or are pacing volume growth differently. This pattern reinforces the per-size-tier sales motion: mid-market accounts respond to "deflection-as-headcount-avoidance" framing; upper-mid-market accounts respond more to executive-mandate framing or competitive-AI framing.</p>
+<p class="q-cite">Source question: "What's happening at your company or within your industry more broadly that may be shaping how you're thinking about your customer support operation? If so, please share what those are." Theme prevalence in 1k-3k = 53%, in 3k-5k = 38%.</p>
+
+<h3>Objection map, by platform</h3>
+
+<p>Objections sales reps will hear, by parent platform. On Zendesk, pricing predictability is the dominant concern. On Salesforce, integration depth is. The grouped chart below makes the divergence visible; the response-angle table follows.</p>
+
+<div class="gbc" data-drilldown-chart="objection-map">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin concerns / objections, by platform (sorted by total prevalence)</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w2_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w2_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.objection_map_by_platform.map((row: any) => {
+      const z = row.cells.w2_zendesk; const sf = row.cells.w2_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p class="gbc-footnote">Note the rank-order divergence: pricing predictability is #1 on the Zendesk side; integration depth is #1 on the Salesforce side. The aggregate ranking averages the two and obscures the platform-specific top concern. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+</div>
+
+<h4>Response angles by objection</h4>
+<table class="rec-table">
+  <thead><tr><th>Objection / concern</th><th>Total prevalence (n={meta.n_wave_2_non_adopters})</th><th>Suggested response angle</th></tr></thead>
+  <tbody>
+    {sa.objection_map.slice(0, 8).map((o: any) => {
+      let angle = "(see prose above)";
+      if (o.objection.includes("pricing_predictability")) angle = "Pre-quoted floor structure + contractual containment-rate benchmarks";
+      else if (o.objection.includes("integration")) angle = "Production-validated architecture documents (not marketing material)";
+      else if (o.objection.includes("hallucination")) angle = "Confidence threshold configuration walkthrough + escalation behavior demo";
+      else if (o.objection.includes("peer_reference")) angle = "Industry-and-size-matched reference customers with before/after data";
+      else if (o.objection.includes("marketplace")) angle = "Buyer/seller dispute neutrality guardrails reference deployment";
+      else if (o.objection.includes("regulatory")) angle = "Industry-specific compliance documentation (SOC 2, FCRA, CFPB-aligned)";
+      else if (o.objection.includes("native_ai")) angle = "Capability-gap demonstration on participant's own ticket sample";
+      return (
+        <tr>
+          <td>{titleCase(o.objection)}</td>
+          <td>{ceil(o.rate)}%</td>
+          <td>{angle}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+<p class="q-cite">Source question: "What concerns, hesitations, or reservations do you have about Fin? What gives you pause?" Asked of Non-Adopters.</p>
+
+<h3>Replatform expansion play</h3>
+
+<p><strong>The replatform expansion play is almost entirely a Zendesk-side play.</strong> Of the 11 Fin Adopters who lean somewhat-likely toward replatform, 9 are on Zendesk and only 2 are on Salesforce. Of the 12 undecided Adopters, all 12 are on Zendesk. So the qualified-conversation pipeline for replatform conversion is roughly 21 Zendesk-based accounts (70% of the 30 Zendesk Adopters) versus 2 Salesforce-based accounts (7% of the 30 Salesforce Adopters). Sales should target the Zendesk-based "somewhat likely + undecided" cohort with renewal-aligned outreach and feature-parity-anchored proof points; the Salesforce-side replatform pipeline should not exceed the 2-account "somewhat likely" cohort and is best treated as long-tail customer-success work rather than active sales motion.</p>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 05. CUSTOMER INSIGHTS                                                    -->
+<!-- ======================================================================== -->
+<Section title="Customer Insights" subtitle="Who the buyer is, how they got here, how it's going">
+
+<p><strong>Sample composition note.</strong> This study includes US-based Director / VP / Head / CCO decision-makers in Customer Support, CX, and Customer Operations at companies of 1,000-5,000 employees handling 5,000+ monthly support inquiries across SaaS, Fintech, Ecommerce, Marketplaces, and Digital Services. All participants are on Zendesk or Salesforce Service Cloud. Findings here apply to that population; they do not generalize to companies outside the size, industry, or platform scope.</p>
+
+<h3>Sample cohort split</h3>
+
+<p>Two cohorts with distinct identities. Each is profiled below by the two firmographic dimensions that matter most for the analysis: parent helpdesk platform and company size band.</p>
+
+<div class="cohort-comparison">
+  <div class="cohort-block">
+    <div class="cohort-header">
+      <div class="cohort-name">Fin Adopters</div>
+      <div class="cohort-n">n = {meta.n_wave_1_adopters}</div>
+    </div>
+    <p class="cohort-desc">Companies that have added Intercom Fin on top of their existing helpdesk in the last 3-12 months, with Fin actively deployed and resolving customer inquiries. The respondent base for findings about pre-Fin push forces, Fin selection drivers, post-deployment experience, and the Replatform Thesis.</p>
+
+    <div class="cohort-section">
+      <div class="cohort-section-label">Parent helpdesk platform</div>
+      <div class="bar-row mini">
+        <span class="bar-label">Zendesk</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w1_zendesk / meta.n_wave_1_adopters)} color="ink" variant="bar" /></div>
+        <span class="bar-count">{meta.w1_zendesk}</span>
+      </div>
+      <div class="bar-row mini">
+        <span class="bar-label">Salesforce Service Cloud</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w1_salesforce / meta.n_wave_1_adopters)} color="ink" variant="bar" /></div>
+        <span class="bar-count">{meta.w1_salesforce}</span>
+      </div>
+    </div>
+
+    <div class="cohort-section">
+      <div class="cohort-section-label">Company size (employees)</div>
+      <div class="bar-row mini">
+        <span class="bar-label">1,000-3,000</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w1_size_1k_3k / meta.n_wave_1_adopters)} color="teal" variant="bar" /></div>
+        <span class="bar-count">{meta.w1_size_1k_3k}</span>
+      </div>
+      <div class="bar-row mini">
+        <span class="bar-label">3,001-5,000</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w1_size_3k_5k / meta.n_wave_1_adopters)} color="teal" variant="bar" /></div>
+        <span class="bar-count">{meta.w1_size_3k_5k}</span>
+      </div>
+    </div>
+    <p class="cohort-note">Platform was a hard quota at 30/30. Company size was a probability sample (no quota); the natural distribution skews mid-market.</p>
+  </div>
+
+  <div class="cohort-block">
+    <div class="cohort-header">
+      <div class="cohort-name">Aware Non-Adopters</div>
+      <div class="cohort-n">n = {meta.n_wave_2_non_adopters}</div>
+    </div>
+    <p class="cohort-desc">Companies on Zendesk or Salesforce Service Cloud that are aware of Fin and aware Fin can be deployed on top without replatforming, but have not adopted Fin in any form and have not actively deployed their platform's native AI agent. The respondent base for current-state push forces, Fin perception, competitive comparison, and adoption intent.</p>
+
+    <div class="cohort-section">
+      <div class="cohort-section-label">Parent helpdesk platform</div>
+      <div class="bar-row mini">
+        <span class="bar-label">Zendesk</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w2_zendesk / meta.n_wave_2_non_adopters)} color="ink" variant="bar" /></div>
+        <span class="bar-count">{meta.w2_zendesk}</span>
+      </div>
+      <div class="bar-row mini">
+        <span class="bar-label">Salesforce Service Cloud</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w2_salesforce / meta.n_wave_2_non_adopters)} color="ink" variant="bar" /></div>
+        <span class="bar-count">{meta.w2_salesforce}</span>
+      </div>
+    </div>
+
+    <div class="cohort-section">
+      <div class="cohort-section-label">Company size (employees)</div>
+      <div class="bar-row mini">
+        <span class="bar-label">1,000-3,000</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w2_size_1k_3k / meta.n_wave_2_non_adopters)} color="teal" variant="bar" /></div>
+        <span class="bar-count">{meta.w2_size_1k_3k}</span>
+      </div>
+      <div class="bar-row mini">
+        <span class="bar-label">3,001-5,000</span>
+        <div class="bar-track"><BarCell pct={ceil(meta.w2_size_3k_5k / meta.n_wave_2_non_adopters)} color="teal" variant="bar" /></div>
+        <span class="bar-count">{meta.w2_size_3k_5k}</span>
+      </div>
+    </div>
+    <p class="cohort-note">Both platform and company size were hard quotas (60/60 each), producing the four-cell analytical frame for Non-Adopter sub-segment analysis.</p>
+  </div>
+</div>
+
+<h3>Push forces against the incumbent platform</h3>
+
+<p>The strongest theme on both sides of the cohort is dissatisfaction with the helpdesk's native AI capabilities. Adopters cite this retrospectively as the trigger for evaluating Fin; Non-Adopters cite the same theme in their current-state critique. The platform split underneath the cross-wave story is striking: Zendesk-based participants are noticeably more dissatisfied with their native AI capabilities than Salesforce-based participants, and the gap shows up in both waves.</p>
+
+<div class="gbc" data-drilldown-chart="push-forces-w1">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin Adopters: pre-Fin platform frustrations</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w1_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w1_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.push_forces_w1.sort((a: any, b: any) => (b.cells.w1_overall?.rate ?? 0) - (a.cells.w1_overall?.rate ?? 0)).map((row: any) => {
+      const z = row.cells.w1_zendesk; const sf = row.cells.w1_salesforce; const o = row.cells.w1_overall;
+      if (!z || !sf || !o) return null;
+      const avgPct = ceil(o.rate);
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair" style="position: relative;">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p class="gbc-footnote">Dashed reference line not shown when overall is meaningfully different from each platform; the per-platform bars are the analytical focus. Themes ordered by overall prevalence within the Adopter cohort.</p>
+</div>
+
+<div class="gbc" data-drilldown-chart="push-forces-w2">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Aware Non-Adopters: current platform frustrations</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w2_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w2_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.push_forces_w2.sort((a: any, b: any) => (b.cells.w2_overall?.rate ?? 0) - (a.cells.w2_overall?.rate ?? 0)).map((row: any) => {
+      const z = row.cells.w2_zendesk; const sf = row.cells.w2_salesforce; const o = row.cells.w2_overall;
+      if (!z || !sf || !o) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p class="gbc-footnote">Themes ordered by overall prevalence within the Non-Adopter cohort.</p>
+</div>
+<p class="q-cite">Source questions: "Before you brought Fin in, what were the biggest frustrations or limitations with [Zendesk / Salesforce Service Cloud] and how you were running support?" (asked of Adopters about their pre-Fin state); "What are the biggest frustrations or limitations with [Zendesk / Salesforce Service Cloud] today?" (asked of Non-Adopters about their current state). Each chart shows within-wave rates split by parent platform. <span class="vb-hint">Click any theme on either chart to read participant quotes.</span></p>
+
+<div class="subtheme-block">
+  <h4 class="subtheme-block-title">What's inside the top three push-force themes</h4>
+  <p class="subtheme-block-intro">A drill-down on the three highest-prevalence push themes ("native AI inadequacy", "reporting limitations", "self-service capability gap") shows that each has an identifiable sub-pattern, and on two of the three the pattern diverges by parent platform. The platform-specific framing has direct implications for marketing, product, and sales positioning.</p>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Native AI inadequacy</div>
+    <div class="subtheme-detail">
+      <p>Both platforms' native bots deflect almost nothing in absolute terms (Answer Bot at 6-15% containment; Einstein Bots at 8-16%), but participants describe the <strong>reason</strong> the AI fails differently on each side.</p>
+      <p><span class="plat-tag zd">Zendesk</span> The complaint is <strong>capability ceiling</strong>. Answer Bot is described in participant verbatims as "a search-suggest layer", "pure keyword matching dressed up as AI", "decision-tree FAQ". Suggested-reply features in Advanced AI "became a punchline internally" and agents stopped trusting them within weeks of rollout. Output quality is the gap.</p>
+      <p><span class="plat-tag sf">Salesforce</span> The complaint is <strong>effort-to-value ratio</strong>. Einstein Bots are flow-based, every new intent or product change requires Salesforce-admin time, and the admin team is contested across business units. Agentforce evaluations consistently quoted 10-20 weeks to production-ready deployment. Deployment cost is the gap.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Reporting limitations</div>
+    <div class="subtheme-detail">
+      <p>Both platforms handle operational metrics (handle time, queue depth, CSAT) competently. Both break down for cohort and segment analysis, journey-level reporting ("what did the customer try before contacting us?"), and AI-specific analytics (containment by intent, confidence-level data). All participants describe piping data into an external BI layer (Looker, Tableau, Snowflake, Sheets) to do real analysis. The bottleneck differs:</p>
+      <p><span class="plat-tag zd">Zendesk</span> The Explore tool itself is the constraint. "Rigid query model", "counterintuitive", "if I want a non-standard metric I'm exporting to Sheets". Tool limitation.</p>
+      <p><span class="plat-tag sf">Salesforce</span> The shared-services Salesforce-admin queue is the constraint. Tableau CRM dependency for non-standard dashboards; admin team required for every routing or reporting change; multi-week SLAs. Organizational limitation.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Self-service capability gap</div>
+    <div class="subtheme-detail">
+      <p>Unlike the first two themes, the self-service gap is <strong>described nearly identically on both platforms</strong>. Four sub-patterns recur regardless of helpdesk:</p>
+      <ul>
+        <li><strong>Search relevance is the most-cited failure.</strong> Customers type natural-language questions, hit keyword-matched results, abandon to a ticket. "I watched session recordings of customers abandoning the help center and submitting a ticket for something that was literally on the page they just left."</li>
+        <li><strong>No feedback loop for content health.</strong> Neither platform surfaces which articles fail or which queries return zero results. Knowledge bases age into stale-on-arrival territory.</li>
+        <li><strong>Bot can't reason across multiple articles.</strong> Customer questions that require synthesizing two or three knowledge entries get a single keyword-matched article instead.</li>
+        <li><strong>Hand-off from self-service to ticket loses all context.</strong> The customer who failed the bot has to re-explain from scratch when an agent picks up. One participant: "the customer told the bot three times he was on a mobile device and the first thing the agent said was 'are you on mobile or desktop?'"</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3>Macro pressures shaping AI strategy</h3>
+
+<p>The dominant macro driver is competitive AI pressure (companies seeing peer announcements, board-level questions about AI strategy). Customer expectation shift is rising signal for Non-Adopters that wasn't yet a major driver among Adopters. Volume-growth pressure is the cross-wave shared theme that explains why the AI conversation is happening at all.</p>
+
+<div class="gbc" data-drilldown-chart="macro-pressures">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Macro context: three most-differentiating themes (cross-wave)</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Fin Adopters (n={meta.n_wave_1_adopters})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Non-Adopters (n={meta.n_wave_2_non_adopters})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {(() => {
+      const order = ["Competitive AI pressure", "Volume growth outpacing headcount", "Customer expectation shift"];
+      return [...bp.macro_pressures_compressed].sort((a: any, b: any) => order.indexOf(a.label) - order.indexOf(b.label));
+    })().map((row: any) => {
+      const w1 = row.cells.w1_overall; const w2 = row.cells.w2_overall;
+      if (!w1 || !w2) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(w1.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(w2.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p class="gbc-footnote">Compressed from a longer list to the three themes with the largest cross-wave differential. The other six macro themes (executive AI mandate, headcount constraint, cost-per-contact pressure, support quality as revenue lever, regulatory compliance, acute volume spike) showed only modest cross-wave differences and don't drive recommendations differently across cohorts.</p>
+</div>
+<p class="q-cite">Source question: "What's happening at your company or within your industry more broadly that may be shaping how you're thinking about your customer support operation?" (Non-Adopter wording; the parallel Adopter wording asked what was contributing to the team starting to look at AI agent solutions). <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 06. COMPETITIVE POSITION                                                 -->
+<!-- ======================================================================== -->
+<Section title="Competitive Position" subtitle="Mental availability, appeal, concerns, and per-platform competitive context">
+
+<h3>Likely choice among engaged Non-Adopters, by parent platform</h3>
+
+<p>Fin is the most-named likely AI-agent choice on both platforms. Crucially, the runner-up is platform-specific: Zendesk AI Agents is named only by Zendesk-base prospects (zero Salesforce prospects pick it); Agentforce is named only by Salesforce-base prospects. Showing the choices in a single ranked list with all 120 participants as the denominator visually understates competitive intensity within each platform's accounts. Within Zendesk, Fin gets {ceil((bp.likely_choice_panels.zendesk.choices["Intercom Fin"] ?? 0) / bp.likely_choice_panels.zendesk.n)}% but Zendesk AI Agents gets {ceil((bp.likely_choice_panels.zendesk.choices["Zendesk AI Agents"] ?? 0) / bp.likely_choice_panels.zendesk.n)}%. Within Salesforce, Fin gets {ceil((bp.likely_choice_panels.salesforce.choices["Intercom Fin"] ?? 0) / bp.likely_choice_panels.salesforce.n)}% and Agentforce gets {ceil((bp.likely_choice_panels.salesforce.choices["Salesforce Agentforce"] ?? 0) / bp.likely_choice_panels.salesforce.n)}%. <strong>Fin is winning roughly two out of three engaged Non-Adopters on each platform; the question is who closes the remaining one in three, and that competitive battle is platform-specific.</strong></p>
+
+<div class="two-panel">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Zendesk Non-Adopters</div>
+      <div class="panel-n">n = {bp.likely_choice_panels.zendesk.n}</div>
+    </div>
+    {(() => {
+      const c = bp.likely_choice_panels.zendesk.choices ?? {};
+      const n = bp.likely_choice_panels.zendesk.n ?? 60;
+      const fin = c["Intercom Fin"] ?? 0;
+      const native = c["Zendesk AI Agents"] ?? 0;
+      const undecided = c["Undecided"] ?? 0;
+      const known = fin + native + undecided;
+      const other = n - known;
+      const rows = [
+        { label: "Intercom Fin", n: fin, color: "ink" },
+        { label: "Zendesk AI Agents", n: native, color: "signal" },
+        { label: "Undecided", n: undecided, color: "warm" },
+        { label: "Other / unparsed", n: other, color: "slate" },
+      ];
+      return rows.map(r => {
+        const pct = ceil(r.n / n);
+        return (
+          <div class="bar-row">
+            <span class="bar-label">{r.label}</span>
+            <div class="bar-track"><BarCell pct={pct} color={(r.color) as any} variant="bar" /></div>
+          </div>
+        );
+      });
+    })()}
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Salesforce Non-Adopters</div>
+      <div class="panel-n">n = {bp.likely_choice_panels.salesforce.n}</div>
+    </div>
+    {(() => {
+      const c = bp.likely_choice_panels.salesforce.choices ?? {};
+      const n = bp.likely_choice_panels.salesforce.n ?? 60;
+      const fin = c["Intercom Fin"] ?? 0;
+      const native = (c["Salesforce Agentforce"] ?? 0) + (c["Salesforce Einstein"] ?? 0);
+      const undecided = c["Undecided"] ?? 0;
+      const known = fin + native + undecided;
+      const other = n - known;
+      const rows = [
+        { label: "Intercom Fin", n: fin, color: "ink" },
+        { label: "Salesforce Agentforce / Einstein", n: native, color: "signal" },
+        { label: "Undecided", n: undecided, color: "warm" },
+        { label: "Other / unparsed", n: other, color: "slate" },
+      ];
+      return rows.map(r => {
+        const pct = ceil(r.n / n);
+        return (
+          <div class="bar-row">
+            <span class="bar-label">{r.label}</span>
+            <div class="bar-track"><BarCell pct={pct} color={(r.color) as any} variant="bar" /></div>
+          </div>
+        );
+      });
+    })()}
+  </div>
+</div>
+<p class="q-cite">Source question: "Looking ahead over the next 12 months, how likely is it that your team will adopt an AI agent for customer service? Please share why or why not, and which option you think you're most likely to go with." Likely-choice sub-clause parsed from response text. Each panel's denominator is its platform-specific cohort.</p>
+
+<h3>Native AI critique: shared theme, but Zendesk feels it more acutely</h3>
+
+<p>Both cohorts describe their platform's native AI as inadequate, but the platform split underneath the cross-wave story is striking. Zendesk-base participants critique their native AI more sharply on the "fundamentally inadequate" framing; Salesforce-base participants are more likely to describe Agentforce / Einstein as "improving but not yet ready" (the maturity-gap framing). The product critique is real on both sides; the rhetoric and what it implies for sales motion is different.</p>
+
+<div class="gbc" data-drilldown-chart="native-ai-critique-w1">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin Adopters: native-AI critique themes (pre-Fin), by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w1_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w1_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.native_ai_critique_by_platform.map((row: any) => {
+      const z = row.cells.w1_zendesk; const sf = row.cells.w1_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<div class="gbc" data-drilldown-chart="native-ai-critique-w2">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Non-Adopters: native-AI critique themes (current state), by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w2_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w2_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.native_ai_critique_by_platform.map((row: any) => {
+      const z = row.cells.w2_zendesk; const sf = row.cells.w2_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+<p class="q-cite">Source: cross-cohort aggregation of native-AI critique codes (Adopters: pre-Fin frustrations + native-AI rejection rationale during Fin evaluation; Non-Adopters: current platform frustrations + Fin-vs-native-AI rationale). Within-cohort rates split by parent platform. <span class="vb-hint">Click any theme on either chart to read participant quotes.</span></p>
+
+<div class="subtheme-block">
+  <h4 class="subtheme-block-title">What "native AI inadequacy", "maturity gap", and "perceived as bolt-on" mean: a drill-down</h4>
+  <p class="subtheme-block-intro">For the "native AI inadequacy" theme above, see the sub-theme drill-down in Section 02 (Customer Insights, "What's inside the top three push-force themes"); the Zendesk-side capability-ceiling vs Salesforce-side effort-to-value pattern documented there applies directly to this chart. Below, the two related themes get their own drill-down: "native AI maturity gap" and "native AI perceived as bolt-on" surface different concerns and skew differently by platform.</p>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Native AI maturity gap</div>
+    <div class="subtheme-detail">
+      <p>The complaint is about <strong>evidence and trust</strong>: native AI products (Zendesk AI Agents, Agentforce) are positioned as material upgrades to Answer Bot or Einstein, but participants struggle to find production reference customers in their industry, at their volume, deployed long enough to give defensible accuracy data. "Demos were better, but the production reference pool was thin" recurs across the verbatims.</p>
+      <p>This theme appears more frequently on the Salesforce side (40% of Salesforce Non-Adopters cite it vs 23% of Zendesk Non-Adopters in this chart) because Agentforce is a rebranded and reorganized product that has been through more visible churn. Zendesk-side participants are more likely to discount Zendesk AI Agents using direct pilot data rather than reference-pool concerns.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Native AI perceived as bolt-on</div>
+    <div class="subtheme-detail">
+      <p>The complaint is about <strong>product philosophy and roadmap velocity</strong>: native AI feels like a feature added to a ticketing platform, not a product designed from the ground up to resolve customer conversations. Phrases that recur: "checkbox feature", "search widget with a chat wrapper", "press release product, not production". Participants distinguish "AI-first companies" (Intercom positioning Fin as the core product) from "platform companies adding AI" (Zendesk and Salesforce).</p>
+      <p>This theme skews to the Zendesk side (34 Zendesk Non-Adopters vs 10 Salesforce Non-Adopters). Zendesk is a longer-tenure incumbent for many of these accounts, so the credibility-discount accumulates; Advanced AI features specifically (suggested replies, intelligent triage) are cited as products that didn't deliver despite premium pricing. The Salesforce side has fewer of these complaints in part because Einstein and Agentforce are both more recent and less cumulatively disappointing.</p>
+    </div>
+  </div>
+</div>
+
+<h3>Fin pull and appeal, by platform</h3>
+
+<p>The single dominant Fin pull force across both waves and both platforms is the no-replatform deployment model. It is essentially universal among aware Non-Adopters and a primary stated selection driver among Adopters. Beyond that, the appeal mix differs by platform: Zendesk-base participants weight resolution-rate and conversational-quality framing more heavily; Salesforce-base participants weight deployment speed and the purpose-built-AI positioning more.</p>
+
+<div class="gbc" data-drilldown-chart="fin-pull-w1">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Fin Adopters: Fin selection drivers, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w1_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w1_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.fin_pull_by_platform.slice().sort((a: any, b: any) => (b.cells.w1_overall?.rate ?? 0) - (a.cells.w1_overall?.rate ?? 0)).map((row: any) => {
+      const z = row.cells.w1_zendesk; const sf = row.cells.w1_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<div class="gbc" data-drilldown-chart="fin-pull-w2">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Non-Adopters: Fin appeal themes, by platform</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w2_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w2_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.fin_pull_by_platform.slice().sort((a: any, b: any) => (b.cells.w2_overall?.rate ?? 0) - (a.cells.w2_overall?.rate ?? 0)).map((row: any) => {
+      const z = row.cells.w2_zendesk; const sf = row.cells.w2_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+<p class="q-cite">Source: Adopter responses to "Why did you specifically choose Fin over the alternatives you considered?", "Why didn't you choose [native AI] instead of Fin?", and "Now that you've been using Fin for a few months, what is it doing well for your team?"; Non-Adopter responses to "How would you describe Intercom's Fin AI Agent to a peer at another company?", "What appeals to you about Fin?", and "How does Fin compare in your mind to [native AI]?". Within-wave rates split by parent platform. <span class="vb-hint">Click any theme on either chart to read participant quotes.</span></p>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 07. THE REPLATFORM THESIS                                                -->
+<!-- ======================================================================== -->
+<Section title="The Replatform Thesis" subtitle="Does Fin-on-Top convert to full Intercom replatform? The central strategic question.">
+
+<div class="vuln-callout">
+  <p><strong>The Replatform Thesis answer splits sharply by parent platform.</strong> {zdOpenPct}% of Zendesk-based Adopters are open or undecided about replatforming to Intercom's full platform within 24 months. Of the Salesforce-based Adopters, only {sfOpenPct}% are. The replatform funnel is real and addressable on the Zendesk side; structurally closed on the Salesforce side. The two platforms are effectively two different replatform-conversion stories that should be sold and measured differently.</p>
+</div>
+
+<h3>Replatform likelihood by platform</h3>
+
+<div class="gbc">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Replatform likelihood among current Fin Adopters</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={rt.by_platform.Zendesk?.n})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={rt.by_platform["Salesforce Service Cloud"]?.n})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {["very likely","somewhat likely","undecided","somewhat unlikely","very unlikely"].map(band => {
+      const zd = rt.by_platform.Zendesk?.distribution?.[band] || 0;
+      const sf = rt.by_platform["Salesforce Service Cloud"]?.distribution?.[band] || 0;
+      const zd_n = rt.by_platform.Zendesk?.n || 1;
+      const sf_n = rt.by_platform["Salesforce Service Cloud"]?.n || 1;
+      const zdPct = ceil(zd / zd_n);
+      const sfPct = ceil(sf / sf_n);
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{titleCase(band)}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={zdPct} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={sfPct} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+<p class="q-cite">Source question: "Looking ahead over the next 12 to 24 months, how likely is it that you will replatform your full helpdesk from [Zendesk / Salesforce Service Cloud] to Intercom's platform? Please share why or why not." Likelihood band parsed from response text via phrase match.</p>
+
+<h3>Replatform threshold conditions, by platform</h3>
+
+<p>What would have to be true for an Adopter to consider full replatform? The conditions are different for Zendesk and Salesforce Adopters, weighted differently between the two cohorts, and addressing them requires different product / commercial moves.</p>
+
+<div class="gbc" data-drilldown-chart="replatform-thresholds">
+  <div class="gbc-header">
+    <h4 class="gbc-title">Replatform threshold conditions among current Fin Adopters</h4>
+    <div class="gbc-legend">
+      <span class="gbc-legend-item"><span class="gbc-swatch zd"></span>Zendesk (n={meta.w1_zendesk})</span>
+      <span class="gbc-legend-item"><span class="gbc-swatch sf"></span>Salesforce (n={meta.w1_salesforce})</span>
+    </div>
+  </div>
+  <div class="gbc-rows">
+    {bp.replatform_thresholds_by_platform.map((row: any) => {
+      const z = row.cells.w1_zendesk; const sf = row.cells.w1_salesforce;
+      if (!z || !sf) return null;
+      return (
+        <div class="gbc-row">
+          <span class="gbc-label">{row.label}</span>
+          <div class="gbc-pair">
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(z.rate)} color="zd" variant="gbc" /></div></div>
+            <div class="gbc-bar"><div class="gbc-track"><BarCell pct={ceil(sf.rate)} color="sf" variant="gbc" /></div></div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+<p class="q-cite">Source question: "What would have to be true for you to decide to replatform your entire support stack from [Zendesk / Salesforce Service Cloud] to Intercom? What conditions, capabilities, or events would push you to make that move?" Asked of current Fin Adopters, split by parent platform. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+<div class="subtheme-block">
+  <h4 class="subtheme-block-title">What's inside the top two replatform threshold themes</h4>
+  <p class="subtheme-block-intro">"Replatform functional threshold" and "replatform commercial trigger" are the two highest-prevalence threshold conditions on both platforms. Reading the participant verbatims surfaces concrete sub-patterns inside each.</p>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Replatform functional threshold</div>
+    <div class="subtheme-detail">
+      <p>Adopters define "functional parity" against features they currently rely on in their incumbent helpdesk. The recurring sub-patterns are <strong>case-management depth and routing complexity</strong> (multi-step workflows, custom case fields, queue-routing logic with years of configuration); <strong>native integrations to operational systems</strong> (Shopify, OMS, payment processors, internal data warehouses, internal compliance tools); and <strong>historical data portability and reporting continuity</strong> (years of ticket history, custom Explore or Tableau dashboards, custom-CSAT cohort analysis).</p>
+      <p>This sub-pattern is more acute on the Salesforce side: Salesforce-base Adopters cite the Service Cloud object model and APEX customizations as binding constraints, and several explicitly note that case management is what Service Cloud is built around. Zendesk-base Adopters cite Explore-based reporting infrastructure and the four-plus years of accumulated trigger / automation logic as comparable anchors but framed more in terms of operational continuity than platform-architecture parity.</p>
+    </div>
+  </div>
+
+  <div class="subtheme-row">
+    <div class="subtheme-name">Replatform commercial trigger</div>
+    <div class="subtheme-detail">
+      <p>This is overwhelmingly about <strong>contract renewal timing</strong> and <strong>total-cost comparison</strong>. Adopters describe their incumbent contract renewal (12-24 months out for most) as the natural decision point: "we should treat that as a decision point, not an automatic renewal". The total-cost calculation is "Zendesk plus Fin" vs "Intercom all-in", a comparison participants explicitly plan to run before renewal. A secondary pattern is <strong>trust accrual</strong>: positive Fin experience extends to broader Intercom credibility, making the renewal-window conversation more receptive than it would have been pre-Fin.</p>
+      <p>The pattern is more open-ended on the Zendesk side because the Zendesk contract is more often the only commercial anchor; on the Salesforce side, the Salesforce contract bundles Service Cloud with Sales Cloud, Commerce Cloud, and other clouds, making "swap out Service Cloud" a much harder commercial conversation that doesn't naturally trigger at renewal.</p>
+    </div>
+  </div>
+</div>
+
+<div class="opp-callout">
+  <p><strong>Strategic implications, by platform:</strong> on the Zendesk side, the replatform-conversion play is real and addressable: 70% of current Zendesk Adopters are at least open to the conversation, with 30% leaning toward replatform and 40% undecided. The Zendesk-side play is to nurture the undecided cohort toward "somewhat likely" through targeted feature parity (especially around dual-platform reporting fragmentation) and contract-renewal timing. On the Salesforce side, replatform is structurally blocked for at least 90% of the current Adopter base; investments in fintech-grade compliance, deep Salesforce ecosystem integration, and Salesforce-trained customer references can address the remaining 10%, but should be sized as a long-tail upside, not a primary revenue driver.</p>
+</div>
+
+</Section>
+
+<!-- ======================================================================== -->
+<!-- 08. METHODOLOGY                                                          -->
+<!-- ======================================================================== -->
+<Section title="Methodology" subtitle="Sample design, coding, and statistical conventions">
+
+<h3>Sample design</h3>
+
+<p>Two-cohort B2B study designed to answer Intercom's Fin-on-Top strategic question. <strong>Wave 1 Fin Adopters (n={meta.n_wave_1_adopters})</strong>: companies that added Intercom Fin on top of an existing Zendesk or Salesforce Service Cloud helpdesk in the last 3-12 months, with Fin actively deployed. <strong>Wave 2 Non-Adopters (n={meta.n_wave_2_non_adopters})</strong>: companies on Zendesk or Salesforce Service Cloud, aware of Fin and aware that Fin can be deployed on top, who have not adopted Fin and have not actively deployed their platform's native AI agent.</p>
+
+<p>Both cohorts: US-based, Director / VP / Head / CCO decision-makers in Customer Support, CX, or Customer Operations, 12+ months tenure in role, 5,000+ monthly support inquiries, 1,000-5,000 employees, in five qualifying industries (SaaS, Fintech, Ecommerce, Marketplaces, Digital Services). Hard quotas on platform (50/50 Zendesk/Salesforce) and industry (equal share). Wave 2 additionally has a hard size-band quota (50/50 1k-3k vs 3k-5k employees).</p>
+
+<h3>Coding methodology</h3>
+
+<p>Inductive thematic coding. Three-agent application pipeline: dual independent coders + arbiter resolution. Codebook: 55 codes, 7 thematic blocks. {me.n_segments_coded} segments coded across 24 questions × 180 participants.</p>
+
+<table class="rec-table">
+  <thead><tr><th>Reliability metric</th><th>Value</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Thematic-code Cohen's kappa</td><td>{me.thematic_kappa}</td><td>Almost perfect</td></tr>
+    <tr><td>Codes below the reliability threshold</td><td>{me.n_codes_below_threshold} of {me.n_codes}</td><td>{me.n_codes_below_threshold === 0 ? "None (full codebook is reliable)" : "Listed below"}</td></tr>
+  </tbody>
+</table>
+
+<h3>Statistical methodology</h3>
+
+<ul>
+  <li><strong>Alpha:</strong> {me.alpha}, two-tailed. Not 0.05.</li>
+  <li><strong>Default test:</strong> {me.test_default}.</li>
+  <li><strong>Fallback:</strong> {me.test_fallback}.</li>
+  <li><strong>Subgroup-vs-others convention:</strong> the dashed line on subgroup bar charts shows the overall sample average for visual reference, but the significance test compares the focal subgroup against all other respondents combined (subgroup excluded from the reference).</li>
+  <li><strong>Three-tier claim discipline:</strong> only p &lt; 0.10 findings get directive recommendation language. Non-significant + corroborated claims get hedged ("directionally," "suggestive but not conclusive"). Non-significant + uncorroborated findings are not highlighted.</li>
+</ul>
+
+</Section>
+
+
+</div>
+
+<!-- Verbatim drill-down modal. Hidden until a chart row click opens it. -->
+<div class="vb-overlay" id="vbOverlay" aria-hidden="true">
+  <div class="vb-dialog" role="dialog" aria-modal="true" aria-labelledby="vbTitle">
+    <button type="button" class="vb-close" id="vbClose" aria-label="Close">&times;</button>
+    <div class="vb-header">
+      <h3 id="vbTitle"></h3>
+      <p class="vb-q" id="vbSubtitle"></p>
+    </div>
+    <div class="vb-body" id="vbBody"></div>
+  </div>
+</div>
+
+<Fragment set:html={vxScript} />
+
+<script is:inline>
+(function () {
+  var VX = window.__VX;
+  if (!VX) return;
+
+  var overlay = document.getElementById('vbOverlay');
+  var titleEl = document.getElementById('vbTitle');
+  var subEl   = document.getElementById('vbSubtitle');
+  var bodyEl  = document.getElementById('vbBody');
+  var closeBtn = document.getElementById('vbClose');
+  if (!overlay || !titleEl || !subEl || !bodyEl || !closeBtn) return;
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s == null ? '' : String(s)));
+    return d.innerHTML;
+  }
+
+  function platformShort(plat) {
+    if (plat === 'Salesforce Service Cloud') return 'Salesforce';
+    return plat || '';
+  }
+  function waveLabel(w) {
+    if (w === 'wave_1_fin_adopters') return 'Fin Adopter';
+    if (w === 'wave_2_non_adopters') return 'Non-Adopter';
+    return w || '';
+  }
+
+  function openModal(chartId, barLabel) {
+    var chart = VX.charts[chartId];
+    if (!chart) return;
+    var codeNames = chart.bars[barLabel];
+    if (!codeNames) return;
+    var qids = chart.qids || [];
+    var codeSet = {};
+    codeNames.forEach(function (cn) { codeSet[cn] = true; });
+
+    // Find every (participant, qid) pair where the participant's codes at
+    // that qid include any of the bar's code names. Emit one card per pair.
+    var cards = [];
+    (VX.participants || []).forEach(function (p) {
+      qids.forEach(function (qid) {
+        var pcodes = (p.c || {})[qid];
+        if (!pcodes || !pcodes.length) return;
+        var matched = null;
+        for (var i = 0; i < pcodes.length; i++) {
+          if (codeSet[pcodes[i]]) { matched = pcodes[i]; break; }
+        }
+        if (!matched) return;
+        var verbatim = (p.v || {})[qid];
+        if (!verbatim) return;
+        var intensity = ((p.i || {})[qid] || {})[matched] || 2;
+        cards.push({
+          pid: p.pid,
+          qid: qid,
+          quote: verbatim,
+          intensity: intensity,
+          platform: p.platform,
+          wave: p.wave,
+          size: p.size,
+          industry: p.industry,
+          role: p.role,
+          code: matched,
+        });
+      });
+    });
+
+    // Sort by intensity desc (most narrative-weighted first), then pid stable
+    cards.sort(function (a, b) {
+      var ia = a.intensity || 0;
+      var ib = b.intensity || 0;
+      if (ia !== ib) return ib - ia;
+      return a.pid - b.pid;
+    });
+
+    // Title shows the actual count of unique participants matched, not the
+    // chart's overall cohort n. Cards may include same pid at multiple qids
+    // (e.g. fin-pull-w1 spans w1_Q6 + w1_Q9), so dedupe by pid for the
+    // count. Matches the hr-report modal title format.
+    var pidSet = {};
+    cards.forEach(function (c) { pidSet[c.pid] = true; });
+    var nUnique = 0;
+    for (var k in pidSet) { if (Object.prototype.hasOwnProperty.call(pidSet, k)) nUnique++; }
+    titleEl.textContent = barLabel + ' (' + nUnique + ' participant' + (nUnique !== 1 ? 's' : '') + ')';
+    subEl.textContent = chart.question || '';
+
+    bodyEl.innerHTML = '';
+    if (cards.length === 0) {
+      bodyEl.innerHTML = '<p class="vb-empty">No participant quotes matched this theme.</p>';
+    } else {
+      cards.forEach(function (ex) {
+        var card = document.createElement('div');
+        card.className = 'vb-card';
+
+        var fullText = ex.quote || '';
+        var truncated = fullText.length > 500;
+        var shortText = truncated ? fullText.substring(0, 500).replace(/\s+\S*$/, '') + '...' : fullText;
+
+        var quoteDiv = document.createElement('div');
+        quoteDiv.className = 'vb-quote';
+        quoteDiv.textContent = '“' + shortText + '”';
+        card.appendChild(quoteDiv);
+
+        if (truncated) {
+          var moreBtn = document.createElement('button');
+          moreBtn.type = 'button';
+          moreBtn.className = 'vb-more';
+          moreBtn.textContent = 'Show more';
+          var expanded = false;
+          moreBtn.addEventListener('click', function () {
+            expanded = !expanded;
+            quoteDiv.textContent = expanded ? ('“' + fullText + '”') : ('“' + shortText + '”');
+            moreBtn.textContent = expanded ? 'Show less' : 'Show more';
+          });
+          card.appendChild(moreBtn);
+        }
+
+        var tagsDiv = document.createElement('div');
+        tagsDiv.className = 'vb-tags';
+        var tagLabels = [
+          platformShort(ex.platform),
+          waveLabel(ex.wave),
+          ex.size,
+          ex.industry,
+          ex.role,
+        ].filter(Boolean);
+        tagLabels.forEach(function (t) {
+          var span = document.createElement('span');
+          span.className = 'vb-tag';
+          span.textContent = t;
+          tagsDiv.appendChild(span);
+        });
+        card.appendChild(tagsDiv);
+
+        bodyEl.appendChild(card);
+      });
+    }
+    bodyEl.scrollTop = 0;
+
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  // Click delegation: any chart row inside a [data-drilldown-chart] container
+  // opens the modal. Reads the bar label from .gbc-label (grouped charts) or
+  // .bar-label / .stack-bar-label (single-color and stacked charts).
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-drilldown-chart] .gbc-row, [data-drilldown-chart] .bar-row, [data-drilldown-chart] .stack-bar-row');
+    if (!row) return;
+    if (row.hasAttribute('data-no-drill')) return;
+    var chartEl = row.closest('[data-drilldown-chart]');
+    if (!chartEl) return;
+    var chartId = chartEl.getAttribute('data-drilldown-chart');
+    var labelEl = row.querySelector('.gbc-label, .bar-label, .stack-bar-label');
+    if (!labelEl) return;
+    // Use textContent so any <strong> wrapper text is included; trim trailing
+    // significance asterisks before lookup.
+    var label = (labelEl.textContent || '').replace(/\*+\s*$/, '').trim();
+    openModal(chartId, label);
+  });
+})();
+</script>
+
+<style is:inline>
+  .ifr-report { font-family: var(--sans); }
+  .ifr-report h3 { font-family: var(--serif); font-size: 18px; margin: 24px 0 8px; color: var(--ink); font-weight: 600; }
+  .ifr-report p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; color: var(--rule); }
+  .ifr-report ul { font-size: 14px; line-height: 1.6; padding-left: 24px; margin-bottom: 12px; }
+  .ifr-report li { margin-bottom: 4px; }
+  .ifr-report .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+  .ifr-report .stat-grid.compact-stats { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .ifr-report .stat-card { text-align: center; padding: 16px; background: rgba(11, 31, 58, 0.04); border-radius: 8px; }
+  .ifr-report .stat-value { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1.0; }
+  .ifr-report .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+  .ifr-report .stat-source { font-size: 10px; color: var(--muted); margin-top: 4px; font-style: italic; }
+  .ifr-report .insight { border-left: 4px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ifr-report .insight p { font-size: 13px; margin-bottom: 0; }
+  .ifr-report .insight strong { color: var(--signal); }
+  .ifr-report .vuln-callout { border-left: 4px solid #C4784A; background: rgba(196, 120, 74, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ifr-report .vuln-callout p { font-size: 13px; margin-bottom: 0; }
+  .ifr-report .vuln-callout strong { color: #C4784A; }
+  .ifr-report .opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42, 122, 110, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ifr-report .opp-callout p { font-size: 13px; margin-bottom: 0; }
+  .ifr-report .opp-callout strong { color: #2A7A6E; }
+  .ifr-report .rec-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .ifr-report .rec-table th { background: rgba(11, 31, 58, 0.04); padding: 10px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; }
+  .ifr-report .rec-table td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .ifr-report .rec-table tr.highlight-row td { background: rgba(184, 52, 27, 0.06); }
+  .ifr-report .crosstab { font-size: 12px; margin: 16px 0; width: 100%; }
+  .ifr-report .crosstab table { border-collapse: collapse; width: 100%; }
+  .ifr-report .crosstab th, .ifr-report .crosstab td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .ifr-report .crosstab th:first-child, .ifr-report .crosstab td:first-child { text-align: left; min-width: 160px; font-weight: 500; }
+  .ifr-report .crosstab th { text-align: center; background: rgba(11, 31, 58, 0.04); font-weight: 600; }
+  .ifr-report .crosstab .highlight { background: rgba(184, 52, 27, 0.10); font-weight: 700; }
+  .ifr-report .q-cite { display: block; font-family: var(--sans); font-size: 12px; font-weight: 400; color: var(--muted); font-style: italic; margin: 4px 0 16px; line-height: 1.5; }
+  .ifr-report .bar-chart-container { margin: 16px 0; }
+  .ifr-report .bar-row { display: flex; align-items: center; gap: 12px; padding: 5px 0; font-size: 13px; }
+  .ifr-report .bar-label { flex: 0 0 200px; color: var(--ink); font-weight: 500; }
+  .ifr-report .bar-track { flex: 1; height: 22px; background: rgba(11, 31, 58, 0.06); border-radius: 2px; position: relative; }
+  /* Bar fill width is the raw percentage; no min-width so bars accurately
+     reflect their value (a 0% or 1% bar is genuinely tiny). The percentage
+     label sits inside the fill (right-aligned, white) when the fill is
+     wide enough; when the fill is too narrow the label still shows but
+     visually sits outside via overflow. */
+  .ifr-report .bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: #fff; font-weight: 600; overflow: visible; }
+  .ifr-report .bar-fill.ink { background: var(--ink); }
+  .ifr-report .bar-fill.signal { background: var(--signal); }
+  .ifr-report .bar-fill.teal { background: #2A7A6E; }
+  .ifr-report .bar-fill.warm { background: #C4784A; }
+  .ifr-report .bar-fill.slate { background: #4A6FA5; }
+  .ifr-report .bar-val { font-size: 11px; }
+  /* Cohort comparison block (Customer Insights sample composition) */
+  .ifr-report .cohort-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0 8px; }
+  .ifr-report .cohort-block { background: rgba(11, 31, 58, 0.03); padding: 20px 22px; border-radius: 8px; border: 1px solid var(--border); }
+  .ifr-report .cohort-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; gap: 12px; }
+  .ifr-report .cohort-name { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); }
+  .ifr-report .cohort-n { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--signal); white-space: nowrap; }
+  .ifr-report .cohort-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0 0 16px; font-style: italic; }
+  .ifr-report .cohort-section { margin-bottom: 14px; }
+  .ifr-report .cohort-section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); margin-bottom: 6px; font-weight: 600; opacity: 0.75; }
+  .ifr-report .cohort-note { font-size: 11px; color: var(--muted); margin: 8px 0 0; line-height: 1.4; }
+  .ifr-report .bar-row.mini { padding: 3px 0; gap: 8px; font-size: 12px; }
+  .ifr-report .bar-row.mini .bar-label { flex: 0 0 130px; font-size: 12px; }
+  .ifr-report .bar-row.mini .bar-track { height: 18px; }
+  .ifr-report .bar-row.mini .bar-count { flex: 0 0 28px; text-align: right; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (max-width: 700px) { .ifr-report .cohort-comparison { grid-template-columns: 1fr; } }
+
+  /* Grouped bar chart, paired Zendesk vs Salesforce bars per theme.
+     Used for per-platform theme-prevalence charts throughout the report. */
+  .ifr-report .gbc { margin: 16px 0 8px; }
+  .ifr-report .gbc-header { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 10px; }
+  .ifr-report .gbc-title { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink); margin: 0; }
+  .ifr-report .gbc-legend { display: flex; gap: 16px; font-size: 11px; color: var(--muted); }
+  .ifr-report .gbc-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .ifr-report .gbc-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 2px; }
+  .ifr-report .gbc-swatch.zd { background: var(--ink); }
+  .ifr-report .gbc-swatch.sf { background: var(--signal); }
+  .ifr-report .gbc-rows { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; position: relative; }
+  .ifr-report .gbc-row { display: grid; grid-template-columns: 220px 1fr; gap: 12px; align-items: center; padding: 4px 0; }
+  .ifr-report .gbc-label { font-size: 12px; color: var(--ink); font-weight: 500; line-height: 1.3; }
+  .ifr-report .gbc-pair { display: flex; flex-direction: column; gap: 3px; }
+  /* No gbc-tag column: bars sit flush against the theme column. The legend at the top of the chart identifies which color is which platform. */
+  .ifr-report .gbc-bar { display: grid; grid-template-columns: 1fr; gap: 0; align-items: center; }
+  /* Per-chart overrides not needed since the default .gbc-bar already drops the tag column. */
+  .ifr-report .gbc-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); text-transform: uppercase; }
+  .ifr-report .gbc-track { height: 18px; background: rgba(11, 31, 58, 0.06); border-radius: 2px; position: relative; }
+  /* No min-width: bars genuinely scale to their percentage. */
+  .ifr-report .gbc-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; color: #fff; font-size: 11px; font-weight: 600; overflow: visible; }
+  /* External label that sits to the right of the fill end, used when the
+     fill is too narrow to show the value inside. Positioned absolutely
+     against the gbc-track. */
+  .ifr-report .bar-val-out { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: var(--ink); white-space: nowrap; pointer-events: none; }
+  /* Inside-bar percentage labels are pure white. They only render when
+     the bar is wide enough to fit them (BarCell handles the gating);
+     when the bar is too narrow, the .bar-val-out external label below
+     is rendered instead. */
+  .ifr-report .gbc-fill .bar-val,
+  .ifr-report .bar-fill .bar-val { color: #fff; }
+  /* External label, positioned absolutely against the track at the
+     fill's right edge. Rendered for narrow bars (< 8%) and zero bars
+     so the value stays visible. */
+  .ifr-report .gbc-track .bar-val-out,
+  .ifr-report .bar-track .bar-val-out { position: absolute; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: var(--ink); white-space: nowrap; pointer-events: none; }
+  .ifr-report .gbc-fill.zd { background: var(--ink); }
+  .ifr-report .gbc-fill.sf { background: var(--signal); }
+  .ifr-report .gbc-avg-line { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--muted); pointer-events: none; }
+  .ifr-report .gbc-avg-label { position: absolute; top: -16px; transform: translateX(-50%); font-size: 9px; letter-spacing: 0.04em; color: var(--muted); white-space: nowrap; background: var(--paper); padding: 0 3px; }
+  .ifr-report .gbc-footnote { font-size: 11px; color: var(--muted); font-style: italic; margin: 8px 0 0; line-height: 1.5; }
+  @media (max-width: 700px) { .ifr-report .gbc-row { grid-template-columns: 1fr; } }
+
+  /* Two-panel layout (e.g. likely-choice for Section 03) */
+  .ifr-report .two-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0; }
+  .ifr-report .two-panel .panel { background: rgba(11, 31, 58, 0.03); padding: 18px 20px; border-radius: 8px; border: 1px solid var(--border); }
+  .ifr-report .two-panel .panel-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+  .ifr-report .two-panel .panel-title { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--ink); }
+  .ifr-report .two-panel .panel-n { font-size: 12px; color: var(--muted); }
+  @media (max-width: 700px) { .ifr-report .two-panel { grid-template-columns: 1fr; } }
+
+  /* Sub-theme drill-down block (Customer Insights, below push-force charts).
+     Boxed callout with one row per theme; each row pairs the theme name on
+     the left with the platform-split sub-pattern detail on the right. The
+     .plat-tag pills mirror the chart legend swatches (ink for Zendesk,
+     signal-red for Salesforce) so the reader has a consistent visual cue. */
+  .ifr-report .subtheme-block { background: rgba(11, 31, 58, 0.04); border: 1px solid var(--border); border-radius: 10px; padding: 22px 26px; margin: 20px 0 24px; }
+  .ifr-report .subtheme-block-title { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); margin: 0 0 6px; line-height: 1.3; }
+  .ifr-report .subtheme-block-intro { font-size: 13px; line-height: 1.6; color: var(--rule); margin: 0 0 16px; }
+  .ifr-report .subtheme-row { display: grid; grid-template-columns: 200px 1fr; gap: 18px; padding: 14px 0; border-top: 1px solid rgba(11, 31, 58, 0.08); }
+  .ifr-report .subtheme-row:first-of-type { padding-top: 4px; border-top: none; }
+  .ifr-report .subtheme-name { font-family: var(--serif); font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.35; padding-top: 2px; }
+  .ifr-report .subtheme-detail p { font-size: 13px; line-height: 1.55; color: var(--rule); margin: 0 0 8px; }
+  .ifr-report .subtheme-detail p:last-child { margin-bottom: 0; }
+  .ifr-report .subtheme-detail ul { font-size: 13px; line-height: 1.55; padding-left: 18px; margin: 4px 0 0; }
+  .ifr-report .subtheme-detail li { margin-bottom: 6px; }
+  .ifr-report .subtheme-detail li:last-child { margin-bottom: 0; }
+  .ifr-report .plat-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-right: 8px; vertical-align: 1px; }
+  .ifr-report .plat-tag.zd { background: var(--ink); color: var(--paper); }
+  .ifr-report .plat-tag.sf { background: var(--signal); color: var(--paper); }
+  @media (max-width: 700px) { .ifr-report .subtheme-row { grid-template-columns: 1fr; gap: 8px; } }
+
+  /* Two playbooks summary (Sales section opener) */
+  .ifr-report .playbooks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
+  .ifr-report .playbook { padding: 18px 22px; border-radius: 8px; border-left: 4px solid; background: rgba(11, 31, 58, 0.03); }
+  .ifr-report .playbook.zd { border-left-color: var(--ink); }
+  .ifr-report .playbook.sf { border-left-color: var(--signal); }
+  .ifr-report .playbook-title { font-family: var(--serif); font-size: 15px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+  .ifr-report .playbook-n { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .ifr-report .playbook-row { display: grid; grid-template-columns: 100px 1fr; gap: 8px; padding: 4px 0; font-size: 12px; }
+  .ifr-report .playbook-row .pb-key { color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; padding-top: 2px; }
+  .ifr-report .playbook-row .pb-val { color: var(--ink); line-height: 1.4; }
+  @media (max-width: 700px) { .ifr-report .playbooks { grid-template-columns: 1fr; } }
+
+  /* Click-to-view-quotes affordance: any chart row inside a
+     [data-drilldown-chart] container shows a pointer cursor and the bar
+     label gets a signal-red underline to indicate interactivity. Both
+     the .gbc-row (grouped bar chart, the dominant pattern in this report)
+     and .bar-row (single-color bar chart, used in the two-panel likely-
+     choice and the small replatform-aggregate chart) trigger the modal. */
+  .ifr-report [data-drilldown-chart] .gbc-row,
+  .ifr-report [data-drilldown-chart] .bar-row { cursor: pointer; transition: opacity 0.15s; }
+  .ifr-report [data-drilldown-chart] .gbc-row:hover,
+  .ifr-report [data-drilldown-chart] .bar-row:hover { opacity: 0.82; }
+  .ifr-report [data-drilldown-chart] .gbc-label,
+  .ifr-report [data-drilldown-chart] .bar-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  /* The Sales motion chart's first row is "Fin likely-choice rate", not
+     a thematic code, so opt out of the drilldown affordance for that row. */
+  .ifr-report [data-drilldown-chart] .gbc-row[data-no-drill],
+  .ifr-report [data-drilldown-chart] .bar-row[data-no-drill] { cursor: default; }
+  .ifr-report [data-drilldown-chart] .gbc-row[data-no-drill] .gbc-label,
+  .ifr-report [data-drilldown-chart] .bar-row[data-no-drill] .bar-label { text-decoration: none; }
+
+  /* Drilldown hint embedded as red signal text inside the source-note line,
+     prefixed with a › guillemet, matching retail-banking-report and
+     uk-neobanks-report. */
+  .ifr-report .vb-hint { font-size: 11.5px; color: var(--signal); font-weight: 500; }
+  .ifr-report .vb-hint::before { content: '\203A  '; }
+
+  /* Verbatim drill-down modal. Hidden by default; the click handler adds
+     the .open class. Visual style mirrors hr-report (the canonical
+     BuyerVoice modal design): paper background, signal-red left border on
+     each card, sans italic quote text, neutral tag badges. */
+  .vb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; }
+  .vb-overlay.open { display: flex; justify-content: center; align-items: center; }
+  .vb-dialog { background: var(--paper); border-radius: 12px; max-width: 760px; width: 95%; max-height: 85vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  .vb-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 8px; }
+  .vb-close:hover { color: var(--ink); }
+  .vb-header { padding: 20px 24px 12px; border-bottom: 1px solid rgba(11,31,58,0.10); }
+  .vb-header h3 { font-family: var(--serif), Georgia, serif; font-size: 18px; font-weight: 600; color: var(--ink); margin: 0; line-height: 1.3; }
+  .vb-q { font-size: 13px; color: var(--muted); margin: 4px 0 0; font-style: italic; line-height: 1.45; }
+  .vb-body { padding: 16px 24px 24px; overflow-y: auto; flex: 1; }
+  .vb-card { background: rgba(11,31,58,0.04); border-left: 3px solid var(--signal); padding: 14px 16px; border-radius: 0 6px 6px 0; margin-bottom: 12px; }
+  .vb-card .vb-quote { font-style: italic; font-size: 13px; color: var(--rule); line-height: 1.6; margin-bottom: 8px; }
+  .vb-card .vb-more { font-size: 12px; color: var(--signal); cursor: pointer; border: none; background: none; padding: 0; margin-bottom: 8px; font-weight: 500; }
+  .vb-card .vb-more:hover { text-decoration: underline; }
+  .vb-card .vb-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .vb-tag { font-size: 11px; background: rgba(11,31,58,0.08); color: var(--rule); padding: 2px 8px; border-radius: 10px; }
+  .vb-empty { font-size: 13px; color: var(--muted); }
+
+  @media print {
+    .ifr-report [data-drilldown-chart] .gbc-label,
+    .ifr-report [data-drilldown-chart] .bar-label { text-decoration: none !important; }
+    .ifr-report .vb-hint { display: none !important; }
+    .vb-overlay { display: none !important; }
+  }
+</style>

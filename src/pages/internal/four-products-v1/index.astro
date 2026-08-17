@@ -1,0 +1,522 @@
+---
+import BaseLayout from '../../../layouts/FourProductsBaseLayout.astro';
+import ProcessFlow from '../../../components/four-products/ProcessFlow.astro';
+import TeamMemberCard from '../../../components/four-products/TeamMemberCard.astro';
+import CTABand from '../../../components/four-products/CTABand.astro';
+import BrandMap from '../../../components/four-products/BrandMap.astro';
+import BuyerJourneyStudy from '../../../components/four-products/BuyerJourneyStudy.astro';
+
+const processSteps = [
+  { number: 1, title: 'Scope and design', timeline: 'Days 1-3', description: 'Define objectives, select methodology' },
+  { number: 2, title: 'Data collection or ingestion', timeline: 'Week 1-3', description: 'New studies via our platform, or analysis of your existing data' },
+  { number: 3, title: 'Expert analysis', timeline: 'Week 2-3', description: 'PhD team applies proven frameworks' },
+  { number: 4, title: 'Strategic deliverables', timeline: 'Week 3-4', description: 'Decision-ready reports and recommendations' },
+];
+
+const team = [
+  { name: 'Rogier Verhulst, MBA', role: 'CEO and Co-Founder', credential: 'Built LinkedIn\'s 30+ person research org', image: '/images/team/rogier.jpg' },
+  { name: 'Marco Vriens, PhD', role: 'Chief Methodologist', credential: '50+ publications. Former Global CRO at Ipsos', image: '/images/team/marco.jpg' },
+  { name: 'Forest Baker, PhD, MBA', role: 'Head of Growth', credential: 'Launched LinkedIn\'s ad effectiveness program. 2,200+ citations', image: '/images/team/forest.jpg' },
+  { name: 'Felix Eggers, PhD', role: 'Scientific Advisor', credential: 'Published in PNAS and Marketing Science. Full Professor at CBS', image: '/images/team/felix.jpg', advisor: true },
+];
+
+const services = [
+  {
+    question: 'Why do people buy in your category?',
+    service: 'Buyer Journey + Preferences',
+    bullets: [
+      'Participants share their purchase decision story: what frustrated them, what attracted them, and what almost stopped them from switching. This reveals actionable buyer segments and category entry points.',
+      'Learn which outcomes or attributes buyers care about most.',
+      'Prioritize product roadmap features and improve messaging.',
+    ],
+    href: '/services/buyer-journey-analysis',
+  },
+  {
+    question: 'What do people think about your brand?',
+    service: 'Brand Associations + CSV',
+    bullets: [
+      'Category buyers share their perceptions of the category and brands in their own words. Analyzing what people say (vs responses to Likert scales) captures a more accurate picture of mental availability, associations, and feelings.',
+      'Quantify the value of brand attributes (Consumer Surplus Value).',
+      'Reveal opportunities for mental availability and positioning.',
+    ],
+    href: '/services/brand-associations-csv',
+  },
+  {
+    question: 'How should you price to maximize revenue?',
+    service: 'Conjoint: Pricing and Packaging',
+    bullets: [
+      'Category buyers choose between realistic product configurations at different price points, revealing what they actually value through trade-offs.',
+      'We model different buyer segments to forecast the optimal pricing strategy.',
+      'Maximize revenue with better pricing and packaging.',
+    ],
+    href: '/services/conjoint-pricing-packaging',
+  },
+  {
+    question: 'How is your brand perception changing over time?',
+    service: 'Brand + CSV Tracking',
+    bullets: [
+      'Each wave measures the same metrics (Brand Density, CSV, awareness, and emotional profile), so movement is statistically meaningful, not random fluctuation.',
+      'You see exactly which associations grew, which declined, and which campaigns produced measurable outcomes vs. which ones didn\'t move anything.',
+      'Monitor messaging effectiveness and category dynamics.',
+    ],
+    href: '/services/brand-csv-tracking',
+  },
+];
+
+const journalLogos = [
+  { name: 'Journal of Marketing Research', image: '/images/journal-logos/jmr.svg', rect: true },
+  { name: 'Marketing Science', image: '/images/journal-logos/marketing-science.svg', rect: true },
+  { name: 'Harvard Business Review', image: '/images/journal-logos/hbr.png', rect: true },
+  { name: 'American Economic Review', image: '/images/journal-logos/aer.svg', rect: true },
+  { name: 'Journal of Financial Economics', image: '/images/journal-logos/jfe.svg', rect: true },
+];
+
+const customerLogos = [
+  { name: 'CVS Health', image: '/images/customer-logos/CVS_Health_logo.svg' },
+  { name: 'Fidelity Investments', image: '/images/customer-logos/fidelity investments logo.webp' },
+  { name: 'LinkedIn', image: '/images/customer-logos/linkedin.svg' },
+  { name: 'Microsoft', image: '/images/customer-logos/Microsoft.png' },
+  { name: 'Tableau', image: '/images/customer-logos/Tableau.png' },
+  { name: 'NewtonX', image: '/images/customer-logos/NewtonX_Logo.jpg' },
+  { name: 'Barracuda Networks', image: '/images/customer-logos/Barracuda Networks logo.png' },
+  { name: 'In Tandem', image: '/images/customer-logos/In Tandem Logo.jpg' },
+];
+---
+
+<BaseLayout
+  title="Marketing Science + AI for Product & Marketing Teams"
+  description="KwantumLabs delivers PhD-level market research at AI speed. Quantified insights on what customers think, want, and will pay for, in 3-4 weeks."
+>
+
+  <!-- Section 1: Hero -->
+  <section class="hero section">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="overline">Marketing Science + AI for product and marketing teams</p>
+        <h1>Insights that drive growth</h1>
+        <p class="hero-sub">KwantumLabs is a small team of academic and industry experts. We apply marketing science to answer the most important questions for brand growth. And we leverage AI to quickly collect and analyze data from real people. Our customers get the rigor of an academic research team, but receive strategic insights in weeks, not months.</p>
+      </div>
+      <div class="hero-visual">
+        <div class="matrix">
+          <div class="matrix-label matrix-y-top">High Rigor</div>
+          <div class="matrix-label matrix-y-bottom">Low Rigor</div>
+          <div class="matrix-label matrix-x-left">Slow</div>
+          <div class="matrix-label matrix-x-right">Fast</div>
+          <div class="matrix-grid">
+            <div class="matrix-cell">
+              <span class="matrix-dot dot-gray"></span>
+              <span class="matrix-name">Traditional Firms</span>
+            </div>
+            <div class="matrix-cell highlight">
+              <span class="matrix-dot dot-green"></span>
+              <span class="matrix-name matrix-name-highlight">KwantumLabs</span>
+            </div>
+            <div class="matrix-cell">
+              <span class="matrix-dot dot-gray"></span>
+              <span class="matrix-name">DIY Tools</span>
+            </div>
+            <div class="matrix-cell">
+              <span class="matrix-dot dot-gray"></span>
+              <span class="matrix-name">AI Platforms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journal Logos Section -->
+  <section class="section section-gray">
+    <div class="container customer-logos-container">
+      <p class="customer-logos-label">Published in leading journals</p>
+      <div class="journal-logos-grid">
+        {journalLogos.map(logo => (
+          <div class={`journal-logo${logo.rect ? ' journal-logo-rect' : ''}`}>
+            <img src={logo.image} alt={logo.name} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Logos Section -->
+  <section class="section">
+    <div class="container customer-logos-container">
+      <p class="customer-logos-label">Trusted by leading companies</p>
+      <div class="customer-logos-grid">
+        {customerLogos.map(logo => (
+          <div class="customer-logo">
+            <img src={logo.image} alt={logo.name} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Four questions -->
+  <section class="section section-gray">
+    <div class="container">
+      <p class="overline">Learn what your category buyers think, feel, and value</p>
+      <h2 class="section-heading">Our Research Services</h2>
+      <div class="services-grid">
+        {services.map(s => (
+          <div class="service-card">
+            <span class="service-name">{s.service}</span>
+            <h3 class="service-question">{s.question}</h3>
+            <ul class="service-bullets">
+              <li class="service-bullet-implication">{s.bullets[2]}</li>
+            </ul>
+            <a href={s.href} class="text-link">
+              Learn more
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: How we work (condensed) -->
+  <section class="section section-gray">
+    <div class="container">
+      <h2 class="section-heading">From question to answer in 3-4 weeks</h2>
+      <ProcessFlow steps={processSteps} />
+      <p class="process-tagline">Our researchers handle the thinking. AI handles the volume.</p>
+    </div>
+  </section>
+
+  <!-- Buyer Journey Study Example -->
+  <BuyerJourneyStudy />
+
+  <!-- Brand Map Section -->
+  <BrandMap />
+
+  <!-- Section 5: Analysis gap (positioning) -->
+  <section class="section section-gray">
+    <div class="container analysis-gap">
+      <h2>Insights that drive growth</h2>
+      <p>Our frameworks are grounded in evidence-based marketing. Indicators such as mental availability, category entry points, brand associations, and preference-based metrics are the most predictive of market share and brand growth. Furthermore, we invented Brand Density and Consumer Surplus Value (CSV) to translate those signals into metrics executives can defend and act on <span style="white-space: nowrap">(<a href="https://hbr.org/2024/05/why-you-should-be-tracking-customer-surplus-value" target="_blank" rel="noopener noreferrer" class="text-link">see our HBR article</a>).</span></p>
+      <p>We are also pioneers in extracting quantitative insights from conversational data. Consumer interviews and sales calls contain rich brand signals that traditional methods miss. Our AI-powered approach captures mental maps of product categories, brand perceptions, and emotional associations from unstructured data, and converts them into the same rigorous metrics we apply to structured surveys.</p>
+      <p>Our team brings an unusual combination of academic depth and real industry experience. Our researchers have published 100+ peer-reviewed papers in marketing journals and have decades of experience running research programs for Fortune 500 companies (LinkedIn, Microsoft, Ipsos). That combination means our recommendations are grounded in science and align with what actually moves brands.</p>
+    </div>
+  </section>
+
+  <!-- Section 6: Team preview -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-heading">Built by the researchers who wrote the textbooks</h2>
+      <div class="team-grid">
+        {team.map(member => (
+          <TeamMemberCard {...member} />
+        ))}
+      </div>
+      <div class="team-cta">
+        <a href="/internal/four-products-v1/about" class="text-link">
+          Meet the team
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: CTA band -->
+  <CTABand />
+
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--color-slate);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    max-width: 540px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .matrix {
+    position: relative;
+    padding: var(--space-xl);
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--color-medium-gray);
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .matrix-cell {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    min-height: 120px;
+  }
+
+  .matrix-cell.highlight {
+    background: rgba(58, 166, 85, 0.04);
+  }
+
+  .matrix-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+
+  .dot-green {
+    background: var(--color-green);
+    box-shadow: 0 0 0 4px rgba(58, 166, 85, 0.15);
+  }
+
+  .dot-gray { background: var(--color-medium-gray); }
+
+  .matrix-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-slate);
+  }
+
+  .matrix-name-highlight {
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  .matrix-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-slate);
+  }
+
+  .matrix-y-top { top: 4px; left: 50%; transform: translateX(-50%); }
+  .matrix-y-bottom { bottom: 4px; left: 50%; transform: translateX(-50%); }
+  .matrix-x-left { left: 4px; top: 50%; transform: translateY(-50%); }
+  .matrix-x-right { right: 4px; top: 50%; transform: translateY(-50%); }
+
+  .section-heading {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .customer-logos-container {
+    text-align: center;
+  }
+
+  .customer-logos-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-slate);
+    text-align: center;
+    margin: 0 auto var(--space-xl) auto;
+    display: block;
+    width: 100%;
+  }
+
+  .customer-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--space-xl);
+    align-items: center;
+    justify-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .journal-logos-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .journal-logos-grid { gap: var(--space-lg); }
+  }
+
+  .customer-logo, .journal-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .customer-logo img {
+    max-width: 120px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+  }
+
+  .journal-logo img {
+    max-height: 58px;
+    max-width: 184px;
+    height: auto;
+    width: auto;
+    border-radius: 3px;
+  }
+
+  .journal-logo:nth-child(3) img {
+    max-height: 77px;
+    max-width: 77px;
+  }
+
+  @media (max-width: 1024px) {
+    .customer-logos-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .customer-logos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .customer-logo img {
+      max-width: 100px;
+      max-height: 40px;
+    }
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .service-card {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    border-radius: var(--radius);
+  }
+
+  .service-question {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--space-sm);
+  }
+
+  .service-name {
+    display: block;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--color-green);
+    background: rgba(58, 166, 85, 0.08);
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: var(--space-md);
+    margin-top: 0;
+  }
+
+  .service-bullets {
+    font-size: 15px;
+    color: var(--color-slate);
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-lg);
+    list-style: disc;
+  }
+
+  .service-bullets li {
+    margin-bottom: var(--space-sm);
+    line-height: 1.5;
+  }
+
+  .service-bullet-implication {
+    color: var(--color-green);
+    font-weight: 500;
+    list-style: none;
+    margin-left: calc(-1 * var(--space-lg));
+    padding-left: 0;
+  }
+
+  .service-desc {
+    font-size: 15px;
+    color: var(--color-slate);
+    margin-bottom: var(--space-md);
+    max-width: none;
+  }
+
+  .process-tagline {
+    font-weight: 500;
+    color: var(--color-green);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .analysis-gap {
+    max-width: var(--max-text-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .analysis-gap h2 { margin-bottom: var(--space-xl); }
+
+  .analysis-gap p {
+    max-width: none;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .team-cta {
+    text-align: center;
+    margin-top: var(--space-xl);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    .hero-visual { max-width: 400px; }
+  }
+
+  @media (max-width: 768px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+  }
+
+  @media (max-width: 480px) {
+    .team-grid { grid-template-columns: 1fr; }
+  }
+</style>

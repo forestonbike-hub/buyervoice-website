@@ -1,0 +1,121 @@
+---
+interface Step {
+  number: number;
+  title: string;
+  timeline: string;
+  description: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<div class="process-flow">
+  {steps.map((step, i) => (
+    <div class="process-step">
+      <div class="step-indicator">
+        <span class="step-number">{step.number}</span>
+        {i < steps.length - 1 && <div class="step-line" />}
+      </div>
+      <div class="step-content">
+        <span class="step-timeline">{step.timeline}</span>
+        <h4 class="step-title">{step.title}</h4>
+        <p class="step-desc">{step.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .process-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: var(--space-md);
+  }
+
+  .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-green);
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--color-slate);
+    opacity: 0.3;
+    margin-left: var(--space-sm);
+  }
+
+  .step-timeline {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-green);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: var(--space-xs);
+    display: block;
+  }
+
+  .step-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--space-sm);
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--color-slate);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .process-flow {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .step-indicator {
+      width: auto;
+    }
+
+    .step-line {
+      display: none;
+    }
+
+    .process-step {
+      flex-direction: row;
+      gap: var(--space-md);
+    }
+
+    .step-indicator {
+      margin-bottom: 0;
+    }
+  }
+</style>

@@ -1,0 +1,1620 @@
+---
+// BuyerVoice.AI - How to Simulate Interview Participants
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>How we simulate interview participants | BuyerVoice.AI</title>
+  <meta name="description" content="BuyerVoice.AI 's methodology for generating synthetic interview participants from probability distributions — enabling full pipeline testing before real recruitment begins." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <span class="bv-logo" aria-label="BuyerVoice.AI" style="font-family:'Fraunces',Georgia,serif;display:inline-flex;align-items:baseline;line-height:1;"><span style="font-size:24px;font-weight:600;color:#0B1F3A;letter-spacing:-0.02em;">BuyerVoice</span><span style="font-size:16px;font-weight:500;color:#B8341B;letter-spacing:-0.01em;margin-left:1px;">.AI</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="#why">Why simulate</a>
+        <a href="#dimensions">Dimensions</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#parallel">Parallel execution</a>
+        <a href="#maze">Maze style</a>
+        <a href="#rules">Simulation rules</a>
+        <a href="#output">Output format</a>
+        <a href="#run">Run a simulation</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <p class="overline">Research methodology</p>
+      <h1>How we simulate interview participants</h1>
+      <p class="hero-subtitle">
+        Before recruiting real people, we generate synthetic participants drawn from probability distributions. Each participant gets a consistent persona, realistic speech patterns, and responses that reflect their role, industry, and company. The result is a complete transcript dataset we can use to test and refine the entire research pipeline.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY SIMULATE -->
+  <section class="section" id="why">
+    <div class="container">
+      <h2>Why simulate before recruiting</h2>
+      <p>
+        Real recruitment takes weeks. Scheduling and conducting 80 interviews takes more. By the time the first real transcripts arrive, any problems in the interview guide, the coding pipeline, or the analysis framework are expensive to fix.
+      </p>
+      <p>
+        Simulation inverts that order. We run the full research workflow on synthetic data first, identify and fix every structural problem, and arrive at real recruitment with a proven setup. Simulation also provides a clean dataset for internal methodology demonstrations and client-facing process documentation.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Firmographic variables per participant: seniority, function, company size, industry, current tool, work model, headcount trajectory, HR team size</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~18 min</div>
+          <div class="stat-label">Wall time to generate 180 transcripts using 20 parallel instances — down from ~4 hours sequential</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">Simulation rules applied to every participant before a transcript is accepted</div>
+        </div>
+      </div>
+
+      <div class="benefit-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">&#x25B6;</div>
+          <h3>Test the pipeline early</h3>
+          <p>Run the full coding and analysis workflow before a single real interview is scheduled. Catch problems in the guide, codebook, or report structure while changes are cheap.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">&#x25B6;</div>
+          <h3>Validate the interview guide</h3>
+          <p>Simulate 20 participants first. If certain questions produce thin, uniform answers, the guide needs work. Better to learn that from synthetic data than from 80 real interviews.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">&#x25B6;</div>
+          <h3>Control the sample distribution</h3>
+          <p>Real recruitment rarely hits exact targets. Simulation lets us verify that our probability distributions produce the intended sample composition before committing to a recruiting spec.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">&#x25B6;</div>
+          <h3>Document the methodology</h3>
+          <p>Simulated transcripts are a clean, concrete demonstration of how the approach works. They power methodology documentation, client presentations, and internal training.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIMENSIONS -->
+  <section class="section section-alt" id="dimensions">
+    <div class="container">
+      <h2>Simulation dimensions</h2>
+      <p>
+        Every participant is defined by four independently sampled components. The first establishes who the participant is (up to 8 firmographic variables). The second controls how they talk. The third enforces hard sample composition requirements. The fourth locks in the full roster before any API spend begins.
+      </p>
+
+      <!-- DIMENSION CARDS -->
+      <div class="dimension-grid">
+
+        <div class="dimension-card">
+          <div class="dimension-num">1</div>
+          <div class="dimension-content">
+            <h3>Firmographic variables</h3>
+            <p>The structural characteristics of the participant. For B2B studies this typically covers seniority, industry, and company size. For HR software studies specifically, we add five more dimensions that meaningfully predict different evaluation triggers, pain points, and tool requirements.</p>
+            <div class="dimension-example">
+              <div class="example-label">HR leaders study — all 8 firmographic dimensions</div>
+              <div class="dist-table">
+                <div class="dist-row dist-header">
+                  <span>Dimension</span><span>Example values</span>
+                </div>
+                <div class="dist-row">
+                  <span>Seniority</span><span>Manager 30% / Sr. Manager 20% / Director 30% / VP+ 15% / C-suite 5%</span>
+                </div>
+                <div class="dist-row">
+                  <span>Function</span><span>HR 41% / People Operations 35% / Talent Acquisition 24%</span>
+                </div>
+                <div class="dist-row">
+                  <span>Company size</span><span>1-50: 10% / 51-250: 35% / 251-1K: 35% / 1K-5K: 20%</span>
+                </div>
+                <div class="dist-row">
+                  <span>Industry</span><span>Technology 25% / Prof. Services 15% / Healthcare 15% / Other 45%</span>
+                </div>
+                <div class="dist-row">
+                  <span>Current tool</span><span>BambooHR 33% (quota-enforced) / ADP 18% / Rippling 15% / others</span>
+                </div>
+                <div class="dist-row">
+                  <span>Work model</span><span>Hybrid 50% / Primarily remote 25% / Primarily in-office 25%</span>
+                </div>
+                <div class="dist-row">
+                  <span>Headcount trajectory</span><span>Steady growth 40% / Fast growth 25% / Stable 25% / Declining 10%</span>
+                </div>
+                <div class="dist-row">
+                  <span>HR team size</span><span>Small (2-4) 45% / Solo 20% / Mid-size (5-10) 25% / Large (11+) 10%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dimension-card">
+          <div class="dimension-num">2</div>
+          <div class="dimension-content">
+            <h3>Verboseness</h3>
+            <p>Verboseness controls how much each participant talks and determines total transcript length. It is sampled independently of all other dimensions — a VP can be terse, a manager can be expansive. The default probabilities below were calibrated from word-count analysis of 74 real Maze-transcribed interviews (median 1,520 words).</p>
+            <div class="dimension-example">
+              <div class="example-label">Calibrated defaults (from real Maze transcript data, N=74)</div>
+              <div class="verbose-table">
+                <div class="verbose-row verbose-header">
+                  <span>Level</span><span>Prob.</span><span>Target words</span><span>Range</span>
+                </div>
+                <div class="verbose-row">
+                  <span class="verbose-badge verbose-high">Very Verbose</span>
+                  <span>22%</span>
+                  <span>2,000 words</span>
+                  <span>1,700–2,400</span>
+                </div>
+                <div class="verbose-row">
+                  <span class="verbose-badge verbose-mid">Somewhat Verbose</span>
+                  <span>43%</span>
+                  <span>1,300 words</span>
+                  <span>1,000–1,500</span>
+                </div>
+                <div class="verbose-row">
+                  <span class="verbose-badge verbose-low">Not Verbose</span>
+                  <span>35%</span>
+                  <span>900 words</span>
+                  <span>500–1,100</span>
+                </div>
+              </div>
+              <div class="verbose-descriptions">
+                <p><strong>Very Verbose:</strong> Tells stories, shares multiple examples, goes on tangents, elaborates without prompting.</p>
+                <p><strong>Somewhat Verbose:</strong> Reasonable depth, answers with context but does not over-share.</p>
+                <p><strong>Not Verbose:</strong> Short, direct answers. Few stories unless prompted.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dimension-card">
+          <div class="dimension-num">3</div>
+          <div class="dimension-content">
+            <h3>Quotas</h3>
+            <p>When you need an exact count of participants with a specific dimension value — not just a probability — use a quota. Quotas are pre-assigned before the rest of the sample is drawn, so the final number is guaranteed regardless of random variation.</p>
+            <div class="dimension-example">
+              <div class="example-label">When to use quotas</div>
+              <div class="dist-table">
+                <div class="dist-row dist-header">
+                  <span>Use case</span><span>Example</span>
+                </div>
+                <div class="dist-row">
+                  <span>Competitive study with target vendor</span><span>Exactly 60 of 180 participants use BambooHR</span>
+                </div>
+                <div class="dist-row">
+                  <span>Balanced segment comparison</span><span>Equal split across 3 company sizes for cross-tab analysis</span>
+                </div>
+                <div class="dist-row">
+                  <span>Client-specified recruit spec</span><span>Min. 30 directors/VPs regardless of overall seniority distribution</span>
+                </div>
+              </div>
+              <div class="callout-inline" style="margin-top: 12px; padding: 10px 14px; background: #F0F9F3; border-left: 3px solid var(--ink); border-radius: 2px;">
+                <p style="margin: 0; font-size: 13px;">In <code>study_config.json</code>: add a <code>"quotas"</code> field specifying the exact count. The script pre-assigns quota values, fills remaining slots from the filtered distribution, then shuffles to avoid clustering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dimension-card">
+          <div class="dimension-num">4</div>
+          <div class="dimension-content">
+            <h3>Participant roster</h3>
+            <p>Before generating any transcripts, generate the complete list of all N participants with their assigned values. This locks in the sample distribution so you can verify it matches targets before running the expensive transcript generation step.</p>
+            <div class="dimension-example">
+              <div class="example-label">Excerpt: realized sample from HR leaders study (180 participants)</div>
+              <div class="roster-table">
+                <div class="roster-row roster-header">
+                  <span>#</span><span>Seniority</span><span>Function</span><span>Industry</span><span>Current tool</span><span>Verboseness</span>
+                </div>
+                <div class="roster-row">
+                  <span>1</span><span>Director</span><span>HR</span><span>Technology</span><span>BambooHR</span><span>Not Verbose</span>
+                </div>
+                <div class="roster-row">
+                  <span>2</span><span>Manager</span><span>People Ops</span><span>Retail</span><span>ADP</span><span>Somewhat Verbose</span>
+                </div>
+                <div class="roster-row">
+                  <span>3</span><span>VP or above</span><span>HR</span><span>Healthcare</span><span>BambooHR</span><span>Very Verbose</span>
+                </div>
+                <div class="roster-row roster-ellipsis">
+                  <span colspan="6">... 177 more participants</span>
+                </div>
+              </div>
+              <div class="realized-dist">
+                <div class="realized-label">Quota verification (HR leaders study)</div>
+                <div class="realized-chips">
+                  <span class="realized-chip">BambooHR: 60 of 180 (exactly 33% — quota enforced)</span>
+                  <span class="realized-chip">Non-BambooHR: 120 sampled from distribution</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="section" id="workflow">
+    <div class="container">
+      <h2>Workflow: 4 steps from config to transcripts</h2>
+      <p>
+        Simulation follows a structured sequence. Each step has a clear input and output, and steps 2 and 4 include explicit checkpoints before proceeding.
+      </p>
+
+      <div class="workflow-steps">
+
+        <div class="workflow-step">
+          <div class="workflow-step-header">
+            <div class="workflow-num">1</div>
+            <div class="workflow-step-title">Define the sampling framework</div>
+          </div>
+          <div class="workflow-step-body">
+            <p>Create a <code>study_config.json</code> for the study. This is the single source of truth for the simulation. It specifies:</p>
+            <ul>
+              <li>The participant population (e.g., "HR and People leaders at companies with 1-5,000 employees")</li>
+              <li>Probability distributions for each firmographic dimension</li>
+              <li>Any quotas (exact count requirements for specific dimension values)</li>
+              <li>Verboseness levels and target word counts</li>
+              <li>Batch size (use 3 — see parallel execution below)</li>
+              <li>Path to the interview guide and output directory</li>
+            </ul>
+            <div class="step-output">
+              <span class="output-label">Output:</span> <code>study_config.json</code> saved to <code>research-projects/Interview Projects/{"{"}Study Name{"}"}/1 Interview Guide and Roster/</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="workflow-step-header">
+            <div class="workflow-num">2</div>
+            <div class="workflow-step-title">Generate and verify the participant roster</div>
+          </div>
+          <div class="workflow-step-body">
+            <p>Run <code>simulate.py --phase roster</code>. The script reads the config, samples all dimension values (applying quotas first), shuffles the roster, and saves it as both JSON and Markdown. Before proceeding:</p>
+            <div class="checkpoint-box">
+              <div class="checkpoint-label">Checkpoint: verify the roster</div>
+              <ul>
+                <li>Does the realized distribution match the targets within a reasonable range?</li>
+                <li>Are quota-controlled values exactly at their specified counts?</li>
+                <li>Do the N counts add up correctly?</li>
+              </ul>
+            </div>
+            <div class="step-output">
+              <span class="output-label">Output:</span> <code>roster.json</code> and <code>roster.md</code> saved to <code>1 Interview Guide and Roster/</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="workflow-step-header">
+            <div class="workflow-num">3</div>
+            <div class="workflow-step-title">Generate transcripts (in parallel)</div>
+          </div>
+          <div class="workflow-step-body">
+            <p>Run <code>simulate.py --phase transcripts</code> using 20 parallel instances, each handling a 9-participant slice. The script reads the roster and interview guide, calls Claude to generate transcripts in batches of 3, and saves each batch as a separate JSON file. Already-completed batches are skipped automatically if a run is interrupted and resumed.</p>
+            <p>For a 180-participant study, 20 slices of 9 participants each complete in approximately 18 minutes. Sequential execution of the same study takes approximately 4 hours.</p>
+            <div class="batch-files">
+              <div class="batch-file"><code>transcripts-001-003.json</code></div>
+              <div class="batch-file"><code>transcripts-004-006.json</code></div>
+              <div class="batch-file"><code>transcripts-007-009.json</code></div>
+              <div class="batch-file"><code>...</code></div>
+              <div class="batch-file"><code>transcripts-178-180.json</code></div>
+            </div>
+            <div class="step-output">
+              <span class="output-label">Output:</span> Transcript batch files saved to <code>research-projects/Interview Projects/{"{"}Study Name{"}"}/A2 Simulated Interviews/</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="workflow-step-header">
+            <div class="workflow-num">4</div>
+            <div class="workflow-step-title">Spot-check and validate</div>
+          </div>
+          <div class="workflow-step-body">
+            <p>After each batch, review a sample of transcripts manually. Check three things:</p>
+            <div class="checkpoint-box">
+              <div class="checkpoint-label">Checkpoint: validate transcripts</div>
+              <ul>
+                <li><strong>Completeness:</strong> Every question has a response. No question is skipped or merged.</li>
+                <li><strong>Length:</strong> Estimate interview duration (word count / 150 words per minute). Is it within the acceptable range for the participant's verboseness group?</li>
+                <li><strong>Realism:</strong> Does the response sound like a real person talking in a live interview? Does vocabulary, budget range, and tool awareness match the participant's profile?</li>
+              </ul>
+            </div>
+            <p>If any transcript fails validation, re-run the affected slice with <code>--no-resume</code> to regenerate only those batch files.</p>
+            <div class="step-output">
+              <span class="output-label">Output:</span> Validated transcript files ready for the coding pipeline
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLEL EXECUTION -->
+  <section class="section" id="parallel">
+    <div class="container">
+      <h2>Parallel execution</h2>
+      <p>
+        The default approach for any study with more than 30 participants is to run 20 simultaneous instances of the simulation script, each covering a non-overlapping slice of the participant roster. Each instance runs independently, writes to its own batch files, and exits when its slice is complete.
+      </p>
+      <p>
+        For a 180-participant study with batch size 3, this reduces wall time from approximately 4 hours to approximately 18 minutes. API cost is identical — the same total number of tokens are generated either way.
+      </p>
+
+      <div class="parallel-how">
+        <div class="parallel-rule">
+          <h3>How slicing works</h3>
+          <p>Use the <code>--slice START:END</code> argument to assign each instance a participant ID range. Slice boundaries should be multiples of batch size to ensure clean batch file naming. For 180 participants with batch size 3: 20 slices of 9 participants each (9 is a multiple of 3).</p>
+        </div>
+        <div class="parallel-rule">
+          <h3>Resume safety</h3>
+          <p>Already-completed batch files are skipped automatically when any instance restarts. If a single slice fails, re-run just that slice — the others are unaffected. Batch files are named by participant ID range (<code>transcripts-001-003.json</code>), not by sequence number, so parallel writes never conflict.</p>
+        </div>
+        <div class="parallel-rule">
+          <h3>API key propagation</h3>
+          <p>Export the key before launching background processes. Using <code>&&</code> between the export and the first Python call will not propagate to subsequent background jobs. Use <code>;</code> (semicolons) to separate the export from each Python call, then launch all instances with <code>&amp;</code>.</p>
+        </div>
+      </div>
+
+      <div class="format-code-block" style="margin-top: 32px;">
+        <div class="code-header">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-title">Parallel launch command — 180 participants, 20 slices of 9</span>
+        </div>
+        <pre class="code-body">{`CONFIG="research-projects/Interview Projects/MyStudy/1 Interview Guide and Roster/study_config.json"
+AKEY=$(grep ANTHROPIC_API_KEY .env | cut -d= -f2-); export ANTHROPIC_API_KEY="$AKEY"
+python simulate.py --config "$CONFIG" --phase transcripts --slice 1:9   &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 10:18  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 19:27  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 28:36  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 37:45  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 46:54  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 55:63  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 64:72  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 73:81  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 82:90  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 91:99  &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 100:108 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 109:117 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 118:126 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 127:135 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 136:144 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 145:153 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 154:162 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 163:171 &
+python simulate.py --config "$CONFIG" --phase transcripts --slice 172:180 &
+wait && echo "All slices complete"`}</pre>
+      </div>
+
+      <div class="parallel-stats" style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div class="stat-card">
+          <div class="stat-number">20x</div>
+          <div class="stat-label">Speed improvement vs. sequential execution for 180-participant studies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~18 min</div>
+          <div class="stat-label">Actual wall time for 180 participants using 20 parallel instances (batch size 3)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0%</div>
+          <div class="stat-label">Additional API cost — same total tokens regardless of how many instances run in parallel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATION RULES -->
+  <section class="section section-alt" id="rules">
+    <div class="container">
+      <h2>10 simulation rules</h2>
+      <p>
+        These rules apply to every participant in every study. They are included verbatim in the simulation prompt so Claude applies them consistently.
+      </p>
+
+      <div class="rules-grid">
+
+        <div class="rule-card">
+          <div class="rule-num">1</div>
+          <div class="rule-content">
+            <h3>All questions required</h3>
+            <p>Every question in the interview guide must be asked to every participant. No questions may be skipped. Participants may say they do not know the answer, but they cannot skip it.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">2</div>
+          <div class="rule-content">
+            <h3>Verboseness-driven length</h3>
+            <p>Calibrate response depth so estimated interview duration (word count / 150 words per minute) falls within the acceptable range for the participant's verboseness group. Redo if outside range.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">3</div>
+          <div class="rule-content">
+            <h3>Maze-transcript speech style</h3>
+            <p>Simulate at Maze-output level — cleaned but conversational. <strong>Omit</strong> um, uh, hmm, and heavy false starts (Maze strips these). <strong>Include</strong> hedge markers like "I think," "I mean," "I guess," "kind of," "you know" (2–4% of words). Target 15–22 words per sentence. Allow 0–1 subtle self-repairs per participant.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">4</div>
+          <div class="rule-content">
+            <h3>Profile-appropriate responses</h3>
+            <p>Each participant's answers must reflect their assigned seniority, industry, and company size. A VP at a 5,000-person tech company has different vocabulary, concerns, and frustrations than a manager at a 200-person healthcare company.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">5</div>
+          <div class="rule-content">
+            <h3>No brand skewing</h3>
+            <p>Studies are general market research unless specified otherwise. Do not skew awareness, sentiment, or behavior toward any specific brand, product, or vendor.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">6</div>
+          <div class="rule-content">
+            <h3>Realistic geographic distribution</h3>
+            <p>When participants mention company HQ location, weight toward high-density business states (California, Texas, New York, Florida, Illinois, Massachusetts) while including some spread across others.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">7</div>
+          <div class="rule-content">
+            <h3>Dollar amounts that scale with company size</h3>
+            <p>Any spend figures, budget ranges, or willingness-to-pay amounts should scale realistically with company size. A 150-person company and a 5,000-person company operate on different budget scales entirely.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">8</div>
+          <div class="rule-content">
+            <h3>Tool and brand awareness by profile</h3>
+            <p>Larger companies know enterprise tools. Smaller companies know SMB tools. Mid-market companies know a mix. VPs and Directors have broader awareness than Managers. Awareness should follow these patterns, not be uniformly distributed.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">9</div>
+          <div class="rule-content">
+            <h3>Post-interview completeness check</h3>
+            <p>After completing each participant, verify that every question has a response before moving to the next. If any question is missing, add it before proceeding.</p>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-num">10</div>
+          <div class="rule-content">
+            <h3>Post-interview length check</h3>
+            <p>Estimate interview duration after finishing each participant. If outside the acceptable range for their verboseness group, redo the participant before proceeding. Do not batch up out-of-range transcripts and fix them later.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MAZE CALIBRATION -->
+  <section class="section section-alt" id="maze">
+    <div class="container">
+      <h2>Maze-transcript speech style</h2>
+      <p>
+        Our interviews are recorded on Maze and AI-transcribed by Maze's platform. Maze's transcription pipeline does two things that shape the output significantly: it strips vocal disfluencies (um, uh, hmm) almost entirely, and it merges spoken clauses — so sentences in the transcript are longer than they were in real speech.
+      </p>
+      <p>
+        This means the right simulation target is <strong>Maze-output-level speech</strong>, not raw unedited speech. We simulate directly at that level rather than generating raw speech and running a separate cleaning pass.
+      </p>
+
+      <div class="maze-compare">
+        <div class="maze-col maze-raw">
+          <div class="maze-col-header">Raw speech (what the person actually said)</div>
+          <div class="maze-col-body">
+            <p class="maze-example">"Um, so we were on Greenhouse — actually no, we were still on Lever at that point — and, uh, the biggest pain was just, like, getting the hiring managers to actually fill out their scorecards."</p>
+          </div>
+        </div>
+        <div class="maze-arrow">&#x2192;</div>
+        <div class="maze-col maze-output">
+          <div class="maze-col-header">Maze transcript output (what we receive)</div>
+          <div class="maze-col-body">
+            <p class="maze-example">"So we were on Lever at that point and the biggest pain was getting the hiring managers to fill out their scorecards."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="maze-rules">
+        <div class="maze-rule-col">
+          <div class="maze-rule-header maze-omit-header">Omit from simulation</div>
+          <div class="maze-rule-list">
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-x">&#x2715;</span>
+              <span><strong>Um, uh, hmm, er</strong> — Maze removes these entirely. Including them produces transcripts that don't match what we get from real studies.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-x">&#x2715;</span>
+              <span><strong>Heavy false starts</strong> — "Well I — I mean — so what I was saying" gets cleaned to a single statement.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-x">&#x2715;</span>
+              <span><strong>Extreme trailing off</strong> — "So yeah... that's basically it" gets cleaned or removed.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-x">&#x2715;</span>
+              <span><strong>Sentence fragments</strong> — Maze stitches these into longer connected sentences.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="maze-rule-col">
+          <div class="maze-rule-header maze-keep-header">Keep in simulation</div>
+          <div class="maze-rule-list">
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-check">&#x2713;</span>
+              <span><strong>Hedge markers</strong> — "I think," "I mean," "I guess," "kind of," "you know," "honestly" survive at ~3% of words. Use these to signal personality and uncertainty.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-check">&#x2713;</span>
+              <span><strong>Run-on connectors</strong> — Sentences starting with "So," "And," "But," "And so" are natural in Maze output.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-check">&#x2713;</span>
+              <span><strong>Subtle self-repairs</strong> — "No — actually, what I meant was..." survives if mild (0–1 per participant).</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-check">&#x2713;</span>
+              <span><strong>Credibility markers</strong> — "For context," "I should say," "To be honest" are preserved.</span>
+            </div>
+            <div class="maze-rule-item">
+              <span class="maze-rule-icon maze-check">&#x2713;</span>
+              <span><strong>Longer sentences</strong> — Maze merges clauses, so target 15–22 words per sentence, not 10–15 as in raw speech.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="maze-stat-row">
+        <div class="maze-stat">
+          <div class="maze-stat-num">0%</div>
+          <div class="maze-stat-label">Strict fillers (um/uh) in Maze output. Include zero in simulation.</div>
+        </div>
+        <div class="maze-stat">
+          <div class="maze-stat-num">~3%</div>
+          <div class="maze-stat-label">Hedge markers that survive Maze cleaning. Use these to signal personality.</div>
+        </div>
+        <div class="maze-stat">
+          <div class="maze-stat-num">15–22</div>
+          <div class="maze-stat-label">Words per sentence in Maze output. Longer than raw speech because clauses are merged.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTPUT FORMAT -->
+  <section class="section" id="output">
+    <div class="container">
+      <h2>Output format</h2>
+      <p>
+        All transcripts are saved as JSON. Each file contains a batch of participants. The structure is consistent across studies, which means the coding pipeline can ingest simulated and real transcripts through the same process.
+      </p>
+
+      <div class="format-layout">
+        <div class="format-code-block">
+          <div class="code-header">
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-title">transcripts-001-025.json</span>
+          </div>
+          <pre class="code-body">{`{
+  "study": "Study Name",
+  "participants": [
+    {
+      "participant_id": 1,
+      "seniority": "Director",
+      "industry": "Tech/Software",
+      "company_size": "100-500",
+      "verboseness": "Not Verbose",
+      "transcript": [
+        {
+          "question_id": "Q1.1",
+          "question": "Full question text...",
+          "response": "Participant's simulated response..."
+        },
+        {
+          "question_id": "Q1.2",
+          "question": "Next question...",
+          "response": "Next response..."
+        }
+      ]
+    },
+    {
+      "participant_id": 2,
+      ...
+    }
+  ]
+}`}</pre>
+        </div>
+
+        <div class="format-notes">
+          <div class="format-note-card">
+            <h3>Batch size</h3>
+            <p>3 participants per file. Smaller batches fit comfortably within the 24K token output ceiling, enable cleaner parallel execution, and make it easy to spot and re-run any single failing batch without redoing a large chunk of work.</p>
+          </div>
+          <div class="format-note-card">
+            <h3>Dimension fields</h3>
+            <p>Participant-level fields (seniority, industry, company_size, verboseness) are stored alongside the transcript so coding agents can access them without joining to a separate roster file.</p>
+          </div>
+          <div class="format-note-card">
+            <h3>Question IDs</h3>
+            <p>Every question carries both an ID and the full question text. IDs enable exact joins to the codebook; full text is available for coding agents that need it without a lookup.</p>
+          </div>
+          <div class="format-note-card">
+            <h3>Compatible with real transcripts</h3>
+            <p>The same structure is used for real participant transcripts. This means the coding pipeline, analysis scripts, and report templates work identically on both simulated and real data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section class="section section-alt" id="validation">
+    <div class="container">
+      <h2>What makes a good simulation</h2>
+      <p>
+        Synthetic participants are useful only if they produce data that exercises the research pipeline the same way real participants would. These are the quality signals we look for.
+      </p>
+
+      <div class="quality-grid">
+        <div class="quality-card quality-good">
+          <div class="quality-header">Good signals</div>
+          <ul>
+            <li>Responses vary meaningfully across seniority levels — VPs discuss strategy, managers discuss tactics</li>
+            <li>Company size shows up in dollar amounts, tool choices, and team structures</li>
+            <li>Industry vocabulary is accurate (healthcare = "HRIS," tech = "ATS," retail = "scheduling software")</li>
+            <li>Verboseness is audible — not verbose participants give genuinely short answers</li>
+            <li>Hedge markers ("I think," "kind of," "you know") appear naturally — not mechanically forced into every sentence</li>
+            <li>Some participants give unexpected or off-topic answers (a VP who is oddly uninformed about budget)</li>
+          </ul>
+        </div>
+        <div class="quality-card quality-bad">
+          <div class="quality-header">Warning signs</div>
+          <ul>
+            <li>All responses feel the same length regardless of verboseness assignment</li>
+            <li>Budget numbers do not scale with company size</li>
+            <li>Every participant knows every major tool in the market equally well</li>
+            <li>Responses sound like polished written summaries, not live speech</li>
+            <li>Every question gets the same level of detail rather than varying naturally</li>
+            <li>No participant expresses uncertainty, confusion, or lack of knowledge</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 40px;">
+        <h4>When simulated data reveals guide problems</h4>
+        <p>
+          If multiple simulated participants give thin or nearly identical answers to a question, the question is probably too narrow, too leading, or positioned too late in the guide. This is exactly what simulation is for. Fix the guide and regenerate before real recruitment begins.
+        </p>
+        <p style="margin-top: 8px;">
+          Similarly, if the codebook discovery pipeline produces very few distinct themes from a simulated dataset, the interview questions may not be generating enough variation to support meaningful segmentation.
+        </p>
+      </div>
+
+      <div class="where-files-go">
+        <h3>Where files live</h3>
+        <div class="files-table-wrap">
+          <table class="files-table">
+            <thead>
+              <tr>
+                <th>File type</th>
+                <th>Location</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Participant spec / sampling framework</td>
+                <td><code>research-projects/1 Simulating participants/examples/b2b/</code></td>
+                <td>Reusable methodology reference, not study-specific data</td>
+              </tr>
+              <tr>
+                <td>Participant roster</td>
+                <td>Appended to the participant spec document</td>
+                <td>The realized sample — stays with the spec</td>
+              </tr>
+              <tr>
+                <td>Transcript JSON files</td>
+                <td><code>research-projects/Interview Projects/{"{"}Study Name{"}"}/</code></td>
+                <td>One folder per study; batched by 25</td>
+              </tr>
+              <tr>
+                <td>Coded data and analysis scripts</td>
+                <td><code>research-projects/Interview Projects/{"{"}Study Name{"}"}/</code></td>
+                <td>Output of the coding pipeline</td>
+              </tr>
+              <tr>
+                <td>Interview guide (study-specific)</td>
+                <td><code>research-projects/Interview Projects/{"{"}Study Name{"}"}/</code></td>
+                <td>Or in <code>research/0 How to prepare interview guides/</code> if reusable</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUN A SIMULATION -->
+  <section class="section" id="run">
+    <div class="container">
+      <h2>How to run a simulation</h2>
+      <p>
+        Starting a new simulation requires two inputs: an interview guide and a study config. Everything else is handled by <code>simulate.py</code>. Here is the exact process for a new study.
+      </p>
+
+      <div class="run-steps">
+
+        <div class="run-step">
+          <div class="run-step-num">1</div>
+          <div class="run-step-body">
+            <h3>Prepare your interview guide</h3>
+            <p>The guide should be a Markdown file with numbered questions and question IDs (Q1, Q2, Q3, etc.). Save it to <code>research-projects/Interview Projects/{"{"}Study Name{"}"}/1 Interview Guide and Roster/</code>.</p>
+          </div>
+        </div>
+
+        <div class="run-step">
+          <div class="run-step-num">2</div>
+          <div class="run-step-body">
+            <h3>Create study_config.json</h3>
+            <p>Define all participant parameters in a JSON config file saved to the same folder. Required fields:</p>
+            <div class="param-grid">
+              <div class="param-item">
+                <div class="param-label">Population</div>
+                <div class="param-value">Description of who these participants are — used in the simulation prompt.</div>
+              </div>
+              <div class="param-item">
+                <div class="param-label">n_participants</div>
+                <div class="param-value">Total participant count. For parallel execution with 20 slices and batch size 3, use a multiple of 9 (e.g., 180).</div>
+              </div>
+              <div class="param-item">
+                <div class="param-label">dimensions</div>
+                <div class="param-value">Probability distributions for each firmographic variable. For HR software studies: seniority, function, company_size, industry, current_tool, work_model, headcount_trajectory, hr_team_size.</div>
+              </div>
+              <div class="param-item">
+                <div class="param-label">quotas</div>
+                <div class="param-value">Optional. Exact count requirements for specific dimension values. Example: <code>"current_tool": {"{"}  "BambooHR": 60 {"}"}</code></div>
+              </div>
+              <div class="param-item">
+                <div class="param-label">verboseness</div>
+                <div class="param-value">Default calibrated values: 35% Not Verbose (900 words, range 500-1,100) / 43% Somewhat Verbose (1,300 words, range 1,000-1,500) / 22% Very Verbose (2,000 words, range 1,700-2,400)</div>
+              </div>
+              <div class="param-item">
+                <div class="param-label">batch_size</div>
+                <div class="param-value">Use 3. Keeps each API call within the 24K token output ceiling and enables clean parallel execution.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="run-step">
+          <div class="run-step-num">3</div>
+          <div class="run-step-body">
+            <h3>Generate and verify the roster</h3>
+            <p>Run the roster phase to lock in sample composition before spending any API tokens on transcripts.</p>
+            <div class="kickoff-block">
+              <div class="kickoff-header">
+                <span class="kickoff-dot"></span>
+                <span class="kickoff-dot"></span>
+                <span class="kickoff-dot"></span>
+                <span class="kickoff-title">Roster phase</span>
+              </div>
+              <pre class="kickoff-body">{`python simulate.py --config "research-projects/Interview Projects/MyStudy/1 Interview Guide and Roster/study_config.json" --phase roster`}</pre>
+            </div>
+            <p style="margin-top: 12px;">Review the generated <code>roster.md</code> file. Verify the realized distribution matches your targets and all quotas are exactly met.</p>
+          </div>
+        </div>
+
+        <div class="run-step">
+          <div class="run-step-num">4</div>
+          <div class="run-step-body">
+            <h3>Launch 20 parallel transcript instances</h3>
+            <p>Once the roster is approved, launch the transcript phase using 20 parallel instances. Copy the command from the Parallel execution section above, replacing the config path with your study's path.</p>
+            <p>Each instance logs progress to the terminal. The <code>wait</code> command at the end holds until all 20 are complete. For 180 participants this takes approximately 18 minutes.</p>
+            <div class="checkpoint-box">
+              <div class="checkpoint-label">After completion: spot-check transcripts</div>
+              <ul>
+                <li><strong>Completeness:</strong> Every question has a response. No question is skipped.</li>
+                <li><strong>Length:</strong> Word count falls within the acceptable range for each participant's verboseness group.</li>
+                <li><strong>Realism:</strong> Vocabulary, budget figures, and tool awareness match the participant's profile.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout" style="margin-top: 32px;">
+        <h4>What to do after transcripts are complete</h4>
+        <p>
+          Once all transcript batches are saved, run the coding pipeline (<code>research-projects/4 Coding transcripts/</code>) pointing at your new study folder. The pipeline reads the same JSON format that simulation produces, so there is no conversion step. Simulated and real transcripts go through exactly the same downstream process.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="bv-logo" aria-label="BuyerVoice.AI" style="font-family:'Fraunces',Georgia,serif;display:inline-flex;align-items:baseline;line-height:1;"><span style="font-size:24px;font-weight:600;color:#0B1F3A;letter-spacing:-0.02em;">BuyerVoice</span><span style="font-size:16px;font-weight:500;color:#B8341B;letter-spacing:-0.01em;margin-left:1px;">.AI</span></span>
+        <p class="footer-text">Marketing science + AI. Quantified insights in weeks, not months.</p>
+        <p class="footer-link">
+          <a href="https://buyervoice.ai">buyervoice.ai</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<style is:global>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans), -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--rule);
+    background: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; height: auto; }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--ink); }
+  strong { font-weight: 600; color: #1A1A1A; }
+
+  /* ===== TYPOGRAPHY ===== */
+  h1, h2 {
+    font-family: var(--serif), Georgia, serif;
+    color: #1A1A1A;
+    line-height: 1.2;
+  }
+  h1 { font-size: 48px; font-weight: 700; }
+  h2 { font-size: 32px; font-weight: 600; margin-bottom: 16px; }
+  h3 {
+    font-family: var(--sans);
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  h4 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+  }
+  p { max-width: 720px; margin-bottom: 16px; }
+  ul { margin-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; line-height: 1.5; }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #F0F2F5;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 6px;
+    color: #1A1A1A;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .section-alt { background: var(--card-bg); }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 12px 0;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-link { display: flex; align-items: center; }
+  .logo { height: 36px; width: auto; }
+  .header-nav { display: flex; gap: 24px; }
+  .header-nav a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--rule);
+    transition: color 0.15s;
+  }
+  .header-nav a:hover { color: var(--ink); }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid var(--border);
+  }
+  .overline {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .hero h1 { margin-bottom: 20px; }
+  .hero-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--rule);
+    max-width: 700px;
+    margin-bottom: 0;
+  }
+
+  /* ===== STAT ROW ===== */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: var(--serif), Georgia, serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 14px;
+    color: var(--rule);
+    line-height: 1.4;
+  }
+
+  /* ===== BENEFIT GRID ===== */
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .benefit-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+  }
+  .benefit-icon {
+    font-size: 12px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .benefit-card h3 { margin-bottom: 8px; font-size: 16px; }
+  .benefit-card p { margin-bottom: 0; font-size: 14px; }
+
+  /* ===== DIMENSION GRID ===== */
+  .dimension-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .dimension-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    display: flex;
+    gap: 20px;
+  }
+  .dimension-num {
+    font-family: var(--serif), Georgia, serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--border);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+  .dimension-content { flex: 1; }
+  .dimension-content p { font-size: 14px; margin-bottom: 16px; }
+  .dimension-example {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .example-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9AA0AC;
+    margin-bottom: 10px;
+  }
+
+  /* Distribution table */
+  .dist-table { width: 100%; }
+  .dist-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid #F0F2F5;
+  }
+  .dist-row:last-child { border-bottom: none; }
+  .dist-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9AA0AC;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+  }
+
+  /* Verbose table */
+  .verbose-table { width: 100%; margin-bottom: 16px; }
+  .verbose-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid #F0F2F5;
+    align-items: center;
+  }
+  .verbose-row:last-child { border-bottom: none; }
+  .verbose-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9AA0AC;
+    border-bottom: 1px solid var(--border);
+  }
+  .verbose-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .verbose-high { background: #EDF7F0; color: var(--ink); }
+  .verbose-mid { background: #EEF4FF; color: #3B6FD4; }
+  .verbose-low { background: var(--card-bg); color: var(--muted); }
+  .verbose-descriptions p { font-size: 13px; margin-bottom: 6px; }
+  .verbose-descriptions p:last-child { margin-bottom: 0; }
+
+  /* Roster table */
+  .roster-table { width: 100%; font-size: 12px; }
+  .roster-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 1.5fr 1.2fr 1.2fr;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid #F0F2F5;
+    align-items: center;
+  }
+  .roster-row:last-child { border-bottom: none; }
+  .roster-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9AA0AC;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .roster-ellipsis {
+    color: #9AA0AC;
+    font-style: italic;
+    justify-content: center;
+    grid-template-columns: 1fr;
+    padding: 6px 0;
+  }
+  .realized-dist { margin-top: 14px; }
+  .realized-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9AA0AC;
+    margin-bottom: 6px;
+  }
+  .realized-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .realized-chip {
+    font-size: 11px;
+    background: #EDF7F0;
+    color: var(--ink);
+    border-radius: 2px;
+    padding: 2px 8px;
+    font-weight: 500;
+  }
+
+  /* ===== WORKFLOW STEPS ===== */
+  .workflow-steps {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .workflow-step {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .workflow-step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card-bg);
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .workflow-num {
+    width: 32px;
+    height: 32px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .workflow-step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1A1A;
+  }
+  .workflow-step-body {
+    padding: 24px;
+  }
+  .workflow-step-body p { font-size: 14px; }
+  .workflow-step-body ul { font-size: 14px; }
+  .step-output {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border-left: 3px solid var(--ink);
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+  }
+  .output-label {
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-right: 6px;
+  }
+  .checkpoint-box {
+    margin: 16px 0;
+    padding: 16px 20px;
+    background: #FFFBEB;
+    border: 1px solid #F5D87A;
+    border-radius: 2px;
+  }
+  .checkpoint-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #92600A;
+    margin-bottom: 10px;
+  }
+  .checkpoint-box ul { font-size: 13px; color: var(--rule); }
+  .batch-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .batch-file {
+    background: #F0F2F5;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #1A1A1A;
+  }
+
+  /* ===== RULES GRID ===== */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .rule-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+  }
+  .rule-num {
+    font-family: var(--serif), Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 28px;
+  }
+  .rule-content { flex: 1; }
+  .rule-content h3 { font-size: 15px; margin-bottom: 8px; }
+  .rule-content p { font-size: 13px; margin-bottom: 0; }
+  .rule-list { font-size: 13px; margin-top: 8px; margin-bottom: 0; }
+  .rule-list li { margin-bottom: 4px; }
+
+  /* ===== OUTPUT FORMAT ===== */
+  .format-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+    align-items: start;
+  }
+  .format-code-block {
+    background: var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    background: #16213E;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+  .code-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-left: 8px;
+  }
+  .code-body {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #A8D8A8;
+    padding: 20px;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  .format-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .format-note-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 18px 20px;
+  }
+  .format-note-card h3 { font-size: 14px; margin-bottom: 6px; }
+  .format-note-card p { font-size: 13px; margin-bottom: 0; }
+
+  /* ===== QUALITY GRID ===== */
+  .quality-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .quality-card {
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .quality-good {
+    background: #EDF7F0;
+    border: 1px solid #B2DFBB;
+  }
+  .quality-bad {
+    background: #FEF3F2;
+    border: 1px solid #FECACA;
+  }
+  .quality-header {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .quality-good .quality-header { color: var(--ink); }
+  .quality-bad .quality-header { color: #B91C1C; }
+  .quality-card ul { font-size: 14px; margin-bottom: 0; }
+  .quality-card li { margin-bottom: 8px; }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ink);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+  }
+  .callout h4 { margin-bottom: 8px; }
+  .callout p { font-size: 14px; margin-bottom: 0; }
+
+  /* ===== FILES TABLE ===== */
+  .where-files-go { margin-top: 48px; }
+  .where-files-go h3 { margin-bottom: 16px; }
+  .files-table-wrap { overflow-x: auto; }
+  .files-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .files-table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #9AA0AC;
+    padding: 10px 16px;
+    border-bottom: 2px solid var(--border);
+    background: var(--card-bg);
+  }
+  .files-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--rule);
+  }
+  .files-table tr:last-child td { border-bottom: none; }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    background: #1A1A1A;
+    padding: 40px 0;
+    margin-top: 0;
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+  .footer-logo { height: 32px; width: auto; filter: brightness(0) invert(1); opacity: 0.8; }
+  .footer-text { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 0; max-width: 100%; }
+  .footer-link a { font-size: 14px; color: rgba(255,255,255,0.4); }
+  .footer-link a:hover { color: var(--ink); }
+
+  /* ===== MAZE SECTION ===== */
+  .maze-compare {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 32px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .maze-col { flex: 1; }
+  .maze-col-header {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 20px;
+  }
+  .maze-raw .maze-col-header { background: #FEF3F2; color: #B91C1C; border-bottom: 1px solid #FECACA; }
+  .maze-output .maze-col-header { background: #EDF7F0; color: var(--ink); border-bottom: 1px solid #B2DFBB; }
+  .maze-col-body { padding: 16px 20px; }
+  .maze-example { font-size: 14px; line-height: 1.6; font-style: italic; color: var(--rule); margin: 0; max-width: 100%; }
+  .maze-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 24px;
+    color: #9AA0AC;
+    background: var(--card-bg);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .maze-rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .maze-rule-col {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .maze-rule-header {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .maze-omit-header { background: #FEF3F2; color: #B91C1C; border-bottom: 1px solid #FECACA; }
+  .maze-keep-header { background: #EDF7F0; color: var(--ink); border-bottom: 1px solid #B2DFBB; }
+  .maze-rule-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .maze-rule-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--rule); line-height: 1.5; }
+  .maze-rule-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .maze-x { background: #FEE2E2; color: #B91C1C; }
+  .maze-check { background: #D1FAE5; color: #065F46; }
+  .maze-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .maze-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 20px;
+    text-align: center;
+  }
+  .maze-stat-num {
+    font-family: var(--serif), Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .maze-stat-label { font-size: 13px; color: var(--rule); line-height: 1.4; }
+
+  /* ===== RUN A SIMULATION ===== */
+  .run-steps { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .run-step {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+  }
+  .run-step-num {
+    width: 56px;
+    flex-shrink: 0;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif), Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .run-step-body { padding: 24px; flex: 1; }
+  .run-step-body h3 { margin-bottom: 10px; font-size: 17px; }
+  .run-step-body p { font-size: 14px; }
+  .run-step-body ul { font-size: 14px; }
+  .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .param-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 12px 14px;
+  }
+  .param-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .param-value { font-size: 13px; color: var(--rule); line-height: 1.4; }
+  .kickoff-block {
+    background: var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+  .kickoff-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: #16213E;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .kickoff-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .kickoff-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.5); margin-left: 8px; }
+  .kickoff-body {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #A8D8A8;
+    padding: 20px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    h1 { font-size: 36px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .benefit-grid { grid-template-columns: 1fr; }
+    .dimension-grid { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .format-layout { grid-template-columns: 1fr; }
+    .quality-grid { grid-template-columns: 1fr; }
+    .header-nav { display: none; }
+    .roster-row { grid-template-columns: 30px 1fr 1fr 1fr 1fr; font-size: 11px; }
+  }
+</style>

@@ -1,0 +1,402 @@
+---
+// BrandMap.astro — correspondence analysis + brand attribute index heat map
+// SVG viewBox: 0 0 1000 620
+// Mapping: chartX [-1.7, 1.3] → svgX [50, 950] | chartY [-1.0, 2.1] → svgY [590, 30]
+// svgX = 50 + (cx + 1.7) / 3.0 * 900
+// svgY = 590 - (cy + 1.0) / 3.1 * 560
+
+const AX = 560;
+const AY = 409;
+
+const brands = [
+  { name: 'Workday',    cx: 605, cy: 251, color: '#5B6FD4' },
+  { name: 'BambooHR',  cx: 329, cy: 413, color: '#3AA655' },
+  { name: 'Greenhouse',cx: 704, cy: 489, color: '#2B8C96' },
+];
+
+interface A { x: number; y: number; l: string[]; ta: string; dx: number; dy: number; }
+const attrs: A[] = [
+  // ── Top isolated ──────────────────────────────────────────────────────────
+  { x: 671, y: 104, l: ['Enterprise recruiting platform', 'vendor mentions'],   ta:'start', dx:5,  dy:4 },
+  { x: 618, y: 157, l: ['Negative reporting / analytics language'],             ta:'start', dx:5,  dy:4 },
+  { x: 476, y: 185, l: ['Campus recruiting channels'],                          ta:'start', dx:5,  dy:4 },
+  { x: 648, y: 229, l: ['Platform evaluation criteria'],                        ta:'start', dx:5,  dy:4 },
+
+  // ── Upper-right cluster: spread vertically, alternate directions ───────────
+  { x: 700, y: 256, l: ['Candidate experience pain points'],                    ta:'start', dx:5,  dy:4 },
+  { x: 713, y: 274, l: ['Integration & stack fit'],                             ta:'end',   dx:-5, dy:4 },
+  { x: 698, y: 293, l: ['Overall candidate experience'],                        ta:'start', dx:5,  dy:4 },
+
+  // ── Right-middle ──────────────────────────────────────────────────────────
+  { x: 704, y: 333, l: ['Staffing agencies'],                                   ta:'start', dx:5,  dy:4 },
+  { x: 665, y: 352, l: ['Cost & affordability concerns'],                       ta:'end',   dx:-5, dy:4 },
+  { x: 685, y: 368, l: ['Analytics, reporting & decision support'],             ta:'start', dx:5,  dy:4 },
+
+  // ── Left isolated ─────────────────────────────────────────────────────────
+  { x: 314, y: 344, l: ['Nursing & travel staffing'],                           ta:'end',   dx:-5, dy:4 },
+
+  // ── Middle cluster: alternating left/right, ~10px between rows ───────────
+  { x: 455, y: 374, l: ['General negative recruiting language'],                ta:'end',   dx:-5, dy:4 },
+  { x: 478, y: 384, l: ['Candidate management & speed'],                        ta:'start', dx:5,  dy:4 },
+  { x: 374, y: 394, l: ['Resume screening & candidate triage'],                 ta:'end',   dx:-5, dy:4 },
+  { x: 500, y: 404, l: ['Recruiting team structure'],                           ta:'start', dx:5,  dy:4 },
+  { x: 444, y: 414, l: ['Credentialing & verification'],                        ta:'end',   dx:-5, dy:4 },
+  { x: 458, y: 424, l: ['Recruiting process pain points'],                      ta:'start', dx:5,  dy:4 },
+  { x: 402, y: 434, l: ['Retention & show-up reliability'],                     ta:'end',   dx:-5, dy:4 },
+  { x: 432, y: 451, l: ['Platform identity'],                                   ta:'start', dx:5,  dy:4 },
+  { x: 485, y: 468, l: ['Industry / role-specific recruiting'],                 ta:'end',   dx:-5, dy:4 },
+  { x: 360, y: 478, l: ['Background checks'],                                   ta:'start', dx:5,  dy:4 },
+  { x: 434, y: 494, l: ['Job boards & posting channels'],                       ta:'start', dx:5,  dy:4 },
+  { x: 424, y: 508, l: ['Healthcare recruiting platforms'],                     ta:'end',   dx:-5, dy:4 },
+
+  // ── Far-left cluster: spread vertically ──────────────────────────────────
+  { x: 311, y: 524, l: ['Core ATS / recruiting platform', 'capabilities'],     ta:'end',   dx:-5, dy:4 },
+  { x: 210, y: 549, l: ['HCM / HRIS recruiting suite', 'vendor mentions'],     ta:'end',   dx:-5, dy:4 },
+  { x: 244, y: 572, l: ['Platform fit limitations & doubts'],                  ta:'start', dx:5,  dy:4 },
+
+  // ── Right cluster: interleaved left/right, 16px same-direction spacing ───
+  { x: 632, y: 432, l: ['Quality of hire & match quality'],                    ta:'end',   dx:-5, dy:4 },
+  { x: 735, y: 440, l: ['Executive / retained search firms'],                  ta:'start', dx:5,  dy:4 },
+  { x: 678, y: 448, l: ['Approval & requisition process'],                     ta:'end',   dx:-5, dy:4 },
+  { x: 715, y: 456, l: ['Outbound sourcing & automation'],                     ta:'start', dx:5,  dy:4 },
+  { x: 671, y: 464, l: ['Professional networks sourcing'],                     ta:'end',   dx:-5, dy:4 },
+  { x: 736, y: 472, l: ['Talent CRM & candidate pipelines'],                   ta:'start', dx:5,  dy:4 },
+  { x: 663, y: 480, l: ['Recruiting frequencies / KPIs'],                      ta:'end',   dx:-5, dy:4 },
+  { x: 748, y: 488, l: ['Video interviewing'],                                  ta:'start', dx:5,  dy:4 },
+  { x: 664, y: 496, l: ['Offer management'],                                    ta:'end',   dx:-5, dy:4 },
+  { x: 720, y: 504, l: ['Structured interviewing'],                             ta:'start', dx:5,  dy:4 },
+  { x: 690, y: 512, l: ['Interview scheduling & coordination'],                 ta:'end',   dx:-5, dy:4 },
+  { x: 737, y: 520, l: ['Modern ATS / recruiting platform', 'vendor mentions'], ta:'start', dx:5,  dy:4 },
+  { x: 718, y: 530, l: ['DEI & bias reduction'],                                ta:'end',   dx:-5, dy:4 },
+  { x: 742, y: 538, l: ['Technical assessments'],                               ta:'start', dx:5,  dy:4 },
+];
+
+// Heat map data — sorted descending by attribute mention frequency (%)
+// Values are brand-attribute index (100 = category average). * = statistically significant.
+interface HRow {
+  attr: string;
+  pct: number;
+  gh: { v: number; sig: boolean };
+  wd: { v: number; sig: boolean };
+  bh: { v: number; sig: boolean };
+}
+const heatData: HRow[] = [
+  { attr: 'Recruiting process pain points',              pct: 80, gh:{v:115,sig:false}, wd:{v:67, sig:false}, bh:{v:118,sig:true}  },
+  { attr: 'Platform identity',                           pct: 79, gh:{v:81, sig:false}, wd:{v:67, sig:false}, bh:{v:152,sig:true}  },
+  { attr: 'HCM / HRIS recruiting suite vendor mentions', pct: 62, gh:{v:3,  sig:false}, wd:{v:0,  sig:false}, bh:{v:297,sig:true}  },
+  { attr: 'Recruiting team structure',                   pct: 47, gh:{v:160,sig:true},  wd:{v:32, sig:false}, bh:{v:107,sig:false} },
+  { attr: 'Enterprise recruiting platform vendor mentions', pct: 46, gh:{v:6,sig:false}, wd:{v:285,sig:true}, bh:{v:9,  sig:false} },
+  { attr: 'Cost & affordability concerns',               pct: 46, gh:{v:143,sig:true},  wd:{v:110,sig:false}, bh:{v:48, sig:false} },
+  { attr: 'Modern ATS / recruiting platform vendor mentions', pct: 43, gh:{v:258,sig:true}, wd:{v:29,sig:false}, bh:{v:12,sig:false} },
+  { attr: 'Job boards & posting channels',               pct: 43, gh:{v:96, sig:false}, wd:{v:41, sig:false}, bh:{v:163,sig:true}  },
+  { attr: 'Professional networks sourcing',              pct: 41, gh:{v:191,sig:true},  wd:{v:47, sig:false}, bh:{v:62, sig:false} },
+  { attr: 'Structured interviewing',                     pct: 38, gh:{v:239,sig:true},  wd:{v:32, sig:false}, bh:{v:30, sig:false} },
+  { attr: 'Outbound sourcing & automation',              pct: 31, gh:{v:218,sig:true},  wd:{v:58, sig:false}, bh:{v:24, sig:false} },
+  { attr: 'Talent CRM & candidate pipelines',            pct: 16, gh:{v:242,sig:true},  wd:{v:53, sig:false}, bh:{v:5,  sig:false} },
+];
+
+function cellBg(v: number): string {
+  if (v >= 220) return '#1b5e20';
+  if (v >= 175) return '#2e7d32';
+  if (v >= 140) return '#43a047';
+  if (v >= 112) return '#a5d6a7';
+  if (v >= 90)  return '#f5f5f5';
+  if (v >= 70)  return '#ffcdd2';
+  if (v >= 45)  return '#ef9a9a';
+  if (v >= 15)  return '#e53935';
+  return '#b71c1c';
+}
+
+function cellFg(v: number): string {
+  if (v >= 140 || v < 45) return '#ffffff';
+  return '#1a1a1a';
+}
+---
+
+<section class="section bm-section">
+  <div class="container">
+    <p class="overline">Research Output Example: Brand Associations + CSV Study</p>
+    <h2 class="bm-heading">Category mental model for HR professionals when &#8220;recruiting new talent&#8221;</h2>
+    <p class="bm-sub">This example is based on 100 interviews with a synthetic sample of HR managers and directors. When participants were prompted with a category during an interview (&#8220;recruiting new talent for your organization&#8221;), they shared the attributes and associations that came to mind, in their own words. Using AI, we were able to code thousands of statements and group them into attributes. And, using correspondence analysis, we mapped how closely the attributes were associated with brands in the category.</p>
+    <p class="bm-insights-intro">This reveals several important insights:</p>
+    <ol class="bm-insights-list">
+      <li>Attributes that consumers associate with a category are not necessarily the ones your team is tracking.</li>
+      <li>Some attributes are associated with all brands (grey dots in the middle), but others are uniquely &#8220;owned&#8221; by specific brands (grey dots near the colored brand dots).</li>
+      <li>Some brands have stronger mental availability in consumers&#8217; minds (more grey dots closely clustered around a colored brand dot).</li>
+    </ol>
+
+    <div class="bm-columns">
+
+      <!-- Left: animated correspondence analysis map -->
+      <div class="bm-left">
+        <div class="bm-wrapper">
+          <svg
+            id="bmap"
+            viewBox="0 0 1000 620"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid meet"
+            aria-label="Correspondence analysis brand map showing Workday, BambooHR, and Greenhouse"
+            role="img"
+          >
+            <line x1={AX} y1="30" x2={AX} y2="590" stroke="#E2E4E8" stroke-width="1"/>
+            <line x1="50" y1={AY} x2="950" y2={AY} stroke="#E2E4E8" stroke-width="1"/>
+            {attrs.map(a => (
+              <g>
+                <circle cx={a.x} cy={a.y} r="3.5" fill="#94A3B8"/>
+                <text font-size="9" fill="#64748B" font-family="Inter, system-ui, sans-serif" text-anchor={a.ta}>
+                  {a.l.map((line, i) => (
+                    <tspan x={a.x + a.dx} dy={i === 0 ? a.y + a.dy : 11}>{line}</tspan>
+                  ))}
+                </text>
+              </g>
+            ))}
+            {brands.map(b => (
+              <g>
+                <circle cx={b.cx} cy={b.cy} r="13" fill={b.color} opacity="0.9"/>
+                <text x={b.cx} y={b.cy - 20} text-anchor="middle" font-size="17" font-weight="700" fill={b.color} font-family="Inter, system-ui, sans-serif">{b.name}</text>
+              </g>
+            ))}
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: static brand × attribute index heat map -->
+      <div class="bm-right">
+        <p class="hm-title">Brand &times; Attribute Index</p>
+        <div class="hm-scroll">
+          <table class="hm-table">
+            <thead>
+              <tr>
+                <th class="hm-attr-head">Attribute (% of participants who mentioned)</th>
+                <th class="hm-brand-head" style="color:#2B8C96">GH</th>
+                <th class="hm-brand-head" style="color:#5B6FD4">WD</th>
+                <th class="hm-brand-head" style="color:#3AA655">BH</th>
+              </tr>
+            </thead>
+            <tbody>
+              {heatData.map(row => (
+                <tr>
+                  <td class="hm-attr">{row.attr} <span class="hm-pct">({row.pct}%)</span></td>
+                  <td class="hm-val" style={`background:${cellBg(row.gh.v)};color:${cellFg(row.gh.v)}`}>
+                    {row.gh.sig ? <strong>{row.gh.v}*</strong> : row.gh.v}
+                  </td>
+                  <td class="hm-val" style={`background:${cellBg(row.wd.v)};color:${cellFg(row.wd.v)}`}>
+                    {row.wd.sig ? <strong>{row.wd.v}*</strong> : row.wd.v}
+                  </td>
+                  <td class="hm-val" style={`background:${cellBg(row.bh.v)};color:${cellFg(row.bh.v)}`}>
+                    {row.bh.sig ? <strong>{row.bh.v}*</strong> : row.bh.v}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="hm-legend">Index 100 = category average. * = statistically significant overindex.</p>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const svg = document.getElementById('bmap') as SVGSVGElement | null;
+  if (!svg) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const FULL       = [0,   0,   1000, 620];
+  const BAMBOOHR   = [85,  285,  420,  263];
+  const WORKDAY    = [395, 55,   420,  263];
+  const GREENHOUSE = [455, 350,  420,  263];
+
+  const steps = [
+    { to: BAMBOOHR,   tDur: 2000, hDur: 2500 },
+    { to: FULL,       tDur: 1500, hDur: 700  },
+    { to: WORKDAY,    tDur: 2000, hDur: 2500 },
+    { to: FULL,       tDur: 1500, hDur: 700  },
+    { to: GREENHOUSE, tDur: 2000, hDur: 2500 },
+    { to: FULL,       tDur: 1500, hDur: 1200 },
+  ];
+
+  const ease = (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+  const lerp = (a: number, b: number, t: number) => a + (b-a)*t;
+
+  let current = [...FULL], stepIdx = 0;
+  let phase: 'transition'|'hold' = 'hold', phaseStart = 0, initialized = false;
+
+  function animate(ts: number) {
+    if (!initialized) { initialized = true; phaseStart = ts; stepIdx = -1; }
+    const elapsed = ts - phaseStart;
+    if (stepIdx === -1) {
+      if (elapsed >= 1500) { stepIdx = 0; phase = 'transition'; phaseStart = ts; }
+    } else {
+      const step = steps[stepIdx];
+      if (phase === 'transition') {
+        const t = Math.min(elapsed / step.tDur, 1);
+        const vb = current.map((v, i) => lerp(v, step.to[i], ease(t)));
+        svg!.setAttribute('viewBox', vb.join(' '));
+        if (t >= 1) { current = [...step.to]; phase = 'hold'; phaseStart = ts; }
+      } else {
+        if (elapsed >= step.hDur) { stepIdx = (stepIdx+1) % steps.length; phase = 'transition'; phaseStart = ts; }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+})();
+</script>
+
+<style>
+  .bm-section { background: var(--color-white); }
+
+  .bm-heading { margin-bottom: var(--space-md); }
+
+  .bm-sub {
+    font-size: 16px;
+    color: var(--color-slate);
+    max-width: none;
+    margin-bottom: var(--space-sm);
+  }
+
+  .bm-insights-intro {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-green);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  .bm-insights-list {
+    font-size: 16px;
+    color: var(--color-slate);
+    padding-left: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    line-height: 1.6;
+  }
+
+  .bm-insights-list li {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Two-column layout */
+  .bm-columns {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 1024px) {
+    .bm-columns { grid-template-columns: 1fr; }
+  }
+
+  /* Left: SVG wrapper */
+  .bm-wrapper {
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #FAFBFC;
+  }
+  .bm-wrapper svg { display: block; width: 100%; height: auto; }
+
+  /* Right: heat map */
+  .bm-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .hm-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-slate);
+    margin: 0;
+  }
+
+  .hm-scroll {
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .hm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    table-layout: fixed;
+  }
+
+  .hm-attr-head {
+    width: 58%;
+    padding: 7px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-slate);
+    text-align: left;
+    background: #f8f9fa;
+    border-bottom: 2px solid var(--color-medium-gray);
+  }
+
+  .hm-brand-head {
+    width: 14%;
+    padding: 7px 4px;
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    background: #f8f9fa;
+    border-bottom: 2px solid var(--color-medium-gray);
+    white-space: nowrap;
+  }
+
+  .hm-attr {
+    padding: 5px 8px;
+    font-size: 11px;
+    color: var(--color-black);
+    text-align: left;
+    line-height: 1.3;
+    border-bottom: 1px solid #eee;
+  }
+
+  .hm-pct {
+    font-size: 10px;
+    color: var(--color-slate);
+    white-space: nowrap;
+  }
+
+  .hm-val {
+    padding: 5px 4px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child .hm-attr,
+  tbody tr:last-child .hm-val { border-bottom: none; }
+
+  .hm-legend {
+    font-size: 11px;
+    color: var(--color-slate);
+    opacity: 0.8;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .hm-cosine {
+    font-size: 10px;
+    color: var(--color-slate);
+    opacity: 0.6;
+    margin: 0;
+  }
+
+  .bm-note {
+    font-size: 13px;
+    color: var(--color-slate);
+    margin-top: var(--space-xl);
+    opacity: 0.75;
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,130 @@
+{
+  "total_participants": 100,
+  "seniority_distribution": {
+    "VP": 37,
+    "Manager": 33,
+    "Director": 30
+  },
+  "industry_distribution": {
+    "Tech/Software": 39,
+    "Retail": 16,
+    "Healthcare": 15,
+    "Professional Services/Finance": 13,
+    "Manufacturing": 2,
+    "Education": 2,
+    "Nonprofit": 2,
+    "Logistics/Transportation": 2,
+    "Construction": 2,
+    "Energy": 1,
+    "Media/Entertainment": 1,
+    "Hospitality": 1,
+    "Insurance": 1,
+    "Real Estate": 1,
+    "Food/Beverage": 1,
+    "Aerospace/Defense": 1
+  },
+  "company_size_distribution": {
+    "500-2,000": 38,
+    "100-500": 33,
+    "2,000-10,000": 29
+  },
+  "solution_landscape": {
+    "LinkedIn Recruiter": 85,
+    "Indeed": 54,
+    "Lever": 22,
+    "Greenhouse": 21,
+    "Gem": 20,
+    "BambooHR": 18,
+    "iCIMS": 16,
+    "GoodTime": 11,
+    "Workday": 10,
+    "Handshake": 8,
+    "JazzHR": 5,
+    "PeopleAdmin": 2,
+    "Robert Half": 1,
+    "Heidrick & Struggles": 1,
+    "Manpower": 1,
+    "Adecco": 1,
+    "HigherEdJobs": 1
+  },
+  "solution_landscape_pct": {
+    "LinkedIn Recruiter": 85.0,
+    "Indeed": 54.0,
+    "Lever": 22.0,
+    "Greenhouse": 21.0,
+    "Gem": 20.0,
+    "BambooHR": 18.0,
+    "iCIMS": 16.0,
+    "GoodTime": 11.0,
+    "Workday": 10.0,
+    "Handshake": 8.0,
+    "JazzHR": 5.0,
+    "PeopleAdmin": 2.0,
+    "Robert Half": 1.0,
+    "Heidrick & Struggles": 1.0,
+    "Manpower": 1.0,
+    "Adecco": 1.0,
+    "HigherEdJobs": 1.0
+  },
+  "brand_usage": {
+    "BambooHR": 18,
+    "Workday": 10,
+    "Greenhouse": 21
+  },
+  "brand_usage_pct": {
+    "BambooHR": 18.0,
+    "Workday": 10.0,
+    "Greenhouse": 21.0
+  },
+  "bamboohr_users": {
+    "count": 18,
+    "seniority": {
+      "VP": 8,
+      "Director": 6,
+      "Manager": 4
+    },
+    "industry": {
+      "Healthcare": 5,
+      "Retail": 4,
+      "Professional Services/Finance": 3,
+      "Nonprofit": 2,
+      "Construction": 1,
+      "Real Estate": 1,
+      "Logistics/Transportation": 1,
+      "Tech/Software": 1
+    },
+    "company_size": {
+      "100-500": 14,
+      "500-2,000": 4
+    }
+  },
+  "bamboohr_non_users": {
+    "count": 82,
+    "seniority": {
+      "Manager": 29,
+      "VP": 29,
+      "Director": 24
+    },
+    "industry": {
+      "Tech/Software": 38,
+      "Retail": 12,
+      "Professional Services/Finance": 10,
+      "Healthcare": 10,
+      "Manufacturing": 2,
+      "Education": 2,
+      "Logistics/Transportation": 1,
+      "Energy": 1,
+      "Media/Entertainment": 1,
+      "Hospitality": 1,
+      "Insurance": 1,
+      "Construction": 1,
+      "Food/Beverage": 1,
+      "Aerospace/Defense": 1
+    },
+    "company_size": {
+      "500-2,000": 34,
+      "2,000-10,000": 29,
+      "100-500": 19
+    }
+  }
+}

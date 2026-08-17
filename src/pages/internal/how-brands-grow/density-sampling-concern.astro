@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+<title>Brand Association Density: A Sampling Composition Question</title>
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8f9fa;
+    color: #1a1a2e;
+    line-height: 1.7;
+    padding: 48px 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .subtitle { font-size: 17px; color: #6b7280; margin-bottom: 48px; line-height: 1.6; }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  p { margin-bottom: 16px; font-size: 15px; }
+  strong { color: #1a1a2e; }
+
+  /* Callout boxes */
+  .callout {
+    border-radius: 2px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .callout-finding {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+  }
+  .callout-concern {
+    background: #fef3c7;
+    border: 1px solid #fbbf24;
+  }
+  .callout-key {
+    background: #fce4ec;
+    border: 1px solid #f48fb1;
+  }
+  .callout-suggestion {
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+  }
+  .callout h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .callout-finding h3 { color: #1e40af; }
+  .callout-concern h3 { color: #92400e; }
+  .callout-key h3 { color: #c62828; }
+  .callout-suggestion h3 { color: #065f46; }
+  .callout p { font-size: 14px; margin-bottom: 8px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* Sample composition diagram */
+  .diagram-section {
+    margin: 32px 0;
+  }
+  .diagram-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  /* Bar chart style diagram */
+  .sample-diagram {
+    background: white;
+    border-radius: 2px;
+    padding: 32px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+  }
+  .brand-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .brand-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+  }
+  .bar-container {
+    height: 36px;
+    background: #f3f4f6;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-buyers {
+    height: 100%;
+    border-radius: 2px 0 0 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+  }
+  .bar-nonbuyers {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: #6b7280;
+  }
+  .share-label {
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+  }
+
+  /* Association bubbles */
+  .assoc-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .assoc-card {
+    background: white;
+    border-radius: 2px;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+  }
+  .assoc-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1a1a2e;
+  }
+  .assoc-card .person {
+    padding: 8px 12px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .person-buyer {
+    background: #dbeafe;
+    border-left: 3px solid #2563eb;
+  }
+  .person-nonbuyer {
+    background: #f3f4f6;
+    border-left: 3px solid #d1d5db;
+  }
+  .person-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .person-buyer .person-label { color: #1e40af; }
+  .person-nonbuyer .person-label { color: #9ca3af; }
+
+  /* Correlation table */
+  .corr-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 24px 0;
+    border: 1px solid #e5e7eb;
+  }
+  .corr-table th {
+    background: #f3f4f6;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .corr-table td {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .corr-table tr:last-child td { border-bottom: none; }
+
+  /* Logic chain */
+  .logic-chain {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+  .logic-step {
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    flex: 1;
+    min-width: 140px;
+  }
+  .logic-arrow {
+    font-size: 20px;
+    color: #9ca3af;
+    padding: 0 4px;
+  }
+  .logic-step:nth-child(1) { background: #dbeafe; color: #1e40af; border-radius: 2px 0 0 8px; }
+  .logic-step:nth-child(3) { background: #fef3c7; color: #92400e; }
+  .logic-step:nth-child(5) { background: #fce7f3; color: #9f1239; }
+  .logic-step:nth-child(7) { background: #dcfce7; color: #166534; border-radius: 0 8px 8px 0; }
+
+  /* Two-path diagram */
+  .paths-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .path-card {
+    border-radius: 2px;
+    padding: 24px;
+  }
+  .path-real {
+    background: #ecfdf5;
+    border: 2px solid #6ee7b7;
+  }
+  .path-artifact {
+    background: #fef3c7;
+    border: 2px solid #fbbf24;
+  }
+  .path-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .path-real h4 { color: #065f46; }
+  .path-artifact h4 { color: #92400e; }
+  .path-card p { font-size: 13px; }
+  .path-card ol {
+    font-size: 13px;
+    padding-left: 20px;
+    margin: 8px 0;
+  }
+  .path-card li { margin-bottom: 4px; }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .assoc-comparison, .paths-container { grid-template-columns: 1fr; }
+    .brand-row { grid-template-columns: 80px 1fr 60px; }
+    .logic-chain { flex-direction: column; }
+    .logic-step { border-radius: 2px !important; width: 100%; }
+    .logic-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Brand Association Density: Does It Predict Market Share, or Just Reflect It?</h1>
+<p class="subtitle">A question about the sampling composition in Vriens, Chen & Schomaker (2019). The brand association density metric shows very high correlations with market share (0.93-0.98). But could those correlations be an artifact of who's in the sample?</p>
+
+<!-- ============ THE PUBLISHED FINDING ============ -->
+<h2>The Published Finding</h2>
+
+<div class="callout callout-finding">
+  <h3>What the paper showed</h3>
+  <p>Brand association density (number of distinct associations x average inter-connectedness) correlates strongly with market share across three consumer categories. Open free association data ("What comes to mind when you think of Brand X?") outperformed pre-defined attribute lists.</p>
+</div>
+
+<table class="corr-table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Correlation with Market Share</th>
+      <th>Sample</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Smartphones</td>
+      <td><strong>0.93</strong></td>
+      <td>400 US smartphone owners</td>
+    </tr>
+    <tr>
+      <td>Toothpaste</td>
+      <td><strong>0.95</strong></td>
+      <td>401 Mexican toothpaste buyers</td>
+    </tr>
+    <tr>
+      <td>Beer</td>
+      <td><strong>0.64</strong></td>
+      <td>900 US beer drinkers</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>These are impressive numbers. A 0.93 or 0.95 correlation would mean brand association density is one of the strongest predictors of market share ever found in brand research. But there's a question about what's driving those correlations.</p>
+
+<!-- ============ THE SAMPLING STRUCTURE ============ -->
+<h2>How the Study Sampled Respondents</h2>
+
+<p>The study sampled <strong>general category buyers</strong>: all smartphone owners, all beer drinkers, all toothpaste purchasers. Each respondent was then asked about specific brands using the free association prompt: "Thinking about Brand X, what comes to mind?"</p>
+
+<p>In a general market sample, the proportion of respondents who are current buyers of each brand will naturally mirror market share:</p>
+
+<div class="sample-diagram">
+  <div class="diagram-title">Hypothetical sample of 400 smartphone owners</div>
+
+  <div class="brand-row">
+    <div class="brand-label">Apple (45%)</div>
+    <div class="bar-container">
+      <div class="bar-buyers" style="width: 45%; background: #1e40af;">~180 buyers</div>
+      <div class="bar-nonbuyers">~220 non-buyers</div>
+    </div>
+    <div class="share-label">45% share</div>
+  </div>
+
+  <div class="brand-row">
+    <div class="brand-label">Samsung (28%)</div>
+    <div class="bar-container">
+      <div class="bar-buyers" style="width: 28%; background: #2563eb;">~112 buyers</div>
+      <div class="bar-nonbuyers">~288 non-buyers</div>
+    </div>
+    <div class="share-label">28% share</div>
+  </div>
+
+  <div class="brand-row">
+    <div class="brand-label">LG (8%)</div>
+    <div class="bar-container">
+      <div class="bar-buyers" style="width: 8%; background: #60a5fa;">~32</div>
+      <div class="bar-nonbuyers">~368 non-buyers</div>
+    </div>
+    <div class="share-label">8% share</div>
+  </div>
+
+  <div class="brand-row">
+    <div class="brand-label">Motorola (4%)</div>
+    <div class="bar-container">
+      <div class="bar-buyers" style="width: 4%; background: #93c5fd;"></div>
+      <div class="bar-nonbuyers">~384 non-buyers</div>
+    </div>
+    <div class="share-label">4% share</div>
+  </div>
+
+  <div class="brand-row">
+    <div class="brand-label">HTC (1%)</div>
+    <div class="bar-container">
+      <div class="bar-buyers" style="width: 1%; background: #bfdbfe;"></div>
+      <div class="bar-nonbuyers">~396 non-buyers</div>
+    </div>
+    <div class="share-label">1% share</div>
+  </div>
+</div>
+
+<!-- ============ THE BUYER EFFECT ============ -->
+<h2>The Buyer Effect on Free Association</h2>
+
+<p>When you ask someone "What comes to mind when you think of Brand X?", a current buyer of that brand will naturally produce more associations, and those associations will be more inter-connected, because they have direct, ongoing experience with the product.</p>
+
+<div class="assoc-comparison">
+  <div class="assoc-card">
+    <h4>Asking an Apple buyer about Apple</h4>
+    <div class="person person-buyer">
+      <div class="person-label">Current buyer</div>
+      "iPhone, great camera, iMessage, ecosystem, AirDrop, reliable, expensive but worth it, privacy, the blue bubbles, my whole family uses it"
+    </div>
+    <p style="margin-top: 12px; font-size: 13px; color: #1e40af;"><strong>10 associations, highly inter-connected.</strong> Camera connects to iPhone, ecosystem connects to AirDrop and iMessage, family connects to ecosystem. High density.</p>
+  </div>
+
+  <div class="assoc-card">
+    <h4>Asking a Samsung buyer about Apple</h4>
+    <div class="person person-nonbuyer">
+      <div class="person-label">Non-buyer</div>
+      "Expensive, iPhone, trendy"
+    </div>
+    <p style="margin-top: 12px; font-size: 13px; color: #6b7280;"><strong>3 associations, low inter-connectedness.</strong> These are surface-level impressions, not experience-based knowledge. Low density.</p>
+  </div>
+</div>
+
+<div class="callout callout-concern">
+  <h3>The concern</h3>
+  <p>When you compute brand association density at the aggregate level across all respondents, a brand with more buyers in the sample will get a higher density score almost automatically, because a larger share of its respondents are producing rich, inter-connected associations from direct experience.</p>
+</div>
+
+<!-- ============ THE LOGIC CHAIN ============ -->
+<h2>The Circular Logic</h2>
+
+<p>Here is the chain of reasoning that creates the concern:</p>
+
+<div class="logic-chain">
+  <div class="logic-step">Brand has high market share</div>
+  <div class="logic-arrow">→</div>
+  <div class="logic-step">More buyers in a general market sample</div>
+  <div class="logic-arrow">→</div>
+  <div class="logic-step">Buyers give richer, denser associations</div>
+  <div class="logic-arrow">→</div>
+  <div class="logic-step">Higher aggregate brand density score</div>
+</div>
+
+<p>If this chain holds, then <strong>brand association density doesn't predict market share. It reflects market share.</strong> The correlation would be baked into the sampling, not evidence of a causal relationship.</p>
+
+<p>This doesn't mean the metric is wrong. It means the high correlation might be measuring "how many buyers does this brand have in my sample" rather than "how strong is this brand's mental structure in the minds of potential buyers."</p>
+
+<!-- ============ TWO EXPLANATIONS ============ -->
+<h2>Two Possible Explanations for the Correlation</h2>
+
+<div class="paths-container">
+  <div class="path-card path-real">
+    <h4>Explanation A: Density genuinely drives market share</h4>
+    <ol>
+      <li>Brands with denser, more inter-connected associations are easier to retrieve from memory</li>
+      <li>Easier retrieval leads to more consideration and more purchases</li>
+      <li>Therefore density causes higher market share</li>
+    </ol>
+    <p style="margin-top: 12px;"><strong>This would be the exciting finding.</strong> It would mean that building denser associations through marketing directly drives growth.</p>
+    <p><strong>To prove this:</strong> Show that density among <em>non-buyers</em> predicts future brand switching or acquisition. If people who don't currently buy Brand X but have dense associations with it are more likely to switch to it, that's causal evidence.</p>
+  </div>
+
+  <div class="path-card path-artifact">
+    <h4>Explanation B: Market share inflates density scores</h4>
+    <ol>
+      <li>Bigger brands have more buyers in a general market sample</li>
+      <li>Buyers produce richer associations than non-buyers (because they use the product)</li>
+      <li>Aggregate density reflects the buyer/non-buyer ratio, not independent brand strength</li>
+    </ol>
+    <p style="margin-top: 12px;"><strong>This would mean the correlation is an artifact.</strong> The metric would be measuring a consequence of market share, not a predictor of it.</p>
+    <p><strong>To test this:</strong> Compute density separately for buyers and non-buyers. If the metric only works when buyers are included, the correlation may be driven by sampling composition.</p>
+  </div>
+</div>
+
+<p>The reality is likely <strong>somewhere in between</strong>. Dense associations probably do matter for brand retrieval (the neuroscience behind Spreading Activation Theory supports this). But the <em>magnitude</em> of the correlations reported (0.93-0.98) may be inflated by the buyer composition effect.</p>
+
+<!-- ============ WHAT THE PAPER DOESN'T SHOW ============ -->
+<h2>What the Paper Doesn't Report</h2>
+
+<p>The following analyses would resolve this question. None appear in the published paper:</p>
+
+<table class="corr-table">
+  <thead>
+    <tr>
+      <th>Analysis</th>
+      <th>What It Would Show</th>
+      <th>Reported?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Density computed from <strong>non-buyers only</strong></td>
+      <td>Whether the metric works when you remove the buyer composition effect entirely</td>
+      <td style="color: #dc2626; font-weight: 600;">No</td>
+    </tr>
+    <tr>
+      <td>Density computed from <strong>buyers only</strong></td>
+      <td>Whether buyers of small brands have equally dense associations as buyers of large brands (testing if density is really about brand strength vs. just brand size)</td>
+      <td style="color: #dc2626; font-weight: 600;">No</td>
+    </tr>
+    <tr>
+      <td>Correlation between <strong>% of sample who are buyers</strong> and density</td>
+      <td>How much of the density score is explained simply by buyer proportion in the sample</td>
+      <td style="color: #dc2626; font-weight: 600;">No</td>
+    </tr>
+    <tr>
+      <td><strong>Longitudinal</strong> density predicting future share changes</td>
+      <td>Whether improving density today leads to share gains tomorrow (causal direction)</td>
+      <td style="color: #dc2626; font-weight: 600;">No</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ============ WHY THIS MATTERS ============ -->
+<h2>Why This Matters for How We Use the Metric</h2>
+
+<div class="callout callout-key">
+  <h3>The How Brands Grow connection</h3>
+  <p>Ehrenberg-Bass research consistently shows that brands grow by <strong>acquiring new customers</strong> (non-buyers and light buyers), not by increasing loyalty among current buyers. If brand association density primarily reflects what <em>current buyers</em> think, it measures the wrong population for growth strategy.</p>
+  <p>A brand manager would want to know: "What is my brand's mental footprint among the people who <em>don't yet buy from me</em>?" That's where growth potential lives. The current metric conflates buyer knowledge with non-buyer awareness.</p>
+</div>
+
+<!-- ============ SUGGESTED RESOLUTION ============ -->
+<h2>A Path Forward</h2>
+
+<div class="callout callout-suggestion">
+  <h3>The concept is sound. The validation needs strengthening.</h3>
+  <p>The underlying theory (Spreading Activation Theory) is well-supported by neuroscience. Inter-connected associations probably do make brands easier to recall. The open free association method is almost certainly better than pre-defined attribute checklists.</p>
+  <p>The question is specifically about the <strong>market share correlation</strong> and whether it proves what the paper claims. Two analyses would settle it:</p>
+  <p><strong>1. Recompute density for non-buyers only.</strong> If brand association density among non-buyers still correlates with market share, the metric is measuring genuine brand strength, not just buyer familiarity. This would be a much stronger finding.</p>
+  <p><strong>2. Test density as a predictor of future acquisition.</strong> Do non-buyers with higher density scores for Brand X show higher rates of switching to Brand X over time? This would demonstrate the causal direction.</p>
+</div>
+
+<p>If these analyses hold up, the brand association density metric becomes significantly more powerful: it would be validated as a leading indicator of growth, not just a reflection of current share. And the open free association method would be confirmed as the right way to capture it.</p>
+
+<div class="footer">
+  Internal discussion document. BuyerVoice.AI, March 2026.<br>
+  Reference: Vriens, M., Chen, S., & Schomaker, J. (2019). "The evaluation of a brand association density metric." Journal of Product & Brand Management.
+</div>
+
+</div>
+</body>
+</html>

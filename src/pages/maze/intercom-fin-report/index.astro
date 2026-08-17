@@ -1,0 +1,23 @@
+---
+// AI customer support market: Intercom's Fin-on-top strategy — Maze-branded
+// edition at /maze/intercom-fin-report/. Content is identical to the canonical
+// /intercom-fin-report/ page; only the chrome (cover, fonts, palette, page
+// title) is rebranded to Maze. Chart fills, callout accents, and per-platform
+// data colors keep BuyerVoice's red and dark-anchor coloring so the meaning
+// of each color in the data viz is preserved (Option A, chrome-only re-skin).
+// Powered by BuyerVoice.AI attribution sits under the Maze wordmark.
+import MazeReportLayout from '../../../components/report/MazeReportLayout.astro';
+import ReportBody from '../../../components/intercom-fin-report/ReportBody.astro';
+---
+
+<MazeReportLayout
+  studyName="AI customer support market: Intercom's Fin-on-top strategy"
+  client="Intercom (illustrative)"
+  preparedOn="May 2026"
+  scope="Insights based on interviews with customer support leaders at companies with 1,000 to 5,000 employees in the United States"
+  hideClientOnCover={true}
+  stats={{ interviews: 180, avgLengthMin: 18, wordsAnalyzedK: 342, thematicCodes: 55 }}
+  title="AI customer support market: Intercom's Fin-on-top strategy"
+>
+  <ReportBody />
+</MazeReportLayout>

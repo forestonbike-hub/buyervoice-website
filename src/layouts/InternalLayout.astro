@@ -1,0 +1,331 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Internal reference page' } = Astro.props;
+
+const pages = [
+  { name: 'Interview Study Workflow', href: '/internal/interview-study-workflow/', category: 'Workflows' },
+  { name: 'How to Code Transcripts', href: '/internal/how-to-code-transcripts/', category: 'Workflows' },
+  { name: 'Segmentation Workflow', href: '/internal/segmentation-workflow/', category: 'Workflows' },
+  { name: 'How to Simulate Participants', href: '/internal/how-to-simulate-participants/', category: 'Workflows' },
+  { name: 'Interview Guide Design', href: '/internal/interview-guides/', category: 'Methodology' },
+  { name: 'Best-Worst Scaling', href: '/internal/best-worst-scaling/', category: 'Methodology' },
+  { name: 'Aided vs Unaided Brand Research', href: '/internal/aided-vs-unaided-brand-research/', category: 'Methodology' },
+  { name: 'Market Segmentation', href: '/internal/market-segmentation/', category: 'Methodology' },
+  { name: 'How Brands Grow', href: '/internal/how-brands-grow/', category: 'Methodology' },
+  { name: 'Syndicated Research Strategy', href: '/internal/syndicated-research-strategy/', category: 'Methodology' },
+  { name: 'B2C Research Projects', href: '/internal/b2c-research-projects/', category: 'Methodology' },
+  { name: 'HR Interview Report', href: '/internal/hr-interview-report/', category: 'Reports' },
+  { name: 'HR Interview Report v2', href: '/internal/hr-interview-reportv2/', category: 'Reports' },
+  { name: 'HR Leaders BambooHR', href: '/internal/hr-leaders-bamboohr/', category: 'Reports' },
+  { name: 'HR Leaders BGR', href: '/internal/hr-leaders-bgr/', category: 'Reports' },
+  { name: 'Retail Banking CIBC', href: '/internal/retail-banking-cibc/', category: 'Reports' },
+  { name: 'UK Neobank Switching Study', href: '/internal/uk-neobanks-report/', category: 'Reports' },
+  { name: 'Intercom Fin-on-Top Study', href: '/internal/intercom-fin-report/', category: 'Reports' },
+  { name: 'Retinol Graduation Moment', href: '/internal/retinol-switching-report/', category: 'Reports' },
+  { name: 'Applied Generative AI Concept', href: '/internal/applied-genai-report/', category: 'Reports' },
+  { name: 'Calendar Sync', href: '/internal/calendar-sync/', category: 'Tools' },
+  { name: 'Four Products v1', href: '/internal/four-products-v1/', category: 'Legacy' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F5EF" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+    <title>{title} | BuyerVoice Internal</title>
+  </head>
+  <body>
+    <!-- Top bar -->
+    <nav class="internal-nav" aria-label="Internal navigation">
+      <div class="internal-nav-inner">
+        <div class="internal-nav-left">
+          <a href="/internal/" class="internal-nav-logo">
+            <img src="/images/logo-nav.svg" alt="BuyerVoice.AI" width="160" height="32" />
+            <span class="internal-badge">Internal</span>
+          </a>
+        </div>
+        <div class="internal-nav-right">
+          <a href="/internal/" class="internal-nav-link">Dashboard</a>
+          <a href="/" class="internal-nav-link">Public Site</a>
+          <a href="/cdn-cgi/access/logout" class="internal-nav-link internal-nav-logout">Log out</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page layout with sidebar -->
+    <div class="internal-layout">
+      <aside class="internal-sidebar" id="sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-heading">Workflows</h3>
+          {pages.filter(p => p.category === 'Workflows').map(page => (
+            <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
+              {page.name}
+            </a>
+          ))}
+        </div>
+        <div class="sidebar-section">
+          <h3 class="sidebar-heading">Methodology</h3>
+          {pages.filter(p => p.category === 'Methodology').map(page => (
+            <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
+              {page.name}
+            </a>
+          ))}
+        </div>
+        <div class="sidebar-section">
+          <h3 class="sidebar-heading">Reports</h3>
+          {pages.filter(p => p.category === 'Reports').map(page => (
+            <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
+              {page.name}
+            </a>
+          ))}
+        </div>
+        <div class="sidebar-section">
+          <h3 class="sidebar-heading">Tools</h3>
+          {pages.filter(p => p.category === 'Tools').map(page => (
+            <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
+              {page.name}
+            </a>
+          ))}
+        </div>
+        <div class="sidebar-section">
+          <h3 class="sidebar-heading">Legacy</h3>
+          {pages.filter(p => p.category === 'Legacy').map(page => (
+            <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
+              {page.name}
+            </a>
+          ))}
+        </div>
+      </aside>
+
+      <main class="internal-main">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --ink: #0B1F3A;
+    --paper: #F7F5EF;
+    --signal: #B8341B;
+    --rule: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: rgba(11, 31, 58, 0.10);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--sans);
+    color: var(--rule);
+    background-color: var(--paper);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--signal);
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+</style>
+
+<style>
+  .internal-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--ink);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .internal-nav-inner {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .internal-nav-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .internal-nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .internal-nav-logo img {
+    height: 36px;
+    width: auto;
+  }
+
+  .internal-badge {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  .internal-nav-right {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .internal-nav-link {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .internal-nav-link:hover {
+    color: #fff;
+  }
+
+  .internal-nav-logout {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .internal-nav-logout:hover {
+    color: var(--signal);
+  }
+
+  /* Layout */
+  .internal-layout {
+    display: flex;
+    padding-top: 56px; /* nav height */
+    min-height: 100vh;
+  }
+
+  .internal-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 0;
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .sidebar-heading {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.5rem 1.25rem;
+  }
+
+  .sidebar-link {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--rule);
+    text-decoration: none;
+    padding: 0.4rem 1.25rem;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .sidebar-link:hover {
+    background: rgba(11, 31, 58, 0.04);
+    color: var(--ink);
+  }
+
+  .sidebar-link.active {
+    background: rgba(184, 52, 27, 0.06);
+    color: var(--signal);
+    font-weight: 500;
+    border-right: 2px solid var(--signal);
+  }
+
+  .internal-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2rem 3rem;
+    max-width: calc(100% - 260px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .internal-sidebar {
+      display: none;
+    }
+
+    .internal-main {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 1.5rem;
+    }
+  }
+</style>

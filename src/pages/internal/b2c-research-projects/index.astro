@@ -1,0 +1,2091 @@
+---
+import InternalLayout from '../../../layouts/InternalLayout.astro';
+---
+
+<InternalLayout title="B2C Research Projects" description="Study design, interview framework, and report structure for consumer (B2C) research projects, grounded in How Brands Grow, CBBE, JTBD, and magnitude coding methodology.">
+  <div class="b2c-page">
+
+    <!-- Hero header -->
+    <header class="page-header">
+      <p class="page-label">Methodology</p>
+      <h1>B2C Research Projects</h1>
+      <p class="page-subtitle">How to adapt BuyerVoice's interview methodology for consumer markets. Covers study design, interview structure, magnitude coding (direction + intensity), buyer/non-buyer analysis, report sections, and recommendations framework, all grounded in validated academic research.</p>
+      <p class="page-date">Last updated: April 22, 2026</p>
+    </header>
+
+    <!-- Table of contents -->
+    <nav class="toc" aria-label="Table of contents">
+      <h2 class="toc-heading">Contents</h2>
+      <ol class="toc-list">
+        <li><a href="#positioning">What This Study Is and Is Not</a></li>
+        <li><a href="#why-different">Why B2C Requires a Different Approach</a></li>
+        <li><a href="#research-foundations">Theoretical Foundations (7 Frameworks)</a></li>
+        <li><a href="#recruitment">Recruitment and Quota Design</a></li>
+        <li><a href="#interview">Interview Framework (16 Questions, 20 Minutes)</a></li>
+        <li><a href="#magnitude-coding">Magnitude Coding Methodology</a></li>
+        <li><a href="#buyer-nonbuyer">Buyer/Non-Buyer Analysis Framework</a></li>
+        <li><a href="#report">Report Structure and Charts</a></li>
+        <li><a href="#recommendations">Recommendations by Stakeholder</a></li>
+        <li><a href="#segmentation">Segmentation Approach</a></li>
+        <li><a href="#moderation">AI Moderation Notes</a></li>
+      </ol>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Positioning -->
+    <!-- ============================================ -->
+    <section id="positioning">
+      <h2>What This Study Is and Is Not</h2>
+
+      <p>This study is a <strong>qualitative brand intelligence snapshot</strong> that uses structured interviews at scale. It is not a brand health tracker. Understanding this distinction shapes how we position the study to clients, design the instrument, and interpret results.</p>
+
+      <div class="comparison-grid">
+        <div class="comparison-card b2b">
+          <h3>Brand Health Tracker (BBH)</h3>
+          <ul>
+            <li>Longitudinal quantitative survey</li>
+            <li>Prompted brand lists, forced-choice responses</li>
+            <li>Tracker-grade metrics (MMS, MPen, NS, SOM)</li>
+            <li>Statistically representative samples</li>
+            <li>Tells you <strong>WHAT</strong> is happening</li>
+          </ul>
+          <p class="comparison-question">"Brand awareness dropped 3 points."</p>
+        </div>
+        <div class="comparison-card b2c">
+          <h3>Our Interview Study</h3>
+          <ul>
+            <li>One-time qualitative snapshot at scale (200 interviews)</li>
+            <li>Open-ended questions, AI-moderated</li>
+            <li>Directional metrics (not tracker-precision)</li>
+            <li>Consumer's own language, reasoning, emotional response</li>
+            <li>Tells you <strong>WHY</strong> it's happening</li>
+          </ul>
+          <p class="comparison-question">"Non-customers associate you with 'old-fashioned banking' in the everyday spending CEP."</p>
+        </div>
+      </div>
+
+      <h3>Three Roles This Study Plays</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Client Situation</th><th>What This Study Provides</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Has a tracker</strong></td>
+              <td>Explains WHY tracker metrics move. The tracker shows awareness dropped; our interviews reveal the reason.</td>
+            </tr>
+            <tr>
+              <td><strong>No tracker yet</strong></td>
+              <td>Foundational understanding to design one. Our CEP identification provides the initial CEP list and baselines.</td>
+            </tr>
+            <tr>
+              <td><strong>Entering a new market</strong></td>
+              <td>Initial landscape map: who competitors are in consumers' minds, the CEP structure, and mental availability gaps.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>What this study uniquely offers (things surveys cannot capture):</strong> (1) Confirmation with richness: validates known patterns (Double Jeopardy, low rejection) with qualitative detail explaining WHY they hold. (2) New discoveries: consumer language, origin stories, switching narratives, and CEP associations that no closed-ended survey can capture. (3) New frameworks: the CEP landscape becomes the tracker's measurement framework; segment profiles become targeting strategy.
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Why Different -->
+    <!-- ============================================ -->
+    <section id="why-different">
+      <h2>Why B2C Requires a Different Approach</h2>
+
+      <p>The B2B methodology (built for the HR Leaders BGR study) is structured around a <strong>deliberate evaluation process</strong>: a buyer had a trigger, formed a consideration set, compared alternatives against criteria, involved a buying committee, and chose a winner. Module A reconstructs that evaluation story.</p>
+
+      <p>In B2C, the buying process is fundamentally different. The interview architecture must change to match.</p>
+
+      <div class="comparison-grid">
+        <div class="comparison-card b2b">
+          <h3>B2B (Current Approach)</h3>
+          <ul>
+            <li>Every buyer went through a deliberate evaluation</li>
+            <li>Buying committees with multiple stakeholders</li>
+            <li>Formal criteria, demos, and vendor comparisons</li>
+            <li>Contracts expire and force periodic re-evaluation</li>
+            <li>JTBD switching analysis applies to the full sample</li>
+          </ul>
+          <p class="comparison-question">"How did you decide?"</p>
+        </div>
+        <div class="comparison-card b2c">
+          <h3>B2C (New Approach)</h3>
+          <ul>
+            <li>Most consumers never "evaluated" their provider</li>
+            <li>Individual or household decisions</li>
+            <li>Inherited relationships, proximity, life events</li>
+            <li>Switching is rare, friction-laden, and inertia-heavy</li>
+            <li>Mental availability is the primary growth driver</li>
+          </ul>
+          <p class="comparison-question">"How did you end up here, and what would make you leave?"</p>
+        </div>
+      </div>
+
+      <h3>Four Structural Changes from B2B</h3>
+      <ol>
+        <li><strong>No Module A / Module B split.</strong> In B2C, ~70-80% of participants have no evaluation story. We use a four-section structure instead.</li>
+        <li><strong>Mental landscape comes first.</strong> CEP identification and brand associations (Section 1) precede the participant identifying their own bank (Section 2) to prevent anchoring bias in open-ended recall.</li>
+        <li><strong>CEP identification is the strategic core.</strong> The CEP block (Q3-Q4) is the most time-intensive section and produces the most strategically valuable output. No B2B equivalent.</li>
+        <li><strong>The switching question is branched.</strong> Only ~20-30% have switched. Q12 branches: switchers get a JTBD deep dive, non-switchers get retention anchors.</li>
+      </ol>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Research Foundations -->
+    <!-- ============================================ -->
+    <section id="research-foundations">
+      <h2>Theoretical Foundations</h2>
+
+      <p>Every element of this interview is grounded in at least one validated academic framework. No invented methods. This section documents which frameworks inform the study and how they connect to specific interview sections.</p>
+
+      <div class="foundations-grid">
+        <div class="foundation-card">
+          <h4>1. Ehrenberg-Bass / How Brands Grow</h4>
+          <p class="foundation-source">Sharp (2010), Romaniuk &amp; Sharp (2022)</p>
+          <p>Mental availability drives growth. Brands grow by penetration (reaching more non-buyers), not loyalty. Rejection is low (7-11%); unawareness is 4-16x larger. Growth comes from non-buyers. Every metric must be split by buyer/non-buyer (BBH Ch. 2, 6, 7).</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Q2 awareness, Q3-Q4 CEPs, Q5 rejection, buyer/non-buyer framework</p>
+        </div>
+        <div class="foundation-card">
+          <h4>2. Category Entry Points &amp; Ws Framework</h4>
+          <p class="foundation-source">Romaniuk &amp; Sharp (2022), Ch. 5-6</p>
+          <p>CEPs are the situational cues that trigger brand recall. The Ws framework (Why, When, Where, While, Whom, What, hoW feeling) structures CEP identification. Six design principles: open-ended cue, Ws probes, completeness push, diverse buyers, balance breadth/distinctiveness, periodic refresh.</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Q3 (genuine CEP identification with Ws probes) and Q4 (brand-CEP associations)</p>
+        </div>
+        <div class="foundation-card">
+          <h4>3. Customer-Based Brand Equity (CBBE)</h4>
+          <p class="foundation-source">Keller (1993, 2001)</p>
+          <p>Brand equity = awareness (recall + recognition) + image (associations varying in strength, favorability, uniqueness). Direction coding measures Keller's "favorability" dimension. Three-tier awareness derives from recall (Q2) and CEP linkage (Q4).</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Q2 (recall), Q4 (associations + favorability via direction coding)</p>
+        </div>
+        <div class="foundation-card">
+          <h4>4. JTBD Switching Forces</h4>
+          <p class="foundation-source">Christensen (1997), Moesta &amp; Spiek (2014)</p>
+          <p>Four forces: push (dissatisfaction), pull (attraction of new), anxiety (fear of change), habit (comfort). Switching when push + pull > anxiety + habit. In banking, anxiety and habit dominate. Intensity coding reveals which forces drive behavior vs. passive mention.</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Q12 (JTBD forces, branched by switching history)</p>
+        </div>
+        <div class="foundation-card">
+          <h4>5. Voice of the Customer (VoC)</h4>
+          <p class="foundation-source">Griffin &amp; Hauser (1993)</p>
+          <p>20-30 interviews capture ~90% of customer needs. Our 200 far exceed this, enabling segmentation and cross-brand comparison. Value is in the customer's own language, not corporate jargon. Feeds the Consumer Language Bank.</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Q9 (retained value), Q10 (frustrations), Q11 (unmet needs), Q16 (ideal experience)</p>
+        </div>
+        <div class="foundation-card">
+          <h4>6. Market Segmentation</h4>
+          <p class="foundation-source">Wedel &amp; Kamakura (2000)</p>
+          <p>Basis variables (form segments), descriptor variables (profile them), criterion variables (validate them). Terminology follows Wedel &amp; Kamakura exactly. Every question classified by segmentation role.</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Every question pre-classified as basis, descriptor, or criterion</p>
+        </div>
+        <div class="foundation-card full-width">
+          <h4>7. Magnitude Coding</h4>
+          <p class="foundation-source">Saldana (2021), Miles, Huberman &amp; Saldana (2020), Osgood et al. (1956), Krippendorff (2018)</p>
+          <p>Adds supplemental codes for "intensity, frequency, direction, presence, or evaluative content" (Saldana, 2021). We apply two dimensions: <strong>direction</strong> (+/-/~) at meaning-unit level and <strong>intensity</strong> (1/2/3) at participant x code level. All terminology is Saldana's exact terms. Direction has a 70+ year research tradition in content analysis. Intensity predicts switching behavior (Singh 1988, Zeelenberg &amp; Pieters 2004).</p>
+          <p class="foundation-implication"><strong>Interview:</strong> Applied to ALL meaning units across ALL thematic questions</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Recruitment -->
+    <!-- ============================================ -->
+    <section id="recruitment">
+      <h2>Recruitment and Quota Design</h2>
+
+      <p>The recommended approach mirrors the B2B brand-cohort model: recruit by primary provider relationship, with quotas ensuring coverage of specific brands the client cares about.</p>
+
+      <h3>Recommended Quota Structure (~200 Participants)</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Cohort</th><th>Target N</th><th>Rationale</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Client's brand</strong></td>
+              <td>60</td>
+              <td>Deep understanding of own customers. Largest cohort for robust buyer analysis.</td>
+            </tr>
+            <tr>
+              <td><strong>Competitor A</strong></td>
+              <td>40</td>
+              <td>Head-to-head comparison with a named rival</td>
+            </tr>
+            <tr>
+              <td><strong>Competitor B</strong></td>
+              <td>40</td>
+              <td>Second named rival for triangulation</td>
+            </tr>
+            <tr>
+              <td><strong>Other traditional players</strong></td>
+              <td>30</td>
+              <td>Fills out the traditional provider landscape</td>
+            </tr>
+            <tr>
+              <td><strong>Digital challengers</strong></td>
+              <td>30</td>
+              <td>Captures the disruptor segment</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total</strong></td>
+              <td><strong>200</strong></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Buyer/Non-Buyer Sample Sizes</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>For Analysis of...</th><th>Buyers</th><th>Non-Buyers</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Client's bank</td><td>~60</td><td>~140</td></tr>
+            <tr><td>Competitor A</td><td>~40</td><td>~160</td></tr>
+            <tr><td>Competitor B</td><td>~40</td><td>~160</td></tr>
+            <tr><td>Other traditional</td><td>~30</td><td>~170</td></tr>
+            <tr><td>Digital challengers</td><td>~30 total (thin per brand)</td><td>~170</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Demographics to Capture in Screener</h3>
+      <ul class="detail-list">
+        <li><strong>Age band:</strong> 18-25 / 26-35 / 36-50 / 51-65 / 65+</li>
+        <li><strong>Province</strong> (banking behavior varies; Quebec has Desjardins)</li>
+        <li><strong>Area type:</strong> Urban / suburban / rural (branch access matters)</li>
+        <li><strong>Household income band</strong></li>
+        <li><strong>Multi-provider usage:</strong> Whether they use more than one bank</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Why brand cohorts over random sampling:</strong> Random sampling overrepresents market leaders and underrepresents challengers. Quotas ensure enough participants per brand for meaningful cross-brand comparisons and buyer/non-buyer splits with sufficient sample sizes.
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Interview Framework -->
+    <!-- ============================================ -->
+    <section id="interview">
+      <h2>Interview Framework (16 Questions, 20 Minutes)</h2>
+
+      <p>Four sections, 16 questions. Ordered to prevent anchoring bias: mental landscape captured BEFORE the participant identifies their own bank. Every question produces at least one basis variable, report metric, or recommendation-driving insight.</p>
+
+      <div class="callout">
+        <strong>Design principle: Mental landscape before personal story.</strong> CEP identification and brand associations (Section 1) come before the participant identifies their own bank (Section 2). Asking "which bank is yours?" before open-ended brand recall questions primes that brand in working memory, inflating its CEP associations. In surveys with prompted brand lists this is less of a concern, but in open-ended interviews it matters.
+      </div>
+
+      <div class="time-budget">
+        <div class="time-block">
+          <span class="time-label">Section 1</span>
+          <span class="time-name">Mental Landscape</span>
+          <span class="time-duration">8-9 min</span>
+          <div class="time-bar" style="width: 42.5%"></div>
+        </div>
+        <div class="time-block">
+          <span class="time-label">Section 2</span>
+          <span class="time-name">Your Banking Story</span>
+          <span class="time-duration">3-4 min</span>
+          <div class="time-bar section2" style="width: 17.5%"></div>
+        </div>
+        <div class="time-block">
+          <span class="time-label">Section 3</span>
+          <span class="time-name">Needs, Friction &amp; Switching</span>
+          <span class="time-duration">5-6 min</span>
+          <div class="time-bar section3" style="width: 27.5%"></div>
+        </div>
+        <div class="time-block">
+          <span class="time-label">Section 4</span>
+          <span class="time-name">The Bigger Picture</span>
+          <span class="time-duration">1-2 min</span>
+          <div class="time-bar section4" style="width: 7.5%"></div>
+        </div>
+      </div>
+
+      <!-- Section 1: Mental Landscape -->
+      <div class="interview-section">
+        <h3>Section 1: Mental Landscape <span class="section-time">8-9 min</span></h3>
+        <p class="section-purpose">Captures the participant's mental map of the banking category BEFORE they identify their own bank. Spontaneous awareness, CEP identification, brand-CEP associations, and rejection measured while working memory is unanchored. Three-tier awareness derived from Q2 + Q4.</p>
+
+        <div class="question-list">
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q1</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"To start, could you tell me your age range, which province you live in, and whether you'd describe your area as urban, suburban, or rural?"</p>
+            <p class="q-coding">Discrete categories: age band, province, area type. Not magnitude coded (categorical data).</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q2</span>
+              <span class="q-role metric">Report Metric</span>
+            </div>
+            <p class="q-text">"When you think about banks in Canada, which ones come to mind?"</p>
+            <p class="q-coding">Code all banks mentioned, in order. First-mentioned = TOM. This is spontaneous awareness (recall) per Keller's CBBE. Combined with Q4, produces the <strong>three-tier awareness classification</strong>: (1) Mentally available (mentioned in Q4 CEP responses), (2) Aware but not linked (mentioned in Q2 but not Q4), (3) Unaware (not mentioned anywhere). <strong>Direction</strong> coded on any evaluative comments alongside brand names.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q3</span>
+              <span class="q-role basis">CEP Identification</span>
+            </div>
+            <p class="q-text">"Think about a time recently when banking or finances came to mind. What was happening? What were you doing, or what prompted you to think about your bank or a bank?"</p>
+            <div class="cep-battery">
+              <h4>AI Moderator Probes (Ws Framework, BBH Ch. 5)</h4>
+              <div class="cep-list">
+                <div class="cep-item">
+                  <span class="cep-letter">Why</span>
+                  <p>"What specifically prompted that thought? Was it a need, a frustration, a goal?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">When</span>
+                  <p>"Are there particular times when banking comes to mind more?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">Where</span>
+                  <p>"Where were you? At home, at work, in a store, on your phone?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">While</span>
+                  <p>"What else were you doing at the time?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">Whom</span>
+                  <p>"Was anyone else involved? Banking for yourself, family, someone else?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">What</span>
+                  <p>"What specific product or service were you thinking about?"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">hoW</span>
+                  <p>"How were you feeling? Stressed, confident, frustrated, neutral?"</p>
+                </div>
+              </div>
+            </div>
+            <p class="q-coding">This is genuine CEP identification per BBH's recommended methodology (Ch. 5). Code each distinct situation as a potential Category Entry Point. Use 2-3 Ws probes based on participant's response, push once for completeness. 3-4 minutes. <strong>Direction + intensity</strong> coded.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q4</span>
+              <span class="q-role basis">Basis + Report Metric</span>
+            </div>
+            <p class="q-text">"For each of these situations, tell me which bank or banks come to mind first, and why."</p>
+            <div class="cep-battery">
+              <h4>CEP Battery (4-5 situations, drawing from Q3 + pre-set CEPs)</h4>
+              <div class="cep-list">
+                <div class="cep-item">
+                  <span class="cep-letter">a</span>
+                  <p>"Everyday spending and transactions (bills, groceries, transfers)"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">b</span>
+                  <p>"Mortgage or buying a home"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">c</span>
+                  <p>"Savings or investing for the future"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">d</span>
+                  <p>"Digital banking (everything from phone/computer)"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">e</span>
+                  <p>"Financial advice for a major decision"</p>
+                </div>
+                <div class="cep-item">
+                  <span class="cep-letter">f</span>
+                  <p>"Recommending a bank to someone new to Canada"</p>
+                </div>
+              </div>
+            </div>
+            <p class="q-coding">For each CEP: first-mentioned bank, all banks, reason for association. Produces the <strong>CEP-Brand Association Map</strong>. <strong>Direction</strong> captures Keller's favorability dimension. <strong>Intensity</strong> at participant x code level. <strong>Split by buyer/non-buyer</strong> in analysis. Non-buyer data is the strategic data for growth.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q5</span>
+              <span class="q-role metric">Report Metric</span>
+            </div>
+            <p class="q-text">"Are there any banks you would absolutely not consider, regardless of the situation? Which ones, and why?"</p>
+            <p class="q-coding">Produces <strong>Brand Rejection Rate</strong> per brand. Ehrenberg-Bass predicts 7-11%. Direction inherently negative. <strong>Most meaningful among non-buyers</strong>. Rejection is a separate overlay on the three-tier awareness classification.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Banking Story -->
+      <div class="interview-section">
+        <h3>Section 2: Your Banking Story <span class="section-time">3-4 min</span></h3>
+        <p class="section-purpose">Now that the mental landscape is captured, the participant identifies their own bank and tells their origin story. Q6 is the KEY variable that enables buyer/non-buyer analysis for all brand-level metrics.</p>
+
+        <div class="question-list">
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q6</span>
+              <span class="q-role criterion">Criterion + Key Classifier</span>
+            </div>
+            <p class="q-text">"Which bank do you consider your primary bank, the one where you do most of your day-to-day banking? And roughly how long have you been with them?"</p>
+            <p class="q-coding"><strong>CRITICAL: This is the KEY buyer/non-buyer classifier for ALL brand-level analysis.</strong> Primary bank is the criterion variable (never clustering input). Tenure as ordinal bands. Not magnitude coded.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q7</span>
+              <span class="q-role basis">Basis</span>
+            </div>
+            <p class="q-text">"How did you first end up at this bank? What's the story behind how you became a customer there?"</p>
+            <p class="q-coding">Thematic: <strong>Bank Origin</strong> pathway (inherited / proximity / life event / actively chose / employer / recommendation / other). <strong>Basis variable.</strong> <strong>Direction + intensity</strong> coded: "I specifically chose them" (+) vs. "there was no other option" (-).</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q8</span>
+              <span class="q-role basis">Basis</span>
+            </div>
+            <p class="q-text">"Besides your primary bank, do you use any other banks or financial services? If so, which ones and what do you use them for?"</p>
+            <p class="q-coding">Multi-banking binary (<strong>basis variable</strong>) + thematic reasons for splitting. <strong>Direction + intensity</strong> coded.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Needs & Switching -->
+      <div class="interview-section">
+        <h3>Section 3: Needs, Friction, and Switching <span class="section-time">5-6 min</span></h3>
+        <p class="section-purpose">What consumers value, what frustrates them, and the forces anchoring or pushing them. Branches on switching history. Magnitude coding on all meaning units. Buyer/non-buyer split on frustrations.</p>
+
+        <div class="question-list">
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q9</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"What does your primary bank do particularly well for you? What would you miss most if you had to leave?"</p>
+            <p class="q-coding">Retained value themes. <strong>Direction</strong> inherently positive. <strong>Intensity</strong> at participant x code level.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q10</span>
+              <span class="q-role basis">Basis Candidate</span>
+            </div>
+            <p class="q-text">"What frustrates you most about your bank? Where does it fall short?"</p>
+            <p class="q-coding"><strong>Direction</strong> inherently negative. <strong>Intensity</strong> is the key analytical lever: "fees" at intensity 1 (brief mention) is background noise; at intensity 3 (specific incident narrative) it's a switching trigger. <strong>Split by buyer/non-buyer:</strong> buyer frustrations = retention risk, non-buyer perceptions = acquisition barriers. Cross-referenced with Q12 switching stories.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q11</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"If you could change one thing about your banking experience, what would it be?"</p>
+            <p class="q-coding">Forces prioritization. <strong>Direction + intensity</strong> coded.</p>
+          </div>
+
+          <div class="question branching">
+            <div class="q-header">
+              <span class="q-num">Q12</span>
+              <span class="q-role basis">Basis Candidate (JTBD)</span>
+            </div>
+
+            <div class="branch-container">
+              <div class="branch switchers">
+                <h4>For switchers:</h4>
+                <p class="q-text">"You mentioned you switched from [previous bank] to [current bank]. What triggered that decision? What were you hoping to get?"</p>
+                <p class="q-coding">Push forces (-), pull forces (+), anxiety (-), habit (~), triggering event. <strong>Intensity</strong> reveals which forces drive behavior vs. passive mention.</p>
+              </div>
+              <div class="branch non-switchers">
+                <h4>For non-switchers:</h4>
+                <p class="q-text">"Have you ever been frustrated enough to think about leaving? What kept you?"</p>
+                <p class="q-coding">Latent switching + retention anchors (habit/anxiety forces). <strong>Direction + intensity</strong> coded.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q13</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"What would a bank need to offer or do differently to make you seriously consider switching?"</p>
+            <p class="q-coding">Switching motivation themes. <strong>Direction</strong> coded.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q14</span>
+              <span class="q-role descriptor">Descriptor / Criterion</span>
+            </div>
+            <p class="q-text">"How likely are you to still be with your current bank two years from now?"</p>
+            <p class="q-coding">5-point ordinal. Not magnitude coded. <strong>Split by brand</strong> in analysis.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Bigger Picture -->
+      <div class="interview-section">
+        <h3>Section 4: The Bigger Picture <span class="section-time">1-2 min</span></h3>
+        <p class="section-purpose">Macro sentiment and aspirational needs. Content scaffolding for thought leadership.</p>
+
+        <div class="question-list">
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q15</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"Stepping back from your own experience, what do you think is the biggest challenge or frustration that most Canadians have with their banks today?"</p>
+            <p class="q-coding">Macro market challenges. <strong>Direction + intensity</strong> coded.</p>
+          </div>
+
+          <div class="question">
+            <div class="q-header">
+              <span class="q-num">Q16</span>
+              <span class="q-role descriptor">Descriptor</span>
+            </div>
+            <p class="q-text">"If you could design the perfect banking experience from scratch, what would it look like?"</p>
+            <p class="q-coding">Aspiration themes. <strong>Direction</strong> inherently positive. <strong>Intensity</strong> coded.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variable Summary -->
+      <h3>Segmentation Variable Summary</h3>
+      <div class="table-wrap">
+        <table class="variable-table">
+          <thead>
+            <tr><th>Q</th><th>Variable Type</th><th>Role</th><th>What It Captures</th><th>Magnitude Coded?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Q1</td><td>Discrete (age, province, area)</td><td class="role-descriptor">Descriptor</td><td>Demographics</td><td>No</td></tr>
+            <tr><td>Q2</td><td>Discrete (bank names)</td><td class="role-metric">Report metric</td><td>Spontaneous awareness</td><td>Direction only</td></tr>
+            <tr><td>Q3</td><td>Thematic (CEP situations)</td><td class="role-metric">Report metric + basis candidate</td><td>CEP landscape</td><td>Direction + intensity</td></tr>
+            <tr><td>Q4</td><td>Discrete + Thematic (CEP-brand)</td><td class="role-basis">Basis + metric</td><td>Mental availability by brand</td><td>Direction + intensity</td></tr>
+            <tr><td>Q5</td><td>Discrete + Thematic (rejection)</td><td class="role-metric">Report metric</td><td>Brand rejection</td><td>Direction + intensity</td></tr>
+            <tr><td>Q6</td><td>Discrete (bank) + Ordinal (tenure)</td><td class="role-criterion">Criterion + key classifier</td><td>Primary bank relationship</td><td>No</td></tr>
+            <tr><td>Q7</td><td>Thematic (origin story)</td><td class="role-basis">Basis</td><td>How they became a customer</td><td>Direction + intensity</td></tr>
+            <tr><td>Q8</td><td>Binary + Thematic</td><td class="role-basis">Basis + descriptor</td><td>Wallet fragmentation</td><td>Direction + intensity</td></tr>
+            <tr><td>Q9</td><td>Thematic</td><td class="role-descriptor">Descriptor</td><td>What they value</td><td>Direction (+) + intensity</td></tr>
+            <tr><td>Q10</td><td>Thematic</td><td class="role-basis">Basis candidate</td><td>Pain points</td><td>Direction (-) + intensity</td></tr>
+            <tr><td>Q11</td><td>Thematic</td><td class="role-descriptor">Descriptor</td><td>Priority need</td><td>Direction + intensity</td></tr>
+            <tr><td>Q12</td><td>Thematic (branching)</td><td class="role-basis">Basis candidate</td><td>JTBD forces</td><td>Direction + intensity</td></tr>
+            <tr><td>Q13</td><td>Thematic</td><td class="role-descriptor">Descriptor</td><td>What would make them move</td><td>Direction</td></tr>
+            <tr><td>Q14</td><td>Ordinal</td><td class="role-descriptor">Descriptor / criterion</td><td>Churn risk</td><td>No</td></tr>
+            <tr><td>Q15</td><td>Thematic</td><td class="role-descriptor">Descriptor</td><td>Macro sentiment</td><td>Direction + intensity</td></tr>
+            <tr><td>Q16</td><td>Thematic</td><td class="role-descriptor">Descriptor</td><td>Aspirational needs</td><td>Direction (+) + intensity</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Magnitude Coding -->
+    <!-- ============================================ -->
+    <section id="magnitude-coding">
+      <h2>Magnitude Coding Methodology</h2>
+
+      <p><strong>Method:</strong> Magnitude coding (Saldana, 2021). <strong>Dimensions:</strong> Direction and intensity (Saldana's exact terminology). Magnitude coding is "the addition of a supplemental alphanumeric or symbolic code to an existing coded datum to indicate its intensity, frequency, direction, presence, or evaluative content." We apply two of these dimensions.</p>
+
+      <div class="callout">
+        <strong>Why direction and intensity?</strong> These two dimensions answer the two questions most relevant to marketing and product teams: <strong>Direction</strong> tells you "is this an asset or a liability?" (maps to Keller's 1993 favorability dimension). <strong>Intensity</strong> tells you "how much does it matter to behavior?" (Singh 1988: complaint intensity predicts exit vs. voice vs. loyalty; Zeelenberg &amp; Pieters 2004: same negative direction but different intensity = different behavioral responses).
+      </div>
+
+      <div class="comparison-grid">
+        <div class="comparison-card b2c">
+          <h3>Direction (+/-/~)</h3>
+          <ul>
+            <li><strong>Level:</strong> Meaning-unit level, during dual-coder phase</li>
+            <li><strong>Applied to:</strong> EVERY meaning unit (even question-directed ones)</li>
+            <li><strong>+ Positive:</strong> Approval, satisfaction, benefit</li>
+            <li><strong>- Negative:</strong> Disapproval, criticism, complaint</li>
+            <li><strong>~ Mixed/Neutral:</strong> Factual or hedged; default for ambiguous</li>
+            <li><strong>Critical rule:</strong> Reflects participant's stance, not topic nature. "I love their fees" = +, "Their fees are outrageous" = -</li>
+          </ul>
+          <p class="comparison-question">Research: Osgood et al. (1956), Krippendorff (2018), Keller (1993)</p>
+        </div>
+        <div class="comparison-card b2c">
+          <h3>Intensity (1/2/3)</h3>
+          <ul>
+            <li><strong>Level:</strong> Participant x code level, post-coding aggregation</li>
+            <li><strong>Why not meaning-unit:</strong> Our meaning units are too micro; intensity manifests across totality</li>
+            <li><strong>1 Brief:</strong> Single generic statement, no detail</li>
+            <li><strong>2 Elaborated:</strong> 2+ meaning units OR specific detail, mild intensifiers</li>
+            <li><strong>3 Narrative:</strong> Incident story, strong language, emotional markers, or returns to topic unprompted</li>
+            <li><strong>Why 3 levels:</strong> Saldana recommends 3-4; finer distinctions are unreliable</li>
+          </ul>
+          <p class="comparison-question">Research: Singh (1988), Zeelenberg &amp; Pieters (2004), Miles et al. (2020)</p>
+        </div>
+      </div>
+
+      <h3>Why Direction on ALL Meaning Units?</h3>
+      <p>Even when a question implies direction (e.g., "What frustrates you?" implies negative), each meaning unit gets an explicit direction code. Rationale: meaning units are queried independently of their source question in downstream analysis. If a meaning unit from a frustration question is later retrieved in a cross-question query, the source question context is gone. Without an explicit direction tag, the evaluative dimension is lost.</p>
+      <p>For question-directed responses (frustrations = negative, retained value = positive), direction coding is fast and nearly automatic. For open-ended responses (CEP associations, origin stories), the coder reads context and makes a judgment.</p>
+
+      <h3>Why NOT Emotional Coding?</h3>
+      <p>We considered and rejected emotional coding (coding for specific emotions: anger, joy, anxiety) for three reasons: (1) lower inter-rater reliability because it requires inferring internal states, (2) disproportionate complexity (6-20 categories per meaning unit), (3) our research questions don't require it. We need to know favorable vs. unfavorable (direction) and how strongly held (intensity), not whether a negative association produces anger specifically vs. disappointment.</p>
+
+      <h3>Three Dimensions Per Meaning Unit</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Dimension</th><th>Level</th><th>Values</th><th>Applied When</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Thematic code</strong></td><td>Meaning-unit</td><td>Codebook codes</td><td>Existing pipeline</td></tr>
+            <tr><td><strong>Direction</strong></td><td>Meaning-unit</td><td>+ / - / ~</td><td>During dual-coder application (Phase 1a)</td></tr>
+            <tr><td><strong>Intensity</strong></td><td>Participant x code</td><td>1 / 2 / 3</td><td>Post-coding aggregation (Phase 2)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Pipeline-level improvement:</strong> Magnitude coding applies to both B2C and B2B studies. All future studies should use direction + intensity coding. The existing extraction, clustering, and application pipeline is unchanged; direction is added during application, and intensity is a new post-coding pass.
+      </div>
+
+      <h3>What This Produces in the Report</h3>
+      <p>"62% of non-customers mentioned fees (direction: negative). Of those, 35% were intensity 1 (brief mention), 40% were intensity 2 (elaborated), and 25% were intensity 3 (specific incident narrative). The intensity-3 group overlaps 2.5x more with participants who reported seriously considering switching (Q12), identifying fee frustration at the narrative level as a genuine switching trigger, not background noise."</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Buyer/Non-Buyer -->
+    <!-- ============================================ -->
+    <section id="buyer-nonbuyer">
+      <h2>Buyer/Non-Buyer Analysis Framework</h2>
+
+      <p><strong>Why this is non-negotiable:</strong> Growth comes from non-buyers. A brand's current customers already buy from it. Measuring their awareness tells you about retention. Measuring NON-customers' awareness tells you about growth potential.</p>
+
+      <div class="callout foundation-callout">
+        <strong>BBH is emphatic across multiple chapters:</strong><br>
+        Ch. 2: "Brand buyers have a higher baseline Brand Awareness score due to past brand buying. To detect whether marketing communications successfully built Brand Awareness among a brand's non-buyers, we would need to quarantine brand buyer responses."<br>
+        Ch. 6: "MPen is most useful among non-buyers of brands, as this is where their potential to become future buyers will be first detected."<br>
+        Ch. 4: Modified wording forms suppress non-buyer responses by 27% vs. 14% for buyers. Non-buyers are 2x more affected by measurement choices.
+      </div>
+
+      <h3>How It Works</h3>
+      <p>Q6 (primary bank) classifies each participant. For any given brand: <strong>brand buyers</strong> = participants whose primary bank is this brand (30-60 people), <strong>brand non-buyers</strong> = everyone else (140-170 people).</p>
+
+      <h3>What Each Split Tells You</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Analysis</th><th>Buyer Data = Retention Health</th><th>Non-Buyer Data = Growth Potential</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>CEP-brand associations</strong></td><td>Which situations customers associate with the brand (reflects experience)</td><td>Which situations NON-customers associate with the brand (reflects mental availability)</td></tr>
+            <tr><td><strong>Spontaneous awareness</strong></td><td>Near-ceiling; not diagnostic</td><td>The brand's presence in the growth audience's memory</td></tr>
+            <tr><td><strong>Frustrations</strong></td><td>What might cause churn (retention risk)</td><td>What non-customers believe is wrong (acquisition barrier)</td></tr>
+            <tr><td><strong>Rejection</strong></td><td>Rarely applicable</td><td>Low rejection + high unawareness (Ehrenberg-Bass prediction)</td></tr>
+            <tr><td><strong>Direction of associations</strong></td><td>Expected to skew positive</td><td>Reveals brand's reputation among the growth audience</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Report rule:</strong> Every chart showing brand-level data includes a buyer/non-buyer breakdown. The non-buyer row is the strategic row for marketing teams. Recommendations separate retention actions (buyer data) from acquisition actions (non-buyer data).
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Report Structure -->
+    <!-- ============================================ -->
+    <section id="report">
+      <h2>Report Structure and Charts</h2>
+
+      <p>12 analytical sections plus recommendations and appendix. ~33 distinct charts/tables. Every question feeds at least one report section. Every brand-level chart includes buyer/non-buyer splits. Magnitude coding (direction + intensity) integrated throughout.</p>
+
+      <!-- Report Section Cards -->
+      <div class="report-sections">
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">1</span>
+            <h4>Executive Summary</h4>
+          </div>
+          <p>Top 5-7 findings, one sentence each. Key implication for each stakeholder group. No charts.</p>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">2</span>
+            <h4>Study Design and Methodology</h4>
+          </div>
+          <p>Sample composition, methodology, magnitude coding explanation (direction + intensity per Saldana 2021), buyer/non-buyer analysis rationale (cite BBH), directional metrics disclaimer.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Sample Composition</span>
+              <span class="chart-source">Screener + Q1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card highlight">
+          <div class="rs-header">
+            <span class="rs-num">3</span>
+            <h4>CEP Discovery and Mental Landscape</h4>
+            <span class="rs-badge">Centerpiece</span>
+          </div>
+          <p>Consumer-generated CEP inventory, brand-CEP association map (buyer/non-buyer split), mental availability scores, competitive battleground. Direction overlay on all associations.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">CEP Inventory (from Q3 identification)</span>
+              <span class="chart-source">Q3</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Heatmap</span>
+              <span class="chart-name">CEP-Brand Association Map (buyer/non-buyer, with direction)</span>
+              <span class="chart-source">Q4</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Mental Availability Score (buyer/non-buyer)</span>
+              <span class="chart-source">Q4 (derived)</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Grouped Bar</span>
+              <span class="chart-name">First Mention Share by CEP</span>
+              <span class="chart-source">Q4</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Quadrant</span>
+              <span class="chart-name">CEP Competitive Battleground (non-buyers only)</span>
+              <span class="chart-source">Q4 (derived)</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">"Why Brands Come to Mind" (buyer/non-buyer)</span>
+              <span class="chart-source">Q4 (reasons)</span>
+            </div>
+          </div>
+          <p class="chart-note">The CEP-Brand Association Map with buyer/non-buyer split is the single most strategically important chart. The non-buyer row shows the brand's mental availability among the growth audience.</p>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">4</span>
+            <h4>Brand Awareness and Rejection</h4>
+          </div>
+          <p>Three-tier awareness (derived from Q2 + Q4, not self-reported), rejection rates, awareness opportunity. Non-buyers only for awareness (buyer awareness is near-ceiling).</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Stacked Bar</span>
+              <span class="chart-name">Three-Tier Awareness (non-buyers only)</span>
+              <span class="chart-source">Q2 + Q4</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Rejection Reasons by Brand (with intensity)</span>
+              <span class="chart-source">Q5</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Awareness Opportunity (with direction data)</span>
+              <span class="chart-source">Q2 + Q4 + Q5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">5</span>
+            <h4>How Consumers End Up at Their Bank</h4>
+          </div>
+          <p>Origin pathway distribution by brand and age band. Direction coding reveals whether origins were positive, neutral, or negative.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Stacked Bar</span>
+              <span class="chart-name">Bank Origin Distribution by Brand (with direction)</span>
+              <span class="chart-source">Q7</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Grouped Bar</span>
+              <span class="chart-name">Origin Pathway by Age Band</span>
+              <span class="chart-source">Q7 + Q1</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">6</span>
+            <h4>Needs, Frustrations, and Friction</h4>
+          </div>
+          <p>Frustration frequency x intensity, buyer/non-buyer split, unmet needs. Magnitude coding transforms frustrations from a topic list into a behavioral predictor.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Retained Value Frequency (with intensity)</span>
+              <span class="chart-source">Q9</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Frustration Frequency x Intensity (buyer/non-buyer)</span>
+              <span class="chart-source">Q10</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Top Unmet Need Ranking</span>
+              <span class="chart-source">Q11</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bubble</span>
+              <span class="chart-name">Frustration Intensity Map (frequency x intensity-3 %)</span>
+              <span class="chart-source">Q10 (derived)</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Frustration vs. Switching Trigger Cross-Reference</span>
+              <span class="chart-source">Q10 + Q12</span>
+            </div>
+          </div>
+          <p class="chart-note">NEW: The frustration vs. switching cross-reference shows which frustrations at intensity 3 actually appear in switching stories (Q12), separating genuine triggers from background noise.</p>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">7</span>
+            <h4>Switching Dynamics</h4>
+          </div>
+          <p>JTBD four-forces analysis with intensity coding. Push, pull, anxiety, and habit forces weighted by intensity.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Switching Rate by Brand</span>
+              <span class="chart-source">Q7 / screener</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Push Forces (switchers, with intensity)</span>
+              <span class="chart-source">Q12</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Pull Forces (switchers, with intensity)</span>
+              <span class="chart-source">Q12</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Anxiety and Habit Forces (all, with intensity)</span>
+              <span class="chart-source">Q12</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Switching Motivation Themes</span>
+              <span class="chart-source">Q13</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Stacked Bar</span>
+              <span class="chart-name">Switching Propensity by Brand</span>
+              <span class="chart-source">Q14</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">8</span>
+            <h4>Multi-Banking and Wallet Fragmentation</h4>
+          </div>
+          <p>Where consumers split their banking and why. Direction coding on reasons for splitting.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Multi-Banking Rate by Primary Brand</span>
+              <span class="chart-source">Q8</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Secondary Provider Frequency</span>
+              <span class="chart-source">Q8</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Reasons for Splitting (with direction)</span>
+              <span class="chart-source">Q8</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">9</span>
+            <h4>Consumer Segments</h4>
+          </div>
+          <p>3-5 segments profiled across all variables. Segment profiles include magnitude coding summary (direction and intensity patterns).</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Segment Overview</span>
+              <span class="chart-source">Clustering output</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Multi-chart</span>
+              <span class="chart-name">Segment Profiles (1 page each, with magnitude coding)</span>
+              <span class="chart-source">All questions</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Heatmap</span>
+              <span class="chart-name">Segment-by-CEP Cross-Tab</span>
+              <span class="chart-source">Q4 x segments</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Segment Migration Opportunities</span>
+              <span class="chart-source">Derived</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">10</span>
+            <h4>Market Outlook and Aspirations</h4>
+          </div>
+          <p>Macro challenges and ideal experience. Direction + intensity coded.</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Top Market Challenges (with intensity)</span>
+              <span class="chart-source">Q15</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Bar</span>
+              <span class="chart-name">Ideal Experience Themes</span>
+              <span class="chart-source">Q16</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-section-card">
+          <div class="rs-header">
+            <span class="rs-num">11</span>
+            <h4>Consumer Language Bank</h4>
+            <span class="rs-badge">New</span>
+          </div>
+          <p>Curated verbatims organized by theme, CEP, and segment. Tagged with direction, intensity, and buyer/non-buyer status. Direct input for ad copywriters and content creators. "Use these words, not those words."</p>
+          <div class="chart-list">
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Language by Theme (buyer/non-buyer)</span>
+              <span class="chart-source">All questions</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Language by CEP (buyer/non-buyer)</span>
+              <span class="chart-source">Q3 + Q4</span>
+            </div>
+            <div class="chart-item">
+              <span class="chart-type">Table</span>
+              <span class="chart-name">Language by Segment</span>
+              <span class="chart-source">All questions</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3>Appendix: What to Track Next</h3>
+      <p>Recommendations for a future tracker or repeat study: which CEPs to monitor, three-tier awareness per brand among non-buyers, frustration intensity distributions over time, segment stability, multi-banking rates, and digital challenger growth as secondary providers.</p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Recommendations -->
+    <!-- ============================================ -->
+    <section id="recommendations">
+      <h2>Recommendations by Stakeholder</h2>
+
+      <p>The three-audience framework maps to three decision types. <strong>All recommendations split by retention actions (buyer data) and acquisition actions (non-buyer data).</strong></p>
+
+      <div class="stakeholder-grid">
+
+        <!-- Brand & Marketing -->
+        <div class="stakeholder-card">
+          <div class="stakeholder-header marketing-bg">
+            <h3>Brand &amp; Marketing</h3>
+            <p class="stakeholder-who">CMO, Brand VP, Advertising, Content</p>
+          </div>
+          <div class="stakeholder-body">
+            <p class="stakeholder-decision">Decisions: <strong>What to say and where to say it</strong></p>
+
+            <h4>Strategic Recommendations</h4>
+
+            <div class="rec-item">
+              <h5>CEP Prioritization Strategy (Using Non-Buyer Data)</h5>
+              <p>Identify 2-3 CEPs where the client should concentrate advertising. Prioritize using the non-buyer rows of the CEP-Brand Association Map: CEPs where the client has low non-buyer linkage but the CEP is high-relevance (white space), or moderate linkage with no competitor dominance (contestable).</p>
+              <p class="rec-grounding">Romaniuk &amp; Sharp (2022): Brands grow mental availability by building more CEP linkages, not deepening existing ones.</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Awareness Over Persuasion</h5>
+              <p>If the data confirms low rejection and high unawareness among non-buyers (per Ehrenberg-Bass prediction), the priority is building basic awareness and CEP linkage with the unaware population, not campaigns to change the few rejecters' minds.</p>
+              <p class="rec-grounding">Rejection averages 7-11%. Unawareness is 4-16x larger. ROI on converting unaware to aware exceeds converting rejecters.</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Reach the Whole Market (95-5 Rule)</h5>
+              <p>Most consumers are not actively looking for a new bank. Broad-reach advertising builds memory structures (CEP-brand links) that determine which bank comes to mind when a life event triggers a need months or years later.</p>
+              <p class="rec-grounding">Sharp (2010): Advertising effectiveness in long-cycle categories depends on memory-building, not immediate conversion.</p>
+            </div>
+
+            <h4>Tactical Recommendations</h4>
+            <ul>
+              <li><strong>Messaging by CEP:</strong> Using consumer language from the Consumer Language Bank (Section 11), differentiated for buyer (retention) vs. non-buyer (acquisition) audiences</li>
+              <li><strong>Segment-specific campaign briefs:</strong> One page per segment with CEPs, frustrations, tone/language, and channel implications</li>
+              <li><strong>Competitive positioning:</strong> Based on CEP Competitive Battleground (non-buyer data) for acquisition strategy</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Product & Digital -->
+        <div class="stakeholder-card">
+          <div class="stakeholder-header product-bg">
+            <h3>Product &amp; Digital</h3>
+            <p class="stakeholder-who">Head of Digital, Product Managers, UX</p>
+          </div>
+          <div class="stakeholder-body">
+            <p class="stakeholder-decision">Decisions: <strong>What to build</strong></p>
+
+            <h4>Strategic Recommendations</h4>
+
+            <div class="rec-item">
+              <h5>Close Frustration Gaps That Cause Switching (Intensity-Weighted)</h5>
+              <p>Cross-reference frustrations (Section 6) with switching triggers (Section 6e cross-reference chart). Frustrations at intensity 3 that also appear in switching stories are the product priorities. Frustrations at intensity 1 that never trigger switching are lower priority, regardless of frequency.</p>
+              <p class="rec-grounding">JTBD framework + Singh (1988): complaint intensity predicts exit vs. voice vs. loyalty. Frequency alone misleads (Miles et al. 2020).</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Stem Multi-Banking Leakage</h5>
+              <p>Section 8 identifies where consumers go for secondary products and why. Each leakage category = product gap to close or bundling opportunity.</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Physical Availability Still Matters</h5>
+              <p>If proximity-driven origin pathways remain significant, branch presence is still a growth factor. For digital challengers winning younger cohorts, investment shifts to app experience and digital onboarding.</p>
+              <p class="rec-grounding">Sharp (2010): Physical availability is the second growth pillar alongside mental availability.</p>
+            </div>
+
+            <h4>Tactical Recommendations</h4>
+            <ul>
+              <li><strong>Feature priority matrix:</strong> Unmet needs (Q11, Q13, Q16) against competitive offerings, weighted by intensity</li>
+              <li><strong>Digital experience gap analysis:</strong> Features non-customers associate with challengers vs. client offering</li>
+              <li><strong>Segment-specific product needs:</strong> Frustrations and unmet needs per segment with intensity distributions</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Retail & Growth -->
+        <div class="stakeholder-card">
+          <div class="stakeholder-header growth-bg">
+            <h3>Retail &amp; Growth</h3>
+            <p class="stakeholder-who">Head of Retail, Acquisition, Retention, Branch Network</p>
+          </div>
+          <div class="stakeholder-body">
+            <p class="stakeholder-decision">Decisions: <strong>Who to acquire and how to keep them</strong></p>
+
+            <h4>Strategic Recommendations</h4>
+
+            <div class="rec-item">
+              <h5>Penetration, Not Loyalty</h5>
+              <p>Growth comes from acquiring more customers, not deepening loyalty. Loyalty metrics are largely determined by brand size (Double Jeopardy). Primary growth investment should be acquisition.</p>
+              <p class="rec-grounding">Double Jeopardy confirmed across consumer banking categories. Smaller brands have fewer customers AND lower loyalty.</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Be Present at Life Events</h5>
+              <p>Life events are the primary triggers putting consumers in-market. Acquisition strategy should concentrate on these moments through partnerships, targeted media, and CEP-linked messaging.</p>
+              <p class="rec-grounding">JTBD: push forces accumulate but a triggering event (almost always a life event in banking) is required to overcome habit and anxiety.</p>
+            </div>
+
+            <div class="rec-item">
+              <h5>Lower Switching Barriers as Acquisition Tool</h5>
+              <p>Section 7 quantifies barriers. If "too much hassle to re-set up payments" is dominant, an acquisition program that automates the switch removes the largest obstacle.</p>
+            </div>
+
+            <h4>Tactical Recommendations</h4>
+            <ul>
+              <li><strong>Competitor vulnerability map:</strong> Cross-reference frustrations (Q10, intensity-weighted), switching propensity (Q14), and non-buyer awareness of client (Q2/Q4)</li>
+              <li><strong>Segment acquisition prioritization:</strong> Rank by size, client under-representation, switching propensity, awareness</li>
+              <li><strong>Retention risk dashboard:</strong> Client's customers by segment, with leaving propensity and intensity-3 frustrations</li>
+              <li><strong>Onboarding priorities:</strong> New customers (short tenure in Q6): what they value and what frustrates them</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Segmentation -->
+    <!-- ============================================ -->
+    <section id="segmentation">
+      <h2>Segmentation Approach</h2>
+
+      <p>In B2B, basis variables came from the evaluation process (triggers, criteria, decision authority). In B2C, basis variables shift because most consumers never went through a formal evaluation. Terminology follows Wedel &amp; Kamakura (2000) exactly.</p>
+
+      <h3>Primary Basis Candidates</h3>
+      <div class="basis-grid">
+        <div class="basis-card">
+          <h4>Bank Origin Type</h4>
+          <p>Inherited / active choice / life event / proximity / other</p>
+          <p class="basis-source">From Q7</p>
+        </div>
+        <div class="basis-card">
+          <h4>Multi-Banking Behavior</h4>
+          <p>Single provider vs. split across multiple</p>
+          <p class="basis-source">From Q8</p>
+        </div>
+        <div class="basis-card">
+          <h4>CEP Importance Profile</h4>
+          <p>Which category entry points matter most to this consumer</p>
+          <p class="basis-source">From Q4</p>
+        </div>
+        <div class="basis-card">
+          <h4>Frustration Patterns</h4>
+          <p>If they show cross-participant variation independent of bank choice</p>
+          <p class="basis-source">From Q10 (basis candidate)</p>
+        </div>
+        <div class="basis-card">
+          <h4>Switching Force Balance</h4>
+          <p>Push/pull vs. anxiety/habit dominance</p>
+          <p class="basis-source">From Q12 (basis candidate)</p>
+        </div>
+      </div>
+
+      <h3>Role of Magnitude Coding in Segmentation</h3>
+      <p>Direction and intensity are not direct segmentation inputs (they modify codes, not stand alone). They influence segmentation in two ways: (1) <strong>Variable selection:</strong> If a frustration code is 80% intensity-1, only the intensity-3 subset may be worth treating as a basis variable. (2) <strong>Segment profiling:</strong> Direction and intensity distributions within each segment add interpretive depth. "Segments A and B both mention fees, but Segment A is 70% intensity-3 while Segment B is 80% intensity-1."</p>
+
+      <h3>Expected Segment Archetypes (Illustrative)</h3>
+      <p>These are hypothetical, not predetermined. Actual segments emerge from the data through MCA + clustering (Wedel &amp; Kamakura, 2000).</p>
+
+      <div class="archetype-grid">
+        <div class="archetype-card">
+          <h4>Inherited Loyalists</h4>
+          <p>Banked with the same institution since childhood. Never considered switching. Low engagement.</p>
+          <p class="archetype-strategy"><strong>Growth lever:</strong> Cross-sell, increase share of wallet</p>
+        </div>
+        <div class="archetype-card">
+          <h4>Convenience-First</h4>
+          <p>Chose based on proximity or digital ease. Would switch for better convenience. Moderate engagement.</p>
+          <p class="archetype-strategy"><strong>Growth lever:</strong> Digital experience, branch network, reduce friction</p>
+        </div>
+        <div class="archetype-card">
+          <h4>Active Optimizers</h4>
+          <p>Have switched or use multiple providers. Compare rates and features. Higher financial literacy.</p>
+          <p class="archetype-strategy"><strong>Growth lever:</strong> Competitive rates, transparent pricing, reward switching</p>
+        </div>
+        <div class="archetype-card">
+          <h4>Life-Event Movers</h4>
+          <p>Banking shaped by life events: immigration, first home, marriage. Needs change with life stage.</p>
+          <p class="archetype-strategy"><strong>Growth lever:</strong> Anticipate next life event, be present at the right CEP</p>
+        </div>
+        <div class="archetype-card">
+          <h4>Digitally Displaced</h4>
+          <p>Moved some banking to digital challengers but kept a traditional primary account. Splitting wallet.</p>
+          <p class="archetype-strategy"><strong>Growth lever:</strong> Match digital rates/experience (traditional); convert to primary (challengers)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECTION: Moderation Notes -->
+    <!-- ============================================ -->
+    <section id="moderation">
+      <h2>AI Moderation Notes</h2>
+
+      <div class="moderation-grid">
+        <div class="mod-card">
+          <h4>Language Calibration</h4>
+          <p>Consumers range from financially sophisticated to basic. Use plain language: "savings account" not "deposit product," "mortgage" not "secured lending," "fees" not "service charges." Match the participant's language level.</p>
+        </div>
+        <div class="mod-card">
+          <h4>CEP Identification Probing (Q3)</h4>
+          <p>Most open-ended part of the interview. Let the participant talk freely, then use 2-3 Ws probes targeted to what they said. Don't run through all 7 mechanically. Push once for completeness. 3-4 min max.</p>
+        </div>
+        <div class="mod-card">
+          <h4>CEP Battery Probing (Q4)</h4>
+          <p>Present each situation clearly, wait for bank names, probe briefly with "Why does [bank] come to mind for that?" Keep probes brief. Goal: first-mention data and a short reason, not deep exploration.</p>
+        </div>
+        <div class="mod-card">
+          <h4>Inherited Relationships (Q7)</h4>
+          <p>Many will say "I've been with [bank] since I was a kid." Don't push for an evaluation story that doesn't exist. The absence of deliberate choice is itself data.</p>
+        </div>
+        <div class="mod-card">
+          <h4>Switching Story Depth (Q12)</h4>
+          <p>Spend extra time with the ~20-30% who switched (the JTBD gold). For non-switchers, keep Q12 briefer: 1-2 probes on retention anchors.</p>
+        </div>
+        <div class="mod-card">
+          <h4>Time Management</h4>
+          <p>Section 1 (Mental Landscape) is the time risk. If running long, reduce Ws probes in Q3 to 2 and CEP battery in Q4 from 5 to 4. Never cut Q3/Q4 in favor of later questions. The CEP data is the strategically most valuable output.</p>
+        </div>
+        <div class="mod-card">
+          <h4>Anchoring Bias Prevention</h4>
+          <p>Do NOT mention any bank names before Q6. In Q3 and Q4, let the participant generate names spontaneously. If they ask "which banks do you mean?", respond "whichever banks come to mind for you."</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</InternalLayout>
+
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  .b2c-page {
+    max-width: 860px;
+  }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .page-date {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .toc-heading {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .toc-list {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .toc-list li {
+    font-size: 0.88rem;
+  }
+
+  .toc-list a {
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .toc-list a:hover {
+    color: var(--signal);
+    text-decoration: underline;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-child {
+    border-bottom: none;
+  }
+
+  section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  section h3 {
+    font-size: 1.15rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  section p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  section ul, section ol {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  section li {
+    margin-bottom: 0.4rem;
+  }
+
+  /* Callout */
+  .callout {
+    background: rgba(184, 52, 27, 0.04);
+    border-left: 3px solid var(--signal);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.25rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .foundation-callout {
+    background: rgba(11, 31, 58, 0.03);
+    border-left-color: var(--ink);
+  }
+
+  /* Comparison grid */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+  }
+
+  .comparison-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .comparison-card.b2b { border-top: 3px solid var(--muted); }
+  .comparison-card.b2c { border-top: 3px solid var(--signal); }
+
+  .comparison-card h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .comparison-card ul {
+    font-size: 0.84rem;
+    padding-left: 1.25rem;
+  }
+
+  .comparison-question {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--signal);
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+  }
+
+  /* Foundation cards */
+  .foundations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .foundations-grid { grid-template-columns: 1fr; }
+  }
+
+  .foundation-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .foundation-card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .foundation-card h4 {
+    font-size: 0.95rem;
+    margin-top: 0;
+    margin-bottom: 0.35rem;
+  }
+
+  .foundation-source {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.5rem !important;
+  }
+
+  .foundation-card p {
+    font-size: 0.84rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .foundation-implication {
+    font-size: 0.82rem !important;
+    color: var(--signal) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.25rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  thead {
+    background: rgba(11, 31, 58, 0.04);
+  }
+
+  th {
+    font-family: var(--sans);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--border);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+  }
+
+  td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .total-row td {
+    background: rgba(11, 31, 58, 0.04);
+    font-weight: 600;
+  }
+
+  .detail-list {
+    font-size: 0.88rem;
+    padding-left: 1.5rem;
+  }
+
+  .detail-list li {
+    margin-bottom: 0.35rem;
+  }
+
+  /* Time budget */
+  .time-budget {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+    margin: 1.25rem 0 2rem;
+  }
+
+  .time-block {
+    display: grid;
+    grid-template-columns: 70px 1fr 60px;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    position: relative;
+  }
+
+  .time-block + .time-block {
+    border-top: 1px solid var(--border);
+  }
+
+  .time-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+
+  .time-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .time-duration {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--signal);
+    text-align: right;
+  }
+
+  .time-bar {
+    display: none;
+  }
+
+  /* Interview sections */
+  .interview-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .interview-section h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .section-time {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--signal);
+    background: rgba(184, 52, 27, 0.08);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+
+  .section-purpose {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  /* Questions */
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .question {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1rem 1.25rem;
+    background: var(--paper);
+  }
+
+  .question.branching {
+    border-color: var(--signal);
+    border-width: 1px;
+    border-style: dashed;
+  }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .q-num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--signal);
+  }
+
+  .q-role {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  .q-role.basis {
+    background: rgba(184, 52, 27, 0.1);
+    color: var(--signal);
+  }
+
+  .q-role.descriptor {
+    background: rgba(11, 31, 58, 0.08);
+    color: var(--muted);
+  }
+
+  .q-role.criterion {
+    background: rgba(46, 93, 62, 0.1);
+    color: #2e5a3e;
+  }
+
+  .q-role.metric {
+    background: rgba(90, 78, 46, 0.1);
+    color: #5a4e2e;
+  }
+
+  .q-text {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .q-coding {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  /* CEP Battery */
+  .cep-battery {
+    margin: 0.75rem 0;
+    padding: 1rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .cep-battery h4 {
+    font-size: 0.85rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .cep-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .cep-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .cep-letter {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--signal);
+    min-width: 2.5rem;
+    text-align: center;
+    padding-top: 0.1rem;
+  }
+
+  .cep-item p {
+    font-family: var(--serif);
+    font-size: 0.86rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0;
+    line-height: 1.45;
+  }
+
+  /* Branching */
+  .branch-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .branch-container { grid-template-columns: 1fr; }
+  }
+
+  .branch {
+    padding: 0.75rem 1rem;
+    border-radius: 2px;
+  }
+
+  .branch.switchers {
+    background: rgba(184, 52, 27, 0.04);
+    border: 1px solid rgba(184, 52, 27, 0.12);
+  }
+
+  .branch.non-switchers {
+    background: rgba(11, 31, 58, 0.03);
+    border: 1px solid rgba(11, 31, 58, 0.1);
+  }
+
+  .branch h4 {
+    font-size: 0.8rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Variable table roles */
+  .role-basis { color: var(--signal); font-weight: 600; }
+  .role-descriptor { color: var(--muted); }
+  .role-criterion { color: #2e5a3e; font-weight: 500; }
+  .role-metric { color: #5a4e2e; font-weight: 500; }
+
+  /* Report section cards */
+  .report-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  .report-section-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .report-section-card.highlight {
+    border-color: var(--signal);
+    border-width: 2px;
+  }
+
+  .rs-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .rs-num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--signal);
+    min-width: 1.5rem;
+    text-align: center;
+  }
+
+  .rs-header h4 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .rs-badge {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: var(--signal);
+    color: #fff;
+  }
+
+  .report-section-card > p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .chart-note {
+    font-size: 0.82rem !important;
+    color: var(--signal) !important;
+    font-style: italic;
+    margin-top: 0.5rem;
+    margin-bottom: 0 !important;
+  }
+
+  /* Chart list */
+  .chart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .chart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.35rem 0.5rem;
+    background: rgba(11, 31, 58, 0.02);
+    border-radius: 3px;
+    font-size: 0.82rem;
+  }
+
+  .chart-type {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .chart-name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .chart-source {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* Stakeholder grid */
+  .stakeholder-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .stakeholder-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .stakeholder-header {
+    padding: 1rem 1.5rem;
+    color: #fff;
+  }
+
+  .stakeholder-header h3 {
+    color: #fff;
+    font-size: 1.15rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .stakeholder-who {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    opacity: 0.8;
+    margin-bottom: 0;
+  }
+
+  .marketing-bg { background: var(--signal); }
+  .product-bg { background: var(--ink); }
+  .growth-bg { background: #2e5a3e; }
+
+  .stakeholder-body {
+    padding: 1.5rem;
+  }
+
+  .stakeholder-decision {
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stakeholder-body h4 {
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stakeholder-body h4:first-of-type {
+    margin-top: 0;
+  }
+
+  .stakeholder-body ul {
+    font-size: 0.84rem;
+    padding-left: 1.25rem;
+  }
+
+  .stakeholder-body ul li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Recommendation items */
+  .rec-item {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: var(--paper);
+    border-radius: 2px;
+  }
+
+  .rec-item h5 {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .rec-item p {
+    font-size: 0.84rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .rec-grounding {
+    font-size: 0.78rem !important;
+    color: var(--muted) !important;
+    font-style: italic;
+    margin-bottom: 0 !important;
+    padding-top: 0.35rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Basis grid */
+  .basis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .basis-grid { grid-template-columns: 1fr; }
+  }
+
+  .basis-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--signal);
+    border-radius: 0 6px 6px 0;
+    padding: 0.75rem 1rem;
+  }
+
+  .basis-card h4 {
+    font-size: 0.88rem;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  .basis-card p {
+    font-size: 0.82rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .basis-source {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 0 !important;
+  }
+
+  /* Archetype grid */
+  .archetype-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .archetype-grid { grid-template-columns: 1fr; }
+  }
+
+  .archetype-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .archetype-card h4 {
+    font-size: 0.92rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .archetype-card p {
+    font-size: 0.82rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .archetype-strategy {
+    font-size: 0.8rem !important;
+    color: var(--signal) !important;
+    margin-bottom: 0 !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Moderation grid */
+  .moderation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .moderation-grid { grid-template-columns: 1fr; }
+  }
+
+  .mod-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  .mod-card h4 {
+    font-size: 0.9rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .mod-card p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  /* Variable table */
+  .variable-table td:first-child {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--signal);
+  }
+</style>

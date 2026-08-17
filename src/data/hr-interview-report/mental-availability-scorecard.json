@@ -1,0 +1,1000 @@
+{
+  "BambooHR": {
+    "type": "prompted",
+    "sample_size": 100,
+    "total_aware": 99,
+    "total_not_aware": 1,
+    "awareness_pct": 99.0,
+    "awareness_gap_pct": 1.0,
+    "non_users": {
+      "count": 82,
+      "aware_count": 81,
+      "awareness_pct": 98.8,
+      "awareness_gap_pct": 1.2,
+      "association_variety": 11,
+      "avg_associations_per_respondent": 2.74,
+      "association_density": 30.1,
+      "sentiment": {
+        "positive": 62,
+        "negative": 0,
+        "neutral": 30
+      },
+      "top_themes": [
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 74,
+          "pct": 90
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 56,
+          "pct": 68
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 24,
+          "pct": 29
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 24,
+          "pct": 29
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 21,
+          "pct": 26
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 20,
+          "pct": 24
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 11,
+          "pct": 13
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 4,
+          "pct": 5
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 3,
+          "pct": 4
+        },
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 2,
+          "pct": 2
+        }
+      ]
+    },
+    "current_users": {
+      "count": 18,
+      "association_variety": 11,
+      "avg_associations_per_respondent": 2.93,
+      "association_density": 32.2,
+      "sentiment": {
+        "positive": 25,
+        "negative": 0,
+        "neutral": 3
+      },
+      "top_themes": [
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 18,
+          "pct": 100
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 15,
+          "pct": 83
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 15,
+          "pct": 83
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 5,
+          "pct": 28
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 4,
+          "pct": 22
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 4,
+          "pct": 22
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 3,
+          "pct": 17
+        },
+        {
+          "theme": "Good integrations",
+          "count": 2,
+          "pct": 11
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 1,
+          "pct": 6
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 1,
+          "pct": 6
+        }
+      ]
+    }
+  },
+  "Workday": {
+    "type": "prompted",
+    "sample_size": 100,
+    "total_aware": 97,
+    "total_not_aware": 3,
+    "awareness_pct": 97.0,
+    "awareness_gap_pct": 3.0,
+    "non_users": {
+      "count": 90,
+      "aware_count": 87,
+      "awareness_pct": 96.7,
+      "awareness_gap_pct": 3.3,
+      "association_variety": 15,
+      "avg_associations_per_respondent": 2.52,
+      "association_density": 37.9,
+      "sentiment": {
+        "positive": 46,
+        "negative": 20,
+        "neutral": 39
+      },
+      "top_themes": [
+        {
+          "theme": "Enterprise / large company",
+          "count": 73,
+          "pct": 81
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 42,
+          "pct": 47
+        },
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 35,
+          "pct": 39
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 27,
+          "pct": 30
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 25,
+          "pct": 28
+        },
+        {
+          "theme": "Overkill / too much for our size",
+          "count": 25,
+          "pct": 28
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 6,
+          "pct": 7
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 3,
+          "pct": 3
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 3,
+          "pct": 3
+        },
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 2,
+          "pct": 2
+        }
+      ]
+    },
+    "current_users": {
+      "count": 10,
+      "association_variety": 10,
+      "avg_associations_per_respondent": 2.93,
+      "association_density": 29.3,
+      "sentiment": {
+        "positive": 6,
+        "negative": 3,
+        "neutral": 6
+      },
+      "top_themes": [
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 9,
+          "pct": 90
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 6,
+          "pct": 60
+        },
+        {
+          "theme": "Enterprise / large company",
+          "count": 6,
+          "pct": 60
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 5,
+          "pct": 50
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 3,
+          "pct": 30
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 3,
+          "pct": 30
+        },
+        {
+          "theme": "Good integrations",
+          "count": 2,
+          "pct": 20
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 1,
+          "pct": 10
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 1,
+          "pct": 10
+        },
+        {
+          "theme": "Structured / process-oriented",
+          "count": 1,
+          "pct": 10
+        }
+      ]
+    }
+  },
+  "Greenhouse": {
+    "type": "prompted",
+    "sample_size": 100,
+    "total_aware": 89,
+    "total_not_aware": 11,
+    "awareness_pct": 89.0,
+    "awareness_gap_pct": 11.0,
+    "non_users": {
+      "count": 79,
+      "aware_count": 69,
+      "awareness_pct": 87.3,
+      "awareness_gap_pct": 12.7,
+      "association_variety": 13,
+      "avg_associations_per_respondent": 1.06,
+      "association_density": 13.8,
+      "sentiment": {
+        "positive": 52,
+        "negative": 0,
+        "neutral": 30
+      },
+      "top_themes": [
+        {
+          "theme": "Structured / process-oriented",
+          "count": 30,
+          "pct": 38
+        },
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 20,
+          "pct": 25
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 9,
+          "pct": 11
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 9,
+          "pct": 11
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 6,
+          "pct": 8
+        },
+        {
+          "theme": "Overkill / too much for our size",
+          "count": 3,
+          "pct": 4
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 2,
+          "pct": 3
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 2,
+          "pct": 3
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 1,
+          "pct": 1
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 1,
+          "pct": 1
+        }
+      ]
+    },
+    "current_users": {
+      "count": 21,
+      "association_variety": 10,
+      "avg_associations_per_respondent": 2.1,
+      "association_density": 21.0,
+      "sentiment": {
+        "positive": 27,
+        "negative": 0,
+        "neutral": 2
+      },
+      "top_themes": [
+        {
+          "theme": "Structured / process-oriented",
+          "count": 20,
+          "pct": 95
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 15,
+          "pct": 71
+        },
+        {
+          "theme": "Good integrations",
+          "count": 6,
+          "pct": 29
+        },
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 4,
+          "pct": 19
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 2,
+          "pct": 10
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 2,
+          "pct": 10
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 1,
+          "pct": 5
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 1,
+          "pct": 5
+        },
+        {
+          "theme": "Modern / innovative",
+          "count": 1,
+          "pct": 5
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 1,
+          "pct": 5
+        }
+      ]
+    }
+  },
+  "Indeed": {
+    "type": "unprompted",
+    "sample_size": 57,
+    "awareness_pct": 57.0,
+    "non_users": {
+      "count": 57,
+      "aware_count": 57,
+      "awareness_pct": 100.0,
+      "association_variety": 6,
+      "avg_associations_per_respondent": 0.3,
+      "association_density": 1.8,
+      "sentiment": {
+        "positive": 20,
+        "negative": 4,
+        "neutral": 33
+      },
+      "top_themes": [
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 10,
+          "pct": 18
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 2,
+          "pct": 4
+        },
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 2,
+          "pct": 4
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "LinkedIn Recruiter": {
+    "type": "unprompted",
+    "sample_size": 88,
+    "awareness_pct": 88.0,
+    "non_users": {
+      "count": 88,
+      "aware_count": 88,
+      "awareness_pct": 100.0,
+      "association_variety": 12,
+      "avg_associations_per_respondent": 0.84,
+      "association_density": 10.1,
+      "sentiment": {
+        "positive": 27,
+        "negative": 25,
+        "neutral": 36
+      },
+      "top_themes": [
+        {
+          "theme": "Expensive / high cost",
+          "count": 46,
+          "pct": 52
+        },
+        {
+          "theme": "Tech company standard / gold standard",
+          "count": 6,
+          "pct": 7
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 4,
+          "pct": 5
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 4,
+          "pct": 5
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 3,
+          "pct": 3
+        },
+        {
+          "theme": "Good integrations",
+          "count": 3,
+          "pct": 3
+        },
+        {
+          "theme": "Affordable / good value",
+          "count": 2,
+          "pct": 2
+        },
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 2,
+          "pct": 2
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 1,
+          "pct": 1
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 1,
+          "pct": 1
+        }
+      ]
+    }
+  },
+  "Lever": {
+    "type": "unprompted",
+    "sample_size": 63,
+    "awareness_pct": 63.0,
+    "non_users": {
+      "count": 63,
+      "aware_count": 63,
+      "awareness_pct": 100.0,
+      "association_variety": 9,
+      "avg_associations_per_respondent": 0.87,
+      "association_density": 7.9,
+      "sentiment": {
+        "positive": 44,
+        "negative": 1,
+        "neutral": 18
+      },
+      "top_themes": [
+        {
+          "theme": "Small/mid-market fit",
+          "count": 13,
+          "pct": 21
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 13,
+          "pct": 21
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 7,
+          "pct": 11
+        },
+        {
+          "theme": "Modern / innovative",
+          "count": 6,
+          "pct": 10
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 6,
+          "pct": 10
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 5,
+          "pct": 8
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 2,
+          "pct": 3
+        },
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 2,
+          "pct": 3
+        },
+        {
+          "theme": "Overkill / too much for our size",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "Ashby": {
+    "type": "unprompted",
+    "sample_size": 41,
+    "awareness_pct": 41.0,
+    "non_users": {
+      "count": 41,
+      "aware_count": 41,
+      "awareness_pct": 100.0,
+      "association_variety": 5,
+      "avg_associations_per_respondent": 1.15,
+      "association_density": 5.7,
+      "sentiment": {
+        "positive": 23,
+        "negative": 0,
+        "neutral": 18
+      },
+      "top_themes": [
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 26,
+          "pct": 63
+        },
+        {
+          "theme": "Modern / innovative",
+          "count": 16,
+          "pct": 39
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 3,
+          "pct": 7
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "JazzHR": {
+    "type": "unprompted",
+    "sample_size": 30,
+    "awareness_pct": 30.0,
+    "non_users": {
+      "count": 30,
+      "aware_count": 30,
+      "awareness_pct": 100.0,
+      "association_variety": 4,
+      "avg_associations_per_respondent": 1.23,
+      "association_density": 4.9,
+      "sentiment": {
+        "positive": 11,
+        "negative": 0,
+        "neutral": 19
+      },
+      "top_themes": [
+        {
+          "theme": "Affordable / good value",
+          "count": 20,
+          "pct": 67
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 6,
+          "pct": 20
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 6,
+          "pct": 20
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 5,
+          "pct": 17
+        }
+      ]
+    }
+  },
+  "Rippling": {
+    "type": "unprompted",
+    "sample_size": 23,
+    "awareness_pct": 23.0,
+    "non_users": {
+      "count": 23,
+      "aware_count": 23,
+      "awareness_pct": 100.0,
+      "association_variety": 3,
+      "avg_associations_per_respondent": 0.7,
+      "association_density": 2.1,
+      "sentiment": {
+        "positive": 5,
+        "negative": 0,
+        "neutral": 18
+      },
+      "top_themes": [
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 9,
+          "pct": 39
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 6,
+          "pct": 26
+        },
+        {
+          "theme": "Enterprise / large company",
+          "count": 1,
+          "pct": 4
+        }
+      ]
+    }
+  },
+  "iCIMS": {
+    "type": "unprompted",
+    "sample_size": 51,
+    "awareness_pct": 51.0,
+    "non_users": {
+      "count": 51,
+      "aware_count": 51,
+      "awareness_pct": 100.0,
+      "association_variety": 10,
+      "avg_associations_per_respondent": 1.04,
+      "association_density": 10.4,
+      "sentiment": {
+        "positive": 27,
+        "negative": 2,
+        "neutral": 22
+      },
+      "top_themes": [
+        {
+          "theme": "Enterprise / large company",
+          "count": 30,
+          "pct": 59
+        },
+        {
+          "theme": "Complex / clunky / hard to use",
+          "count": 4,
+          "pct": 8
+        },
+        {
+          "theme": "Modern / innovative",
+          "count": 4,
+          "pct": 8
+        },
+        {
+          "theme": "Powerful / comprehensive / feature-rich",
+          "count": 4,
+          "pct": 8
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 3,
+          "pct": 6
+        },
+        {
+          "theme": "Overkill / too much for our size",
+          "count": 3,
+          "pct": 6
+        },
+        {
+          "theme": "Expensive / high cost",
+          "count": 2,
+          "pct": 4
+        },
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 1,
+          "pct": 2
+        },
+        {
+          "theme": "Limited features / basic",
+          "count": 1,
+          "pct": 2
+        }
+      ]
+    }
+  },
+  "SmartRecruiters": {
+    "type": "unprompted",
+    "sample_size": 12,
+    "awareness_pct": 12.0,
+    "non_users": {
+      "count": 12,
+      "aware_count": 12,
+      "awareness_pct": 100.0,
+      "association_variety": 0,
+      "avg_associations_per_respondent": 0.0,
+      "association_density": 0.0,
+      "sentiment": {
+        "positive": 3,
+        "negative": 0,
+        "neutral": 9
+      },
+      "top_themes": []
+    }
+  },
+  "Jobvite": {
+    "type": "unprompted",
+    "sample_size": 11,
+    "awareness_pct": 11.0,
+    "non_users": {
+      "count": 11,
+      "aware_count": 11,
+      "awareness_pct": 100.0,
+      "association_variety": 2,
+      "avg_associations_per_respondent": 0.27,
+      "association_density": 0.5,
+      "sentiment": {
+        "positive": 5,
+        "negative": 0,
+        "neutral": 6
+      },
+      "top_themes": [
+        {
+          "theme": "Good ATS / recruiting features",
+          "count": 2,
+          "pct": 18
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 1,
+          "pct": 9
+        }
+      ]
+    }
+  },
+  "Paradox": {
+    "type": "unprompted",
+    "sample_size": 6,
+    "awareness_pct": 6.0,
+    "non_users": {
+      "count": 6,
+      "aware_count": 6,
+      "awareness_pct": 100.0,
+      "association_variety": 1,
+      "avg_associations_per_respondent": 0.33,
+      "association_density": 0.3,
+      "sentiment": {
+        "positive": 3,
+        "negative": 0,
+        "neutral": 3
+      },
+      "top_themes": [
+        {
+          "theme": "Modern / innovative",
+          "count": 2,
+          "pct": 33
+        }
+      ]
+    }
+  },
+  "GoodTime": {
+    "type": "unprompted",
+    "sample_size": 17,
+    "awareness_pct": 17.0,
+    "non_users": {
+      "count": 17,
+      "aware_count": 17,
+      "awareness_pct": 100.0,
+      "association_variety": 0,
+      "avg_associations_per_respondent": 0.0,
+      "association_density": 0.0,
+      "sentiment": {
+        "positive": 10,
+        "negative": 0,
+        "neutral": 7
+      },
+      "top_themes": []
+    }
+  },
+  "Gem": {
+    "type": "unprompted",
+    "sample_size": 33,
+    "awareness_pct": 33.0,
+    "non_users": {
+      "count": 33,
+      "aware_count": 33,
+      "awareness_pct": 100.0,
+      "association_variety": 3,
+      "avg_associations_per_respondent": 0.12,
+      "association_density": 0.4,
+      "sentiment": {
+        "positive": 29,
+        "negative": 0,
+        "neutral": 4
+      },
+      "top_themes": [
+        {
+          "theme": "Affordable / good value",
+          "count": 2,
+          "pct": 6
+        },
+        {
+          "theme": "Good candidate experience",
+          "count": 1,
+          "pct": 3
+        },
+        {
+          "theme": "Data-driven / strong analytics",
+          "count": 1,
+          "pct": 3
+        }
+      ]
+    }
+  },
+  "Breezy HR": {
+    "type": "unprompted",
+    "sample_size": 18,
+    "awareness_pct": 18.0,
+    "non_users": {
+      "count": 18,
+      "aware_count": 18,
+      "awareness_pct": 100.0,
+      "association_variety": 4,
+      "avg_associations_per_respondent": 0.44,
+      "association_density": 1.8,
+      "sentiment": {
+        "positive": 3,
+        "negative": 0,
+        "neutral": 15
+      },
+      "top_themes": [
+        {
+          "theme": "Affordable / good value",
+          "count": 3,
+          "pct": 17
+        },
+        {
+          "theme": "Small/mid-market fit",
+          "count": 2,
+          "pct": 11
+        },
+        {
+          "theme": "Modern / innovative",
+          "count": 2,
+          "pct": 11
+        },
+        {
+          "theme": "Ease of use / simplicity",
+          "count": 1,
+          "pct": 6
+        }
+      ]
+    }
+  },
+  "ZipRecruiter": {
+    "type": "unprompted",
+    "sample_size": 7,
+    "awareness_pct": 7.0,
+    "non_users": {
+      "count": 7,
+      "aware_count": 7,
+      "awareness_pct": 100.0,
+      "association_variety": 1,
+      "avg_associations_per_respondent": 0.14,
+      "association_density": 0.1,
+      "sentiment": {
+        "positive": 3,
+        "negative": 0,
+        "neutral": 4
+      },
+      "top_themes": [
+        {
+          "theme": "HRIS / HR management focused",
+          "count": 1,
+          "pct": 14
+        }
+      ]
+    }
+  },
+  "Handshake": {
+    "type": "unprompted",
+    "sample_size": 6,
+    "awareness_pct": 6.0,
+    "non_users": {
+      "count": 6,
+      "aware_count": 6,
+      "awareness_pct": 100.0,
+      "association_variety": 0,
+      "avg_associations_per_respondent": 0.0,
+      "association_density": 0.0,
+      "sentiment": {
+        "positive": 5,
+        "negative": 0,
+        "neutral": 1
+      },
+      "top_themes": []
+    }
+  }
+}

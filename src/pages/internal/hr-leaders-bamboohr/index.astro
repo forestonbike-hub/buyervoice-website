@@ -1,0 +1,96 @@
+---
+import InternalLayout from '../../../layouts/InternalLayout.astro';
+---
+
+<InternalLayout title="HR Leaders BambooHR Study">
+  <div class="study-index">
+    <h1>HR Leaders BambooHR Study</h1>
+    <p class="study-desc">Interview study analyzing HR leaders' experience with BambooHR. Includes simulated and real interview data, codebook, and segmentation analysis.</p>
+
+    <div class="study-links">
+      <a href="/internal/hr-leaders-bamboohr/real-report" class="study-card">
+        <h3>Real Interview Report</h3>
+        <p>Analysis based on real interview data.</p>
+      </a>
+      <a href="/internal/hr-leaders-bamboohr/simulated-report" class="study-card">
+        <h3>Simulated Interview Report</h3>
+        <p>Analysis based on simulated interview data.</p>
+      </a>
+      <a href="/internal/hr-leaders-bamboohr/codebook" class="study-card">
+        <h3>Codebook</h3>
+        <p>Code definitions used for transcript analysis.</p>
+      </a>
+      <a href="/internal/hr-leaders-bamboohr/segmentation-simulated" class="study-card">
+        <h3>Segmentation (Simulated)</h3>
+        <p>Market segmentation analysis from simulated data.</p>
+      </a>
+    </div>
+  </div>
+</InternalLayout>
+
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  .study-index {
+    max-width: 800px;
+  }
+
+  .study-index h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .study-desc {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .study-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .study-card {
+    display: block;
+    text-decoration: none;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .study-card:hover {
+    border-color: var(--signal);
+    box-shadow: 0 2px 8px rgba(184, 52, 27, 0.08);
+  }
+
+  .study-card h3 {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .study-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .study-card:hover h3 {
+    color: var(--signal);
+  }
+</style>

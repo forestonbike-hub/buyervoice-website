@@ -1,0 +1,338 @@
+---
+// Supporting Context page
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+<title>Supporting Context | BambooHR Recruiting Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--border); padding: 0 24px; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 16px; flex-wrap: nowrap; list-style: none; }
+  .nav-links a { font-size: 13px; white-space: nowrap; font-weight: 500; color: var(--rule); text-decoration: none; padding: 20px 0; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .nav-pdf { background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
+  .nav-pdf:hover { background: var(--ink); }
+  .hamburger { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-pdf { font-size: 12px; padding: 6px 12px; }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .section-gray { background: var(--card-bg); }
+  .page-header { padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+  .page-title { font-family: var(--serif); font-size: 36px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .page-subtitle { font-size: 16px; color: var(--rule); max-width: 720px; }
+
+  /* SECTION HEADERS */
+  .section-title { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .section-desc { font-size: 15px; color: var(--rule); margin-bottom: 32px; max-width: 720px; }
+  .overline { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); margin-bottom: 8px; }
+
+  /* CRITERIA TABLE */
+  .criteria-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+  .criteria-table th { text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--rule); padding: 12px 16px; border-bottom: 2px solid var(--border); }
+  .criteria-table td { padding: 14px 16px; border-bottom: 1px solid #F0F0F0; font-size: 14px; }
+  .criteria-table tr:hover { background: var(--card-bg); }
+  .criteria-rank { font-weight: 700; color: var(--ink); font-size: 16px; width: 40px; }
+  .criteria-name { font-weight: 600; }
+  .criteria-bar-cell { width: 300px; }
+  .criteria-bar { height: 24px; border-radius: 2px; background: var(--ink); display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 30px; transition: width 0.3s; }
+  .criteria-bar-label { font-size: 12px; font-weight: 700; color: #fff; }
+  .criteria-pct { font-weight: 600; color: var(--ink); width: 60px; text-align: right; }
+
+  /* SATISFACTION */
+  .sat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .sat-card { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 32px; }
+  .sat-card.gray { background: var(--card-bg); }
+  .sat-big-number { font-family: var(--serif); font-size: 56px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .sat-label { font-size: 14px; color: var(--rule); margin-bottom: 24px; }
+  .sat-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .sat-bar-label { font-size: 13px; font-weight: 500; width: 100px; color: var(--rule); }
+  .sat-bar-track { flex: 1; height: 28px; background: #F0F0F0; border-radius: 2px; overflow: hidden; }
+  .sat-bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 10px; }
+  .sat-bar-fill.satisfied { background: var(--ink); }
+  .sat-bar-fill.neutral { background: #94A3B8; }
+  .sat-bar-fill.dissatisfied { background: #EF4444; }
+  .sat-bar-value { font-size: 12px; font-weight: 700; color: #fff; }
+
+  /* MARKET STRUCTURE */
+  .market-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px; }
+  .market-card { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 24px; text-align: center; }
+  .market-number { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .market-label { font-size: 13px; color: var(--rule); }
+
+  /* VALUE PERCEPTION */
+  .value-bar-container { max-width: 600px; margin: 0 auto 48px; }
+  .value-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .value-label { font-size: 14px; font-weight: 500; width: 120px; text-align: right; }
+  .value-track { flex: 1; height: 36px; background: #F0F0F0; border-radius: 2px; overflow: hidden; }
+  .value-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 12px; }
+  .value-fill.good { background: var(--ink); }
+  .value-fill.neutral-v { background: #94A3B8; }
+  .value-fill.poor { background: #EF4444; }
+  .value-count { font-size: 13px; font-weight: 700; color: #fff; }
+
+  /* INSIGHT BOX */
+  .insight-box { border-left: 4px solid var(--ink); background: transparent; padding: 20px 24px; border-radius: 0 8px 8px 0; margin: 32px 0; }
+  .insight-box p { font-size: 15px; color: var(--ink); line-height: 1.7; }
+  .insight-box strong { color: var(--ink); }
+
+  /* NOTE */
+  .method-note { background: var(--card-bg); border: 1px solid var(--border); border-radius: 2px; padding: 20px 24px; margin-top: 32px; font-size: 13px; color: var(--rule); line-height: 1.6; }
+
+  /* FOOTER */
+  .footer { background: var(--ink); color: #94A3B8; padding: 40px 24px; text-align: center; font-size: 13px; line-height: 1.8; }
+  .footer strong { color: #fff; }
+
+  @media (max-width: 768px) {
+    .sat-grid { grid-template-columns: 1fr; }
+    .market-grid { grid-template-columns: 1fr 1fr; }
+    .page-title { font-size: 28px; }
+    .criteria-bar-cell { width: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/internal/hr-interview-report/" class="nav-logo">BuyerVoice.AI</a>
+    <ul class="nav-links">
+      <li><a href="/internal/hr-interview-report/">Executive Summary</a></li>
+      <li><a href="/internal/hr-interview-report/sample">Sample</a></li>
+      <li><a href="/internal/hr-interview-report/mental-availability">Mental Availability</a></li>
+      <li><a href="/internal/hr-interview-report/category-entry-points">CEPs</a></li>
+      <li><a href="/internal/hr-interview-report/supporting-context" class="active">Supporting Data</a></li>
+      <li><a href="/internal/hr-interview-report/themes-evidence">Themes &amp; Evidence</a></li>
+    </ul>
+    <a href="/internal/hr-interview-report/full-report" class="nav-pdf">Download PDF</a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <p class="overline">Section 4</p>
+    <h1 class="page-title">Supporting Context</h1>
+    <p class="page-subtitle">Evaluation criteria, satisfaction levels, and market structure data that informs product strategy and pricing. These inputs complement the primary growth recommendations but are not the basis for marketing tactics.</p>
+  </div>
+</div>
+
+<!-- EVALUATION CRITERIA -->
+<div class="section">
+  <div class="container">
+    <p class="overline">What HR Leaders Want</p>
+    <h2 class="section-title">Evaluation Criteria</h2>
+    <p class="section-desc">When considering recruiting solutions, these are the qualities HR leaders say matter most. Ranked by how many of 100 respondents mentioned each criterion.</p>
+
+    <table class="criteria-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Criteria</th>
+          <th>Frequency</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="criteria-rank">1</td><td class="criteria-name">Analytics and reporting</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:100%"><span class="criteria-bar-label">59%</span></div></td><td class="criteria-pct">59%</td></tr>
+        <tr><td class="criteria-rank">2</td><td class="criteria-name">Integrations</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:93%"><span class="criteria-bar-label">55%</span></div></td><td class="criteria-pct">55%</td></tr>
+        <tr><td class="criteria-rank">3</td><td class="criteria-name">Candidate tracking / pipeline</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:76%"><span class="criteria-bar-label">45%</span></div></td><td class="criteria-pct">45%</td></tr>
+        <tr><td class="criteria-rank">4</td><td class="criteria-name">Speed / time-to-fill</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:71%"><span class="criteria-bar-label">42%</span></div></td><td class="criteria-pct">42%</td></tr>
+        <tr><td class="criteria-rank">5</td><td class="criteria-name">Automation</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:68%"><span class="criteria-bar-label">40%</span></div></td><td class="criteria-pct">40%</td></tr>
+        <tr><td class="criteria-rank">6</td><td class="criteria-name">Candidate experience</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:56%"><span class="criteria-bar-label">33%</span></div></td><td class="criteria-pct">33%</td></tr>
+        <tr><td class="criteria-rank">7</td><td class="criteria-name">Interview scheduling</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:56%"><span class="criteria-bar-label">33%</span></div></td><td class="criteria-pct">33%</td></tr>
+        <tr><td class="criteria-rank">8</td><td class="criteria-name">Mobile experience</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:54%"><span class="criteria-bar-label">32%</span></div></td><td class="criteria-pct">32%</td></tr>
+        <tr><td class="criteria-rank">9</td><td class="criteria-name">Sourcing capabilities</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:37%"><span class="criteria-bar-label">22%</span></div></td><td class="criteria-pct">22%</td></tr>
+        <tr><td class="criteria-rank">10</td><td class="criteria-name">Ease of use</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:24%"><span class="criteria-bar-label">14%</span></div></td><td class="criteria-pct">14%</td></tr>
+        <tr><td class="criteria-rank">11</td><td class="criteria-name">Compliance / EEOC / OFCCP</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:24%"><span class="criteria-bar-label">14%</span></div></td><td class="criteria-pct">14%</td></tr>
+        <tr><td class="criteria-rank">12</td><td class="criteria-name">Cost / value for money</td><td class="criteria-bar-cell"><div class="criteria-bar" style="width:19%"><span class="criteria-bar-label">11%</span></div></td><td class="criteria-pct">11%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box">
+      <p><strong>Product team note:</strong> Analytics and reporting ranks #1, mentioned by 59% of respondents. This aligns with "Lack of analytics" being a top pain-point CEP (21% of respondents). BambooHR's current association with "data-driven/analytics" among non-users is very low (only 4 mentions out of 92). Strengthening reporting capabilities and making them visible in marketing could address both a product gap and a brand perception gap simultaneously.</p>
+    </div>
+
+    <div class="method-note">
+      <strong>Note:</strong> Per the analysis framework, evaluation criteria inform product development and sales conversations. The Ehrenberg-Bass research indicates that marketing creative should depict buying situations (CEPs), not communicate product features. These criteria are flagged for the product team, not for marketing message development.
+    </div>
+  </div>
+</div>
+
+<!-- SATISFACTION -->
+<div class="section section-gray">
+  <div class="container">
+    <p class="overline">Current State</p>
+    <h2 class="section-title">Satisfaction with Current Approach</h2>
+    <p class="section-desc">Respondents described their satisfaction with their current recruiting process in their own words. Responses were coded into three levels: satisfied, neutral, or dissatisfied.</p>
+
+    <div class="sat-grid">
+      <div class="sat-card">
+        <div class="sat-big-number">91%</div>
+        <div class="sat-label">Report satisfaction with current approach</div>
+
+        <div class="sat-bar-row">
+          <span class="sat-bar-label">Satisfied</span>
+          <div class="sat-bar-track">
+            <div class="sat-bar-fill satisfied" style="width:91%"><span class="sat-bar-value">91</span></div>
+          </div>
+        </div>
+        <div class="sat-bar-row">
+          <span class="sat-bar-label">Neutral</span>
+          <div class="sat-bar-track">
+            <div class="sat-bar-fill neutral" style="width:8%"><span class="sat-bar-value">8</span></div>
+          </div>
+        </div>
+        <div class="sat-bar-row">
+          <span class="sat-bar-label">Dissatisfied</span>
+          <div class="sat-bar-track">
+            <div class="sat-bar-fill dissatisfied" style="width:1%"><span class="sat-bar-value">1</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sat-card gray">
+        <p class="overline">Among BambooHR Non-Users (n=82)</p>
+        <div style="margin-top:16px">
+          <div class="sat-bar-row">
+            <span class="sat-bar-label">Satisfied</span>
+            <div class="sat-bar-track">
+              <div class="sat-bar-fill satisfied" style="width:92.7%"><span class="sat-bar-value">76</span></div>
+            </div>
+          </div>
+          <div class="sat-bar-row">
+            <span class="sat-bar-label">Neutral</span>
+            <div class="sat-bar-track">
+              <div class="sat-bar-fill neutral" style="width:6.1%"><span class="sat-bar-value">5</span></div>
+            </div>
+          </div>
+          <div class="sat-bar-row">
+            <span class="sat-bar-label">Dissatisfied</span>
+            <div class="sat-bar-track">
+              <div class="sat-bar-fill dissatisfied" style="width:1.2%"><span class="sat-bar-value">1</span></div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--rule);margin-top:16px;">Of the 1 dissatisfied non-user, 1 is aware of BambooHR. This is the highest-potential acquisition segment, but the pool is very small.</p>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <p><strong>Implication:</strong> Most HR leaders describe themselves as "satisfied" with their current approach, which is typical in B2B categories. Growth comes from building mental availability among the 95% who are not actively shopping, not from targeting the small pool of dissatisfied prospects. Self-reported satisfaction does not predict future switching behavior as reliably as mental availability does.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MARKET STRUCTURE -->
+<div class="section">
+  <div class="container">
+    <p class="overline">Market Economics</p>
+    <h2 class="section-title">Market Structure</h2>
+    <p class="section-desc">Annual spend, value perception, and willingness to pay for solving their biggest frustration.</p>
+
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="market-number">$93.5K</div>
+        <div class="market-label">Average annual spend on recruiting solutions</div>
+      </div>
+      <div class="market-card">
+        <div class="market-number">$50K</div>
+        <div class="market-label">Median annual spend</div>
+      </div>
+      <div class="market-card">
+        <div class="market-number">$54.6K</div>
+        <div class="market-label">Average WTP to solve top frustration</div>
+      </div>
+      <div class="market-card">
+        <div class="market-number">$30K</div>
+        <div class="market-label">Median WTP to solve top frustration</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:22px;margin-bottom:16px;">Value Perception</h3>
+    <p class="section-desc">Do HR leaders feel their current spend is reasonable relative to value received?</p>
+
+    <div class="value-bar-container">
+      <div class="value-row">
+        <span class="value-label">Good value</span>
+        <div class="value-track">
+          <div class="value-fill good" style="width:82%"><span class="value-count">82</span></div>
+        </div>
+      </div>
+      <div class="value-row">
+        <span class="value-label">Neutral</span>
+        <div class="value-track">
+          <div class="value-fill neutral-v" style="width:13%"><span class="value-count">13</span></div>
+        </div>
+      </div>
+      <div class="value-row">
+        <span class="value-label">Poor value</span>
+        <div class="value-track">
+          <div class="value-fill poor" style="width:5%"><span class="value-count">5</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="market-card">
+        <div class="market-number" style="font-size:24px;">$5K - $800K</div>
+        <div class="market-label">Annual spend range across 100 respondents</div>
+      </div>
+      <div class="market-card">
+        <div class="market-number" style="font-size:24px;">82%</div>
+        <div class="market-label">Consider current spend reasonable</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <p><strong>Pricing context:</strong> The median WTP of $30K to solve their top frustration represents a meaningful budget willingness. Companies are spending significant amounts on recruiting ($50K median) and most feel the cost is reasonable. This suggests the market can support premium pricing for solutions that convincingly address the CEPs identified in this study, particularly rapid headcount growth and time-to-hire challenges.</p>
+    </div>
+
+    <div class="method-note">
+      <strong>Note:</strong> Market structure data is useful for pricing strategy and market sizing. These figures are self-reported estimates and may not reflect actual procurement budgets. Spend figures include all recruiting tools and services (ATS, sourcing platforms, job boards, agencies), not just a single vendor.
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <strong>Prepared by BuyerVoice.AI</strong><br>
+  Analysis based on 100 HR leader interviews, March 2026
+</footer>
+
+</body>
+</html>

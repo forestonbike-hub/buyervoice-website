@@ -1,0 +1,2416 @@
+{
+  "meta": {
+    "n": 50,
+    "n_hot": 31,
+    "n_warm": 18,
+    "n_cold": 1,
+    "words_k": 98,
+    "avg_min": 13,
+    "n_codes": 58
+  },
+  "question_text": {
+    "Q1": "To start, tell me a bit about your work: what do you do, in what field, and roughly how many years you've been working?",
+    "Q2": "How does artificial intelligence show up in your job today, if at all? Are you using any AI tools, and how is it changing your work?",
+    "Q3": "Thinking about growing your skills, have you taken any courses or training in the last few years? What would make you invest your own time or money in learning something new, and what's held you back before?",
+    "Q4": "What's your honest first reaction to that? What stands out, good or bad?",
+    "Q5": "How well does something like this fit your situation and your goals? Is it for someone like you?",
+    "Q6": "Do you believe a course like this would actually help you use AI well in your work? And does it matter to you that the certificate comes from a university?",
+    "Q7": "You can already find a lot of AI training online, some of it free, and your employer may offer some. What, if anything, would make a paid university program worth it over those options?",
+    "Q8": "Thinking about the format, 8 weeks, one live evening a week, and around four to five hours a week total, how does that fit your life? Would that work for you?",
+    "Q9": "Do you think finishing something like this would actually help your career, your earning power, or your job security?",
+    "Q10": "The course is pitched as a way to 'stay ahead as AI reshapes your field, rather than get left behind.' Does that framing land for you, or would a different angle be more appealing?",
+    "Q11": "Before I tell you, what would you expect a program like this to cost? [Then revealed: This program costs $3,000. What's your reaction to that price? Does it feel worth it for what's offered?]",
+    "Q12": "Would you expect to pay for this yourself, have your employer cover it, or split it? And how does that change how you feel about it?",
+    "Q13": "What would stop you from actually enrolling in something like this?",
+    "Q14": "Being honest, how likely would you be to seriously consider enrolling in this? And why?",
+    "Q15": "Last one: what single change would make you much more likely to enroll, or what's missing for you?"
+  },
+  "intent": {
+    "Likely": 31,
+    "Unsure": 18,
+    "Unlikely": 1
+  },
+  "first_reaction": [
+    {
+      "code": "Positive Initial Program Reaction",
+      "n": 48,
+      "pct": 96.0,
+      "pos": 39,
+      "neg": 0,
+      "pos_pct": 78.0,
+      "pos_share_raisers": 81.25,
+      "hot_n": 31,
+      "warm_n": 16,
+      "cold_n": 1,
+      "hot_pct": 100.0,
+      "warm_pct": 88.88888888888889,
+      "source_questions": [
+        "Q4"
+      ],
+      "hot_vs_warm_p": 0.13010204081632654,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "No-Coding Accessibility Signal",
+      "n": 39,
+      "pct": 78.0,
+      "pos": 37,
+      "neg": 0,
+      "pos_pct": 74.0,
+      "pos_share_raisers": 94.87179487179488,
+      "hot_n": 26,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 83.87096774193549,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q4"
+      ],
+      "hot_vs_warm_p": 0.28637374848270875,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Own-Job Project Application",
+      "n": 46,
+      "pct": 92.0,
+      "pos": 45,
+      "neg": 0,
+      "pos_pct": 90.0,
+      "pos_share_raisers": 97.82608695652173,
+      "hot_n": 31,
+      "warm_n": 14,
+      "cold_n": 1,
+      "hot_pct": 100.0,
+      "warm_pct": 77.77777777777777,
+      "source_questions": [
+        "Q4",
+        "Q8"
+      ],
+      "hot_vs_warm_p": 0.014442409711340596,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Project-Based Learning Effectiveness",
+      "n": 33,
+      "pct": 66.0,
+      "pos": 33,
+      "neg": 0,
+      "pos_pct": 66.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 22,
+      "warm_n": 10,
+      "cold_n": 1,
+      "hot_pct": 70.96774193548387,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q4",
+        "Q6"
+      ],
+      "hot_vs_warm_p": 0.2745487473289212,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Direct Work Applicability Required",
+      "n": 46,
+      "pct": 92.0,
+      "pos": 39,
+      "neg": 7,
+      "pos_pct": 78.0,
+      "pos_share_raisers": 84.78260869565217,
+      "hot_n": 30,
+      "warm_n": 15,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 83.33333333333333,
+      "source_questions": [
+        "Q3"
+      ],
+      "hot_vs_warm_p": 0.13383299665842285,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Latent AI Adoption Gap",
+      "n": 33,
+      "pct": 66.0,
+      "pos": 0,
+      "neg": 27,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 24,
+      "warm_n": 9,
+      "cold_n": 0,
+      "hot_pct": 77.41935483870968,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q2"
+      ],
+      "hot_vs_warm_p": 0.048480903011100196,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Role Relevance Confirmation",
+      "n": 34,
+      "pct": 68.0,
+      "pos": 29,
+      "neg": 0,
+      "pos_pct": 58.0,
+      "pos_share_raisers": 85.29411764705883,
+      "hot_n": 21,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q5"
+      ],
+      "hot_vs_warm_p": 0.9383231635781337,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "why_pay": [
+    {
+      "code": "Structured Program Over Self-Directed Learning",
+      "n": 43,
+      "pct": 86.0,
+      "pos": 43,
+      "neg": 0,
+      "pos_pct": 86.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 29,
+      "warm_n": 13,
+      "cold_n": 1,
+      "hot_pct": 93.54838709677419,
+      "warm_pct": 72.22222222222223,
+      "source_questions": [
+        "Q3",
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.08406232721304899,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Free Content Limitations",
+      "n": 46,
+      "pct": 92.0,
+      "pos": 0,
+      "neg": 46,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 31,
+      "warm_n": 14,
+      "cold_n": 1,
+      "hot_pct": 100.0,
+      "warm_pct": 77.77777777777777,
+      "source_questions": [
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.014442409711340596,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Live Session Accountability",
+      "n": 37,
+      "pct": 74.0,
+      "pos": 36,
+      "neg": 0,
+      "pos_pct": 72.0,
+      "pos_share_raisers": 97.29729729729729,
+      "hot_n": 23,
+      "warm_n": 14,
+      "cold_n": 0,
+      "hot_pct": 74.19354838709677,
+      "warm_pct": 77.77777777777777,
+      "source_questions": [
+        "Q8"
+      ],
+      "hot_vs_warm_p": 1.0,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Live Session Interaction Value",
+      "n": 15,
+      "pct": 30.0,
+      "pos": 15,
+      "neg": 0,
+      "pos_pct": 30.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 11,
+      "warm_n": 3,
+      "cold_n": 1,
+      "hot_pct": 35.483870967741936,
+      "warm_pct": 16.666666666666668,
+      "source_questions": [
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.15983288631769965,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Peer Cohort Learning Value",
+      "n": 17,
+      "pct": 34.0,
+      "pos": 16,
+      "neg": 0,
+      "pos_pct": 32.0,
+      "pos_share_raisers": 94.11764705882354,
+      "hot_n": 12,
+      "warm_n": 4,
+      "cold_n": 1,
+      "hot_pct": 38.70967741935484,
+      "warm_pct": 22.22222222222222,
+      "source_questions": [
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.23544208484040352,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Employer Training Insufficiency",
+      "n": 39,
+      "pct": 78.0,
+      "pos": 0,
+      "neg": 39,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 24,
+      "warm_n": 14,
+      "cold_n": 1,
+      "hot_pct": 77.41935483870968,
+      "warm_pct": 77.77777777777777,
+      "source_questions": [
+        "Q7"
+      ],
+      "hot_vs_warm_p": 1.0,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Self-Paced Course Abandonment Pattern",
+      "n": 34,
+      "pct": 68.0,
+      "pos": 0,
+      "neg": 34,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 22,
+      "warm_n": 12,
+      "cold_n": 0,
+      "hot_pct": 70.96774193548387,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q3"
+      ],
+      "hot_vs_warm_p": 0.7528186235725649,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "credential": [
+    {
+      "code": "University Signals Curriculum Rigor",
+      "n": 27,
+      "pct": 54.0,
+      "pos": 27,
+      "neg": 0,
+      "pos_pct": 54.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 19,
+      "warm_n": 7,
+      "cold_n": 1,
+      "hot_pct": 61.29032258064516,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q6"
+      ],
+      "hot_vs_warm_p": 0.12983625679825406,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Credential Internal Credibility",
+      "n": 33,
+      "pct": 66.0,
+      "pos": 31,
+      "neg": 0,
+      "pos_pct": 62.0,
+      "pos_share_raisers": 93.93939393939394,
+      "hot_n": 21,
+      "warm_n": 12,
+      "cold_n": 0,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q6",
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.9383231635781337,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Credential External Career Signaling",
+      "n": 31,
+      "pct": 62.0,
+      "pos": 27,
+      "neg": 2,
+      "pos_pct": 54.0,
+      "pos_share_raisers": 87.09677419354838,
+      "hot_n": 21,
+      "warm_n": 10,
+      "cold_n": 0,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q6",
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.3936334654064375,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Credential Value Depends on University Prestige",
+      "n": 27,
+      "pct": 54.0,
+      "pos": 13,
+      "neg": 5,
+      "pos_pct": 26.0,
+      "pos_share_raisers": 48.148148148148145,
+      "hot_n": 20,
+      "warm_n": 7,
+      "cold_n": 0,
+      "hot_pct": 64.51612903225806,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q6"
+      ],
+      "hot_vs_warm_p": 0.08208817917905309,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Practitioner Instructor Credibility",
+      "n": 13,
+      "pct": 26.0,
+      "pos": 2,
+      "neg": 3,
+      "pos_pct": 4.0,
+      "pos_share_raisers": 15.384615384615385,
+      "hot_n": 11,
+      "warm_n": 1,
+      "cold_n": 1,
+      "hot_pct": 35.483870967741936,
+      "warm_pct": 5.555555555555555,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.035571583448618674,
+      "hot_vs_warm_sig": true
+    }
+  ],
+  "format_fit": [
+    {
+      "code": "Weekly Time Commitment Manageability",
+      "n": 49,
+      "pct": 98.0,
+      "pos": 29,
+      "neg": 3,
+      "pos_pct": 58.0,
+      "pos_share_raisers": 59.183673469387756,
+      "hot_n": 30,
+      "warm_n": 18,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 100.0,
+      "source_questions": [
+        "Q8"
+      ],
+      "hot_vs_warm_p": 1.0,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Eight-Week Duration Acceptability",
+      "n": 48,
+      "pct": 96.0,
+      "pos": 48,
+      "neg": 1,
+      "pos_pct": 96.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 30,
+      "warm_n": 17,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 94.44444444444444,
+      "source_questions": [
+        "Q4",
+        "Q8"
+      ],
+      "hot_vs_warm_p": 1.0,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Session Recording Flexibility Needed",
+      "n": 29,
+      "pct": 58.0,
+      "pos": 2,
+      "neg": 2,
+      "pos_pct": 4.0,
+      "pos_share_raisers": 6.896551724137931,
+      "hot_n": 21,
+      "warm_n": 8,
+      "cold_n": 0,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 44.44444444444444,
+      "source_questions": [
+        "Q8"
+      ],
+      "hot_vs_warm_p": 0.1096882473448364,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Unpredictable Work Demands",
+      "n": 28,
+      "pct": 56.0,
+      "pos": 0,
+      "neg": 27,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 20,
+      "warm_n": 7,
+      "cold_n": 1,
+      "hot_pct": 64.51612903225806,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.08208817917905309,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Seasonal Work Conflicts with Cohort Timing",
+      "n": 17,
+      "pct": 34.0,
+      "pos": 0,
+      "neg": 16,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 11,
+      "warm_n": 6,
+      "cold_n": 0,
+      "hot_pct": 35.483870967741936,
+      "warm_pct": 33.333333333333336,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.8788222483689951,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Remote Work Enables Evening Participation",
+      "n": 24,
+      "pct": 48.0,
+      "pos": 24,
+      "neg": 0,
+      "pos_pct": 48.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 13,
+      "warm_n": 11,
+      "cold_n": 0,
+      "hot_pct": 41.935483870967744,
+      "warm_pct": 61.111111111111114,
+      "source_questions": [
+        "Q8"
+      ],
+      "hot_vs_warm_p": 0.195506105885777,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "career_value": [
+    {
+      "code": "Career Advancement Motivation",
+      "n": 39,
+      "pct": 78.0,
+      "pos": 36,
+      "neg": 0,
+      "pos_pct": 72.0,
+      "pos_share_raisers": 92.3076923076923,
+      "hot_n": 26,
+      "warm_n": 13,
+      "cold_n": 0,
+      "hot_pct": 83.87096774193549,
+      "warm_pct": 72.22222222222223,
+      "source_questions": [
+        "Q3",
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.46473009842567375,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Credential External Career Signaling",
+      "n": 31,
+      "pct": 62.0,
+      "pos": 27,
+      "neg": 2,
+      "pos_pct": 54.0,
+      "pos_share_raisers": 87.09677419354838,
+      "hot_n": 21,
+      "warm_n": 10,
+      "cold_n": 0,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q6",
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.3936334654064375,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "AI Leadership Credibility Motivation",
+      "n": 29,
+      "pct": 58.0,
+      "pos": 29,
+      "neg": 0,
+      "pos_pct": 58.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 19,
+      "warm_n": 10,
+      "cold_n": 0,
+      "hot_pct": 61.29032258064516,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.6937680624255684,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Job Security as Career Motivation",
+      "n": 33,
+      "pct": 66.0,
+      "pos": 31,
+      "neg": 0,
+      "pos_pct": 62.0,
+      "pos_share_raisers": 93.93939393939394,
+      "hot_n": 20,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 64.51612903225806,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.8788222483689954,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "price": [
+    {
+      "code": "Price Perceived as Reasonable",
+      "n": 35,
+      "pct": 70.0,
+      "pos": 13,
+      "neg": 0,
+      "pos_pct": 26.0,
+      "pos_share_raisers": 37.142857142857146,
+      "hot_n": 26,
+      "warm_n": 9,
+      "cold_n": 0,
+      "hot_pct": 83.87096774193549,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q11"
+      ],
+      "hot_vs_warm_p": 0.011401673431671089,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "ROI Confidence Required for Investment",
+      "n": 47,
+      "pct": 94.0,
+      "pos": 0,
+      "neg": 29,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 30,
+      "warm_n": 16,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 88.88888888888889,
+      "source_questions": [
+        "Q11"
+      ],
+      "hot_vs_warm_p": 0.545701259227095,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Self-Funded Cost Burden",
+      "n": 43,
+      "pct": 86.0,
+      "pos": 0,
+      "neg": 43,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 30,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q11",
+        "Q12"
+      ],
+      "hot_vs_warm_p": 0.007069893727381411,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Nonprofit or Public Sector Pricing",
+      "n": 5,
+      "pct": 10.0,
+      "pos": 1,
+      "neg": 4,
+      "pos_pct": 2.0,
+      "pos_share_raisers": 20.0,
+      "hot_n": 2,
+      "warm_n": 2,
+      "cold_n": 1,
+      "hot_pct": 6.451612903225806,
+      "warm_pct": 11.11111111111111,
+      "source_questions": [
+        "Q11"
+      ],
+      "hot_vs_warm_p": 0.618125696161906,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "funding": [
+    {
+      "code": "Funding Source Shapes Enrollment Decision",
+      "n": 48,
+      "pct": 96.0,
+      "pos": 1,
+      "neg": 26,
+      "pos_pct": 2.0,
+      "pos_share_raisers": 2.0833333333333335,
+      "hot_n": 30,
+      "warm_n": 17,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 94.44444444444444,
+      "source_questions": [
+        "Q12"
+      ],
+      "hot_vs_warm_p": 1.0,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Employer Funding Preference",
+      "n": 44,
+      "pct": 88.0,
+      "pos": 44,
+      "neg": 1,
+      "pos_pct": 88.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 27,
+      "warm_n": 16,
+      "cold_n": 1,
+      "hot_pct": 87.09677419354838,
+      "warm_pct": 88.88888888888889,
+      "source_questions": [
+        "Q11",
+        "Q12"
+      ],
+      "hot_vs_warm_p": 0.9999999999999999,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Employer Funding Approval Friction",
+      "n": 27,
+      "pct": 54.0,
+      "pos": 0,
+      "neg": 26,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 19,
+      "warm_n": 7,
+      "cold_n": 1,
+      "hot_pct": 61.29032258064516,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q12",
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.12983625679825406,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Employer Funding Justification Toolkit",
+      "n": 12,
+      "pct": 24.0,
+      "pos": 4,
+      "neg": 6,
+      "pos_pct": 8.0,
+      "pos_share_raisers": 33.333333333333336,
+      "hot_n": 6,
+      "warm_n": 5,
+      "cold_n": 1,
+      "hot_pct": 19.35483870967742,
+      "warm_pct": 27.77777777777778,
+      "source_questions": [
+        "Q12"
+      ],
+      "hot_vs_warm_p": 0.5028919300576145,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Payment Plan Accessibility",
+      "n": 8,
+      "pct": 16.0,
+      "pos": 7,
+      "neg": 1,
+      "pos_pct": 14.0,
+      "pos_share_raisers": 87.5,
+      "hot_n": 2,
+      "warm_n": 5,
+      "cold_n": 1,
+      "hot_pct": 6.451612903225806,
+      "warm_pct": 27.77777777777778,
+      "source_questions": [
+        "Q15"
+      ],
+      "hot_vs_warm_p": 0.08406232721304899,
+      "hot_vs_warm_sig": true
+    }
+  ],
+  "positioning": [
+    {
+      "code": "Opportunity Framing Preference",
+      "n": 34,
+      "pct": 68.0,
+      "pos": 34,
+      "neg": 0,
+      "pos_pct": 68.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 21,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.9383231635781337,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Fear Framing Resonance",
+      "n": 38,
+      "pct": 76.0,
+      "pos": 13,
+      "neg": 0,
+      "pos_pct": 26.0,
+      "pos_share_raisers": 34.21052631578947,
+      "hot_n": 27,
+      "warm_n": 11,
+      "cold_n": 0,
+      "hot_pct": 87.09677419354838,
+      "warm_pct": 61.111111111111114,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.07224905020752567,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Fear Framing Resistance",
+      "n": 17,
+      "pct": 34.0,
+      "pos": 0,
+      "neg": 16,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 7,
+      "warm_n": 9,
+      "cold_n": 1,
+      "hot_pct": 22.580645161290324,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.048480903011100196,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Team Leadership Framing Preference",
+      "n": 22,
+      "pct": 44.0,
+      "pos": 22,
+      "neg": 0,
+      "pos_pct": 44.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 15,
+      "warm_n": 7,
+      "cold_n": 0,
+      "hot_pct": 48.38709677419355,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.5193083353350563,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "barriers": [
+    {
+      "code": "Self-Funded Cost Burden",
+      "n": 43,
+      "pct": 86.0,
+      "pos": 0,
+      "neg": 43,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 30,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q11",
+        "Q12"
+      ],
+      "hot_vs_warm_p": 0.007069893727381411,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Program Quality Uncertainty",
+      "n": 30,
+      "pct": 60.0,
+      "pos": 0,
+      "neg": 20,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 21,
+      "warm_n": 8,
+      "cold_n": 1,
+      "hot_pct": 67.74193548387096,
+      "warm_pct": 44.44444444444444,
+      "source_questions": [
+        "Q6"
+      ],
+      "hot_vs_warm_p": 0.1096882473448364,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Content Too Basic for Advanced Users",
+      "n": 26,
+      "pct": 52.0,
+      "pos": 0,
+      "neg": 26,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 16,
+      "warm_n": 10,
+      "cold_n": 0,
+      "hot_pct": 51.61290322580645,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q13",
+        "Q15",
+        "Q5"
+      ],
+      "hot_vs_warm_p": 0.7897805191744853,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Demand for Intermediate or Advanced Track",
+      "n": 5,
+      "pct": 10.0,
+      "pos": 2,
+      "neg": 3,
+      "pos_pct": 4.0,
+      "pos_share_raisers": 40.0,
+      "hot_n": 1,
+      "warm_n": 4,
+      "cold_n": 0,
+      "hot_pct": 3.225806451612903,
+      "warm_pct": 22.22222222222222,
+      "source_questions": [
+        "Q15"
+      ],
+      "hot_vs_warm_p": 0.054239272027034685,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Content Too Advanced or Assumes Baseline",
+      "n": 5,
+      "pct": 10.0,
+      "pos": 0,
+      "neg": 5,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 2,
+      "warm_n": 2,
+      "cold_n": 1,
+      "hot_pct": 6.451612903225806,
+      "warm_pct": 11.11111111111111,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.618125696161906,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Time as Primary Learning Barrier",
+      "n": 38,
+      "pct": 76.0,
+      "pos": 0,
+      "neg": 38,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 27,
+      "warm_n": 11,
+      "cold_n": 0,
+      "hot_pct": 87.09677419354838,
+      "warm_pct": 61.111111111111114,
+      "source_questions": [
+        "Q3"
+      ],
+      "hot_vs_warm_p": 0.07224905020752567,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Unpredictable Work Demands",
+      "n": 28,
+      "pct": 56.0,
+      "pos": 0,
+      "neg": 27,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 20,
+      "warm_n": 7,
+      "cold_n": 1,
+      "hot_pct": 64.51612903225806,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.08208817917905309,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Curriculum Transparency as Enrollment Prerequisite",
+      "n": 13,
+      "pct": 26.0,
+      "pos": 0,
+      "neg": 13,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 7,
+      "warm_n": 6,
+      "cold_n": 0,
+      "hot_pct": 22.580645161290324,
+      "warm_pct": 33.333333333333336,
+      "source_questions": [
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.5076846584069878,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Sector-Specific Content Requirement",
+      "n": 29,
+      "pct": 58.0,
+      "pos": 5,
+      "neg": 26,
+      "pos_pct": 10.0,
+      "pos_share_raisers": 17.24137931034483,
+      "hot_n": 18,
+      "warm_n": 11,
+      "cold_n": 0,
+      "hot_pct": 58.064516129032256,
+      "warm_pct": 61.111111111111114,
+      "source_questions": [
+        "Q13",
+        "Q15",
+        "Q4",
+        "Q5"
+      ],
+      "hot_vs_warm_p": 0.8343093390549265,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Employer Funding Approval Friction",
+      "n": 27,
+      "pct": 54.0,
+      "pos": 0,
+      "neg": 26,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 19,
+      "warm_n": 7,
+      "cold_n": 1,
+      "hot_pct": 61.29032258064516,
+      "warm_pct": 38.888888888888886,
+      "source_questions": [
+        "Q12",
+        "Q13"
+      ],
+      "hot_vs_warm_p": 0.12983625679825406,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Peer Outcome Testimonials Required",
+      "n": 16,
+      "pct": 32.0,
+      "pos": 0,
+      "neg": 16,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 12,
+      "warm_n": 4,
+      "cold_n": 0,
+      "hot_pct": 38.70967741935484,
+      "warm_pct": 22.22222222222222,
+      "source_questions": [
+        "Q15"
+      ],
+      "hot_vs_warm_p": 0.23544208484040352,
+      "hot_vs_warm_sig": false
+    }
+  ],
+  "cohort_gaps": [
+    {
+      "code": "Price Perceived as Reasonable",
+      "n": 35,
+      "pct": 70.0,
+      "pos": 13,
+      "neg": 0,
+      "pos_pct": 26.0,
+      "pos_share_raisers": 37.142857142857146,
+      "hot_n": 26,
+      "warm_n": 9,
+      "cold_n": 0,
+      "hot_pct": 83.87096774193549,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q11"
+      ],
+      "hot_vs_warm_p": 0.011401673431671089,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Structured Program Over Self-Directed Learning",
+      "n": 43,
+      "pct": 86.0,
+      "pos": 43,
+      "neg": 0,
+      "pos_pct": 86.0,
+      "pos_share_raisers": 100.0,
+      "hot_n": 29,
+      "warm_n": 13,
+      "cold_n": 1,
+      "hot_pct": 93.54838709677419,
+      "warm_pct": 72.22222222222223,
+      "source_questions": [
+        "Q3",
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.08406232721304899,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Free Content Limitations",
+      "n": 46,
+      "pct": 92.0,
+      "pos": 0,
+      "neg": 46,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 31,
+      "warm_n": 14,
+      "cold_n": 1,
+      "hot_pct": 100.0,
+      "warm_pct": 77.77777777777777,
+      "source_questions": [
+        "Q7"
+      ],
+      "hot_vs_warm_p": 0.014442409711340596,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Latent AI Adoption Gap",
+      "n": 33,
+      "pct": 66.0,
+      "pos": 0,
+      "neg": 27,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 24,
+      "warm_n": 9,
+      "cold_n": 0,
+      "hot_pct": 77.41935483870968,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q2"
+      ],
+      "hot_vs_warm_p": 0.048480903011100196,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Career Advancement Motivation",
+      "n": 39,
+      "pct": 78.0,
+      "pos": 36,
+      "neg": 0,
+      "pos_pct": 72.0,
+      "pos_share_raisers": 92.3076923076923,
+      "hot_n": 26,
+      "warm_n": 13,
+      "cold_n": 0,
+      "hot_pct": 83.87096774193549,
+      "warm_pct": 72.22222222222223,
+      "source_questions": [
+        "Q3",
+        "Q9"
+      ],
+      "hot_vs_warm_p": 0.46473009842567375,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Direct Work Applicability Required",
+      "n": 46,
+      "pct": 92.0,
+      "pos": 39,
+      "neg": 7,
+      "pos_pct": 78.0,
+      "pos_share_raisers": 84.78260869565217,
+      "hot_n": 30,
+      "warm_n": 15,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 83.33333333333333,
+      "source_questions": [
+        "Q3"
+      ],
+      "hot_vs_warm_p": 0.13383299665842285,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Positive Initial Program Reaction",
+      "n": 48,
+      "pct": 96.0,
+      "pos": 39,
+      "neg": 0,
+      "pos_pct": 78.0,
+      "pos_share_raisers": 81.25,
+      "hot_n": 31,
+      "warm_n": 16,
+      "cold_n": 1,
+      "hot_pct": 100.0,
+      "warm_pct": 88.88888888888889,
+      "source_questions": [
+        "Q4"
+      ],
+      "hot_vs_warm_p": 0.13010204081632654,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Content Too Basic for Advanced Users",
+      "n": 26,
+      "pct": 52.0,
+      "pos": 0,
+      "neg": 26,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 16,
+      "warm_n": 10,
+      "cold_n": 0,
+      "hot_pct": 51.61290322580645,
+      "warm_pct": 55.55555555555556,
+      "source_questions": [
+        "Q13",
+        "Q15",
+        "Q5"
+      ],
+      "hot_vs_warm_p": 0.7897805191744853,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Demand for Intermediate or Advanced Track",
+      "n": 5,
+      "pct": 10.0,
+      "pos": 2,
+      "neg": 3,
+      "pos_pct": 4.0,
+      "pos_share_raisers": 40.0,
+      "hot_n": 1,
+      "warm_n": 4,
+      "cold_n": 0,
+      "hot_pct": 3.225806451612903,
+      "warm_pct": 22.22222222222222,
+      "source_questions": [
+        "Q15"
+      ],
+      "hot_vs_warm_p": 0.054239272027034685,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "Fear Framing Resistance",
+      "n": 17,
+      "pct": 34.0,
+      "pos": 0,
+      "neg": 16,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 7,
+      "warm_n": 9,
+      "cold_n": 1,
+      "hot_pct": 22.580645161290324,
+      "warm_pct": 50.0,
+      "source_questions": [
+        "Q10"
+      ],
+      "hot_vs_warm_p": 0.048480903011100196,
+      "hot_vs_warm_sig": true
+    },
+    {
+      "code": "ROI Confidence Required for Investment",
+      "n": 47,
+      "pct": 94.0,
+      "pos": 0,
+      "neg": 29,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 30,
+      "warm_n": 16,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 88.88888888888889,
+      "source_questions": [
+        "Q11"
+      ],
+      "hot_vs_warm_p": 0.545701259227095,
+      "hot_vs_warm_sig": false
+    },
+    {
+      "code": "Self-Funded Cost Burden",
+      "n": 43,
+      "pct": 86.0,
+      "pos": 0,
+      "neg": 43,
+      "pos_pct": 0.0,
+      "pos_share_raisers": 0.0,
+      "hot_n": 30,
+      "warm_n": 12,
+      "cold_n": 1,
+      "hot_pct": 96.7741935483871,
+      "warm_pct": 66.66666666666667,
+      "source_questions": [
+        "Q11",
+        "Q12"
+      ],
+      "hot_vs_warm_p": 0.007069893727381411,
+      "hot_vs_warm_sig": true
+    }
+  ],
+  "bws": {
+    "concept_appeal": [
+      {
+        "label": "Positive Initial Program Reaction",
+        "n": 48,
+        "freq_pct": 96.0,
+        "mean_bws": 0.099,
+        "top_tier_rate": 0.3333,
+        "high_pct": 47.92,
+        "mid_pct": 14.580000000000002,
+        "low_pct": 37.5
+      },
+      {
+        "label": "Own-Job Project Application",
+        "n": 41,
+        "freq_pct": 82.0,
+        "mean_bws": 0.2195,
+        "top_tier_rate": 0.3659,
+        "high_pct": 56.10000000000001,
+        "mid_pct": 14.63,
+        "low_pct": 29.270000000000003
+      },
+      {
+        "label": "No-Coding Accessibility Signal",
+        "n": 39,
+        "freq_pct": 78.0,
+        "mean_bws": 0.1282,
+        "top_tier_rate": 0.3333,
+        "high_pct": 53.849999999999994,
+        "mid_pct": 12.82,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Role Relevance Confirmation",
+        "n": 34,
+        "freq_pct": 68.0,
+        "mean_bws": -0.3456,
+        "top_tier_rate": 0.0882,
+        "high_pct": 20.59,
+        "mid_pct": 2.94,
+        "low_pct": 76.47
+      },
+      {
+        "label": "Sector-Specific Content Requirement",
+        "n": 26,
+        "freq_pct": 52.0,
+        "mean_bws": -0.0865,
+        "top_tier_rate": 0.1923,
+        "high_pct": 38.46,
+        "mid_pct": 7.6899999999999995,
+        "low_pct": 53.849999999999994
+      },
+      {
+        "label": "Content Too Basic for Advanced Users",
+        "n": 22,
+        "freq_pct": 44.0,
+        "mean_bws": -0.2045,
+        "top_tier_rate": 0.1818,
+        "high_pct": 22.73,
+        "mid_pct": 18.18,
+        "low_pct": 59.089999999999996
+      },
+      {
+        "label": "Systematic AI Use Goal",
+        "n": 19,
+        "freq_pct": 38.0,
+        "mean_bws": -0.3553,
+        "top_tier_rate": 0.0526,
+        "high_pct": 10.530000000000001,
+        "mid_pct": 21.05,
+        "low_pct": 68.42
+      },
+      {
+        "label": "Project-Based Learning Effectiveness",
+        "n": 14,
+        "freq_pct": 28.0,
+        "mean_bws": 0.3929,
+        "top_tier_rate": 0.5,
+        "high_pct": 78.57,
+        "mid_pct": 14.29,
+        "low_pct": 7.140000000000001
+      },
+      {
+        "label": "AI Leadership Credibility Motivation",
+        "n": 13,
+        "freq_pct": 26.0,
+        "mean_bws": -0.0192,
+        "top_tier_rate": 0.0769,
+        "high_pct": 38.46,
+        "mid_pct": 30.769999999999996,
+        "low_pct": 30.769999999999996
+      },
+      {
+        "label": "Leadership-Level Content Desired",
+        "n": 11,
+        "freq_pct": 22.0,
+        "mean_bws": -0.1364,
+        "top_tier_rate": 0.0909,
+        "high_pct": 18.18,
+        "mid_pct": 36.36,
+        "low_pct": 45.45
+      },
+      {
+        "label": "Eight-Week Duration Acceptability",
+        "n": 9,
+        "freq_pct": 18.0,
+        "mean_bws": 0.0556,
+        "top_tier_rate": 0.2222,
+        "high_pct": 33.33,
+        "mid_pct": 22.220000000000002,
+        "low_pct": 44.440000000000005
+      },
+      {
+        "label": "Cohort Composition Concern",
+        "n": 8,
+        "freq_pct": 16.0,
+        "mean_bws": 0.0625,
+        "top_tier_rate": 0.25,
+        "high_pct": 50.0,
+        "mid_pct": 25.0,
+        "low_pct": 25.0
+      },
+      {
+        "label": "AI Adoption Anxiety",
+        "n": 8,
+        "freq_pct": 16.0,
+        "mean_bws": -0.4375,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 25.0,
+        "low_pct": 75.0
+      },
+      {
+        "label": "Live Session Accountability",
+        "n": 6,
+        "freq_pct": 12.0,
+        "mean_bws": 0.0,
+        "top_tier_rate": 0.3333,
+        "high_pct": 33.33,
+        "mid_pct": 16.669999999999998,
+        "low_pct": 50.0
+      },
+      {
+        "label": "Regulated Environment Guidance",
+        "n": 6,
+        "freq_pct": 12.0,
+        "mean_bws": -0.2083,
+        "top_tier_rate": 0.1667,
+        "high_pct": 16.669999999999998,
+        "mid_pct": 16.669999999999998,
+        "low_pct": 66.67
+      },
+      {
+        "label": "Weekly Time Commitment Manageability",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": 0.2,
+        "top_tier_rate": 0.4,
+        "high_pct": 40.0,
+        "mid_pct": 20.0,
+        "low_pct": 40.0
+      },
+      {
+        "label": "Career Advancement Motivation",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": 0.1,
+        "top_tier_rate": 0.0,
+        "high_pct": 40.0,
+        "mid_pct": 60.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Content Too Advanced or Assumes Baseline",
+        "n": 4,
+        "freq_pct": 8.0,
+        "mean_bws": 0.625,
+        "top_tier_rate": 0.75,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Structured Program Over Self-Directed Learning",
+        "n": 3,
+        "freq_pct": 6.0,
+        "mean_bws": 0.5,
+        "top_tier_rate": 0.6667,
+        "high_pct": 66.67,
+        "mid_pct": 33.33,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Credential Internal Credibility",
+        "n": 3,
+        "freq_pct": 6.0,
+        "mean_bws": -0.0833,
+        "top_tier_rate": 0.0,
+        "high_pct": 33.33,
+        "mid_pct": 33.33,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Credential External Career Signaling",
+        "n": 1,
+        "freq_pct": 2.0,
+        "mean_bws": 0.75,
+        "top_tier_rate": 1.0,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "University Signals Curriculum Rigor",
+        "n": 1,
+        "freq_pct": 2.0,
+        "mean_bws": 0.5,
+        "top_tier_rate": 1.0,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      }
+    ],
+    "program_eval": [
+      {
+        "label": "Weekly Time Commitment Manageability",
+        "n": 49,
+        "freq_pct": 98.0,
+        "mean_bws": -0.1224,
+        "top_tier_rate": 0.0204,
+        "high_pct": 8.16,
+        "mid_pct": 48.980000000000004,
+        "low_pct": 42.86
+      },
+      {
+        "label": "Eight-Week Duration Acceptability",
+        "n": 47,
+        "freq_pct": 94.0,
+        "mean_bws": -0.1011,
+        "top_tier_rate": 0.0,
+        "high_pct": 8.51,
+        "mid_pct": 53.190000000000005,
+        "low_pct": 38.3
+      },
+      {
+        "label": "Free Content Limitations",
+        "n": 46,
+        "freq_pct": 92.0,
+        "mean_bws": 0.0761,
+        "top_tier_rate": 0.0652,
+        "high_pct": 39.129999999999995,
+        "mid_pct": 47.83,
+        "low_pct": 13.04
+      },
+      {
+        "label": "Structured Program Over Self-Directed Learning",
+        "n": 43,
+        "freq_pct": 86.0,
+        "mean_bws": 0.0465,
+        "top_tier_rate": 0.0698,
+        "high_pct": 23.26,
+        "mid_pct": 65.12,
+        "low_pct": 11.63
+      },
+      {
+        "label": "Employer Training Insufficiency",
+        "n": 39,
+        "freq_pct": 78.0,
+        "mean_bws": 0.109,
+        "top_tier_rate": 0.1282,
+        "high_pct": 41.03,
+        "mid_pct": 41.03,
+        "low_pct": 17.95
+      },
+      {
+        "label": "Career Advancement Motivation",
+        "n": 37,
+        "freq_pct": 74.0,
+        "mean_bws": 0.0,
+        "top_tier_rate": 0.0,
+        "high_pct": 18.92,
+        "mid_pct": 62.160000000000004,
+        "low_pct": 18.92
+      },
+      {
+        "label": "Live Session Accountability",
+        "n": 35,
+        "freq_pct": 70.0,
+        "mean_bws": 0.05,
+        "top_tier_rate": 0.1143,
+        "high_pct": 31.430000000000003,
+        "mid_pct": 51.43,
+        "low_pct": 17.14
+      },
+      {
+        "label": "Job Security as Career Motivation",
+        "n": 33,
+        "freq_pct": 66.0,
+        "mean_bws": 0.0758,
+        "top_tier_rate": 0.1212,
+        "high_pct": 18.18,
+        "mid_pct": 81.82000000000001,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Credential Internal Credibility",
+        "n": 33,
+        "freq_pct": 66.0,
+        "mean_bws": -0.0076,
+        "top_tier_rate": 0.0606,
+        "high_pct": 30.3,
+        "mid_pct": 39.39,
+        "low_pct": 30.3
+      },
+      {
+        "label": "Credential External Career Signaling",
+        "n": 31,
+        "freq_pct": 62.0,
+        "mean_bws": -0.0161,
+        "top_tier_rate": 0.0645,
+        "high_pct": 19.35,
+        "mid_pct": 61.29,
+        "low_pct": 19.35
+      },
+      {
+        "label": "Session Recording Flexibility Needed",
+        "n": 29,
+        "freq_pct": 58.0,
+        "mean_bws": -0.1293,
+        "top_tier_rate": 0.0,
+        "high_pct": 3.45,
+        "mid_pct": 58.620000000000005,
+        "low_pct": 37.93
+      },
+      {
+        "label": "Self-Paced Course Abandonment Pattern",
+        "n": 27,
+        "freq_pct": 54.0,
+        "mean_bws": 0.0833,
+        "top_tier_rate": 0.1111,
+        "high_pct": 25.929999999999996,
+        "mid_pct": 66.67,
+        "low_pct": 7.41
+      },
+      {
+        "label": "Credential Value Depends on University Prestige",
+        "n": 26,
+        "freq_pct": 52.0,
+        "mean_bws": 0.0096,
+        "top_tier_rate": 0.0385,
+        "high_pct": 26.919999999999998,
+        "mid_pct": 50.0,
+        "low_pct": 23.080000000000002
+      },
+      {
+        "label": "University Signals Curriculum Rigor",
+        "n": 26,
+        "freq_pct": 52.0,
+        "mean_bws": 0.0096,
+        "top_tier_rate": 0.0,
+        "high_pct": 26.919999999999998,
+        "mid_pct": 50.0,
+        "low_pct": 23.080000000000002
+      },
+      {
+        "label": "Project-Based Learning Effectiveness",
+        "n": 25,
+        "freq_pct": 50.0,
+        "mean_bws": 0.07,
+        "top_tier_rate": 0.08,
+        "high_pct": 28.000000000000004,
+        "mid_pct": 60.0,
+        "low_pct": 12.0
+      },
+      {
+        "label": "AI Leadership Credibility Motivation",
+        "n": 25,
+        "freq_pct": 50.0,
+        "mean_bws": 0.06,
+        "top_tier_rate": 0.0,
+        "high_pct": 36.0,
+        "mid_pct": 52.0,
+        "low_pct": 12.0
+      },
+      {
+        "label": "Remote Work Enables Evening Participation",
+        "n": 24,
+        "freq_pct": 48.0,
+        "mean_bws": -0.1667,
+        "top_tier_rate": 0.0,
+        "high_pct": 4.17,
+        "mid_pct": 41.67,
+        "low_pct": 54.169999999999995
+      },
+      {
+        "label": "Unpredictable Work Demands",
+        "n": 22,
+        "freq_pct": 44.0,
+        "mean_bws": -0.0909,
+        "top_tier_rate": 0.0,
+        "high_pct": 9.09,
+        "mid_pct": 59.089999999999996,
+        "low_pct": 31.819999999999997
+      },
+      {
+        "label": "Program Quality Uncertainty",
+        "n": 19,
+        "freq_pct": 38.0,
+        "mean_bws": -0.0658,
+        "top_tier_rate": 0.0,
+        "high_pct": 15.790000000000001,
+        "mid_pct": 47.370000000000005,
+        "low_pct": 36.84
+      },
+      {
+        "label": "Own-Job Project Application",
+        "n": 18,
+        "freq_pct": 36.0,
+        "mean_bws": 0.0694,
+        "top_tier_rate": 0.1667,
+        "high_pct": 33.33,
+        "mid_pct": 44.440000000000005,
+        "low_pct": 22.220000000000002
+      },
+      {
+        "label": "Peer Cohort Learning Value",
+        "n": 16,
+        "freq_pct": 32.0,
+        "mean_bws": 0.0938,
+        "top_tier_rate": 0.125,
+        "high_pct": 31.25,
+        "mid_pct": 62.5,
+        "low_pct": 6.25
+      },
+      {
+        "label": "Live Session Interaction Value",
+        "n": 15,
+        "freq_pct": 30.0,
+        "mean_bws": 0.0833,
+        "top_tier_rate": 0.0667,
+        "high_pct": 40.0,
+        "mid_pct": 46.67,
+        "low_pct": 13.33
+      },
+      {
+        "label": "Practitioner Instructor Credibility",
+        "n": 10,
+        "freq_pct": 20.0,
+        "mean_bws": 0.025,
+        "top_tier_rate": 0.0,
+        "high_pct": 20.0,
+        "mid_pct": 70.0,
+        "low_pct": 10.0
+      },
+      {
+        "label": "Seasonal Work Conflicts with Cohort Timing",
+        "n": 10,
+        "freq_pct": 20.0,
+        "mean_bws": -0.125,
+        "top_tier_rate": 0.0,
+        "high_pct": 10.0,
+        "mid_pct": 40.0,
+        "low_pct": 50.0
+      },
+      {
+        "label": "Past Training Disappointment Increases Selectivity",
+        "n": 8,
+        "freq_pct": 16.0,
+        "mean_bws": -0.0312,
+        "top_tier_rate": 0.0,
+        "high_pct": 12.5,
+        "mid_pct": 75.0,
+        "low_pct": 12.5
+      },
+      {
+        "label": "Regulated Environment Guidance",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": -0.05,
+        "top_tier_rate": 0.0,
+        "high_pct": 20.0,
+        "mid_pct": 40.0,
+        "low_pct": 40.0
+      },
+      {
+        "label": "Employer Funding Justification Toolkit",
+        "n": 1,
+        "freq_pct": 2.0,
+        "mean_bws": 0.0,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 100.0,
+        "low_pct": 0.0
+      }
+    ],
+    "barriers_price": [
+      {
+        "label": "Price Perceived as Reasonable",
+        "n": 35,
+        "freq_pct": 70.0,
+        "mean_bws": -0.1,
+        "top_tier_rate": 0.0857,
+        "high_pct": 34.29,
+        "mid_pct": 14.29,
+        "low_pct": 51.43
+      },
+      {
+        "label": "Funding Source Shapes Enrollment Decision",
+        "n": 27,
+        "freq_pct": 54.0,
+        "mean_bws": 0.0833,
+        "top_tier_rate": 0.3333,
+        "high_pct": 55.559999999999995,
+        "mid_pct": 7.41,
+        "low_pct": 37.04
+      },
+      {
+        "label": "Employer Funding Approval Friction",
+        "n": 20,
+        "freq_pct": 40.0,
+        "mean_bws": 0.1875,
+        "top_tier_rate": 0.3,
+        "high_pct": 60.0,
+        "mid_pct": 15.0,
+        "low_pct": 25.0
+      },
+      {
+        "label": "Unpredictable Work Demands",
+        "n": 17,
+        "freq_pct": 34.0,
+        "mean_bws": 0.1324,
+        "top_tier_rate": 0.4706,
+        "high_pct": 47.06,
+        "mid_pct": 11.76,
+        "low_pct": 41.18
+      },
+      {
+        "label": "Seasonal Work Conflicts with Cohort Timing",
+        "n": 15,
+        "freq_pct": 30.0,
+        "mean_bws": 0.05,
+        "top_tier_rate": 0.3333,
+        "high_pct": 53.33,
+        "mid_pct": 6.67,
+        "low_pct": 40.0
+      },
+      {
+        "label": "ROI Confidence Required for Investment",
+        "n": 15,
+        "freq_pct": 30.0,
+        "mean_bws": 0.0333,
+        "top_tier_rate": 0.2667,
+        "high_pct": 40.0,
+        "mid_pct": 26.669999999999998,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Sector-Specific Content Requirement",
+        "n": 14,
+        "freq_pct": 28.0,
+        "mean_bws": 0.1071,
+        "top_tier_rate": 0.2143,
+        "high_pct": 42.86,
+        "mid_pct": 35.709999999999994,
+        "low_pct": 21.43
+      },
+      {
+        "label": "Employer Funding Preference",
+        "n": 14,
+        "freq_pct": 28.0,
+        "mean_bws": -0.0893,
+        "top_tier_rate": 0.2857,
+        "high_pct": 35.709999999999994,
+        "mid_pct": 14.29,
+        "low_pct": 50.0
+      },
+      {
+        "label": "Content Too Basic for Advanced Users",
+        "n": 13,
+        "freq_pct": 26.0,
+        "mean_bws": -0.0192,
+        "top_tier_rate": 0.2308,
+        "high_pct": 38.46,
+        "mid_pct": 15.379999999999999,
+        "low_pct": 46.150000000000006
+      },
+      {
+        "label": "Self-Funded Cost Burden",
+        "n": 12,
+        "freq_pct": 24.0,
+        "mean_bws": -0.1042,
+        "top_tier_rate": 0.0833,
+        "high_pct": 25.0,
+        "mid_pct": 25.0,
+        "low_pct": 50.0
+      },
+      {
+        "label": "Peer Outcome Testimonials Required",
+        "n": 12,
+        "freq_pct": 24.0,
+        "mean_bws": -0.1458,
+        "top_tier_rate": 0.25,
+        "high_pct": 41.67,
+        "mid_pct": 0.0,
+        "low_pct": 58.330000000000005
+      },
+      {
+        "label": "Curriculum Transparency as Enrollment Prerequisite",
+        "n": 12,
+        "freq_pct": 24.0,
+        "mean_bws": -0.2708,
+        "top_tier_rate": 0.0833,
+        "high_pct": 16.669999999999998,
+        "mid_pct": 16.669999999999998,
+        "low_pct": 66.67
+      },
+      {
+        "label": "Employer Funding Justification Toolkit",
+        "n": 10,
+        "freq_pct": 20.0,
+        "mean_bws": 0.075,
+        "top_tier_rate": 0.4,
+        "high_pct": 50.0,
+        "mid_pct": 10.0,
+        "low_pct": 40.0
+      },
+      {
+        "label": "Program Quality Uncertainty",
+        "n": 8,
+        "freq_pct": 16.0,
+        "mean_bws": 0.2812,
+        "top_tier_rate": 0.625,
+        "high_pct": 62.5,
+        "mid_pct": 12.5,
+        "low_pct": 25.0
+      },
+      {
+        "label": "Payment Plan Accessibility",
+        "n": 6,
+        "freq_pct": 12.0,
+        "mean_bws": 0.125,
+        "top_tier_rate": 0.3333,
+        "high_pct": 50.0,
+        "mid_pct": 16.669999999999998,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Cohort Composition Concern",
+        "n": 6,
+        "freq_pct": 12.0,
+        "mean_bws": -0.0833,
+        "top_tier_rate": 0.3333,
+        "high_pct": 33.33,
+        "mid_pct": 0.0,
+        "low_pct": 66.67
+      },
+      {
+        "label": "Content Too Advanced or Assumes Baseline",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": 0.7,
+        "top_tier_rate": 0.8,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Nonprofit or Public Sector Pricing",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": 0.1,
+        "top_tier_rate": 0.4,
+        "high_pct": 40.0,
+        "mid_pct": 0.0,
+        "low_pct": 60.0
+      },
+      {
+        "label": "Demand for Intermediate or Advanced Track",
+        "n": 5,
+        "freq_pct": 10.0,
+        "mean_bws": -0.55,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 0.0,
+        "low_pct": 100.0
+      },
+      {
+        "label": "Credential Value Depends on University Prestige",
+        "n": 4,
+        "freq_pct": 8.0,
+        "mean_bws": -0.25,
+        "top_tier_rate": 0.0,
+        "high_pct": 25.0,
+        "mid_pct": 0.0,
+        "low_pct": 75.0
+      },
+      {
+        "label": "Positive Initial Program Reaction",
+        "n": 4,
+        "freq_pct": 8.0,
+        "mean_bws": -0.3125,
+        "top_tier_rate": 0.0,
+        "high_pct": 25.0,
+        "mid_pct": 0.0,
+        "low_pct": 75.0
+      },
+      {
+        "label": "Practitioner Instructor Credibility",
+        "n": 3,
+        "freq_pct": 6.0,
+        "mean_bws": 0.6667,
+        "top_tier_rate": 0.6667,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Regulated Environment Guidance",
+        "n": 3,
+        "freq_pct": 6.0,
+        "mean_bws": -0.25,
+        "top_tier_rate": 0.0,
+        "high_pct": 33.33,
+        "mid_pct": 0.0,
+        "low_pct": 66.67
+      },
+      {
+        "label": "Value Articulation for Experienced Users",
+        "n": 3,
+        "freq_pct": 6.0,
+        "mean_bws": -0.5833,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 0.0,
+        "low_pct": 100.0
+      },
+      {
+        "label": "Leadership-Level Content Desired",
+        "n": 2,
+        "freq_pct": 4.0,
+        "mean_bws": -0.875,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 0.0,
+        "low_pct": 100.0
+      },
+      {
+        "label": "Peer Cohort Learning Value",
+        "n": 1,
+        "freq_pct": 2.0,
+        "mean_bws": 0.25,
+        "top_tier_rate": 0.0,
+        "high_pct": 100.0,
+        "mid_pct": 0.0,
+        "low_pct": 0.0
+      },
+      {
+        "label": "Credential External Career Signaling",
+        "n": 1,
+        "freq_pct": 2.0,
+        "mean_bws": 0.0,
+        "top_tier_rate": 0.0,
+        "high_pct": 0.0,
+        "mid_pct": 100.0,
+        "low_pct": 0.0
+      }
+    ],
+    "ai_readiness": [
+      {
+        "label": "Direct Work Applicability Required",
+        "n": 46,
+        "freq_pct": 92.0,
+        "mean_bws": -0.0489,
+        "top_tier_rate": 0.1739,
+        "high_pct": 30.43,
+        "mid_pct": 28.26,
+        "low_pct": 41.3
+      },
+      {
+        "label": "Explicit Leadership Pressure to Adopt AI",
+        "n": 38,
+        "freq_pct": 76.0,
+        "mean_bws": 0.0987,
+        "top_tier_rate": 0.3158,
+        "high_pct": 44.74,
+        "mid_pct": 18.42,
+        "low_pct": 36.84
+      },
+      {
+        "label": "Time as Primary Learning Barrier",
+        "n": 38,
+        "freq_pct": 76.0,
+        "mean_bws": -0.1842,
+        "top_tier_rate": 0.0789,
+        "high_pct": 15.790000000000001,
+        "mid_pct": 23.68,
+        "low_pct": 60.529999999999994
+      },
+      {
+        "label": "Latent AI Adoption Gap",
+        "n": 33,
+        "freq_pct": 66.0,
+        "mean_bws": 0.0909,
+        "top_tier_rate": 0.303,
+        "high_pct": 51.519999999999996,
+        "mid_pct": 18.18,
+        "low_pct": 30.3
+      },
+      {
+        "label": "Organizational Constraints on AI Adoption",
+        "n": 27,
+        "freq_pct": 54.0,
+        "mean_bws": 0.1944,
+        "top_tier_rate": 0.2963,
+        "high_pct": 59.260000000000005,
+        "mid_pct": 7.41,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Past Training Disappointment Increases Selectivity",
+        "n": 21,
+        "freq_pct": 42.0,
+        "mean_bws": -0.0714,
+        "top_tier_rate": 0.0952,
+        "high_pct": 28.57,
+        "mid_pct": 23.810000000000002,
+        "low_pct": 47.620000000000005
+      },
+      {
+        "label": "AI Adoption Anxiety",
+        "n": 16,
+        "freq_pct": 32.0,
+        "mean_bws": 0.0156,
+        "top_tier_rate": 0.25,
+        "high_pct": 37.5,
+        "mid_pct": 18.75,
+        "low_pct": 43.75
+      },
+      {
+        "label": "Career Advancement Motivation",
+        "n": 15,
+        "freq_pct": 30.0,
+        "mean_bws": 0.0333,
+        "top_tier_rate": 0.2667,
+        "high_pct": 40.0,
+        "mid_pct": 26.669999999999998,
+        "low_pct": 33.33
+      },
+      {
+        "label": "Self-Paced Course Abandonment Pattern",
+        "n": 14,
+        "freq_pct": 28.0,
+        "mean_bws": -0.2143,
+        "top_tier_rate": 0.0714,
+        "high_pct": 21.43,
+        "mid_pct": 21.43,
+        "low_pct": 57.14
+      },
+      {
+        "label": "Program Quality Uncertainty",
+        "n": 11,
+        "freq_pct": 22.0,
+        "mean_bws": 0.0227,
+        "top_tier_rate": 0.2727,
+        "high_pct": 45.45,
+        "mid_pct": 9.09,
+        "low_pct": 45.45
+      },
+      {
+        "label": "Structured Program Over Self-Directed Learning",
+        "n": 6,
+        "freq_pct": 12.0,
+        "mean_bws": 0.125,
+        "top_tier_rate": 0.1667,
+        "high_pct": 50.0,
+        "mid_pct": 16.669999999999998,
+        "low_pct": 33.33
+      }
+    ]
+  },
+  "bws_reliability": {
+    "Concept appeal drivers": 0.837,
+    "Program evaluation dimensions": 0.702,
+    "Barriers and price sensitivity": 0.813,
+    "AI readiness and upskilling": 0.704
+  },
+  "demographics": {
+    "function": [
+      {
+        "label": "Marketing / Communications",
+        "n": 14
+      },
+      {
+        "label": "Operations / Project Management",
+        "n": 11
+      },
+      {
+        "label": "Human Resources / People",
+        "n": 7
+      },
+      {
+        "label": "Finance / Accounting",
+        "n": 7
+      },
+      {
+        "label": "General Management / Other",
+        "n": 7
+      },
+      {
+        "label": "Sales / Business Development",
+        "n": 4
+      }
+    ],
+    "seniority": [
+      {
+        "label": "Individual contributor",
+        "n": 19
+      },
+      {
+        "label": "Manager",
+        "n": 15
+      },
+      {
+        "label": "Senior Manager",
+        "n": 7
+      },
+      {
+        "label": "Director",
+        "n": 6
+      },
+      {
+        "label": "VP or above",
+        "n": 3
+      }
+    ],
+    "age_band": [
+      {
+        "label": "25-34",
+        "n": 19
+      },
+      {
+        "label": "35-44",
+        "n": 21
+      },
+      {
+        "label": "45-54",
+        "n": 7
+      },
+      {
+        "label": "55+",
+        "n": 3
+      }
+    ],
+    "ai_familiarity": [
+      {
+        "label": "Regular user",
+        "n": 18
+      },
+      {
+        "label": "Occasional user",
+        "n": 20
+      },
+      {
+        "label": "Non-user",
+        "n": 12
+      }
+    ],
+    "industry": [
+      {
+        "label": "Financial Services",
+        "n": 12
+      },
+      {
+        "label": "Public Sector",
+        "n": 8
+      },
+      {
+        "label": "Retail / Consumer",
+        "n": 6
+      },
+      {
+        "label": "Manufacturing",
+        "n": 6
+      },
+      {
+        "label": "Healthcare",
+        "n": 5
+      },
+      {
+        "label": "Technology",
+        "n": 4
+      },
+      {
+        "label": "Other",
+        "n": 4
+      },
+      {
+        "label": "Professional Services",
+        "n": 3
+      },
+      {
+        "label": "Nonprofit",
+        "n": 2
+      }
+    ],
+    "years_experience": [
+      {
+        "label": "6-10 years",
+        "n": 13
+      },
+      {
+        "label": "11-20 years",
+        "n": 22
+      },
+      {
+        "label": "20+ years",
+        "n": 15
+      }
+    ]
+  },
+  "funding_contingency": {
+    "n_hot": 31,
+    "hot_employer_pref": 27,
+    "hot_employer_pref_pct": 87.09677419354838,
+    "hot_funding_shapes": 30,
+    "hot_funding_shapes_pct": 96.7741935483871,
+    "hot_self_burden": 30,
+    "hot_without_employer_pref": 4,
+    "self_pay_viable_pct": 8.0
+  },
+  "too_basic_by_familiarity": {
+    "rows": [
+      {
+        "label": "Regular user",
+        "n": 18,
+        "too_basic_n": 17,
+        "too_basic_pct": 94.44444444444444,
+        "adv_track_n": 5,
+        "adv_track_pct": 27.77777777777778
+      },
+      {
+        "label": "Occasional user",
+        "n": 20,
+        "too_basic_n": 8,
+        "too_basic_pct": 40.0,
+        "adv_track_n": 0,
+        "adv_track_pct": 0.0
+      },
+      {
+        "label": "Non-user",
+        "n": 12,
+        "too_basic_n": 1,
+        "too_basic_pct": 8.333333333333334,
+        "adv_track_n": 0,
+        "adv_track_pct": 0.0
+      }
+    ],
+    "regular_vs_others_p": 6.6210904261509995e-06,
+    "regular_vs_others_sig": true
+  },
+  "price_expectations": {
+    "n": 50,
+    "below_n": 29,
+    "below_pct": 58.0,
+    "at_top_n": 11,
+    "at_top_pct": 22.0,
+    "within_n": 10,
+    "within_pct": 20.0,
+    "median_expectation_midpoint": 2150.0
+  },
+  "cohort_demo": {
+    "ai_familiarity": {
+      "hot": {
+        "Regular user": 11,
+        "Occasional user": 15,
+        "Non-user": 5
+      },
+      "warm": {
+        "Non-user": 6,
+        "Regular user": 7,
+        "Occasional user": 5
+      },
+      "all": {
+        "Regular user": 18,
+        "Occasional user": 20,
+        "Non-user": 12
+      }
+    },
+    "seniority": {
+      "hot": {
+        "Individual contributor": 12,
+        "Senior Manager": 4,
+        "Manager": 9,
+        "Director": 4,
+        "VP or above": 2
+      },
+      "warm": {
+        "Manager": 5,
+        "Director": 2,
+        "Individual contributor": 7,
+        "Senior Manager": 3,
+        "VP or above": 1
+      }
+    }
+  }
+}

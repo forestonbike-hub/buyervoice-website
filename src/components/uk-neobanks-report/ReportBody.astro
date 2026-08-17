@@ -1,0 +1,1166 @@
+﻿---
+// ReportBody.astro, UK Neobank Switching Study report body.
+// Imported by BOTH the internal page (src/pages/internal/uk-neobanks-report/)
+// and the public page (src/pages/uk-neobanks-report/).
+//
+// Visual language mirrors hr-report (the canonical BuyerVoice report
+// design): stat-card grid, INSIGHT/VULN/OPP callout boxes, color-coded
+// inline bar charts, recommendation tables, crosstab highlights. Section
+// flow mirrors hr-report ordering: Exec Summary, Findings, Competitive
+// Position, 3-stakeholder Recommendations, Retention & Risk, Methodology.
+//
+// Charts marked stacked-by-intensity render the per-code bar as three
+// segments (high / medium / low intensity) summing to the code's overall
+// prevalence. Forest specified intensity stacking on 2A, 2C, 3E, 7A, 7B.
+// Other theme charts render flat but still get the click-to-view-quotes
+// drilldown via the data-drilldown-chart attribute and the __VX modal.
+import Section from '../report/Section.astro';
+import reportStats from '../../data/uk-neobanks/report-stats.json';
+import verbatimExemplars from '../../data/uk-neobanks/verbatim-exemplars.json';
+import triggerSubpatterns from '../../data/uk-neobanks/trigger-subpatterns.json';
+import switchingLikelihood from '../../data/uk-neobanks/switching-likelihood.json';
+
+const d: any = reportStats;
+const tsp: any = triggerSubpatterns;
+const swl: any = switchingLikelihood;
+const vxScript = '<script>window.__VX=' + JSON.stringify(verbatimExemplars).replace(/<\//g, '<\\/') + ';<' + '/script>';
+
+interface CodeRow { label: string; pct: number; n_pos: number; }
+function rows(codes: CodeRow[], topN = 8) {
+  return codes.slice(0, topN).map((c) => ({ label: c.label, pct: c.pct, n: c.n_pos }));
+}
+
+// Build a brand-by-theme correspondence matrix from the per-brand
+// appeal / concern arrays. The result is one row per unique theme label
+// (union across all three brands) with three percentage columns
+// (Monzo, Starling Bank, Revolut). Used by Section 3b and 3c to render
+// the appeal correspondence and concerns correspondence heatmaps.
+const BRANDS = ['Monzo', 'Starling Bank', 'Revolut'] as const;
+function buildCorrespondence(side: 'appeal' | 'concerns') {
+  const matrix: any = (d.chapter3_whos_next?.brand_attribute_matrix) ?? {};
+  const labelSet = new Set<string>();
+  BRANDS.forEach((b) => {
+    (matrix[b]?.[side] ?? []).forEach((c: any) => labelSet.add(c.label));
+  });
+  const out = Array.from(labelSet).map((label) => {
+    const row: any = { label };
+    BRANDS.forEach((b) => {
+      const found = (matrix[b]?.[side] ?? []).find((c: any) => c.label === label);
+      row[b] = found ? found.pct : 0;
+    });
+    row.maxPct = Math.max(...BRANDS.map((b) => row[b]));
+    row.maxBrand = BRANDS.find((b) => row[b] === row.maxPct);
+    return row;
+  });
+  out.sort((a, b) => b.maxPct - a.maxPct);
+  return out;
+}
+function heatClass(pct: number) {
+  if (pct === 0) return 'heat-zero';
+  if (pct >= 60) return 'heat-hi';
+  if (pct >= 30) return 'heat-med';
+  return 'heat-lo';
+}
+
+// Union of push (Wave 1 Q5 frustrations with previous bank) and pull
+// (Wave 1 Q7 reasons for choosing the neobank) per-theme percentages.
+// Ranked by push percentage descending so the reader's eye starts at
+// the largest frustration with the previous bank and works down. The
+// pull bar sits beside it so the strategic question (does the neobank
+// actually solve this frustration?) reads in a glance.
+function pushPullPaired() {
+  const push = d.chapter1_why_they_left?.push_forces_q5?.codes ?? [];
+  const pull = d.chapter1_why_they_left?.pull_forces_q7?.codes ?? [];
+  const labels = new Set<string>();
+  push.forEach((c: any) => labels.add(c.label));
+  pull.forEach((c: any) => labels.add(c.label));
+  const out = Array.from(labels).map((label) => {
+    const p = push.find((c: any) => c.label === label);
+    const u = pull.find((c: any) => c.label === label);
+    return {
+      label,
+      push_pct: p ? p.pct : 0,
+      pull_pct: u ? u.pct : 0,
+    };
+  });
+  // Sort by push_pct descending. Tiebreaker is pull_pct so that themes
+  // tied on push prevalence are ordered by which is also a stronger
+  // pull, surfacing the "most-actively-solved" theme of the tied set
+  // first.
+  out.sort((a, b) => (b.push_pct - a.push_pct) || (b.pull_pct - a.pull_pct));
+  return out.slice(0, 10);
+}
+---
+
+<style is:inline>
+  /* Visual primitives lifted from hr-report, the canonical BuyerVoice
+     report design. Scoped here so this report inherits the same look as
+     hr-report, retail-banking-report, etc., without depending on the
+     ReportLayout stylesheet to grow them. */
+  .ukn-report .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0 24px; }
+  .ukn-report .stat-card { text-align: center; padding: 16px; background: rgba(11, 31, 58, 0.04); border-radius: 8px; }
+  .ukn-report .stat-num { font-family: var(--serif), Georgia, serif; font-size: 28px; font-weight: 600; color: var(--signal); }
+  .ukn-report .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  /* Compact stats variant (used in Section 2 to describe the switcher
+     cohort). Smaller per-card padding and font so 4 cards with longer
+     descriptive labels fit comfortably on one row. Matches the
+     retail-banking-report `.compact-stats` pattern verbatim. */
+  .ukn-report .compact-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+  .ukn-report .compact-stat { padding: 14px 12px; background: var(--card-bg, rgba(11, 31, 58, 0.04)); border: 1px solid var(--border, rgba(11, 31, 58, 0.10)); border-radius: 4px; }
+  .ukn-report .compact-stat .csn { font-family: var(--serif), Georgia, serif; font-size: 22px; font-weight: 600; color: var(--signal); line-height: 1.1; }
+  .ukn-report .compact-stat .csl { font-size: 11.5px; color: var(--rule); margin-top: 6px; line-height: 1.4; }
+  /* Source-centric stacked-bar (Section 2b "Where they came from").
+     Single 100% horizontal bar per incumbent showing what share of that
+     bank's departing switchers went to Monzo vs Starling. */
+  .ukn-report .source-block { display: grid; grid-template-columns: 200px 1fr 80px; align-items: center; gap: 16px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .ukn-report .source-block:last-of-type { border-bottom: none; }
+  .ukn-report .source-bank { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; line-height: 1.3; }
+  .ukn-report .source-track { height: 22px; background: rgba(11, 31, 58, 0.06); border-radius: 3px; overflow: hidden; display: flex; }
+  .ukn-report .source-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; color: #fff; overflow: hidden; white-space: nowrap; padding: 0 4px; }
+  .ukn-report .source-seg.monzo { background: var(--signal); }
+  .ukn-report .source-seg.starling { background: var(--ink); }
+  .ukn-report .source-n { font-size: 12px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .ukn-report .source-legend { display: flex; gap: 18px; align-items: center; font-size: 11px; color: var(--muted); margin: 8px 0 12px 216px; }
+  .ukn-report .source-legend .leg-swatch { display: inline-block; width: 12px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .ukn-report .source-legend .leg-swatch.monzo { background: var(--signal); }
+  .ukn-report .source-legend .leg-swatch.starling { background: var(--ink); }
+  .ukn-report .insight { border-left: 4px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ukn-report .insight p { font-size: 13px; margin-bottom: 0; }
+  .ukn-report .insight strong { color: var(--signal); }
+  .ukn-report .vuln-callout { border-left: 4px solid #C4784A; background: rgba(196, 120, 74, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ukn-report .vuln-callout p { font-size: 13px; margin-bottom: 0; }
+  .ukn-report .vuln-callout strong { color: #C4784A; }
+  .ukn-report .opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42, 122, 110, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .ukn-report .opp-callout p { font-size: 13px; margin-bottom: 0; }
+  .ukn-report .opp-callout strong { color: #2A7A6E; }
+  .ukn-report .bar-chart { margin: 16px 0; }
+  .ukn-report .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .ukn-report .bar-label { width: 240px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; }
+  .ukn-report .bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; position: relative; }
+  .ukn-report .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+  .ukn-report .bar-fill.signal { background: var(--signal); }
+  .ukn-report .bar-fill.ink { background: var(--ink); }
+  .ukn-report .bar-fill.warm { background: #C4784A; }
+  .ukn-report .bar-fill.slate { background: #5A7A94; }
+  .ukn-report .bar-fill.teal { background: #2A7A6E; }
+  .ukn-report .bar-fill.plum { background: #6B4C6E; }
+  .ukn-report .bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+  .ukn-report .q-cite { display: block; font-family: var(--sans), system-ui, sans-serif; font-size: 12px; font-weight: 400; color: var(--muted); font-style: italic; margin-top: 2px; margin-bottom: 8px; }
+  .ukn-report .source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; }
+  .ukn-report .rec-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+  .ukn-report .rec-table th { background: rgba(11, 31, 58, 0.04); text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid rgba(11, 31, 58, 0.12); }
+  .ukn-report .rec-table td { padding: 10px 12px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .ukn-report .rec-table td:first-child { font-weight: 600; width: 30%; }
+  /* Navigation table: spread columns across full width and right-justify the
+     audience column so it reads cleanly against the section list on the
+     left. Without this, the audience column hugs the section text and
+     looks cramped (especially on the longer Section 7 row). */
+  .ukn-report .nav-table { table-layout: fixed; width: 100%; }
+  .ukn-report .nav-table th:first-child, .ukn-report .nav-table td:first-child { width: 60%; }
+  .ukn-report .nav-table th:last-child, .ukn-report .nav-table td:last-child { width: 40%; text-align: right; padding-right: 4px; }
+  .ukn-report .crosstab { font-size: 12px; overflow-x: auto; margin: 16px 0; }
+  .ukn-report .crosstab table { width: 100%; min-width: 600px; border-collapse: collapse; }
+  .ukn-report .crosstab th, .ukn-report .crosstab td { padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .ukn-report .crosstab th:first-child, .ukn-report .crosstab td:first-child { text-align: left; min-width: 200px; }
+  .ukn-report .crosstab th { background: rgba(11, 31, 58, 0.04); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 2px solid rgba(11, 31, 58, 0.12); }
+  .ukn-report .crosstab .highlight { background: rgba(184, 52, 27, 0.10); font-weight: 700; }
+  /* Correspondence heatmap (Section 3b, 3c). Rows = appeal or concern
+     themes (union across the three neobanks). Columns = Monzo, Starling
+     Bank, Revolut. Cells are colored by intensity of the brand-theme
+     association, with the row max outlined in signal red so the
+     "this brand owns this attribute" pattern is visually obvious. */
+  .ukn-report .heat { margin: 16px 0 12px; }
+  .ukn-report .heat table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
+  .ukn-report .heat th { background: rgba(11, 31, 58, 0.04); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 8px; border-bottom: 2px solid rgba(11, 31, 58, 0.12); text-align: center; }
+  .ukn-report .heat th:first-child { text-align: left; width: 40%; }
+  .ukn-report .heat td { padding: 10px 8px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); text-align: center; vertical-align: middle; }
+  .ukn-report .heat td:first-child { text-align: left; font-weight: 500; color: var(--ink); line-height: 1.35; }
+  .ukn-report .heat td.cell { font-weight: 600; }
+  .ukn-report .heat td.heat-hi { background: rgba(184, 52, 27, 0.18); color: var(--signal); }
+  .ukn-report .heat td.heat-med { background: rgba(184, 52, 27, 0.08); color: var(--ink); }
+  .ukn-report .heat td.heat-lo { background: rgba(11, 31, 58, 0.03); color: var(--muted); font-weight: 500; }
+  .ukn-report .heat td.heat-zero { background: transparent; color: rgba(11, 31, 58, 0.25); font-weight: 400; }
+  .ukn-report .heat td.heat-max { outline: 2px solid var(--signal); outline-offset: -2px; color: var(--signal); }
+  .ukn-report .heat-legend { display: flex; gap: 16px; align-items: center; font-size: 11px; color: var(--muted); margin: 8px 0 4px; }
+  .ukn-report .heat-swatch { display: inline-block; width: 12px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .ukn-report .heat-swatch.heat-hi { background: rgba(184, 52, 27, 0.18); }
+  .ukn-report .heat-swatch.heat-med { background: rgba(184, 52, 27, 0.08); }
+  .ukn-report .heat-swatch.heat-lo { background: rgba(11, 31, 58, 0.03); border: 1px solid var(--border, rgba(11, 31, 58, 0.10)); }
+  .ukn-report .heat-swatch.heat-max { outline: 2px solid var(--signal); outline-offset: -1px; background: rgba(184, 52, 27, 0.18); }
+  /* Section-body h2 (e.g. "2a. Why they left"). Excludes .accordion-title
+     so the accordion header doesn't inherit the 28px top margin and look
+     visually stretched relative to retail-banking. */
+  .ukn-report h2:not(.accordion-title) { font-family: var(--serif), Georgia, serif; font-size: 22px; font-weight: 600; color: var(--ink); margin-top: 28px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .ukn-report h3 { font-family: var(--serif), Georgia, serif; font-size: 18px; font-weight: 600; color: var(--ink); margin-top: 24px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .ukn-report h4 { font-family: var(--serif), Georgia, serif; font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 16px; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .ukn-report p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+  .ukn-report ul, .ukn-report ol { margin: 8px 0 16px 20px; }
+  .ukn-report li { font-size: 14px; line-height: 1.6; margin-bottom: 6px; }
+  /* Bar chart standard (canonical for every BuyerVoice report; matches
+     the retail-banking-report pattern). Each .bar-track is a 100%-wide
+     gray rail; the .bar-fill width is set inline as the RAW prevalence
+     percent (so a 77% bar takes 77% of the track, not the whole track).
+     The percentage label sits inside the bar at its right edge, with
+     no external value column. Bar fill is single-color per chart; pick the
+     thematic color (signal for frustrations, teal for positives, warm
+     for triggers/concerns, ink for neutral) and apply it to every bar
+     in that chart. */
+  /* Click-to-view-quotes affordance: bar rows inside a data-drilldown-chart
+     container show a pointer cursor and the bar label gets an underline so
+     readers know it's interactive. Print: revert all of this. */
+  .ukn-report [data-drilldown-chart] .bar-row { cursor: pointer; transition: opacity 0.15s; }
+  .ukn-report [data-drilldown-chart] .bar-row:hover { opacity: 0.82; }
+  .ukn-report [data-drilldown-chart] .bar-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  /* Drilldown hint embedded as red signal text inside the source-note line,
+     prefixed with a › guillemet, matching retail-banking-report's .vb-hint. */
+  .ukn-report .vb-hint { font-size: 11.5px; color: var(--signal); font-weight: 500; }
+  .ukn-report .vb-hint::before { content: '\203A  '; }
+  /* Paired bar chart for cross-wave comparisons (Section 2i). One block
+     per theme: theme label on the left, two stacked mini-bars in the
+     middle (Wave 1 + Wave 2), delta-pp column on the right. The
+     `.paired-block.no-delta` variant drops the delta column for
+     destination-distribution charts (Section 2b "where they came from",
+     2c "other banks considered") that pair Monzo vs Starling switchers
+     without a meaningful delta. */
+  .ukn-report .paired-block { display: grid; grid-template-columns: 200px 1fr 80px; align-items: center; gap: 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .ukn-report .paired-block.no-delta { grid-template-columns: 200px 1fr; }
+  .ukn-report .paired-block:last-of-type { border-bottom: none; }
+  .ukn-report .paired-theme { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; line-height: 1.3; }
+  .ukn-report .paired-bars { display: flex; flex-direction: column; gap: 4px; }
+  .ukn-report .paired-row { display: flex; align-items: center; gap: 8px; }
+  /* Fixed width + right-align so the bar tracks share an origin x-position
+     across rows. Without the fixed width, the longer mini-label (e.g.
+     "Pull (selection driver)") pushes the track right relative to a
+     shorter mini-label (e.g. "Push (frustration)") and the bar origins
+     no longer align. Applies to every paired-bar chart in the report
+     (Sections 2e push/pull, 4a cross-wave, 4b likelihood frustrations). */
+  .ukn-report .paired-mini-label { font-size: 11px; color: var(--muted); font-weight: 500; width: 150px; flex-shrink: 0; text-align: right; }
+  .ukn-report .paired-track { flex: 1; height: 18px; background: rgba(11, 31, 58, 0.06); border-radius: 3px; overflow: hidden; }
+  .ukn-report .paired-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; min-width: 32px; border-radius: 3px; }
+  .ukn-report .paired-fill.w1 { background: var(--ink); }
+  .ukn-report .paired-fill.w2 { background: var(--signal); }
+  /* Monzo and Starling color treatment for destination-paired charts.
+     Monzo signal red (the more dominant/recognized brand), Starling navy
+     ink to differentiate visually from Monzo bars. */
+  .ukn-report .paired-fill.monzo { background: var(--signal); }
+  .ukn-report .paired-fill.starling { background: var(--ink); }
+  .ukn-report .paired-fill.push { background: var(--signal); }
+  .ukn-report .paired-fill.pull { background: #2A7A6E; }
+  .ukn-report .paired-val { font-size: 10.5px; font-weight: 700; color: #fff; }
+  .ukn-report .paired-delta { font-size: 13px; font-weight: 600; text-align: right; color: var(--ink); }
+  .ukn-report .paired-delta.pos { color: var(--signal); }
+  .ukn-report .paired-delta.neg { color: var(--ink); }
+  /* Verbatim drill-down modal. Hidden by default; the click handler adds
+     the .open class. */
+  .vb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; }
+  .vb-overlay.open { display: flex; justify-content: center; align-items: center; }
+  .vb-dialog { background: var(--paper); border-radius: 10px; max-width: 760px; width: 94%; max-height: 86vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  .vb-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 8px; }
+  .vb-close:hover { color: var(--ink); }
+  .vb-header { padding: 22px 28px 8px; border-bottom: 1px solid var(--border); }
+  .vb-header h3 { font-family: var(--serif), Georgia, serif; font-size: 18px; font-weight: 600; color: var(--ink); margin: 0 0 4px; line-height: 1.3; }
+  .vb-q { font-size: 12.5px; color: var(--muted); margin: 0; font-style: italic; line-height: 1.45; }
+  .vb-body { padding: 16px 28px 22px; overflow-y: auto; }
+  .vb-card { background: rgba(11,31,58,0.04); border-left: 3px solid var(--signal); padding: 14px 16px; border-radius: 0 6px 6px 0; margin-bottom: 12px; }
+  .vb-card .vb-quote { font-family: var(--serif), Georgia, serif; font-style: italic; font-size: 14px; color: var(--rule); line-height: 1.6; margin-bottom: 10px; }
+  .vb-card .vb-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .vb-tag { font-size: 10.5px; background: rgba(11,31,58,0.08); color: var(--rule); padding: 2px 9px; border-radius: 10px; font-weight: 500; }
+  .vb-tag.bank { background: rgba(184,52,27,0.12); color: var(--signal); font-weight: 600; }
+  .vb-empty { font-size: 13px; color: var(--muted); }
+  @media print {
+    .ukn-report .insight { background: rgba(184, 52, 27, 0.06) !important; border-left: 4px solid var(--signal) !important; }
+    .ukn-report .vuln-callout { background: rgba(196, 120, 74, 0.08) !important; border-left: 4px solid #C4784A !important; }
+    .ukn-report .opp-callout { background: rgba(42, 122, 110, 0.08) !important; border-left: 4px solid #2A7A6E !important; }
+    .ukn-report .bar-fill.signal { background: var(--signal) !important; }
+    .ukn-report .bar-fill.ink { background: var(--ink) !important; }
+    .ukn-report .bar-fill.warm { background: #C4784A !important; }
+    .ukn-report .bar-fill.slate { background: #5A7A94 !important; }
+    .ukn-report .bar-fill.teal { background: #2A7A6E !important; }
+    .ukn-report .bar-fill.plum { background: #6B4C6E !important; }
+    .ukn-report [data-drilldown-chart] .bar-label { text-decoration: none !important; }
+    .ukn-report .vb-hint { display: none !important; }
+    .ukn-report .paired-fill.w1 { background: var(--ink) !important; }
+    .ukn-report .paired-fill.w2 { background: var(--signal) !important; }
+    .ukn-report .paired-fill.monzo { background: var(--signal) !important; }
+    .ukn-report .paired-fill.starling { background: var(--ink) !important; }
+    .ukn-report .paired-fill.push { background: var(--signal) !important; }
+    .ukn-report .paired-fill.pull { background: #2A7A6E !important; }
+    .ukn-report .heat td.heat-hi { background: rgba(184, 52, 27, 0.18) !important; }
+    .ukn-report .heat td.heat-med { background: rgba(184, 52, 27, 0.08) !important; }
+    .ukn-report .heat td.heat-lo { background: rgba(11, 31, 58, 0.03) !important; }
+    .ukn-report .source-seg.monzo { background: var(--signal) !important; }
+    .ukn-report .source-seg.starling { background: var(--ink) !important; }
+    .vb-overlay { display: none !important; }
+  }
+</style>
+
+<div class="ukn-report">
+
+<!-- ============================================================ -->
+<!-- 01, EXECUTIVE SUMMARY -->
+<!-- ============================================================ -->
+<Section title="Executive Summary" subtitle="The UK incumbent's strategic position, seven critical findings, and the three highest-leverage moves">
+  <h2>The UK Retail-Banking Position</h2>
+  <p>
+    Among UK adults who recently switched their primary current account to Monzo or Starling Bank, the dominant story is not about fees or savings rates. It is about <strong>app quality, spending visibility, and the Pots/Spaces feature</strong>. App design quality was a frustration with the previous bank for 77% of switchers, a selection driver for 55%, and the most-cited theme when switchers describe their new bank to a friend. Among non-switchers at the top-5 incumbents, 81% are mentally available for Monzo (rich impressions) versus 39% for Starling and 29% for Revolut, and 80% cite uncompetitive savings rates as a current-bank frustration, meaningfully higher than the 17% rate among departed switchers. The strategic question for an incumbent is no longer whether to defend product or app investment; it is which features unlock retention before the next switching wave starts.
+  </p>
+
+  <h2>Four Hero Numbers</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">77%</div>
+      <div class="stat-label">App design as a switcher push force</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">Pots/Spaces as a switcher pull force</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">81%</div>
+      <div class="stat-label">Non-switchers mentally available for Monzo</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">95%</div>
+      <div class="stat-label">Non-switchers cite Revolut regulatory trust concerns</div>
+    </div>
+  </div>
+
+  <h2>Seven Critical Findings</h2>
+
+  <div class="insight">
+    <p><strong>1. NatWest customers go heavily to Monzo; Halifax and Barclays directionally lean Starling.</strong> The only individually significant per-incumbent skew in Wave 1 is NatWest at 80% Monzo / 20% Starling. Halifax (35%/65%) and Barclays (34%/67%) both lean Starling at directional levels, individually neither crosses the threshold at these sample sizes, but they corroborate each other and warrant a working hypothesis. For other incumbents the per-bank flows do not yet justify a tailored competitive-positioning split. See Section 2b "Where they came from" for the per-incumbent breakdown and the strategic-implication read. <em>Owner: All teams; per-bank tailoring lives with Brand &amp; Marketing.</em></p>
+  </div>
+
+  <div class="vuln-callout">
+    <p><strong>2. Inertia is overrated as a retention defence.</strong> {d.chapter1_who_switchers_are.switching_ease.regret_about_delay}% of switchers say they should have done it sooner; {d.chapter1_who_switchers_are.switching_ease.switching_process_ease}% describe the switch process itself as easy. Retention strategies leaning on "moving is hard" are working on borrowed time. Retention messaging should make the <em>cost of staying</em> visible (rate gap, fee opacity, missing app features), not rely on the cost of moving doing the work. <em>Owner: Retail &amp; Growth.</em></p>
+  </div>
+
+  <div class="insight">
+    <p><strong>3. App design quality is the dominant push force AND pull force across both waves.</strong> 77% of switchers cited it as a frustration with their previous bank, 55% as a selection driver for their neobank, and 67% of non-switchers volunteer it when describing Monzo to a friend. The story to tell non-switchers is not "we're cheaper" or "we have more products," it is "our app is keeping pace." <em>Owner: Brand &amp; Marketing.</em></p>
+  </div>
+
+  <div class="vuln-callout">
+    <p><strong>4. Spending visibility through categorization is the single most universal theme, and it differentiates the at-risk cohort.</strong> 73% of switchers said it was a frustration with their previous bank; 62% as a selection driver; 77% volunteer it when describing Monzo. Among Wave 2 non-switchers, the high-likelihood-to-switch cohort cites it 22 pp more than the low-likelihood cohort. Incumbents that haven't shipped this feature are losing the narrative AND the at-risk customers. <em>Owner: Product &amp; Digital.</em></p>
+  </div>
+
+  <div class="vuln-callout">
+    <p><strong>5. The savings-rate gap is the single largest leading indicator in the report.</strong> 17% of switchers cited uncompetitive rates as a frustration with their previous bank, versus 80% of matched non-switchers about their current bank, a 63 pp gap. Rates were not why this wave of switchers walked, but they have become salient since. Address with rate moves before the next switching wave starts. <em>Owner: Retail &amp; Growth.</em></p>
+  </div>
+
+  <div class="insight">
+    <p><strong>6. Multi-banking is the new normal; reframe retention from "stop them switching" to "stay primary in a multi-banked wallet."</strong> {d.chapter1_who_switchers_are.wallet_composition.stats[0].value}% of switchers hold Revolut as secondary, {d.chapter1_who_switchers_are.wallet_composition.stats[1].value}% hold Wise, {d.chapter1_who_switchers_are.wallet_composition.stats[2].value}% carry a credit card elsewhere. Embedded FX and premium tiers stop being nice-to-haves under this frame, they are what prevents secondary-banking fragmentation from migrating to primary. <em>Owner: Retail &amp; Growth + Product.</em></p>
+  </div>
+
+  <div class="opp-callout">
+    <p><strong>7. Retirees are a defensive asset, not a vulnerability.</strong> Retirees skew sharply low-likelihood-to-switch ({swl.retirees.low_pct}% low-likelihood vs {Math.ceil(swl.summary.n_low / swl.n_matched * 100)}% in the matched cohort), are well-aware of Monzo (75% mentally available) but unmoved on intent, and over-index on branch-and-trust concerns. Branch network contraction without a retiree-specific defensive plan trades a defensible high-loyalty cohort for a small property cost saving. <em>Owner: Retail &amp; Growth.</em></p>
+  </div>
+
+  <h2>Three Highest-Leverage Moves</h2>
+  <table class="rec-table">
+    <thead><tr><th>Move</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1. Ship spending visibility + Pots-equivalent in the incumbent app</td>
+        <td>The two features that consistently appear at the top of switcher push, switcher pull, and non-switcher Monzo-appeal rankings. If the app doesn't have them, the incumbent is on the wrong side of the narrative regardless of rate competitiveness or product breadth.</td>
+      </tr>
+      <tr>
+        <td>2. Move on savings rates BEFORE customers move</td>
+        <td>The cross-wave gap (17% of switchers cited uncompetitive rates as a frustration with their previous bank, versus 80% of non-switchers about their current bank) is a retention warning. Customers feel the pain before they have the alternative; once they see Monzo or Starling, this becomes a switching trigger.</td>
+      </tr>
+      <tr>
+        <td>3. Position against Revolut on regulatory trust, not on FX features</td>
+        <td>Revolut owns no-fee FX (96%); that is not a fight worth picking. The 95% concern about regulatory trust is the wedge, communications should reinforce "established UK bank with Financial Services Compensation Scheme (FSCS) protection" against "international fintech that just got a UK licence."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Report Navigation</h2>
+  <table class="rec-table nav-table">
+    <thead><tr><th>Section</th><th>Primary Audience</th></tr></thead>
+    <tbody>
+      <tr><td>02. The UK Neobank Switching Story</td><td>All teams</td></tr>
+      <tr><td>03. Competitive Position: Monzo, Starling, Revolut</td><td>Brand &amp; Marketing, Product</td></tr>
+      <tr><td>04. Leading Indicators: who's most likely to switch next</td><td>Brand &amp; Marketing, Retail &amp; Growth</td></tr>
+      <tr><td>05. Brand &amp; Marketing Recommendations</td><td>Brand &amp; Marketing</td></tr>
+      <tr><td>06. Product &amp; Digital Recommendations</td><td>Product &amp; Digital</td></tr>
+      <tr><td>07. Retail &amp; Growth Recommendations</td><td>Retail &amp; Growth</td></tr>
+      <tr><td>08. Re-engagement of departed switchers</td><td>Retail &amp; Growth, Product</td></tr>
+      <tr><td>09. Retiree spotlight: are retirees a vulnerability?</td><td>Retail &amp; Growth, Customer Success</td></tr>
+      <tr><td>10. Methodology</td><td>All teams</td></tr>
+    </tbody>
+  </table>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 02, THE UK NEOBANK SWITCHING STORY -->
+<!-- ============================================================ -->
+<Section title="The UK Neobank Switching Story" subtitle="Who the switchers are, why they left, how it's going for them now, and what non-switchers are voicing today">
+  <p>
+    The two-wave design produces a past-present-future narrative arc. Wave 1 (n=120 switchers to Monzo or Starling) tells us who actually walked, why they walked, and how it's going since they did. Wave 2 (n=200 non-switchers at top-5 incumbents) tells us what current incumbent customers are voicing, the leading-indicator signal for the next switching wave.
+  </p>
+
+  <h2>2a. Who the switchers are</h2>
+  <p>The Wave 1 cohort is descriptive of the switchers we interviewed, not a statistical sample of the UK switching population. Four markers describe this cohort: they skew prime-working-age, mid-income, urban, and full-time employed.</p>
+  <div class="compact-stats">
+    {d.chapter1_who_switchers_are.demographic_stats.stats.map((s: any) => (
+      <div class="compact-stat">
+        <div class="csn">{s.value}%</div>
+        <div class="csl">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  <h2>2b. Where they came from</h2>
+  <p>Each switcher named a previous primary bank in the screener. The chart below is source-centric: one row per incumbent, with a 100%-wide stacked bar showing what share of that bank's departing switchers chose Monzo vs Starling. Each incumbent reader can find their own row to see who their departing customers tended to land at. The top-5 incumbents may not face the same threat, although our sample sizes per incumbent are small, there are some directional signals worth reading carefully.</p>
+  <p class="source-note">"Which bank was your main bank before, and roughly how long had you been with them?" (Wave 1 switchers, n=120 = 60 Monzo + 60 Starling). Each row sums to 100% of departing switchers from that incumbent in this study. An asterisk on the n indicates the only split that is individually statistically distinguishable from 50/50 at alpha=0.10 (two-sided exact binomial); other rows are directional only.</p>
+  <div class="source-legend">
+    <span><span class="leg-swatch monzo"></span>Went to Monzo</span>
+    <span><span class="leg-swatch starling"></span>Went to Starling</span>
+  </div>
+  <div class="source-chart">
+    {d.chapter1_who_switchers_are.per_incumbent_threat.rows.map((row: any) => (
+      <div class="source-block">
+        <div class="source-bank">{row.incumbent}</div>
+        <div class="source-track">
+          {row.monzo_pct > 0 && <div class="source-seg monzo" style={`width: ${row.monzo_pct}%;`}>{row.monzo_pct}%</div>}
+          {row.starling_pct > 0 && <div class="source-seg starling" style={`width: ${row.starling_pct}%;`}>{row.starling_pct}%</div>}
+        </div>
+        <div class="source-n">n={row.n_switchers}{row.is_significant ? '*' : ''}</div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>Read:</strong> the only individually significant skew in this Wave 1 sample is <strong>NatWest customers going heavily to Monzo</strong> (80%/20%, the only row with an asterisk). Halifax (35%/65%) and Barclays (34%/67%) both lean toward Starling at directional levels, individually neither crosses the alpha=0.10 threshold at these sample sizes, but the two corroborate each other and read as a tier-2 directional finding worth testing in a larger sample. Lloyds (58%/42%) is the closest to 50/50 of the major flows; Nationwide and HSBC split evenly. The strategic implication is narrower than the raw percentages suggest: <em>for NatWest, "compete with Monzo" is a strong directive; for Halifax and Barclays, "expect Starling to be the more common landing place" is a working hypothesis; for everyone else, the data does not yet justify a per-bank competitive-positioning split.</em></p>
+  </div>
+
+  <h2>2c. Other banks they considered</h2>
+  <p>When asked what alternatives they considered before switching, almost every Monzo switcher also considered Starling ({d.chapter1_who_switchers_are.other_banks_considered.cross_consideration.monzo_considered_starling}%) and almost every Starling switcher also considered Monzo ({d.chapter1_who_switchers_are.other_banks_considered.cross_consideration.starling_considered_monzo}%). Beyond the two-neobank choice itself, the third-party alternatives ranked across both cohorts are:</p>
+  <p class="source-note">"What banks did you consider switching to? Please list the names of those banks." (Wave 1 switchers, n=120). Bars show the share of all Wave 1 switchers who mentioned the alternative; the two destination neobanks are excluded so the third-party landscape is visible.</p>
+  <div class="bar-chart">
+    {d.chapter1_who_switchers_are.other_banks_considered.rows.map((row: any) => {
+      const combinedPct = Math.ceil((row.monzo_n + row.starling_n) / 120 * 100);
+      return (
+        <div class="bar-row">
+          <span class="bar-label">{row.bank}</span>
+          <div class="bar-track">
+            <div class="bar-fill ink" style={`width: ${combinedPct}%;`}>
+              <span class="bar-val">{combinedPct}%</span>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <div class="vuln-callout">
+    <p><strong>The two competitors most likely to peel off neobank-curious customers are Chase UK and First Direct.</strong> Chase UK leads the third-party consideration set at over 50% of switchers; First Direct sits in second at 15%. <strong>First Direct is HSBC-owned</strong>, which means HSBC effectively has an internal digital alternative inside its consideration set. The strategic question for other incumbents: do you have a digital brand customers will name when they go shopping for one, or are you ceding the consideration set entirely to neobanks and Chase UK?</p>
+  </div>
+
+  <h2>2d. Wallet composition after switching</h2>
+  <p>Switching the primary current account to Monzo or Starling does not mean the switcher banks only there. Roughly half hold a Revolut account as a secondary, a credit card sits at a different bank for over half the cohort, and meaningful share keep a Wise account for foreign-exchange use. Just over half closed their previous bank account fully; the rest kept it dormant or significantly reduced its use.</p>
+  <div class="compact-stats">
+    {d.chapter1_who_switchers_are.wallet_composition.stats.map((s: any) => (
+      <div class="compact-stat">
+        <div class="csn">{s.value}%</div>
+        <div class="csl">{s.label}</div>
+      </div>
+    ))}
+  </div>
+
+  <h2>2e. Push and pull, side by side</h2>
+  <p>The strategic question for incumbents is which frustrations the neobanks actually solve (high push prevalence, also high pull prevalence) and which are still in play (high push, low pull). Each row below pairs one theme's prevalence as a frustration with the previous bank (push) and as a selection driver for the neobank (pull). App design quality, spending visibility, real-time notifications, and Pots/Spaces all show up strongly on both sides, the neobanks are recognised as actively solving these. Phone customer service friction is a strong push (61%) but a weaker pull (35%), suggesting service friction triggers consideration without being the headline reason for choosing the new bank.</p>
+  <p class="source-note">Push: "Did you have any particular frustrations with your previous bank?" Pull: "Why did you specifically choose [neobank]?" (Wave 1 switchers, n=120 for both questions). Themes ranked by the larger of push or pull. <span class="vb-hint">Click any theme on the push or pull chart below to read participant quotes.</span></p>
+  <div class="paired-chart">
+    {pushPullPaired().map((row) => (
+      <div class="paired-block no-delta">
+        <div class="paired-theme">{row.label}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Push (frustration)</span>
+            <div class="paired-track">
+              {row.push_pct > 0 && <div class="paired-fill push" style={`width: ${row.push_pct}%;`}>
+                <span class="paired-val">{row.push_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Pull (selection driver)</span>
+            <div class="paired-track">
+              {row.pull_pct > 0 && <div class="paired-fill pull" style={`width: ${row.pull_pct}%;`}>
+                <span class="paired-val">{row.pull_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>Read:</strong> Three of the top four themes show up strongly on both sides, app design quality, spending visibility, and Pots/Spaces. Phone customer service friction is a strong push but weaker pull, friction triggers consideration without being the chosen-because-of feature. Fees and savings rates are surprisingly low on both sides; rate-driven switching is rarer than UX-driven switching in this cohort.</p>
+  </div>
+
+  <h2>2f. What triggered the consideration</h2>
+  <p>Triggers cluster around incumbent-friction incidents and life-stage transitions (new job, moving city, going self-employed). Social proof from a friend or colleague typically catalyzes the move.</p>
+  <p class="source-note">"What was happening in your life when you first started thinking about switching banks?" (Wave 1 switchers, n=120) <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+  <div class="bar-chart" data-drilldown-chart="triggers-q3">
+    {rows(d.chapter1_why_they_left.triggers_q3.codes).map((row) => (
+      <div class="bar-row">
+        <span class="bar-label">{row.label}</span>
+        <div class="bar-track">
+          <div class="bar-fill warm" style={`width: ${row.pct}%;`}>
+            <span class="bar-val">{row.pct}%</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>Sub-patterns within the top two triggers.</strong> Reading the open-text responses for participants coded with each top trigger surfaces the pattern beneath the headline percentage:</p>
+    <ul>
+      <li><strong>Life-stage transition (45%):</strong> the most common life-stage events are <strong>starting a new job or new role</strong> (cited by 21% of participants in this theme) and <strong>a salary change or pay rise</strong> (also 21%). Moving house or city, divorce or separation, retirement, and going freelance appear at lower frequency. The implication: salary-event triggers (new job + pay rise combined account for over 40% of life-stage citers) are a campaign-timing signal worth instrumenting against.</li>
+      <li><strong>Crystallizing incident at incumbent (58%):</strong> the most common incident pattern is <strong>phone customer-service friction</strong> (16% of incident citers, typically described as long hold times or being unable to reach a person), followed by <strong>disputed transactions or fraud handling</strong> (9%). App outages at critical moments and branch closures appear less often. The implication: fixing phone customer service has a direct lever on the trigger rate, more than fixing app reliability or branch coverage would.</li>
+    </ul>
+    <p style="font-size: 11.5px; color: var(--muted); margin-top: 8px;">Sub-patterns extracted by word-boundary keyword match against the participant's response text; participants whose response didn't match a keyword set are not counted in the percentages above. See the methodology section for the full classifier.</p>
+  </div>
+
+  <h2>2g. How it's going since they switched</h2>
+  <p>The post-switch experience is dominated by the same features that pulled switchers in. Continued enthusiasm rather than decay; the satisfaction story is consistent with the regret-check (universal "would do it again", common "should have done it sooner").</p>
+  <p class="source-note">"Now that you've had some experience with your current bank, how is it going?" (Wave 1 switchers, n=120) <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+  <div class="bar-chart" data-drilldown-chart="post-switch-q9">
+    {rows(d.chapter2_how_its_going.post_switch_q9.codes).map((row) => (
+      <div class="bar-row">
+        <span class="bar-label">{row.label}</span>
+        <div class="bar-track">
+          <div class="bar-fill teal" style={`width: ${row.pct}%;`}>
+            <span class="bar-val">{row.pct}%</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+</Section>
+
+<!-- ============================================================ -->
+<!-- 03, COMPETITIVE POSITION -->
+<!-- ============================================================ -->
+<Section title="Competitive Position: Monzo, Starling, Revolut" subtitle="Mental availability among non-switchers, plus the appeal-versus-concerns matrix for each neobank">
+  <p>
+    Wave 2 talks to the customers incumbents still have. The competitive picture answers <em>which neobank is the bigger threat</em> and <em>where to position</em>. Three findings: Monzo's mental availability dwarfs Starling and Revolut; each brand has a distinct appeal-vs-concern shape; and Revolut's positioning is travel/secondary, not primary-banking.
+  </p>
+
+  <h2>3a. Three-tier awareness funnel (matched cohort, n=160)</h2>
+  <p>
+    Awareness here is derived from a behavioural proxy: the count of impression-level codes triggered when participants describe each brand (one open-ended description prompt per brand). "Mentally available" = two or more concrete impression codes. "Aware but not linked" = one impression code or fewer. "Unaware" = no impression codes whatsoever.
+  </p>
+  <div class="crosstab">
+    <table>
+      <thead>
+        <tr>
+          <th>Brand</th>
+          <th>Mentally available</th>
+          <th>Aware not linked</th>
+          <th>Unaware</th>
+          <th>n</th>
+        </tr>
+      </thead>
+      <tbody>
+        {['Monzo', 'Starling Bank', 'Revolut'].map((brand) => {
+          const v: any = d.chapter3_whos_next.awareness_three_tier[`${brand}_matched`];
+          return (
+            <tr>
+              <td><strong>{brand}</strong></td>
+              <td class={brand === 'Monzo' ? 'highlight' : ''}>{v.mentally_available_pct}%</td>
+              <td class={brand === 'Starling Bank' ? 'highlight' : ''}>{v.aware_not_linked_pct}%</td>
+              <td>{v.unaware_pct}%</td>
+              <td>{v.n}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    <p><strong>Monzo dominates non-switcher mental availability.</strong> 81% volunteer multiple specific impressions when asked about Monzo. Starling has the largest aware-but-not-linked share at 52%, the brand-building opportunity for Starling is to convert that diffuse awareness into specific feature impressions. Revolut sits at 67% aware-not-linked, consistent with its known-but-narrow secondary-account positioning.</p>
+  </div>
+
+  <h2>3b. Appeal correspondence: which brand owns each appeal attribute</h2>
+  <p>The three neobanks are not interchangeable in non-switcher minds. Each brand "owns" a different cluster of appeal attributes: Monzo dominates the spending-visibility / Pots / real-time-notifications feature cluster; Starling owns the business-banking and self-employed use case; Revolut owns no-fee foreign exchange. The heatmap below shows the percentage of matched non-switchers (n=160) who cited each appeal theme for each brand. Each row is outlined on the brand that "wins" that attribute.</p>
+  <p class="source-note">Per-brand appeal questions: Monzo, Starling Bank, Revolut were each profiled with their own open-ended description prompt; non-switchers' responses were thematically coded with a unified codebook so attribute names align across brands. Cells show the share of the matched n=160 cohort citing each theme for that brand.</p>
+  <div class="heat">
+    <table>
+      <thead>
+        <tr>
+          <th>Appeal attribute</th>
+          {BRANDS.map((b) => <th>{b}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {buildCorrespondence('appeal').map((row) => (
+          <tr>
+            <td>{row.label}</td>
+            {BRANDS.map((b) => (
+              <td class={`cell ${heatClass(row[b])} ${row[b] === row.maxPct && row.maxPct > 0 ? 'heat-max' : ''}`}>
+                {row[b] > 0 ? `${row[b]}%` : ''}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="heat-legend">
+    <span><span class="heat-swatch heat-hi"></span>60% or higher</span>
+    <span><span class="heat-swatch heat-med"></span>30 to 59%</span>
+    <span><span class="heat-swatch heat-lo"></span>under 30%</span>
+    <span><span class="heat-swatch heat-max"></span>brand "owns" this attribute (row max)</span>
+  </div>
+
+  <h2>3c. Concerns correspondence: which brand carries each concern</h2>
+  <p>The concerns side tells a different story from the appeal side. Branch access and institutional trust are category-level concerns that all three neobanks share to varying degrees. Revolut's regulatory trust concern is brand-specific, the strongest single concern in the study at 95% prevalence. Starling's brand-visibility concern reflects awareness depth more than a feature problem.</p>
+  <p class="source-note">Per-brand concerns questions: each neobank was probed with its own open-ended concern prompt; non-switchers' responses coded with the unified codebook. Cells show the share of the matched n=160 cohort citing each concern for that brand.</p>
+  <div class="heat">
+    <table>
+      <thead>
+        <tr>
+          <th>Concern attribute</th>
+          {BRANDS.map((b) => <th>{b}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {buildCorrespondence('concerns').map((row) => (
+          <tr>
+            <td>{row.label}</td>
+            {BRANDS.map((b) => (
+              <td class={`cell ${heatClass(row[b])} ${row[b] === row.maxPct && row.maxPct > 0 ? 'heat-max' : ''}`}>
+                {row[b] > 0 ? `${row[b]}%` : ''}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="heat-legend">
+    <span><span class="heat-swatch heat-hi"></span>60% or higher</span>
+    <span><span class="heat-swatch heat-med"></span>30 to 59%</span>
+    <span><span class="heat-swatch heat-lo"></span>under 30%</span>
+    <span><span class="heat-swatch heat-max"></span>brand carries this concern most (row max)</span>
+  </div>
+
+  <h2>3d. Generalised concerns about digital-only banking</h2>
+  <p>Account freeze fears, institutional trust, and branch access dominate. These are category-level barriers, not brand-specific. Incumbents with strong physical presence and an established trust position can lean into both.</p>
+  <p class="source-note">"What concerns do you think people have, if any, about banking with a digital-only bank that doesn't have physical branches?" (Wave 2 matched non-switchers, n=160) <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+  <div class="bar-chart" data-drilldown-chart="general-concerns-q22">
+    {rows(d.chapter3_whos_next.general_concerns_q22.codes).map((row) => (
+      <div class="bar-row">
+        <span class="bar-label">{row.label}</span>
+        <div class="bar-track">
+          <div class="bar-fill warm" style={`width: ${row.pct}%;`}>
+            <span class="bar-val">{row.pct}%</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>3e. The First Direct question: does owning a digital brand insulate HSBC?</h2>
+  <p>First Direct is HSBC-owned and is the second-most-considered third-party alternative among Wave 1 switchers (15% of switchers named it). The strategic hypothesis: if HSBC customers had an internal digital alternative they could reach for, HSBC should be measurably less vulnerable than other incumbents on Wave 2 likelihood-to-switch.</p>
+  <p>The data does not support that hypothesis. Among matched Wave 2 non-switchers, HSBC's high-likelihood share is {swl.by_primary_bank.find((b: any) => b.bank === 'HSBC')?.high_pct}% (n={swl.by_primary_bank.find((b: any) => b.bank === 'HSBC')?.n_cohort}), which is meaningfully higher than Lloyds ({swl.by_primary_bank.find((b: any) => b.bank === 'Lloyds Bank')?.high_pct}%), NatWest ({swl.by_primary_bank.find((b: any) => b.bank === 'NatWest')?.high_pct}%), and Barclays ({swl.by_primary_bank.find((b: any) => b.bank === 'Barclays')?.high_pct}%). HSBC customers are more vulnerable to neobank switching than the average top-5 incumbent, not less. <strong>Owning a digital brand is not enough; integration with the primary banking experience is what would matter, and First Direct sits as a separately-branded sister organisation that customers consider as an external alternative rather than reach for internally.</strong></p>
+  <p>The implication for other incumbents is sharper than expected: a "build / buy / partner with a digital brand" play that leaves the digital brand orbiting outside the primary banking experience does not appear to reduce switching risk. The retention value is in deep integration (in-app spending visibility, real-time notifications, embedded FX) rather than in owning a separately-branded digital sister.</p>
+
+  <h2>3f. Trust as cause vs post-rationalization</h2>
+  <p>Institutional trust deficit and account freeze fears appear at 74-95% in the per-brand concerns and 95-98% in the generalised concerns chart. The question this section answers: is trust a real switching barrier (concentrated in unlikely-to-switch customers) or a post-rationalization (cited at similar rates by both likely-to-switch and unlikely-to-switch customers)?</p>
+  <p>Cross-tabbing trust concerns (institutional trust deficit + Revolut regulatory trust + account freeze fears, summed across the per-brand and generalised concerns questions) against the Wave 2 likelihood-to-switch cohort gives the answer. Among high-likelihood non-switchers, {swl.trust_x_likelihood.high.any_trust_pct}% cite at least one trust concern. Among low-likelihood non-switchers, {swl.trust_x_likelihood.low.any_trust_pct}% cite at least one. The delta is {swl.trust_x_likelihood.delta_pp} pp.</p>
+  <div class="vuln-callout">
+    <p><strong>Trust concern is post-rationalization, not a switching barrier.</strong> If trust were a real barrier, low-likelihood customers would cite it meaningfully more than high-likelihood ones. They don't, both cohorts cite trust at saturation (~100%). Trust is what every non-switcher names when asked about digital-banking concerns, regardless of how likely they are to actually switch. The implication: incumbent "we're trustworthy" messaging is not differentially helpful at preventing switching among the at-risk cohort, those customers cite trust concerns and remain at-risk anyway. Differentiated messaging needs a different frame, the feature gap (spending visibility, fees) is what actually separates the cohorts.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 04, LEADING INDICATORS (NEW: combines old 7c likelihood + 2i cross-wave) -->
+<!-- ============================================================ -->
+<Section title="Leading Indicators: who's most likely to switch next" subtitle="Wave 2 forward-looking signals that flag the next switching cohort">
+  <p>The forward-looking question for incumbents is which non-switchers are about to become switchers. Two signals point at the same answer: the Wave 2 closing question on likelihood-to-switch (a self-report), and the cross-wave frustration gap that compares what switchers said about their previous bank to what non-switchers say about their current bank. Both surface the same retention warning: spending visibility, fees, and savings rates differentiate the at-risk cohort, not phone customer service or branch access.</p>
+
+  <h2>4a. Cross-wave frustration gap</h2>
+  <p>The unified codebook lets us compare frustrations switchers had with their previous bank (Wave 1, n=120) against frustrations non-switchers have with their current bank (Wave 2 matched, n=160). When non-switchers cite a frustration meaningfully more than switchers did, that frustration is a leading indicator of where the next switching wave starts. The single most strategically important number in the report sits in this chart: <strong>uncompetitive savings rates jump from 17% (switchers' frustration with previous bank) to 80% (matched non-switchers' frustration with current bank), a +63 pp gap</strong>.</p>
+  <p class="source-note">Wave 1: "Did you have any particular frustrations with your previous bank?" (n=120). Wave 2: "Do you have any particular frustrations with your current bank?" (matched non-switchers, n=160). Themes ranked by Wave 1 prevalence. Bar weight emphasizes the strategic priority of the gap.</p>
+  <div class="paired-chart">
+    {d.chapter1_why_they_left.cross_wave_push_force_comparison.slice(0, 8).map((x: any) => {
+      const isSavingsGap = x.label.toLowerCase().includes('savings rates');
+      return (
+      <div class="paired-block">
+        <div class="paired-theme" style={isSavingsGap ? "color: var(--signal); font-weight: 700;" : ""}>{x.label}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Wave 1 switchers</span>
+            <div class="paired-track">
+              <div class="paired-fill w1" style={`width: ${x.w1_pct}%;`}>
+                <span class="paired-val">{x.w1_pct}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Wave 2 non-switchers</span>
+            <div class="paired-track">
+              <div class="paired-fill w2" style={`width: ${x.w2_pct}%;`}>
+                <span class="paired-val">{x.w2_pct}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${x.delta_pp > 0 ? 'pos' : 'neg'}`} style={isSavingsGap ? "font-size: 15px;" : ""}>
+          {x.delta_pp >= 0 ? '+' : ''}{x.delta_pp} pp
+        </div>
+      </div>
+      );
+    })}
+  </div>
+  <p class="source-note">Delta is Wave 2 minus Wave 1 (positive means non-switchers cite the theme more often than departed switchers did about their previous bank). Cohorts are demographically matched: Wave 1 n=120 vs Wave 2 n=160 (retirees excluded).</p>
+  <div class="vuln-callout">
+    <p><strong>Read:</strong> uncompetitive savings rates is the leading indicator gap. Departed switchers barely cited rates as a frustration with their previous bank (17%), so rates were not why they walked. But matched non-switchers cite rates at 80% about their current bank, the rate gap has become salient since the previous switching wave. Address it with rate moves before the next switching wave starts. Excessive incumbent fees has a similar (but smaller) profile.</p>
+  </div>
+
+  <h2>4b. Self-reported likelihood-to-switch</h2>
+  <p>The Wave 2 closing question asked non-switchers how likely they are to open an account with a digital-only bank in the next year. Each matched non-switcher's response is classified into a likelihood band by parsing the open-text answer. Of the {swl.n_matched} matched non-switchers, {swl.summary.n_high} (~{Math.ceil(swl.summary.n_high / swl.n_matched * 100)}%) describe themselves as somewhat likely, likely, or very likely; {swl.summary.n_low} (~{Math.ceil(swl.summary.n_low / swl.n_matched * 100)}%) describe themselves as somewhat unlikely or unlikely. {swl.summary.n_unclassified} responses didn't match a clear likelihood phrase and are excluded from the cohort comparison.</p>
+  <p class="source-note">"Looking ahead over the next 12 months, how likely do you think it is that you'll open an account with a digital-only bank? And which, if any, bank do you think you are most likely to open an account with?" (Wave 2 matched non-switchers, n={swl.n_matched})</p>
+
+  <h3>Demographic differences</h3>
+  <p>The high-likelihood cohort skews substantially younger than the low-likelihood cohort. {swl.demographics.high.age_band[0]?.pct}% of high-likelihood non-switchers are aged {swl.demographics.high.age_band[0]?.value} (the largest age band in that cohort), with the second-largest band at {swl.demographics.high.age_band[1]?.pct}% aged {swl.demographics.high.age_band[1]?.value}. Together those two bands account for nearly the entire high-likelihood cohort. The low-likelihood cohort spreads across more age bands: {swl.demographics.low.age_band[0]?.pct}% aged {swl.demographics.low.age_band[0]?.value}, {swl.demographics.low.age_band[1]?.pct}% aged {swl.demographics.low.age_band[1]?.value}, with meaningful share also in older bands.</p>
+  <p>Primary-bank distribution differs in a way that matters strategically: Lloyds has the lowest at-risk share at just {swl.by_primary_bank.find((b: any) => b.bank === 'Lloyds Bank')?.high_pct}% high-likelihood. Santander ({swl.by_primary_bank.find((b: any) => b.bank === 'Santander')?.high_pct}%) and HSBC ({swl.by_primary_bank.find((b: any) => b.bank === 'HSBC')?.high_pct}%) lead the high-likelihood share. The HSBC number is notable given that First Direct (HSBC's digital sister) is the second-most-considered alternative among current switchers, see Section 3e for that analysis.</p>
+
+  <h3>Which frustrations differentiate the at-risk cohort</h3>
+  <p>The Wave 2 frustration themes with the largest difference between the high-likelihood and low-likelihood cohorts, ordered by their share in the high-likelihood cohort:</p>
+  <p class="source-note">Bars show the share of each cohort citing the theme as a frustration with their current bank. Cohorts: high-likelihood (n={swl.summary.n_high}, somewhat-likely + likely + very-likely respondents) vs low-likelihood (n={swl.summary.n_low}, somewhat-unlikely + unlikely + very-unlikely respondents). Delta-pp on the right is high minus low.</p>
+  <div class="paired-chart">
+    {swl.frustrations_top
+      .slice(0, 6)
+      .slice()
+      .sort((a: any, b: any) => (b.high_pct - a.high_pct) || (a.low_pct - b.low_pct))
+      .map((f: any) => (
+      <div class="paired-block">
+        <div class="paired-theme">{f.theme}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">High likely (n={swl.summary.n_high})</span>
+            <div class="paired-track">
+              <div class="paired-fill w2" style={`width: ${f.high_pct}%;`}>
+                <span class="paired-val">{f.high_pct}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Low likely (n={swl.summary.n_low})</span>
+            <div class="paired-track">
+              <div class="paired-fill w1" style={`width: ${f.low_pct}%;`}>
+                <span class="paired-val">{f.low_pct}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${f.delta_pp > 0 ? 'pos' : 'neg'}`}>
+          {f.delta_pp >= 0 ? '+' : ''}{f.delta_pp} pp
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>The high-likelihood non-switcher voices the same frustrations switchers voiced before they left.</strong> Spending visibility and excessive incumbent fees are markedly more common in the high-likelihood cohort, the same two themes that lead Wave 1's switcher push-force chart. Phone customer-service friction is more common in the low-likelihood cohort, but those customers don't translate the friction into action. The retention implication: incumbent moves on spending visibility (in-app categorisation) and fee transparency hit the cohort most likely to leave; phone-service investment improves satisfaction broadly but is unlikely to reduce switching specifically.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 05, BRAND & MARKETING RECOMMENDATIONS (was 04) -->
+<!-- ============================================================ -->
+<Section title="Brand & Marketing Recommendations" subtitle="What to say, where to spend, who to target">
+  <h2>Strategic layer</h2>
+  <div class="insight">
+    <p><strong>Lead with app quality, not rate competitiveness.</strong> The push and pull data both point to UX as the dominant story switchers tell. Rate-led campaigns may underperform UX-led campaigns even when the rate is competitive, switchers don't talk about rates first.</p>
+  </div>
+  <div class="insight">
+    <p><strong>Target Monzo non-buyers with feature-specific messaging.</strong> Monzo's 81% mental availability among non-switchers means Monzo-specific competitive positioning is where the budget should land. Lead with "we have spending visibility / pots-equivalent / real-time notifications" if true; lead with "we have face-to-face advice for complex decisions" if not.</p>
+  </div>
+  <div class="opp-callout">
+    <p><strong>Don't fight Revolut on its no-fee FX moat, fight it on regulatory trust.</strong> Revolut owns travel/FX; that's not a fight worth picking. The 95% concern about Revolut's regulatory trust IS the wedge. Communications should reinforce the difference between "international fintech that just got a UK licence" and "established UK bank with FSCS protection."</p>
+  </div>
+  <h2>Tactical layer</h2>
+  <ul>
+    <li><strong>Retiree messaging diverges.</strong> Lead with branch + trusted-advisor + guarantee language for retirees (see Section 7 Retention &amp; Risk). Lead with feature parity + app upgrade for younger non-switchers.</li>
+    <li><strong>Use consumer language for app-quality complaints.</strong> Phrases like "the app feels designed in a different decade" and "logging in is an obstacle course" should feed copy briefs directly. The Consumer Language Bank in Section 8 has the verbatims, with direction and intensity tags per quote.</li>
+    <li><strong>Trigger campaigns around life events.</strong> The trigger themes that emerged in Wave 1 (new job, moving city, going self-employed, retirement) are the campaign-timing signals, combine with intent data to reach customers at the moment switching becomes plausible.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 06, PRODUCT & DIGITAL RECOMMENDATIONS (was 05) -->
+<!-- ============================================================ -->
+<Section title="Product & Digital Recommendations" subtitle="What to build, in what order, and why">
+  <h2>Strategic layer</h2>
+  <div class="vuln-callout">
+    <p><strong>Spending visibility through categorization is the table-stakes feature.</strong> 73% of switchers cited it as a frustration, 62% as a selection driver, 77% volunteer it for Monzo. If your app doesn't have it, you are losing customers to that gap regardless of how strong the rest of your product is.</p>
+  </div>
+  <div class="insight">
+    <p><strong>Pots/Spaces is the differentiating feature, not table stakes.</strong> 80% of switchers cited it as a pull force, the highest single pull-force prevalence in the study. Building a pots-equivalent without copying the implementation is the Product team's most direct response to neobank attrition.</p>
+  </div>
+  <div class="opp-callout">
+    <p><strong>Re-engagement windows live in the limitations switchers describe.</strong> Mortgages, complex products, and competitive savings rates are the hooks for keeping switchers' secondary banking from becoming primary. Investment here pays off in retention of switchers' wallet share, see Section 7.</p>
+  </div>
+  <h2>Tactical layer</h2>
+  <ul>
+    <li><strong>App reliability matters more than aesthetic refresh.</strong> The friction story switchers tell about their previous bank's app is rarely "it's ugly", it's "it broke at a moment that mattered." Outages at critical moments (Saturday-morning urgent payments, failed standing-order setups) are the canonical incidents in the trigger data.</li>
+    <li><strong>Phone customer service friction is a fixable, narrow cause of switching consideration.</strong> The in-app chat experience at neobanks is the comparison point that should drive customer-service investment. 61% of switchers cited phone CS friction at the previous bank; in-app chat is a recurrent positive theme post-switch.</li>
+    <li><strong>FX features become a Revolut-defensive product question.</strong> 33% of switchers cited no-fee FX as a pull factor; 96% of non-switchers cite Revolut's no-fee FX as appealing. Embedded FX (or a no-fee tier) prevents secondary-banking fragmentation from migrating to primary.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 07, RETAIL & GROWTH RECOMMENDATIONS (was 06) -->
+<!-- ============================================================ -->
+<Section title="Retail & Growth Recommendations" subtitle="Acquisition + retention playbook by segment">
+  <h2>Strategic layer</h2>
+  <div class="opp-callout">
+    <p><strong>Acquisition: target non-switchers who voice the same frustrations switchers had.</strong> Non-switchers who cite uncompetitive savings rates (80%) and spending visibility (53%) as frustrations with their current bank are the leading-indicator pool for the next switching wave. Trigger campaigns when life-stage events occur (new job, moving city, going self-employed), the trigger themes that emerged in Wave 1 are the campaign-timing signals.</p>
+  </div>
+  <div class="vuln-callout">
+    <p><strong>Inertia is overrated as a retention defence: switchers say the move was easier than they expected, and {d.chapter1_who_switchers_are.switching_ease.regret_about_delay}% say they should have done it sooner.</strong> {d.chapter1_who_switchers_are.switching_ease.switching_process_ease}% of switchers cite the switching process itself as easy when describing their experience post-move; only {d.chapter1_who_switchers_are.switching_ease.minor_or_no_friction}% cite even minor friction at the actual switch point. Retention strategies leaning on "moving is hard" are working on borrowed time. Retention messaging should make the <em>cost of staying</em> visible (savings-rate gap, fee opacity, missing in-app categorisation) rather than rely on the <em>cost of moving</em> doing the work, that wall is lower than incumbents have been treating it.</p>
+  </div>
+  <div class="insight">
+    <p><strong>Reframe: don't try to prevent switching, try to prevent secondary-banking fragmentation from migrating to primary.</strong> Multi-banking is the new normal among the matched cohort: {d.chapter1_who_switchers_are.wallet_composition.stats[0].value}% of Wave 1 switchers hold Revolut as a secondary, {d.chapter1_who_switchers_are.wallet_composition.stats[1].value}% hold Wise, {d.chapter1_who_switchers_are.wallet_composition.stats[2].value}% carry a credit card at a different bank. The strategic question for incumbents is not "how do we stop multi-banking" (you can't), it is "how do we stay primary in a multi-banked customer's wallet, and prevent the secondary fragmentation from becoming primary?" Embedded FX, premium-tier accounts, and competitive savings rates all become higher-priority investments under this frame, they are not nice-to-haves; they are what keeps the secondary-banking wallet share from migrating.</p>
+  </div>
+  <h2>Tactical layer</h2>
+  <ul>
+    <li><strong>Make the cost of staying visible.</strong> Personalised "you would have earned £X more in savings interest if you had been at [competitor's rate]" annual reviews put the rate gap on the customer's screen before a friend does. {d.chapter1_who_switchers_are.switching_ease.regret_about_delay}% of switchers regret the delay; the customer does not need a friction-free path to switching, they need a triggering data point.</li>
+    <li><strong>Embedded FX prevents Revolut secondary from migrating to primary.</strong> {d.chapter1_who_switchers_are.wallet_composition.stats[0].value}% hold Revolut as a secondary, primarily for travel and FX use. A no-fee international tier inside the primary bank closes the gap that Revolut currently fills.</li>
+    <li><strong>Retiree retention has different mechanics.</strong> See Section 9. Branch + trusted-advisor + guarantees for retirees, not app upgrades.</li>
+    <li><strong>Social proof is the switching catalyst.</strong> Many switchers describe a friction incident they had previously tolerated until a friend's mention of an alternative made the cost of staying suddenly visible. The Wave 1 trigger data shows social proof appearing across multiple trigger themes; retention programs should make the cost of NOT switching visible to the customer before a friend does.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 08, RE-ENGAGEMENT OF DEPARTED SWITCHERS (was 07a + new matrix) -->
+<!-- ============================================================ -->
+<Section title="Re-engagement of departed switchers" subtitle="Where switchers bump into ceilings, and which incumbent is best positioned to capture each gap">
+  <p>Switchers love their new neobank but bump into specific ceilings, mortgages, complex products, competitive savings rates, branch access for unusual situations, cash deposits. Each ceiling is a re-engagement window: a product or service the incumbent retained the capability for, that the switcher cannot easily get from Monzo or Starling. The realistic acquisition target is wallet share, not primary-bank reversal.</p>
+
+  <h2>8a. Where switchers hit ceilings</h2>
+  <p>The top limitations switchers describe in their new neobank, ranked by prevalence:</p>
+  <p class="source-note">"Have you run into any limitations, frustrations, or moments where you needed something that [neobank] couldn't provide?" (Wave 1 switchers, n=120) <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+  <div class="bar-chart" data-drilldown-chart="limitations-q10">
+    {rows(d.chapter2_how_its_going.limitations_q10.codes).map((row) => (
+      <div class="bar-row">
+        <span class="bar-label">{row.label}</span>
+        <div class="bar-track">
+          <div class="bar-fill warm" style={`width: ${row.pct}%;`}>
+            <span class="bar-val">{row.pct}%</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>8b. Re-engagement opportunity matrix</h2>
+  <p>For each top re-engagement gap, which incumbent is best-positioned to capture wallet share, and what is the realistic shape of the recapture? The matrix below is a strategic-judgment framing of the four most-cited gaps; specific revenue estimates require account-level modelling beyond this study's scope.</p>
+  <table class="rec-table">
+    <thead>
+      <tr>
+        <th>Re-engagement gap</th>
+        <th>Best-positioned incumbents</th>
+        <th>Why</th>
+        <th>Recapture shape</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mortgages and complex products</td>
+        <td>Lloyds, NatWest, Halifax, Santander</td>
+        <td>UK's largest mortgage books; existing mortgage relationships are the single hardest-to-replicate primary-bank anchor.</td>
+        <td>Wallet share: keep the mortgage relationship, accept the secondary-banking neobank flow. Cross-sell direct-deposit retention against the mortgage.</td>
+      </tr>
+      <tr>
+        <td>Competitive savings rates</td>
+        <td>Any incumbent with HISA capacity</td>
+        <td>Easiest gap to close at the product level (a rate move, not a build); 80% of matched non-switchers cite uncompetitive rates as a current-bank frustration.</td>
+        <td>Direct-deposit retention. A competitive HISA inside the primary bank prevents secondary-savings flow to Wise / Chase UK / neobanks.</td>
+      </tr>
+      <tr>
+        <td>Cash deposits / face-to-face service for complex situations</td>
+        <td>Branch-network incumbents (Lloyds, NatWest, Halifax, Barclays, HSBC)</td>
+        <td>Branch is the differentiator switchers eventually need; switchers describe asking "where do I go to do this?" months after their move.</td>
+        <td>Defensive: the branch network is what keeps wallet-share secondary fragmentation from becoming primary-bank switching for the long-tail use cases.</td>
+      </tr>
+      <tr>
+        <td>In-app chat customer service quality</td>
+        <td>Any incumbent willing to invest in conversational support</td>
+        <td>Switchers cite in-app chat at the neobank as a positive surprise post-switch; the incumbent equivalent is the gap.</td>
+        <td>Defensive: closes a recurrent post-switch satisfaction surface and reduces the trigger rate at the source (see Section 2g).</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="opp-callout">
+    <p><strong>Read the matrix as a per-incumbent action plan, not a general one.</strong> A Lloyds reader has the strongest mortgage anchor and the most to gain from a HISA move. A bank without a competitive mortgage book has no recapture story on that row, the strategic answer there is "don't fight the gap, defend the everyday-banking relationship." Layer this matrix against the per-incumbent threat assessment in the executive summary to see who you're losing to and how to compete back.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 09, RETIREE SPOTLIGHT (extracted from old 07b + new awareness/likelihood) -->
+<!-- ============================================================ -->
+<Section title="Retiree spotlight: are retirees a vulnerability?" subtitle="The strategic question for incumbents with branch networks, answered directly">
+  <p>The brief framing: <strong>are retirees a vulnerability for incumbents, or an asset?</strong> The data points clearly to asset. Retirees are concentrated in the low-likelihood-to-switch cohort, their concerns about digital-only banking are sharper than the matched cohort's, and their primary-bank loyalty plus branch reliance creates a defensive moat that is most valuable to incumbents with physical-branch networks.</p>
+  <p><strong>Composition:</strong> 4 in Wave 1 (switchers who are retired), 40 in Wave 2 (non-switchers who are retired; hard quota). Primary-bank distribution among Wave 2 retirees: Halifax 9, HSBC 7, Barclays 7, Lloyds 5, Santander 5, NatWest 4, RBS 2, BoS 1.</p>
+
+  <h2>9a. Retiree likelihood-to-switch versus the matched cohort</h2>
+  <p>Wave 2 retirees (n={swl.retirees.n}) skew sharply toward the low-likelihood-to-switch end of the scale. Of the {swl.retirees.n} Wave 2 retirees: {swl.retirees.collapsed.high} are high-likelihood ({swl.retirees.high_pct}%), {swl.retirees.collapsed.low} are low-likelihood ({swl.retirees.low_pct}%). For comparison, the matched non-switcher cohort is {Math.ceil(swl.summary.n_high / swl.n_matched * 100)}% high-likelihood and {Math.ceil(swl.summary.n_low / swl.n_matched * 100)}% low-likelihood. Retirees are visibly more anchored to their current bank.</p>
+  <div class="compact-stats">
+    <div class="compact-stat">
+      <div class="csn">{swl.retirees.high_pct}%</div>
+      <div class="csl">retirees high-likelihood (n={swl.retirees.collapsed.high} of {swl.retirees.n})</div>
+    </div>
+    <div class="compact-stat">
+      <div class="csn">{swl.retirees.low_pct}%</div>
+      <div class="csl">retirees low-likelihood (n={swl.retirees.collapsed.low} of {swl.retirees.n})</div>
+    </div>
+    <div class="compact-stat">
+      <div class="csn">{Math.ceil(swl.summary.n_high / swl.n_matched * 100)}%</div>
+      <div class="csl">matched non-switchers high-likelihood (n={swl.summary.n_high} of {swl.n_matched})</div>
+    </div>
+    <div class="compact-stat">
+      <div class="csn">{Math.ceil(swl.summary.n_low / swl.n_matched * 100)}%</div>
+      <div class="csl">matched non-switchers low-likelihood (n={swl.summary.n_low} of {swl.n_matched})</div>
+    </div>
+  </div>
+
+  <h2>9b. Retiree mental availability for the three neobanks</h2>
+  <p>Retiree awareness of the three neobanks, computed the same way as the Section 3a awareness funnel (count of impression-level codes triggered when each retiree describes the brand). The interesting finding is what awareness does NOT predict: retirees are well-aware of Monzo (75% mentally available), but their likelihood-to-switch is the lowest of any age band. Awareness is not the bottleneck.</p>
+  <div class="crosstab">
+    <table>
+      <thead>
+        <tr>
+          <th>Brand</th>
+          <th>Mentally available</th>
+          <th>Aware not linked</th>
+          <th>Unaware</th>
+          <th>n</th>
+        </tr>
+      </thead>
+      <tbody>
+        {['Monzo', 'Starling Bank', 'Revolut'].map((brand) => {
+          const v: any = d.retiree_subgroup.brand_awareness?.by_brand?.[brand] || {};
+          return (
+            <tr>
+              <td><strong>{brand}</strong></td>
+              <td>{v.mentally_available_pct ?? 0}%</td>
+              <td>{v.aware_not_linked_pct ?? 0}%</td>
+              <td>{v.unaware_pct ?? 0}%</td>
+              <td>{v.n ?? 0}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>9c. Retiree concerns about digital-only banking</h2>
+  <p>Retirees over-index on category-level barriers (institutional trust, branch access, account freeze fears, digital-banking-skill barriers) more than on feature gaps. Retention strategy diverges from younger-cohort retention strategy.</p>
+  <p class="source-note">"What concerns do you think people have about banking with a digital-only bank?" (Wave 2 retirees, n=40) <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+  <div class="bar-chart" data-drilldown-chart="retiree-concerns-q22">
+    {rows(d.retiree_subgroup.general_concerns_q22.codes, 6).map((row) => (
+      <div class="bar-row">
+        <span class="bar-label">{row.label}</span>
+        <div class="bar-track">
+          <div class="bar-fill warm" style={`width: ${row.pct}%;`}>
+            <span class="bar-val">{row.pct}%</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>9d. Branch network as a defensive moat</h2>
+  <div class="opp-callout">
+    <p><strong>Retirees are an asset, not a vulnerability, for incumbents with a branch network.</strong> The triangulation of three findings makes this directional: retirees are sticky (low likelihood-to-switch), aware but unmoved (Monzo mental availability is high; switching intent is not), and over-index on branch-and-trust concerns rather than feature gaps. The retention answer is not "digital-feature catch-up for retirees", it is "preserve the branch network and the trusted-advisor relationship." This sharpens an active strategic conversation in UK retail banking: contracting branch networks without a retiree-specific defensive plan trades a defensible high-loyalty cohort for a small cost saving. The branch is the moat for this segment; over-rotating on property-cost economics gives the moat away.</p>
+  </div>
+  <ul>
+    <li><strong>Branch retention as retiree retention:</strong> announce branch closures with retiree-specific transition plans (alternate-branch concierge, in-home banking visits for vulnerable customers, telephone-banking continuity). The reputational cost of branch closures lands disproportionately on this segment.</li>
+    <li><strong>Trusted-advisor messaging is segment-specific:</strong> "if anything goes wrong, you can come into a branch and a person will fix it" lands meaningfully harder for retirees than for the under-35 high-likelihood cohort. Brand creative for retiree-skewing channels (long-form print, regional ITV, post-mailings) should lead with continuity and human-fix rather than feature parity.</li>
+    <li><strong>Don't price the branch network as if all customers were equal.</strong> The retention value of a branch differs by customer segment; closure-economics models should be weighted by the share of retiree primary accounts at the branch, not just total foot traffic.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 10, METHODOLOGY -->
+<!-- ============================================================ -->
+<Section title="Methodology" subtitle="Sample design, statistics, coding, known gaps">
+  <h2>8a. Sample design</h2>
+  <p>
+    AI-moderated structured interviews (15-20 minutes per participant), preceded by a survey-style screener. The AI moderator follows a fixed question script per wave with no branching, no conditional logic, and no probes. The two waves run sequentially: Wave 1 first, then Wave 2 with quotas calibrated against Wave 1's realised profile.
+  </p>
+  <ul>
+    <li><strong>Wave 1 (Switchers, n=120):</strong> recent switchers to Monzo (n=60) or Starling Bank (n=60) within the last 12 months. Behavioural confirmation via screener checks for salary deposited at the neobank and closure or significant reduction of the previous account. 13 main questions about the switching narrative.</li>
+    <li><strong>Wave 2 (Non-switchers, n=200):</strong> primary current account at one of nine qualifying top-5 incumbents (Lloyds Banking Group, NatWest Group, Barclays, HSBC, Santander). Excludes Monzo and Starling holders; Revolut holders allowed and tracked. Awareness filter requires familiarity with at least one of Monzo / Starling / Revolut. 23 main questions about current banking, neobank impressions, and forward intent.</li>
+    <li><strong>Wave 2 quotas matched to Wave 1's realised profile</strong> across age band, household income, urbanicity, and employment type, with two overrides: a 40-retiree minimum quota for the retiree spotlight in Section 9 and a 40% soft cap on any single incumbent bank.</li>
+    <li><strong>Matched cohort for cross-wave analysis (n=160):</strong> Wave 2 with the 40 retirees excluded. Every cross-wave comparison in this report (Section 4 leading indicators) uses the matched n=160; the retiree subgroup is reported separately in Section 9.</li>
+  </ul>
+
+  <h2>8b. Statistical methodology</h2>
+  <ul>
+    <li><strong>alpha = 0.10, two-tailed.</strong> Two-proportion z-test when expected cell counts are at least 5; Fisher's exact otherwise.</li>
+    <li><strong>Subgroup charts with a dashed overall-average line:</strong> the dashed line shows the overall sample average; the significance test compares the focal subgroup against all other respondents combined.</li>
+    <li><strong>Every percentage rounded UP to the nearest whole number</strong> per BuyerVoice convention. A non-zero rate never reads as 0%.</li>
+    <li><strong>Three-tier claim discipline:</strong> only findings with p &lt; 0.10 receive strong directive claims; non-significant patterns are hedged only when corroborated by an independent signal elsewhere in the data; non-significant and uncorroborated patterns get no claim and no chart.</li>
+  </ul>
+
+  <h2>8c. Coding and reliability</h2>
+  <ul>
+    <li><strong>Dual-coder application:</strong> two independent coders (Claude Sonnet 4.5 inclusive + Claude Sonnet 4.5 conservative) code every meaning unit, with Opus 4.5 arbitrating disagreements. Thematic Cohen's kappa = 0.948 (almost-perfect agreement). Direction kappa = 0.970.</li>
+    <li><strong>Unified codebook:</strong> a single 46-code codebook spans both waves. Codes that surface in both waves' question sets carry the same definition and naming, enabling cross-wave prevalence comparisons.</li>
+  </ul>
+
+  <h2>8d. Known gaps</h2>
+  <ul>
+    <li><strong>Wave 2 is demographically matched, not nationally representative.</strong> The matched cohort is calibrated to Wave 1's switcher profile, so the non-switcher findings describe the incumbent customer segment that demographically resembles switchers. Generalising to the broader UK incumbent population requires a separately weighted survey.</li>
+  </ul>
+</Section>
+
+</div>
+
+<!-- Verbatim drill-down modal. Hidden until a chart row click opens it. -->
+<div class="vb-overlay" id="vbOverlay" aria-hidden="true">
+  <div class="vb-dialog" role="dialog" aria-modal="true" aria-labelledby="vbTitle">
+    <button type="button" class="vb-close" id="vbClose" aria-label="Close">&times;</button>
+    <div class="vb-header">
+      <h3 id="vbTitle"></h3>
+      <p class="vb-q" id="vbSubtitle"></p>
+    </div>
+    <div class="vb-body" id="vbBody"></div>
+  </div>
+</div>
+
+<Fragment set:html={vxScript} />
+
+<script is:inline>
+(function () {
+  var VX = window.__VX;
+  if (!VX) return;
+
+  var overlay = document.getElementById('vbOverlay');
+  var titleEl = document.getElementById('vbTitle');
+  var subEl = document.getElementById('vbSubtitle');
+  var bodyEl = document.getElementById('vbBody');
+  var closeBtn = document.getElementById('vbClose');
+  if (!overlay || !titleEl || !subEl || !bodyEl || !closeBtn) return;
+
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s == null ? '' : String(s)));
+    return d.innerHTML;
+  }
+
+  function renderCard(ex) {
+    var tags = [];
+    if (ex.bank) tags.push({label: ex.bank, cls: 'bank'});
+    if (ex.age) tags.push({label: ex.age, cls: ''});
+    if (ex.emp) tags.push({label: ex.emp, cls: ''});
+    if (ex.income) tags.push({label: ex.income, cls: ''});
+
+    var html = '<div class="vb-card">';
+    html += '<div class="vb-quote">&ldquo;' + escHtml(ex.quote) + '&rdquo;</div>';
+    html += '<div class="vb-tags">';
+    tags.forEach(function (t) {
+      html += '<span class="vb-tag ' + t.cls + '">' + escHtml(t.label) + '</span>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  function openModal(chartId, barLabel) {
+    var chart = VX.charts[chartId];
+    if (!chart) return;
+    var codeNames = chart.bars[barLabel];
+    if (!codeNames) return;
+    var qids = chart.qids || [];
+    var codeSet = {};
+    codeNames.forEach(function (cn) { codeSet[cn] = true; });
+
+    // Find every (participant, qid) pair where the participant's codes at
+    // that qid include any of the bar's code names. Emit one card per pair.
+    var cards = [];
+    (VX.participants || []).forEach(function (p) {
+      qids.forEach(function (qid) {
+        var pcodes = (p.c || {})[qid];
+        if (!pcodes || !pcodes.length) return;
+        var matched = null;
+        for (var i = 0; i < pcodes.length; i++) {
+          if (codeSet[pcodes[i]]) { matched = pcodes[i]; break; }
+        }
+        if (!matched) return;
+        var verbatim = (p.v || {})[qid];
+        if (!verbatim) return;
+        var intensity = ((p.i || {})[qid] || {})[matched] || 2;
+        cards.push({
+          pid: p.pid,
+          qid: qid,
+          quote: verbatim,
+          intensity: intensity,
+          bank: p.bank,
+          age: p.age,
+          emp: p.emp,
+          income: p.income,
+          code: matched,
+        });
+      });
+    });
+
+    // Sort by intensity desc (most narrative-weighted first), then pid stable
+    cards.sort(function (a, b) {
+      var ia = a.intensity || 0;
+      var ib = b.intensity || 0;
+      if (ia !== ib) return ib - ia;
+      return a.pid - b.pid;
+    });
+
+    titleEl.textContent = barLabel + ' (' + chart.cohort + ')';
+    subEl.textContent = chart.question || '';
+
+    if (cards.length === 0) {
+      bodyEl.innerHTML = '<p class="vb-empty">No participant quotes matched this theme.</p>';
+    } else {
+      var intro = '<p class="vb-empty" style="margin:0 0 12px;font-size:12px;">' +
+        'Showing all ' + cards.length + ' participant quote' + (cards.length === 1 ? '' : 's') +
+        ' coded to this theme.</p>';
+      bodyEl.innerHTML = intro + cards.map(renderCard).join('');
+    }
+
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  // Click delegation: any bar row inside a [data-drilldown-chart] container
+  // opens the modal with that chart_id + the bar label's text content.
+  document.addEventListener('click', function (e) {
+    var row = e.target.closest('[data-drilldown-chart] .bar-row, [data-drilldown-chart] .stack-bar-row');
+    if (!row) return;
+    var chartEl = row.closest('[data-drilldown-chart]');
+    if (!chartEl) return;
+    var chartId = chartEl.getAttribute('data-drilldown-chart');
+    var labelEl = row.querySelector('.bar-label, .stack-bar-label');
+    if (!labelEl) return;
+    var label = (labelEl.textContent || '').replace(/\*+\s*$/, '').trim();
+    openModal(chartId, label);
+  });
+})();
+</script>

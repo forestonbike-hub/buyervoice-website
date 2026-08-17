@@ -1,0 +1,722 @@
+---
+// Category Entry Points page
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Category Entry Points | BambooHR Brand Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans), -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 13px;
+      white-space: nowrap;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: 2px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover {
+      background: var(--card-bg);
+      color: var(--ink);
+    }
+    .nav-links a.active {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ink);
+      color: #ffffff !important;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+      border-bottom: none !important;
+    }
+    .nav-cta:hover {
+      background: var(--ink) !important;
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--ink);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        flex-direction: column;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 0; }
+      .nav-cta-desktop { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--card-bg);
+      padding: 4rem 2rem 3rem;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .hero-intro {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: #444;
+      max-width: 800px;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 3rem 1.5rem 2rem; }
+      .hero h1 { font-size: 2rem; }
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .section h2 {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: #555;
+      max-width: 700px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* ── BAR CHART ── */
+    .chart-container {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .chart-subtitle {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.625rem;
+    }
+    .bar-rank {
+      width: 28px;
+      font-family: var(--serif);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #999;
+      flex-shrink: 0;
+    }
+    .bar-label {
+      width: 240px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink);
+      flex-shrink: 0;
+      padding-right: 1rem;
+    }
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--card-bg);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      min-width: 48px;
+    }
+    .bar-fill.event { background: var(--ink); }
+    .bar-fill.pain { background: #F59E0B; }
+    .bar-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid #F0F0F0;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #666;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .legend-dot.event { background: var(--ink); }
+    .legend-dot.pain { background: #F59E0B; }
+
+    @media (max-width: 768px) {
+      .bar-label { width: 160px; font-size: 0.75rem; }
+      .bar-rank { width: 22px; font-size: 0.75rem; }
+      .chart-container { padding: 1.25rem; }
+    }
+
+    /* ── HEATMAP TABLE ── */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+    .heatmap-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.875rem;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .heatmap-table thead th {
+      background: var(--ink);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0.875rem 1rem;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+    .heatmap-table thead th:first-child {
+      text-align: left;
+      min-width: 220px;
+    }
+    .heatmap-table tbody td {
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .heatmap-table tbody td:first-child {
+      text-align: left;
+      font-weight: 500;
+      color: var(--ink);
+      background: #FAFAFA;
+    }
+    .heatmap-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    /* Heat-map levels */
+    .heat-0 { background: var(--paper); color: #999; }
+    .heat-low { background: #E8F5E9; color: var(--ink); }
+    .heat-med { background: #A5D6A7; color: #1A5C2E; }
+    .heat-high { background: #66BB6A; color: #ffffff; }
+    .heat-danger { background: #FF8A80; color: #B71C1C; }
+    .heat-open { background: #FFF3E0; color: #E65100; }
+    .heat-full-open { background: #FFCCBC; color: #BF360C; font-weight: 700; }
+
+    .bamboo-col { color: var(--ink); }
+    .workday-col { color: #3B82F6; }
+    .greenhouse-col { color: #F59E0B; }
+
+    .col-bamboo { border-bottom: 3px solid var(--ink); }
+    .col-workday { border-bottom: 3px solid #3B82F6; }
+    .col-greenhouse { border-bottom: 3px solid #F59E0B; }
+    .col-nobrand { border-bottom: 3px solid #FF5722; }
+
+    /* ── INSIGHT BOX ── */
+    .insight-box {
+      background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+      border-left: 4px solid var(--ink);
+      border-radius: 0 12px 12px 0;
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+    .insight-box-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+    }
+    .insight-box p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ── PULL QUOTES ── */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 768px) {
+      .quotes-grid { grid-template-columns: 1fr; }
+    }
+    .pull-quote {
+      border-left: 3px solid var(--ink);
+      padding: 1.25rem 1.5rem;
+      background: var(--card-bg);
+      border-radius: 0 8px 8px 0;
+    }
+    .pull-quote p {
+      font-size: 0.9375rem;
+      font-style: italic;
+      line-height: 1.65;
+      color: #333;
+    }
+    .pull-quote cite {
+      display: block;
+      font-size: 0.8rem;
+      font-style: normal;
+      color: #888;
+      margin-top: 0.5rem;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .footer-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    @media (max-width: 768px) {
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-meta { align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/internal/hr-interview-report/" class="nav-logo">BuyerVoice.AI</a>
+      <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/internal/hr-interview-report/">Executive Summary</a></li>
+        <li><a href="/internal/hr-interview-report/sample">Sample</a></li>
+        <li><a href="/internal/hr-interview-report/mental-availability">Mental Availability</a></li>
+        <li><a href="/internal/hr-interview-report/category-entry-points" class="active">CEPs</a></li>
+        <li><a href="/internal/hr-interview-report/supporting-context">Supporting Data</a></li>
+        <li><a href="/internal/hr-interview-report/themes-evidence">Themes &amp; Evidence</a></li>
+      </ul>
+      <a href="/internal/hr-interview-report/full-report" class="nav-cta nav-cta-desktop">Download PDF</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-label">Section 4 of 6</span>
+      <h1>Category Entry Points</h1>
+      <p class="hero-intro">
+        Category Entry Points (CEPs) are the situations, events, and pain points that put an HR leader "in the market" for recruiting solutions. These are the triggers that marketing should depict in creative.
+      </p>
+    </div>
+  </header>
+
+  <!-- SECTION 2A: CEP Frequency Rankings -->
+  <section class="section">
+    <span class="section-label">CEP Analysis</span>
+    <h2>CEP Frequency Rankings</h2>
+    <p class="section-desc">
+      Top 15 category entry points ranked by how often HR leaders cited them as reasons they evaluate recruiting solutions. Respondent base: 100 HR leaders.
+    </p>
+
+    <div class="chart-container">
+      <div class="chart-subtitle">Business Events</div>
+
+      <div class="bar-row">
+        <span class="bar-rank">1</span>
+        <span class="bar-label">Rapid headcount growth</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 70%"><span class="bar-value">70%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">2</span>
+        <span class="bar-label">Backfilling departures/turnover</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 50%"><span class="bar-value">50%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">3</span>
+        <span class="bar-label">Seasonal hiring surge</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 25%"><span class="bar-value">25%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">4</span>
+        <span class="bar-label">Department/team expansion</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 25%"><span class="bar-value">25%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">5</span>
+        <span class="bar-label">New location/office opening</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 24%"><span class="bar-value">24%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">6</span>
+        <span class="bar-label">Acquisition/merger integration</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 18%"><span class="bar-value">18%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">7</span>
+        <span class="bar-label">Recruiting process overhaul</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 15%"><span class="bar-value">15%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">8</span>
+        <span class="bar-label">Post-funding hiring push</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 13%"><span class="bar-value">13%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">9</span>
+        <span class="bar-label">DEI/diversity hiring initiative</span>
+        <div class="bar-track"><div class="bar-fill event" style="width: 10%"><span class="bar-value">10%</span></div></div>
+      </div>
+
+      <div class="chart-subtitle" style="margin-top: 2rem;">Pain Points</div>
+
+      <div class="bar-row">
+        <span class="bar-rank">10</span>
+        <span class="bar-label">Slow time-to-hire</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 30%"><span class="bar-value">30%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">11</span>
+        <span class="bar-label">High turnover/revolving door</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 22%"><span class="bar-value">22%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">12</span>
+        <span class="bar-label">Lack of analytics/reporting</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 21%"><span class="bar-value">21%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">13</span>
+        <span class="bar-label">Sourcing difficulty</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 21%"><span class="bar-value">21%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">14</span>
+        <span class="bar-label">Hiring manager responsiveness</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 13%"><span class="bar-value">13%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-rank">15</span>
+        <span class="bar-label">Interview scheduling</span>
+        <div class="bar-track"><div class="bar-fill pain" style="width: 12%"><span class="bar-value">12%</span></div></div>
+      </div>
+
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot event"></div> Business Event</div>
+        <div class="legend-item"><div class="legend-dot pain"></div> Pain Point</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2B: CEP-Brand Linkage Matrix -->
+  <section class="section">
+    <span class="section-label">Strategic Opportunity</span>
+    <h2>CEP-Brand Linkage Matrix (Among Non-Users)</h2>
+    <p class="section-desc">
+      When non-users experience each buying situation, which brand (if any) comes to mind? The critical finding: most CEPs are open territory. No brand is strongly linked to most buying situations.
+    </p>
+
+    <div class="table-wrapper">
+      <table class="heatmap-table">
+        <thead>
+          <tr>
+            <th>Category Entry Point (% mentioning)</th>
+            <th class="col-bamboo">BambooHR</th>
+            <th class="col-workday">Workday</th>
+            <th class="col-greenhouse">Greenhouse</th>
+            <th class="col-nobrand">No Brand Linked</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rapid headcount growth (70%)</td>
+            <td class="heat-high">31%</td>
+            <td class="heat-low">10%</td>
+            <td class="heat-low">7%</td>
+            <td class="heat-open">53%</td>
+          </tr>
+          <tr>
+            <td>Backfilling departures (50%)</td>
+            <td class="heat-low">2%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-low">2%</td>
+            <td class="heat-full-open">96%</td>
+          </tr>
+          <tr>
+            <td>Slow time-to-hire (30%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>Seasonal hiring surge (25%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>Department/team expansion (25%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>New location/office opening (24%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>High turnover/revolving door (22%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>Lack of analytics/reporting (21%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-low">6%</td>
+            <td class="heat-med">19%</td>
+            <td class="heat-open">56%</td>
+          </tr>
+          <tr>
+            <td>Sourcing difficulty (21%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-full-open">100%</td>
+          </tr>
+          <tr>
+            <td>Acquisition/merger integration (18%)</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-0">0%</td>
+            <td class="heat-med">19%</td>
+            <td class="heat-open">75%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- KEY INSIGHT BOX -->
+    <div class="insight-box">
+      <div class="insight-box-label">Key Insight</div>
+      <p>
+        The vast majority of CEPs are unowned territory. No brand has built strong mental links to the specific situations that trigger HR leaders to seek recruiting solutions.
+      </p>
+    </div>
+
+    <!-- PULL QUOTES -->
+    <div class="quotes-grid">
+      <div class="pull-quote">
+        <p>"We closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast."</p>
+        <cite>HR Director, 400-person SaaS company</cite>
+      </div>
+      <div class="pull-quote">
+        <p>"We had a bit of a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving."</p>
+        <cite>VP People Operations, 600-person company</cite>
+      </div>
+      <div class="pull-quote">
+        <p>"Losing candidates to competing offers because we moved too slowly."</p>
+        <cite>Talent Acquisition Manager, 350-person company</cite>
+      </div>
+      <div class="pull-quote">
+        <p>"The biggest frustration is candidate drop-off. We'll get someone through two rounds and then they ghost us."</p>
+        <cite>Head of Recruiting, 500-person company</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Prepared by BuyerVoice.AI &copy; 2026</div>
+      <div class="footer-meta">
+        <span>Analysis based on 100 HR leader interviews, March 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

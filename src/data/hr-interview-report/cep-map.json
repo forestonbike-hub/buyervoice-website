@@ -1,0 +1,4304 @@
+{
+  "ceps_ranked": [
+    {
+      "code": "rapid_headcount_growth",
+      "name": "Rapid headcount growth",
+      "type": "business_event",
+      "respondent_count": 70,
+      "pct_of_sample": 70.0,
+      "example_quotes": [
+        {
+          "respondent_id": 1,
+          "quote": "Yeah, we closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast."
+        },
+        {
+          "respondent_id": 1,
+          "quote": "I'd say it's like an eight out of ten on the frustration scale."
+        },
+        {
+          "respondent_id": 2,
+          "quote": "Each store needs about 30 people."
+        }
+      ]
+    },
+    {
+      "code": "backfill_departures",
+      "name": "Backfilling departures/turnover",
+      "type": "business_event",
+      "respondent_count": 50,
+      "pct_of_sample": 50.0,
+      "example_quotes": [
+        {
+          "respondent_id": 1,
+          "quote": "We had a bit of a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving and fixing comp bands."
+        },
+        {
+          "respondent_id": 5,
+          "quote": "So we've been trying to backfill those roles while also managing this crazy req load."
+        },
+        {
+          "respondent_id": 6,
+          "quote": "That was a huge deal because not only did we have to backfill those positions, but it created this anxiety across the engineering org, like are other people going to leave too? So we responded on two ..."
+        }
+      ]
+    },
+    {
+      "code": "slow_time_to_hire",
+      "name": "Slow time-to-hire / losing to speed",
+      "type": "pain_point",
+      "respondent_count": 30,
+      "pct_of_sample": 30.0,
+      "example_quotes": [
+        {
+          "respondent_id": 3,
+          "quote": "Losing candidates to competing offers because we moved too slowly."
+        },
+        {
+          "respondent_id": 4,
+          "quote": "And it directly impacts our time-to-fill because the candidate is sitting there waiting."
+        },
+        {
+          "respondent_id": 5,
+          "quote": "And then the third thing, which is more of an ongoing thing, is just trying to reduce our time-to-fill because it's been creeping up."
+        }
+      ]
+    },
+    {
+      "code": "seasonal_hiring",
+      "name": "Seasonal hiring surge",
+      "type": "business_event",
+      "respondent_count": 25,
+      "pct_of_sample": 25.0,
+      "example_quotes": [
+        {
+          "respondent_id": 2,
+          "quote": "Honestly, it's been all about preparing for the spring seasonal ramp-up."
+        },
+        {
+          "respondent_id": 2,
+          "quote": "So on top of the seasonal hiring, we're also trying to staff three brand new locations."
+        },
+        {
+          "respondent_id": 8,
+          "quote": "Pretty typical stuff for this time of year honestly."
+        }
+      ]
+    },
+    {
+      "code": "department_expansion",
+      "name": "Department/team expansion",
+      "type": "business_event",
+      "respondent_count": 25,
+      "pct_of_sample": 25.0,
+      "example_quotes": [
+        {
+          "respondent_id": 4,
+          "quote": "The past two months we've been heavily focused on hiring for the sales team."
+        },
+        {
+          "respondent_id": 5,
+          "quote": "The biggest priority has been this massive engineering hiring push."
+        },
+        {
+          "respondent_id": 6,
+          "quote": "So the biggest thing, and this has been kind of an ongoing priority but it really ramped up recently, is engineering hiring."
+        }
+      ]
+    },
+    {
+      "code": "new_location_opening",
+      "name": "New location/office opening",
+      "type": "business_event",
+      "respondent_count": 24,
+      "pct_of_sample": 24.0,
+      "example_quotes": [
+        {
+          "respondent_id": 2,
+          "quote": "Yeah, so we're opening three new stores in the next quarter, which is exciting but also, you know, a lot of work from a hiring perspective."
+        },
+        {
+          "respondent_id": 8,
+          "quote": "Yeah, we opened a new office in Connecticut, so that created some HR work around, you know, registering in a new state, setting up payroll there, figuring out the local employment laws."
+        },
+        {
+          "respondent_id": 11,
+          "quote": "Yeah, we opened three new stores in Q1, which wasn't originally in the plan."
+        }
+      ]
+    },
+    {
+      "code": "high_turnover_cycle",
+      "name": "High turnover / revolving door",
+      "type": "pain_point",
+      "respondent_count": 22,
+      "pct_of_sample": 22.0,
+      "example_quotes": [
+        {
+          "respondent_id": 1,
+          "quote": "We had a bit of a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving and fixing comp bands."
+        },
+        {
+          "respondent_id": 5,
+          "quote": "So it starts when a hiring manager submits a requisition through Lever. Actually, let me back up. Before that, it goes through headcount planning with their VP and finance, and then once it's approved..."
+        },
+        {
+          "respondent_id": 5,
+          "quote": "And then you start over."
+        }
+      ]
+    },
+    {
+      "code": "lack_of_analytics",
+      "name": "Lack of analytics/reporting",
+      "type": "pain_point",
+      "respondent_count": 21,
+      "pct_of_sample": 21.0,
+      "example_quotes": [
+        {
+          "respondent_id": 6,
+          "quote": "Second was improving time-to-fill metrics because our CEO got a report showing we were averaging 52 days, and he was not happy."
+        },
+        {
+          "respondent_id": 11,
+          "quote": "The biggest frustration is the lack of good analytics and reporting."
+        },
+        {
+          "respondent_id": 14,
+          "quote": "We were on this really old, clunky system that, I mean, it was basically a glorified spreadsheet."
+        }
+      ]
+    },
+    {
+      "code": "sourcing_difficulty",
+      "name": "Sourcing difficulty",
+      "type": "pain_point",
+      "respondent_count": 21,
+      "pct_of_sample": 21.0,
+      "example_quotes": [
+        {
+          "respondent_id": 8,
+          "quote": "It's not a daily crisis, but when we need someone and can't find them, it stalls growth."
+        },
+        {
+          "respondent_id": 15,
+          "quote": "Sourcing is the biggest pain point."
+        },
+        {
+          "respondent_id": 20,
+          "quote": "Yeah, we're opening an engineering office in Toronto to access the talent pool there."
+        }
+      ]
+    },
+    {
+      "code": "acquisition_merger",
+      "name": "Acquisition/merger integration",
+      "type": "business_event",
+      "respondent_count": 18,
+      "pct_of_sample": 18.0,
+      "example_quotes": [
+        {
+          "respondent_id": 3,
+          "quote": "We have an in-house talent acquisition team, six people."
+        },
+        {
+          "respondent_id": 4,
+          "quote": "Um, yeah, so our biggest competitor got acquired, which has created this window where their customers are nervous and looking around."
+        },
+        {
+          "respondent_id": 7,
+          "quote": "Yeah, the big one was that we acquired a smaller company, about 200 people, and the integration has been consuming a lot of attention."
+        }
+      ]
+    },
+    {
+      "code": "process_overhaul",
+      "name": "Recruiting process overhaul",
+      "type": "business_event",
+      "respondent_count": 15,
+      "pct_of_sample": 15.0,
+      "example_quotes": [
+        {
+          "respondent_id": 2,
+          "quote": "Our VP wanted to standardize everything."
+        },
+        {
+          "respondent_id": 3,
+          "quote": "And second, we've been rebuilding our onboarding program from scratch because we shifted to a hybrid model last year and the old onboarding didn't work for remote hires."
+        },
+        {
+          "respondent_id": 13,
+          "quote": "Up until recently, each region was kind of doing their own thing with hiring, and we're trying to standardize that."
+        }
+      ]
+    },
+    {
+      "code": "post_funding_hiring",
+      "name": "Post-funding hiring push",
+      "type": "business_event",
+      "respondent_count": 13,
+      "pct_of_sample": 13.0,
+      "example_quotes": [
+        {
+          "respondent_id": 1,
+          "quote": "Yeah, we closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast."
+        },
+        {
+          "respondent_id": 4,
+          "quote": "So the company is trying to capitalize on that by, you know, ramping up sales fast."
+        },
+        {
+          "respondent_id": 7,
+          "quote": "We closed a Series D about four months ago and a big chunk of that capital is going toward sales and customer success expansion, so we're talking 80 to 100 new GTM hires over the next two quarters."
+        }
+      ]
+    },
+    {
+      "code": "hiring_manager_responsiveness",
+      "name": "Hiring manager responsiveness",
+      "type": "pain_point",
+      "respondent_count": 13,
+      "pct_of_sample": 13.0,
+      "example_quotes": [
+        {
+          "respondent_id": 4,
+          "quote": "Hiring manager responsiveness. Getting them to review resumes, schedule interviews, submit feedback. It's like pulling teeth sometimes."
+        },
+        {
+          "respondent_id": 6,
+          "quote": "A hiring manager submits a req through our system, my team picks it up from there. Each recruiter owns a set of departments, so like one person handles engineering, another handles sales and marketing..."
+        },
+        {
+          "respondent_id": 13,
+          "quote": "So a store manager identifies a need, they submit a request through iCIMS. The regional recruiter reviews it and posts the job, usually to Indeed and our careers page. Applications come in, and the re..."
+        }
+      ]
+    },
+    {
+      "code": "interview_scheduling",
+      "name": "Interview scheduling coordination",
+      "type": "pain_point",
+      "respondent_count": 12,
+      "pct_of_sample": 12.0,
+      "example_quotes": [
+        {
+          "respondent_id": 5,
+          "quote": "I did the math once and estimated my team spends like 15 to 20 hours a week just on scheduling coordination."
+        },
+        {
+          "respondent_id": 6,
+          "quote": "Interview scheduling coordination, hands down."
+        },
+        {
+          "respondent_id": 12,
+          "quote": "Getting four or five busy consultants and partners aligned on interview times is like herding cats."
+        }
+      ]
+    },
+    {
+      "code": "candidate_dropoff",
+      "name": "Candidate drop-off/ghosting",
+      "type": "pain_point",
+      "respondent_count": 11,
+      "pct_of_sample": 11.0,
+      "example_quotes": [
+        {
+          "respondent_id": 1,
+          "quote": "The biggest frustration is candidate drop-off."
+        },
+        {
+          "respondent_id": 12,
+          "quote": "We lose candidates because of it. Like, we'll have a great candidate who's also talking to McKinsey or Deloitte, and if we take two weeks just to schedule a final round, they're gone."
+        },
+        {
+          "respondent_id": 14,
+          "quote": "Meanwhile, the candidates are calling us asking what's going on, and some of them just ghost us because they've found something else."
+        }
+      ]
+    },
+    {
+      "code": "dei_diversity_hiring",
+      "name": "DEI/diversity hiring initiative",
+      "type": "business_event",
+      "respondent_count": 10,
+      "pct_of_sample": 10.0,
+      "example_quotes": [
+        {
+          "respondent_id": 3,
+          "quote": "First, building out our DEI hiring programs, which is an ongoing priority but we've been putting more muscle behind it lately."
+        },
+        {
+          "respondent_id": 14,
+          "quote": "Our CEO got approached by a private equity firm that's interested in potentially investing, and as part of their due diligence, they wanted to understand our people operations in a lot more detail tha..."
+        },
+        {
+          "respondent_id": 22,
+          "quote": "We had a pretty significant challenge around a new state reporting requirement for DEI metrics in hiring."
+        }
+      ]
+    },
+    {
+      "code": "resume_screening_overload",
+      "name": "Resume screening overload",
+      "type": "pain_point",
+      "respondent_count": 8,
+      "pct_of_sample": 8.0,
+      "example_quotes": [
+        {
+          "respondent_id": 16,
+          "quote": "Like I said, I'm rejecting 70% right off the bat and even some of the ones that look good on paper turn out to be not great in the phone screen."
+        },
+        {
+          "respondent_id": 17,
+          "quote": "Applications come in through iCIMS, the recruiter does an initial screen, which is basically a resume review and then a 20 to 30 minute phone call."
+        },
+        {
+          "respondent_id": 21,
+          "quote": "We get a ton of applications but most of them aren't a fit, and my recruiters spend way too much time sifting through unqualified applicants."
+        }
+      ]
+    },
+    {
+      "code": "communication_gaps",
+      "name": "Communication gaps with hiring managers",
+      "type": "pain_point",
+      "respondent_count": 7,
+      "pct_of_sample": 7.0,
+      "example_quotes": [
+        {
+          "respondent_id": 14,
+          "quote": "Okay, so the biggest frustration, and Sarah and I have talked about this so many times, is the communication gap with store managers."
+        },
+        {
+          "respondent_id": 17,
+          "quote": "So a hiring manager submits a requisition through our system, which is iCIMS. That goes to me for approval, then my recruiters pick it up. They write or update the job posting, get it approved by the ..."
+        },
+        {
+          "respondent_id": 50,
+          "quote": "Hiring manager submits a req through Lever. My team does a kickoff to align on the role. Recruiters source through LinkedIn, Gem outbound, community channels, and referrals."
+        }
+      ]
+    },
+    {
+      "code": "offer_approval_bottleneck",
+      "name": "Offer approval bottleneck",
+      "type": "pain_point",
+      "respondent_count": 6,
+      "pct_of_sample": 6.0,
+      "example_quotes": [
+        {
+          "respondent_id": 18,
+          "quote": "The offer approval bottleneck."
+        },
+        {
+          "respondent_id": 24,
+          "quote": "The offer approval bottleneck."
+        },
+        {
+          "respondent_id": 43,
+          "quote": "The single biggest frustration, and I know I've touched on this, is the requisition approval process and how our ATS handles it."
+        }
+      ]
+    },
+    {
+      "code": "no_shows",
+      "name": "No-shows (interviews or day one)",
+      "type": "pain_point",
+      "respondent_count": 4,
+      "pct_of_sample": 4.0,
+      "example_quotes": [
+        {
+          "respondent_id": 2,
+          "quote": "No-shows."
+        },
+        {
+          "respondent_id": 39,
+          "quote": "The biggest frustration is the no-shows."
+        },
+        {
+          "respondent_id": 51,
+          "quote": "No-shows."
+        }
+      ]
+    },
+    {
+      "code": "candidate_quality",
+      "name": "Candidate quality issues",
+      "type": "pain_point",
+      "respondent_count": 4,
+      "pct_of_sample": 4.0,
+      "example_quotes": [
+        {
+          "respondent_id": 21,
+          "quote": "The biggest frustration is candidate quality at the store level."
+        },
+        {
+          "respondent_id": 23,
+          "quote": "The main challenge was that we had a couple bad hires on the engineering side."
+        },
+        {
+          "respondent_id": 50,
+          "quote": "When I go to the board or the executive team and they ask me questions like, what's our quality of hire by source, or what's the correlation between interview scores and performance, I can't answer th..."
+        }
+      ]
+    },
+    {
+      "code": "agency_dependency",
+      "name": "Agency dependency and cost",
+      "type": "pain_point",
+      "respondent_count": 2,
+      "pct_of_sample": 2.0,
+      "example_quotes": [
+        {
+          "respondent_id": 25,
+          "quote": "Oh man, the biggest frustration is definitely agency dependency and cost."
+        },
+        {
+          "respondent_id": 81,
+          "quote": "The agency cost piece has been an ongoing battle."
+        }
+      ]
+    },
+    {
+      "code": "competitor_disruption",
+      "name": "Competitor disruption creating opportunity",
+      "type": "business_event",
+      "respondent_count": 1,
+      "pct_of_sample": 1.0,
+      "example_quotes": [
+        {
+          "respondent_id": 4,
+          "quote": "Um, yeah, so our biggest competitor got acquired, which has created this window where their customers are nervous and looking around."
+        }
+      ]
+    },
+    {
+      "code": "poor_candidate_experience",
+      "name": "Poor candidate experience",
+      "type": "pain_point",
+      "respondent_count": 1,
+      "pct_of_sample": 1.0,
+      "example_quotes": [
+        {
+          "respondent_id": 7,
+          "quote": "The application process is terrible, honestly."
+        }
+      ]
+    }
+  ],
+  "linkage_non_users": {
+    "rapid_headcount_growth": {
+      "n": 58,
+      "brands": {
+        "BambooHR": {
+          "count": 18,
+          "pct": 31.0
+        },
+        "Workday": {
+          "count": 6,
+          "pct": 10.3
+        },
+        "Greenhouse": {
+          "count": 4,
+          "pct": 6.9
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 1,
+          "pct": 1.7
+        },
+        "Lever": {
+          "count": 3,
+          "pct": 5.2
+        },
+        "Ashby": {
+          "count": 1,
+          "pct": 1.7
+        },
+        "JazzHR": {
+          "count": 2,
+          "pct": 3.4
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 1,
+          "pct": 1.7
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 31,
+          "pct": 53.4
+        }
+      }
+    },
+    "backfill_departures": {
+      "n": 44,
+      "brands": {
+        "BambooHR": {
+          "count": 1,
+          "pct": 2.3
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 1,
+          "pct": 2.3
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 42,
+          "pct": 95.5
+        }
+      }
+    },
+    "slow_time_to_hire": {
+      "n": 28,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 28,
+          "pct": 100.0
+        }
+      }
+    },
+    "seasonal_hiring": {
+      "n": 19,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 19,
+          "pct": 100.0
+        }
+      }
+    },
+    "department_expansion": {
+      "n": 25,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 25,
+          "pct": 100.0
+        }
+      }
+    },
+    "new_location_opening": {
+      "n": 17,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 17,
+          "pct": 100.0
+        }
+      }
+    },
+    "high_turnover_cycle": {
+      "n": 18,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 18,
+          "pct": 100.0
+        }
+      }
+    },
+    "lack_of_analytics": {
+      "n": 16,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 1,
+          "pct": 6.2
+        },
+        "Greenhouse": {
+          "count": 3,
+          "pct": 18.8
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 2,
+          "pct": 12.5
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 5,
+          "pct": 31.2
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 1,
+          "pct": 6.2
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 9,
+          "pct": 56.2
+        }
+      }
+    },
+    "sourcing_difficulty": {
+      "n": 16,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 16,
+          "pct": 100.0
+        }
+      }
+    },
+    "acquisition_merger": {
+      "n": 16,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 3,
+          "pct": 18.8
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 1,
+          "pct": 6.2
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 12,
+          "pct": 75.0
+        }
+      }
+    },
+    "process_overhaul": {
+      "n": 15,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 15,
+          "pct": 100.0
+        }
+      }
+    },
+    "post_funding_hiring": {
+      "n": 11,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 11,
+          "pct": 100.0
+        }
+      }
+    },
+    "hiring_manager_responsiveness": {
+      "n": 13,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 13,
+          "pct": 100.0
+        }
+      }
+    },
+    "interview_scheduling": {
+      "n": 12,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 1,
+          "pct": 8.3
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 11,
+          "pct": 91.7
+        }
+      }
+    },
+    "candidate_dropoff": {
+      "n": 8,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 8,
+          "pct": 100.0
+        }
+      }
+    },
+    "dei_diversity_hiring": {
+      "n": 9,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 9,
+          "pct": 100.0
+        }
+      }
+    },
+    "resume_screening_overload": {
+      "n": 7,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 7,
+          "pct": 100.0
+        }
+      }
+    },
+    "communication_gaps": {
+      "n": 5,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 5,
+          "pct": 100.0
+        }
+      }
+    },
+    "offer_approval_bottleneck": {
+      "n": 6,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 6,
+          "pct": 100.0
+        }
+      }
+    },
+    "no_shows": {
+      "n": 3,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "candidate_quality": {
+      "n": 4,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 4,
+          "pct": 100.0
+        }
+      }
+    },
+    "agency_dependency": {
+      "n": 2,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 2,
+          "pct": 100.0
+        }
+      }
+    },
+    "competitor_disruption": {
+      "n": 1,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 1,
+          "pct": 100.0
+        }
+      }
+    },
+    "poor_candidate_experience": {
+      "n": 1,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "No Brand Linked": {
+          "count": 1,
+          "pct": 100.0
+        }
+      }
+    }
+  },
+  "linkage_current_users": {
+    "rapid_headcount_growth": {
+      "n": 12,
+      "brands": {
+        "BambooHR": {
+          "count": 1,
+          "pct": 8.3
+        },
+        "Workday": {
+          "count": 1,
+          "pct": 8.3
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 2,
+          "pct": 16.7
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "backfill_departures": {
+      "n": 6,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "slow_time_to_hire": {
+      "n": 2,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "seasonal_hiring": {
+      "n": 6,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "department_expansion": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "new_location_opening": {
+      "n": 7,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "high_turnover_cycle": {
+      "n": 4,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "lack_of_analytics": {
+      "n": 5,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "sourcing_difficulty": {
+      "n": 5,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "acquisition_merger": {
+      "n": 2,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "process_overhaul": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "post_funding_hiring": {
+      "n": 2,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "hiring_manager_responsiveness": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "interview_scheduling": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "candidate_dropoff": {
+      "n": 3,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "dei_diversity_hiring": {
+      "n": 1,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "resume_screening_overload": {
+      "n": 1,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "communication_gaps": {
+      "n": 2,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "offer_approval_bottleneck": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "no_shows": {
+      "n": 1,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "candidate_quality": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "agency_dependency": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "competitor_disruption": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    },
+    "poor_candidate_experience": {
+      "n": 0,
+      "brands": {
+        "BambooHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Workday": {
+          "count": 0,
+          "pct": 0
+        },
+        "Greenhouse": {
+          "count": 0,
+          "pct": 0
+        },
+        "Indeed": {
+          "count": 0,
+          "pct": 0
+        },
+        "LinkedIn Recruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Lever": {
+          "count": 0,
+          "pct": 0
+        },
+        "Ashby": {
+          "count": 0,
+          "pct": 0
+        },
+        "JazzHR": {
+          "count": 0,
+          "pct": 0
+        },
+        "Rippling": {
+          "count": 0,
+          "pct": 0
+        },
+        "iCIMS": {
+          "count": 0,
+          "pct": 0
+        },
+        "SmartRecruiters": {
+          "count": 0,
+          "pct": 0
+        },
+        "Jobvite": {
+          "count": 0,
+          "pct": 0
+        },
+        "Paradox": {
+          "count": 0,
+          "pct": 0
+        },
+        "GoodTime": {
+          "count": 0,
+          "pct": 0
+        },
+        "Gem": {
+          "count": 0,
+          "pct": 0
+        },
+        "Breezy HR": {
+          "count": 0,
+          "pct": 0
+        },
+        "ZipRecruiter": {
+          "count": 0,
+          "pct": 0
+        },
+        "Handshake": {
+          "count": 0,
+          "pct": 0
+        }
+      }
+    }
+  },
+  "brands_in_matrix": [
+    "BambooHR",
+    "Workday",
+    "Greenhouse",
+    "Indeed",
+    "LinkedIn Recruiter",
+    "Lever",
+    "Ashby",
+    "JazzHR",
+    "Rippling",
+    "iCIMS",
+    "SmartRecruiters",
+    "Jobvite",
+    "Paradox",
+    "GoodTime",
+    "Gem",
+    "Breezy HR",
+    "ZipRecruiter",
+    "Handshake"
+  ]
+}

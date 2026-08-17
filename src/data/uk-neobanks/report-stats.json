@@ -1,0 +1,2649 @@
+{
+  "study_meta": {
+    "study_name": "UK Neobank Switching Study",
+    "client": "Incumbent retail bank (illustrative)",
+    "n_total": 320,
+    "n_wave1": 120,
+    "n_wave2": 200,
+    "n_wave2_matched": 160,
+    "n_retirees": 44,
+    "alpha": 0.1,
+    "test": "two-tailed two-proportion z; Fisher fallback when expected cell < 5",
+    "rounding": "all percentages rounded UP to nearest whole number"
+  },
+  "sample_composition": {
+    "all_320": {
+      "n": 320,
+      "primary_bank": [
+        {
+          "value": "Monzo",
+          "n": 60,
+          "pct": 19
+        },
+        {
+          "value": "Starling Bank",
+          "n": 60,
+          "pct": 19
+        },
+        {
+          "value": "Lloyds Bank",
+          "n": 44,
+          "pct": 14
+        },
+        {
+          "value": "Halifax",
+          "n": 33,
+          "pct": 11
+        },
+        {
+          "value": "NatWest",
+          "n": 31,
+          "pct": 10
+        },
+        {
+          "value": "Santander",
+          "n": 26,
+          "pct": 9
+        },
+        {
+          "value": "HSBC",
+          "n": 25,
+          "pct": 8
+        },
+        {
+          "value": "Barclays",
+          "n": 25,
+          "pct": 8
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 12,
+          "pct": 4
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 4,
+          "pct": 2
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 116,
+          "pct": 37
+        },
+        {
+          "value": "18-24",
+          "n": 75,
+          "pct": 24
+        },
+        {
+          "value": "35-44",
+          "n": 58,
+          "pct": 19
+        },
+        {
+          "value": "45-54",
+          "n": 40,
+          "pct": 13
+        },
+        {
+          "value": "65+",
+          "n": 17,
+          "pct": 6
+        },
+        {
+          "value": "55-64",
+          "n": 14,
+          "pct": 5
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 130,
+          "pct": 41
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 70,
+          "pct": 22
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 44,
+          "pct": 14
+        },
+        {
+          "value": "Under £25,000",
+          "n": 44,
+          "pct": 14
+        },
+        {
+          "value": "£100,000+",
+          "n": 22,
+          "pct": 7
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 10,
+          "pct": 4
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "London",
+          "n": 110,
+          "pct": 35
+        },
+        {
+          "value": "Smaller town or suburban area",
+          "n": 108,
+          "pct": 34
+        },
+        {
+          "value": "Other major urban area",
+          "n": 85,
+          "pct": 27
+        },
+        {
+          "value": "Rural area",
+          "n": 17,
+          "pct": 6
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 202,
+          "pct": 64
+        },
+        {
+          "value": "Retired",
+          "n": 44,
+          "pct": 14
+        },
+        {
+          "value": "Part-time employed",
+          "n": 41,
+          "pct": 13
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 33,
+          "pct": 11
+        }
+      ],
+      "gender": [
+        {
+          "value": "Male",
+          "n": 151,
+          "pct": 48
+        },
+        {
+          "value": "Female",
+          "n": 149,
+          "pct": 47
+        },
+        {
+          "value": "Non-binary",
+          "n": 9,
+          "pct": 3
+        },
+        {
+          "value": "Prefer to self-describe",
+          "n": 7,
+          "pct": 3
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 4,
+          "pct": 2
+        }
+      ]
+    },
+    "wave1_switchers_120": {
+      "n": 120,
+      "primary_bank": [
+        {
+          "value": "Monzo",
+          "n": 60,
+          "pct": 50
+        },
+        {
+          "value": "Starling Bank",
+          "n": 60,
+          "pct": 50
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 43,
+          "pct": 36
+        },
+        {
+          "value": "18-24",
+          "n": 25,
+          "pct": 21
+        },
+        {
+          "value": "35-44",
+          "n": 22,
+          "pct": 19
+        },
+        {
+          "value": "45-54",
+          "n": 17,
+          "pct": 15
+        },
+        {
+          "value": "65+",
+          "n": 7,
+          "pct": 6
+        },
+        {
+          "value": "55-64",
+          "n": 6,
+          "pct": 5
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 47,
+          "pct": 40
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 26,
+          "pct": 22
+        },
+        {
+          "value": "Under £25,000",
+          "n": 18,
+          "pct": 15
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 16,
+          "pct": 14
+        },
+        {
+          "value": "£100,000+",
+          "n": 8,
+          "pct": 7
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 5,
+          "pct": 5
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "Smaller town or suburban area",
+          "n": 40,
+          "pct": 34
+        },
+        {
+          "value": "London",
+          "n": 39,
+          "pct": 33
+        },
+        {
+          "value": "Other major urban area",
+          "n": 33,
+          "pct": 28
+        },
+        {
+          "value": "Rural area",
+          "n": 8,
+          "pct": 7
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 87,
+          "pct": 73
+        },
+        {
+          "value": "Part-time employed",
+          "n": 15,
+          "pct": 13
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 14,
+          "pct": 12
+        },
+        {
+          "value": "Retired",
+          "n": 4,
+          "pct": 4
+        }
+      ],
+      "gender": [
+        {
+          "value": "Male",
+          "n": 58,
+          "pct": 49
+        },
+        {
+          "value": "Female",
+          "n": 54,
+          "pct": 45
+        },
+        {
+          "value": "Non-binary",
+          "n": 4,
+          "pct": 4
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 2,
+          "pct": 2
+        },
+        {
+          "value": "Prefer to self-describe",
+          "n": 2,
+          "pct": 2
+        }
+      ],
+      "previous_bank": [
+        {
+          "value": "Lloyds Bank",
+          "n": 21,
+          "pct": 18
+        },
+        {
+          "value": "Barclays",
+          "n": 18,
+          "pct": 15
+        },
+        {
+          "value": "Halifax",
+          "n": 17,
+          "pct": 15
+        },
+        {
+          "value": "NatWest",
+          "n": 15,
+          "pct": 13
+        },
+        {
+          "value": "Nationwide Building Society",
+          "n": 12,
+          "pct": 10
+        },
+        {
+          "value": "Santander",
+          "n": 9,
+          "pct": 8
+        },
+        {
+          "value": "HSBC",
+          "n": 8,
+          "pct": 7
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 5,
+          "pct": 5
+        },
+        {
+          "value": "TSB",
+          "n": 5,
+          "pct": 5
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 4,
+          "pct": 4
+        },
+        {
+          "value": "First Direct",
+          "n": 3,
+          "pct": 3
+        },
+        {
+          "value": "Co-operative Bank",
+          "n": 2,
+          "pct": 2
+        },
+        {
+          "value": "Metro Bank",
+          "n": 1,
+          "pct": 1
+        }
+      ],
+      "switch_tenure": [
+        {
+          "value": "1-3 months",
+          "n": 43,
+          "pct": 36
+        },
+        {
+          "value": "7-12 months",
+          "n": 37,
+          "pct": 31
+        },
+        {
+          "value": "4-6 months",
+          "n": 30,
+          "pct": 25
+        },
+        {
+          "value": "Less than 1 month",
+          "n": 10,
+          "pct": 9
+        }
+      ],
+      "old_account_fate": [
+        {
+          "value": "Closed it",
+          "n": 62,
+          "pct": 52
+        },
+        {
+          "value": "Kept open but significantly reduced use",
+          "n": 58,
+          "pct": 49
+        }
+      ]
+    },
+    "wave2_non_switchers_200": {
+      "n": 200,
+      "primary_bank": [
+        {
+          "value": "Lloyds Bank",
+          "n": 44,
+          "pct": 22
+        },
+        {
+          "value": "Halifax",
+          "n": 33,
+          "pct": 17
+        },
+        {
+          "value": "NatWest",
+          "n": 31,
+          "pct": 16
+        },
+        {
+          "value": "Santander",
+          "n": 26,
+          "pct": 13
+        },
+        {
+          "value": "HSBC",
+          "n": 25,
+          "pct": 13
+        },
+        {
+          "value": "Barclays",
+          "n": 25,
+          "pct": 13
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 12,
+          "pct": 6
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 4,
+          "pct": 2
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 73,
+          "pct": 37
+        },
+        {
+          "value": "18-24",
+          "n": 50,
+          "pct": 25
+        },
+        {
+          "value": "35-44",
+          "n": 36,
+          "pct": 18
+        },
+        {
+          "value": "45-54",
+          "n": 23,
+          "pct": 12
+        },
+        {
+          "value": "65+",
+          "n": 10,
+          "pct": 5
+        },
+        {
+          "value": "55-64",
+          "n": 8,
+          "pct": 4
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 83,
+          "pct": 42
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 44,
+          "pct": 22
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 28,
+          "pct": 15
+        },
+        {
+          "value": "Under £25,000",
+          "n": 26,
+          "pct": 13
+        },
+        {
+          "value": "£100,000+",
+          "n": 14,
+          "pct": 8
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 5,
+          "pct": 3
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "London",
+          "n": 71,
+          "pct": 36
+        },
+        {
+          "value": "Smaller town or suburban area",
+          "n": 68,
+          "pct": 34
+        },
+        {
+          "value": "Other major urban area",
+          "n": 52,
+          "pct": 26
+        },
+        {
+          "value": "Rural area",
+          "n": 9,
+          "pct": 5
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 115,
+          "pct": 58
+        },
+        {
+          "value": "Retired",
+          "n": 40,
+          "pct": 20
+        },
+        {
+          "value": "Part-time employed",
+          "n": 26,
+          "pct": 13
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 19,
+          "pct": 10
+        }
+      ],
+      "gender": [
+        {
+          "value": "Female",
+          "n": 95,
+          "pct": 48
+        },
+        {
+          "value": "Male",
+          "n": 93,
+          "pct": 47
+        },
+        {
+          "value": "Prefer to self-describe",
+          "n": 5,
+          "pct": 3
+        },
+        {
+          "value": "Non-binary",
+          "n": 5,
+          "pct": 3
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 2,
+          "pct": 1
+        }
+      ]
+    },
+    "wave2_matched_160": {
+      "n": 160,
+      "primary_bank": [
+        {
+          "value": "Lloyds Bank",
+          "n": 38,
+          "pct": 24
+        },
+        {
+          "value": "NatWest",
+          "n": 26,
+          "pct": 17
+        },
+        {
+          "value": "Halifax",
+          "n": 24,
+          "pct": 15
+        },
+        {
+          "value": "Santander",
+          "n": 23,
+          "pct": 15
+        },
+        {
+          "value": "HSBC",
+          "n": 18,
+          "pct": 12
+        },
+        {
+          "value": "Barclays",
+          "n": 18,
+          "pct": 12
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 10,
+          "pct": 7
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 3,
+          "pct": 2
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 63,
+          "pct": 40
+        },
+        {
+          "value": "18-24",
+          "n": 40,
+          "pct": 25
+        },
+        {
+          "value": "35-44",
+          "n": 25,
+          "pct": 16
+        },
+        {
+          "value": "45-54",
+          "n": 17,
+          "pct": 11
+        },
+        {
+          "value": "65+",
+          "n": 8,
+          "pct": 5
+        },
+        {
+          "value": "55-64",
+          "n": 7,
+          "pct": 5
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 68,
+          "pct": 43
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 32,
+          "pct": 20
+        },
+        {
+          "value": "Under £25,000",
+          "n": 22,
+          "pct": 14
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 22,
+          "pct": 14
+        },
+        {
+          "value": "£100,000+",
+          "n": 11,
+          "pct": 7
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 5,
+          "pct": 4
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "London",
+          "n": 58,
+          "pct": 37
+        },
+        {
+          "value": "Smaller town or suburban area",
+          "n": 55,
+          "pct": 35
+        },
+        {
+          "value": "Other major urban area",
+          "n": 39,
+          "pct": 25
+        },
+        {
+          "value": "Rural area",
+          "n": 8,
+          "pct": 5
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 115,
+          "pct": 72
+        },
+        {
+          "value": "Part-time employed",
+          "n": 26,
+          "pct": 17
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 19,
+          "pct": 12
+        }
+      ],
+      "gender": [
+        {
+          "value": "Male",
+          "n": 78,
+          "pct": 49
+        },
+        {
+          "value": "Female",
+          "n": 74,
+          "pct": 47
+        },
+        {
+          "value": "Prefer to self-describe",
+          "n": 3,
+          "pct": 2
+        },
+        {
+          "value": "Non-binary",
+          "n": 3,
+          "pct": 2
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 2,
+          "pct": 2
+        }
+      ]
+    },
+    "retirees_44": {
+      "n": 44,
+      "primary_bank": [
+        {
+          "value": "Halifax",
+          "n": 9,
+          "pct": 21
+        },
+        {
+          "value": "HSBC",
+          "n": 7,
+          "pct": 16
+        },
+        {
+          "value": "Barclays",
+          "n": 7,
+          "pct": 16
+        },
+        {
+          "value": "Lloyds Bank",
+          "n": 6,
+          "pct": 14
+        },
+        {
+          "value": "NatWest",
+          "n": 5,
+          "pct": 12
+        },
+        {
+          "value": "Santander",
+          "n": 3,
+          "pct": 7
+        },
+        {
+          "value": "Starling Bank",
+          "n": 2,
+          "pct": 5
+        },
+        {
+          "value": "Monzo",
+          "n": 2,
+          "pct": 5
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 2,
+          "pct": 5
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 1,
+          "pct": 3
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 12,
+          "pct": 28
+        },
+        {
+          "value": "35-44",
+          "n": 12,
+          "pct": 28
+        },
+        {
+          "value": "18-24",
+          "n": 10,
+          "pct": 23
+        },
+        {
+          "value": "45-54",
+          "n": 6,
+          "pct": 14
+        },
+        {
+          "value": "65+",
+          "n": 3,
+          "pct": 7
+        },
+        {
+          "value": "55-64",
+          "n": 1,
+          "pct": 3
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 15,
+          "pct": 35
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 14,
+          "pct": 32
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 7,
+          "pct": 16
+        },
+        {
+          "value": "Under £25,000",
+          "n": 4,
+          "pct": 10
+        },
+        {
+          "value": "£100,000+",
+          "n": 3,
+          "pct": 7
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 1,
+          "pct": 3
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "Other major urban area",
+          "n": 15,
+          "pct": 35
+        },
+        {
+          "value": "Smaller town or suburban area",
+          "n": 14,
+          "pct": 32
+        },
+        {
+          "value": "London",
+          "n": 14,
+          "pct": 32
+        },
+        {
+          "value": "Rural area",
+          "n": 1,
+          "pct": 3
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Retired",
+          "n": 44,
+          "pct": 100
+        }
+      ],
+      "gender": [
+        {
+          "value": "Female",
+          "n": 21,
+          "pct": 48
+        },
+        {
+          "value": "Male",
+          "n": 19,
+          "pct": 44
+        },
+        {
+          "value": "Prefer to self-describe",
+          "n": 2,
+          "pct": 5
+        },
+        {
+          "value": "Non-binary",
+          "n": 2,
+          "pct": 5
+        }
+      ]
+    }
+  },
+  "chapter1_who_switchers_are": {
+    "demographic_stats": {
+      "n": 120,
+      "stats": [
+        {
+          "value": 55,
+          "label": "age 25-44 (the modal 2-band span)"
+        },
+        {
+          "value": 61,
+          "label": "household income £25K-£75K"
+        },
+        {
+          "value": 60,
+          "label": "London or other major urban area"
+        },
+        {
+          "value": 73,
+          "label": "full-time employed"
+        }
+      ]
+    },
+    "where_came_from": {
+      "monzo_n": 60,
+      "starling_n": 60,
+      "rows": [
+        {
+          "bank": "Lloyds Bank",
+          "monzo_pct": 20,
+          "monzo_n": 12,
+          "starling_pct": 15,
+          "starling_n": 9,
+          "total_n": 21
+        },
+        {
+          "bank": "Barclays",
+          "monzo_pct": 10,
+          "monzo_n": 6,
+          "starling_pct": 20,
+          "starling_n": 12,
+          "total_n": 18
+        },
+        {
+          "bank": "Halifax",
+          "monzo_pct": 10,
+          "monzo_n": 6,
+          "starling_pct": 19,
+          "starling_n": 11,
+          "total_n": 17
+        },
+        {
+          "bank": "NatWest",
+          "monzo_pct": 20,
+          "monzo_n": 12,
+          "starling_pct": 5,
+          "starling_n": 3,
+          "total_n": 15
+        },
+        {
+          "bank": "Nationwide Building Society",
+          "monzo_pct": 10,
+          "monzo_n": 6,
+          "starling_pct": 10,
+          "starling_n": 6,
+          "total_n": 12
+        },
+        {
+          "bank": "Santander",
+          "monzo_pct": 7,
+          "monzo_n": 4,
+          "starling_pct": 9,
+          "starling_n": 5,
+          "total_n": 9
+        },
+        {
+          "bank": "HSBC",
+          "monzo_pct": 7,
+          "monzo_n": 4,
+          "starling_pct": 7,
+          "starling_n": 4,
+          "total_n": 8
+        },
+        {
+          "bank": "TSB",
+          "monzo_pct": 4,
+          "monzo_n": 2,
+          "starling_pct": 5,
+          "starling_n": 3,
+          "total_n": 5
+        }
+      ]
+    },
+    "other_banks_considered": {
+      "monzo_n": 60,
+      "starling_n": 60,
+      "cross_consideration": {
+        "monzo_considered_starling": 97,
+        "starling_considered_monzo": 99
+      },
+      "rows": [
+        {
+          "bank": "Chase UK",
+          "monzo_pct": 54,
+          "monzo_n": 32,
+          "starling_pct": 50,
+          "starling_n": 30,
+          "total_n": 62
+        },
+        {
+          "bank": "First Direct",
+          "monzo_pct": 15,
+          "monzo_n": 9,
+          "starling_pct": 15,
+          "starling_n": 9,
+          "total_n": 18
+        },
+        {
+          "bank": "Revolut",
+          "monzo_pct": 12,
+          "monzo_n": 7,
+          "starling_pct": 9,
+          "starling_n": 5,
+          "total_n": 12
+        },
+        {
+          "bank": "Nationwide",
+          "monzo_pct": 5,
+          "monzo_n": 3,
+          "starling_pct": 14,
+          "starling_n": 8,
+          "total_n": 11
+        },
+        {
+          "bank": "Tide",
+          "monzo_pct": 5,
+          "monzo_n": 3,
+          "starling_pct": 7,
+          "starling_n": 4,
+          "total_n": 7
+        },
+        {
+          "bank": "Halifax",
+          "monzo_pct": 7,
+          "monzo_n": 4,
+          "starling_pct": 4,
+          "starling_n": 2,
+          "total_n": 6
+        },
+        {
+          "bank": "HSBC",
+          "monzo_pct": 2,
+          "monzo_n": 1,
+          "starling_pct": 7,
+          "starling_n": 4,
+          "total_n": 5
+        },
+        {
+          "bank": "NatWest",
+          "monzo_pct": 0,
+          "monzo_n": 0,
+          "starling_pct": 4,
+          "starling_n": 2,
+          "total_n": 2
+        }
+      ],
+      "method": "Word-boundary string match against bank-name aliases on Wave 1 Q6 free-text response. Participant's own destination excluded from their consideration set; the chart additionally excludes the two destination neobanks (Monzo, Starling) so the third-party alternatives are visible."
+    },
+    "wallet_composition": {
+      "n": 120,
+      "stats": [
+        {
+          "value": 47,
+          "label": "hold Revolut as a secondary account"
+        },
+        {
+          "value": 30,
+          "label": "hold Wise (typically for foreign-exchange use)"
+        },
+        {
+          "value": 56,
+          "label": "carry a credit card at a different bank"
+        },
+        {
+          "value": 52,
+          "label": "fully closed their previous bank account"
+        }
+      ]
+    },
+    "switching_ease": {
+      "n": 120,
+      "switching_process_ease": 97,
+      "minor_or_no_friction": 60,
+      "regret_about_delay": 69,
+      "unequivocal_satisfaction": 100
+    },
+    "per_incumbent_threat": {
+      "rows": [
+        {
+          "incumbent": "Lloyds Bank",
+          "n_switchers": 21,
+          "monzo_n": 12,
+          "starling_n": 9,
+          "monzo_pct": 58,
+          "starling_pct": 43,
+          "directional_threat": "Monzo",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 0.6636,
+          "is_significant": false
+        },
+        {
+          "incumbent": "Barclays",
+          "n_switchers": 18,
+          "monzo_n": 6,
+          "starling_n": 12,
+          "monzo_pct": 34,
+          "starling_pct": 67,
+          "directional_threat": "Starling",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 0.2379,
+          "is_significant": false
+        },
+        {
+          "incumbent": "Halifax",
+          "n_switchers": 17,
+          "monzo_n": 6,
+          "starling_n": 11,
+          "monzo_pct": 36,
+          "starling_pct": 65,
+          "directional_threat": "Starling",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 0.3323,
+          "is_significant": false
+        },
+        {
+          "incumbent": "NatWest",
+          "n_switchers": 15,
+          "monzo_n": 12,
+          "starling_n": 3,
+          "monzo_pct": 80,
+          "starling_pct": 20,
+          "directional_threat": "Monzo",
+          "primary_threat": "Monzo",
+          "p_value": 0.0352,
+          "is_significant": true
+        },
+        {
+          "incumbent": "Nationwide Building Society",
+          "n_switchers": 12,
+          "monzo_n": 6,
+          "starling_n": 6,
+          "monzo_pct": 50,
+          "starling_pct": 50,
+          "directional_threat": "Even",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 1.0,
+          "is_significant": false
+        },
+        {
+          "incumbent": "Santander",
+          "n_switchers": 9,
+          "monzo_n": 4,
+          "starling_n": 5,
+          "monzo_pct": 45,
+          "starling_pct": 56,
+          "directional_threat": "Starling",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 1.0,
+          "is_significant": false
+        },
+        {
+          "incumbent": "HSBC",
+          "n_switchers": 8,
+          "monzo_n": 4,
+          "starling_n": 4,
+          "monzo_pct": 50,
+          "starling_pct": 50,
+          "directional_threat": "Even",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 1.0,
+          "is_significant": false
+        },
+        {
+          "incumbent": "Royal Bank of Scotland",
+          "n_switchers": 5,
+          "monzo_n": 3,
+          "starling_n": 2,
+          "monzo_pct": 60,
+          "starling_pct": 40,
+          "directional_threat": "Monzo",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 1.0,
+          "is_significant": false
+        },
+        {
+          "incumbent": "TSB",
+          "n_switchers": 5,
+          "monzo_n": 2,
+          "starling_n": 3,
+          "monzo_pct": 40,
+          "starling_pct": 60,
+          "directional_threat": "Starling",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 1.0,
+          "is_significant": false
+        },
+        {
+          "incumbent": "Bank of Scotland",
+          "n_switchers": 4,
+          "monzo_n": 1,
+          "starling_n": 3,
+          "monzo_pct": 25,
+          "starling_pct": 75,
+          "directional_threat": "Starling",
+          "primary_threat": "Even (n.s.)",
+          "p_value": 0.625,
+          "is_significant": false
+        }
+      ],
+      "n_total_w1": 120,
+      "alpha": 0.1,
+      "test": "exact binomial two-sided vs 50/50 null",
+      "_n_significant": 1
+    }
+  },
+  "chapter1_why_they_left": {
+    "push_forces_q5": {
+      "n_total": 120,
+      "question_id": "w1_Q5",
+      "question_text": "Q5. Did you have any particular frustrations with your previous bank? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q5_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 92,
+          "n_total": 120,
+          "pct": 77
+        },
+        {
+          "code": "w1_Q5_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 87,
+          "n_total": 120,
+          "pct": 73
+        },
+        {
+          "code": "w1_Q5_phone_customer_service_friction",
+          "label": "Phone Customer Service Friction",
+          "n_pos": 73,
+          "n_total": 120,
+          "pct": 61
+        },
+        {
+          "code": "w1_Q5_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 52,
+          "n_total": 120,
+          "pct": 44
+        },
+        {
+          "code": "w1_Q5_excessive_incumbent_fees",
+          "label": "Excessive Incumbent Fees",
+          "n_pos": 29,
+          "n_total": 120,
+          "pct": 25
+        },
+        {
+          "code": "w1_Q5_excessive_security_friction",
+          "label": "Excessive Security Friction",
+          "n_pos": 26,
+          "n_total": 120,
+          "pct": 22
+        },
+        {
+          "code": "w1_Q5_app_reliability_concerns",
+          "label": "App Reliability Concerns",
+          "n_pos": 24,
+          "n_total": 120,
+          "pct": 20
+        },
+        {
+          "code": "w1_Q5_uncompetitive_savings_rates",
+          "label": "Uncompetitive Savings Rates",
+          "n_pos": 20,
+          "n_total": 120,
+          "pct": 17
+        },
+        {
+          "code": "w1_Q5_branch_closure_as_push_factor",
+          "label": "Branch Closure As Push Factor",
+          "n_pos": 11,
+          "n_total": 120,
+          "pct": 10
+        }
+      ]
+    },
+    "triggers_q3": {
+      "n_total": 120,
+      "question_id": "w1_Q3",
+      "question_text": "Q3. What was happening in your life when you first started thinking about switching banks? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q3_social_proof_as_switching_catalyst",
+          "label": "Social Proof As Switching Catalyst",
+          "n_pos": 78,
+          "n_total": 120,
+          "pct": 65
+        },
+        {
+          "code": "w1_Q3_crystallizing_incident_at_incumbent",
+          "label": "Crystallizing Incident At Incumbent",
+          "n_pos": 70,
+          "n_total": 120,
+          "pct": 59
+        },
+        {
+          "code": "w1_Q3_life_stage_transition_as_trigger",
+          "label": "Life Stage Transition As Trigger",
+          "n_pos": 53,
+          "n_total": 120,
+          "pct": 45
+        },
+        {
+          "code": "w1_Q3_phone_customer_service_friction",
+          "label": "Phone Customer Service Friction",
+          "n_pos": 42,
+          "n_total": 120,
+          "pct": 35
+        },
+        {
+          "code": "w1_Q3_self_employed_financial_management_needs",
+          "label": "Self Employed Financial Management Needs",
+          "n_pos": 16,
+          "n_total": 120,
+          "pct": 14
+        },
+        {
+          "code": "w1_Q3_excessive_security_friction",
+          "label": "Excessive Security Friction",
+          "n_pos": 14,
+          "n_total": 120,
+          "pct": 12
+        },
+        {
+          "code": "w1_Q3_app_reliability_concerns",
+          "label": "App Reliability Concerns",
+          "n_pos": 12,
+          "n_total": 120,
+          "pct": 10
+        },
+        {
+          "code": "w1_Q3_inertia_as_switching_barrier",
+          "label": "Inertia As Switching Barrier",
+          "n_pos": 9,
+          "n_total": 120,
+          "pct": 8
+        },
+        {
+          "code": "w1_Q3_branch_closure_as_push_factor",
+          "label": "Branch Closure As Push Factor",
+          "n_pos": 8,
+          "n_total": 120,
+          "pct": 7
+        }
+      ]
+    },
+    "pull_forces_q7": {
+      "n_total": 120,
+      "question_id": "w1_Q7",
+      "question_text": "Q7. Why did you specifically choose [neobank]? What did they offer that was attractive? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q7_money_separation_through_pots_or_spaces",
+          "label": "Money Separation Through Pots Or Spaces",
+          "n_pos": 96,
+          "n_total": 120,
+          "pct": 80
+        },
+        {
+          "code": "w1_Q7_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 87,
+          "n_total": 120,
+          "pct": 73
+        },
+        {
+          "code": "w1_Q7_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 74,
+          "n_total": 120,
+          "pct": 62
+        },
+        {
+          "code": "w1_Q7_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 65,
+          "n_total": 120,
+          "pct": 55
+        },
+        {
+          "code": "w1_Q7_neobank_legitimacy_perception",
+          "label": "Neobank Legitimacy Perception",
+          "n_pos": 51,
+          "n_total": 120,
+          "pct": 43
+        },
+        {
+          "code": "w1_Q7_social_proof_as_switching_catalyst",
+          "label": "Social Proof As Switching Catalyst",
+          "n_pos": 46,
+          "n_total": 120,
+          "pct": 39
+        },
+        {
+          "code": "w1_Q7_no_fee_foreign_transactions",
+          "label": "No Fee Foreign Transactions",
+          "n_pos": 39,
+          "n_total": 120,
+          "pct": 33
+        },
+        {
+          "code": "w1_Q7_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 26,
+          "n_total": 120,
+          "pct": 22
+        },
+        {
+          "code": "w1_Q7_budgeting_tools_for_active_management",
+          "label": "Budgeting Tools For Active Management",
+          "n_pos": 21,
+          "n_total": 120,
+          "pct": 18
+        },
+        {
+          "code": "w1_Q7_self_employed_financial_management_needs",
+          "label": "Self Employed Financial Management Needs",
+          "n_pos": 18,
+          "n_total": 120,
+          "pct": 15
+        }
+      ]
+    },
+    "pull_forces_by_neobank_q7": {
+      "Monzo": [
+        {
+          "code": "w1_Q7_money_separation_through_pots_or_spaces",
+          "label": "Money Separation Through Pots Or Spaces",
+          "n_pos": 55,
+          "n_total": 60,
+          "pct": 92
+        },
+        {
+          "code": "w1_Q7_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 49,
+          "n_total": 60,
+          "pct": 82
+        },
+        {
+          "code": "w1_Q7_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 48,
+          "n_total": 60,
+          "pct": 80
+        },
+        {
+          "code": "w1_Q7_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 33,
+          "n_total": 60,
+          "pct": 56
+        },
+        {
+          "code": "w1_Q7_social_proof_as_switching_catalyst",
+          "label": "Social Proof As Switching Catalyst",
+          "n_pos": 28,
+          "n_total": 60,
+          "pct": 47
+        },
+        {
+          "code": "w1_Q7_budgeting_tools_for_active_management",
+          "label": "Budgeting Tools For Active Management",
+          "n_pos": 18,
+          "n_total": 60,
+          "pct": 30
+        },
+        {
+          "code": "w1_Q7_self_employed_financial_management_needs",
+          "label": "Self Employed Financial Management Needs",
+          "n_pos": 9,
+          "n_total": 60,
+          "pct": 15
+        },
+        {
+          "code": "w1_Q7_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 8,
+          "n_total": 60,
+          "pct": 14
+        },
+        {
+          "code": "w1_Q7_neobank_legitimacy_perception",
+          "label": "Neobank Legitimacy Perception",
+          "n_pos": 6,
+          "n_total": 60,
+          "pct": 10
+        },
+        {
+          "code": "w1_Q7_no_fee_foreign_transactions",
+          "label": "No Fee Foreign Transactions",
+          "n_pos": 4,
+          "n_total": 60,
+          "pct": 7
+        }
+      ],
+      "Starling Bank": [
+        {
+          "code": "w1_Q7_neobank_legitimacy_perception",
+          "label": "Neobank Legitimacy Perception",
+          "n_pos": 45,
+          "n_total": 60,
+          "pct": 75
+        },
+        {
+          "code": "w1_Q7_money_separation_through_pots_or_spaces",
+          "label": "Money Separation Through Pots Or Spaces",
+          "n_pos": 41,
+          "n_total": 60,
+          "pct": 69
+        },
+        {
+          "code": "w1_Q7_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 39,
+          "n_total": 60,
+          "pct": 65
+        },
+        {
+          "code": "w1_Q7_no_fee_foreign_transactions",
+          "label": "No Fee Foreign Transactions",
+          "n_pos": 35,
+          "n_total": 60,
+          "pct": 59
+        },
+        {
+          "code": "w1_Q7_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 32,
+          "n_total": 60,
+          "pct": 54
+        },
+        {
+          "code": "w1_Q7_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 25,
+          "n_total": 60,
+          "pct": 42
+        },
+        {
+          "code": "w1_Q7_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 18,
+          "n_total": 60,
+          "pct": 30
+        },
+        {
+          "code": "w1_Q7_social_proof_as_switching_catalyst",
+          "label": "Social Proof As Switching Catalyst",
+          "n_pos": 18,
+          "n_total": 60,
+          "pct": 30
+        },
+        {
+          "code": "w1_Q7_self_employed_financial_management_needs",
+          "label": "Self Employed Financial Management Needs",
+          "n_pos": 9,
+          "n_total": 60,
+          "pct": 15
+        },
+        {
+          "code": "w1_Q7_budgeting_tools_for_active_management",
+          "label": "Budgeting Tools For Active Management",
+          "n_pos": 3,
+          "n_total": 60,
+          "pct": 5
+        }
+      ]
+    },
+    "switching_experience_q8": {
+      "n_total": 120,
+      "question_id": "w1_Q8",
+      "question_text": "Q8. Walk me through the actual switching experience. (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q8_switching_process_ease",
+          "label": "Switching Process Ease",
+          "n_pos": 116,
+          "n_total": 120,
+          "pct": 97
+        },
+        {
+          "code": "w1_Q8_minor_switching_friction",
+          "label": "Minor Switching Friction",
+          "n_pos": 71,
+          "n_total": 120,
+          "pct": 60
+        },
+        {
+          "code": "w1_Q8_switching_process_anxiety",
+          "label": "Switching Process Anxiety",
+          "n_pos": 32,
+          "n_total": 120,
+          "pct": 27
+        },
+        {
+          "code": "w1_Q8_self_employed_switching_complexity",
+          "label": "Self Employed Switching Complexity",
+          "n_pos": 15,
+          "n_total": 120,
+          "pct": 13
+        }
+      ]
+    },
+    "push_subgroup_by_previous_bank_fees": {
+      "title": "Excessive Incumbent Fees mention rate by previous bank",
+      "questionText": "Q5. Did you have any particular frustrations with your previous bank?",
+      "code": "w1_Q5_excessive_incumbent_fees",
+      "overallAverage": 25,
+      "overallN": 120,
+      "rows": [
+        {
+          "label": "Lloyds Bank",
+          "value": 24,
+          "n": 21,
+          "p_value": 0.9664,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "NatWest",
+          "value": 34,
+          "n": 15,
+          "p_value": 0.3753,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "Barclays",
+          "value": 39,
+          "n": 18,
+          "p_value": 0.1135,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "HSBC",
+          "value": 25,
+          "n": 8,
+          "p_value": 0.9546,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "Halifax",
+          "value": 18,
+          "n": 17,
+          "p_value": 0.4979,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "Santander",
+          "value": 34,
+          "n": 9,
+          "p_value": 0.5042,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        },
+        {
+          "label": "Nationwide Building Society",
+          "value": 9,
+          "n": 12,
+          "p_value": 0.1768,
+          "sigFlag": "",
+          "tier": "tier2_3_nonsig"
+        }
+      ],
+      "footnote": "Significance test compares the subgroup vs all other respondents combined; dashed line shows the overall sample average including the subgroup (n=120). α = 0.10 two-tailed."
+    },
+    "cross_wave_push_force_comparison": [
+      {
+        "label": "App Design Quality",
+        "w1_pct": 77,
+        "w1_n": 120,
+        "w2_pct": 70,
+        "w2_n": 160,
+        "delta_pp": -7,
+        "p_value": 0.1917,
+        "sig": false
+      },
+      {
+        "label": "Spending Visibility Through Categorization",
+        "w1_pct": 73,
+        "w1_n": 120,
+        "w2_pct": 58,
+        "w2_n": 160,
+        "delta_pp": -15,
+        "p_value": 0.0095,
+        "sig": true
+      },
+      {
+        "label": "Phone Customer Service Friction",
+        "w1_pct": 61,
+        "w1_n": 120,
+        "w2_pct": 57,
+        "w2_n": 160,
+        "delta_pp": -4,
+        "p_value": 0.5011,
+        "sig": false
+      },
+      {
+        "label": "Excessive Incumbent Fees",
+        "w1_pct": 25,
+        "w1_n": 120,
+        "w2_pct": 32,
+        "w2_n": 160,
+        "delta_pp": 7,
+        "p_value": 0.2014,
+        "sig": false
+      },
+      {
+        "label": "Excessive Security Friction",
+        "w1_pct": 22,
+        "w1_n": 120,
+        "w2_pct": 10,
+        "w2_n": 160,
+        "delta_pp": -12,
+        "p_value": 0.0056,
+        "sig": true
+      },
+      {
+        "label": "App Reliability Concerns",
+        "w1_pct": 20,
+        "w1_n": 120,
+        "w2_pct": 7,
+        "w2_n": 160,
+        "delta_pp": -13,
+        "p_value": 0.0012,
+        "sig": true
+      },
+      {
+        "label": "Uncompetitive Savings Rates",
+        "w1_pct": 17,
+        "w1_n": 120,
+        "w2_pct": 80,
+        "w2_n": 160,
+        "delta_pp": 63,
+        "p_value": 0.0,
+        "sig": true
+      }
+    ]
+  },
+  "chapter2_how_its_going": {
+    "post_switch_q9": {
+      "n_total": 120,
+      "question_id": "w1_Q9",
+      "question_text": "Q9. Now that you've had some experience with your current bank, how is it going? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q9_money_separation_through_pots_or_spaces",
+          "label": "Money Separation Through Pots Or Spaces",
+          "n_pos": 96,
+          "n_total": 120,
+          "pct": 80
+        },
+        {
+          "code": "w1_Q9_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 76,
+          "n_total": 120,
+          "pct": 64
+        },
+        {
+          "code": "w1_Q9_reduced_financial_anxiety_through_visibility",
+          "label": "Reduced Financial Anxiety Through Visibility",
+          "n_pos": 64,
+          "n_total": 120,
+          "pct": 54
+        },
+        {
+          "code": "w1_Q9_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 58,
+          "n_total": 120,
+          "pct": 49
+        },
+        {
+          "code": "w1_Q9_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 57,
+          "n_total": 120,
+          "pct": 48
+        },
+        {
+          "code": "w1_Q9_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 51,
+          "n_total": 120,
+          "pct": 43
+        },
+        {
+          "code": "w1_Q9_self_employed_financial_management_needs",
+          "label": "Self Employed Financial Management Needs",
+          "n_pos": 15,
+          "n_total": 120,
+          "pct": 13
+        }
+      ]
+    },
+    "limitations_q10": {
+      "n_total": 120,
+      "question_id": "w1_Q10",
+      "question_text": "Q10. Have you run into any limitations, frustrations, or moments where you needed something that [neobank] couldn't provide? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q10_acknowledged_neobank_limitations",
+          "label": "Acknowledged Neobank Limitations",
+          "n_pos": 119,
+          "n_total": 120,
+          "pct": 100
+        },
+        {
+          "code": "w1_Q10_uncompetitive_savings_rates",
+          "label": "Uncompetitive Savings Rates",
+          "n_pos": 94,
+          "n_total": 120,
+          "pct": 79
+        },
+        {
+          "code": "w1_Q10_cash_deposit_limitations",
+          "label": "Cash Deposit Limitations",
+          "n_pos": 79,
+          "n_total": 120,
+          "pct": 66
+        },
+        {
+          "code": "w1_Q10_missing_complex_financial_products",
+          "label": "Missing Complex Financial Products",
+          "n_pos": 36,
+          "n_total": 120,
+          "pct": 30
+        },
+        {
+          "code": "w1_Q10_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 30,
+          "n_total": 120,
+          "pct": 25
+        },
+        {
+          "code": "w1_Q10_branch_access_as_safety_net",
+          "label": "Branch Access As Safety Net",
+          "n_pos": 19,
+          "n_total": 120,
+          "pct": 16
+        }
+      ]
+    },
+    "description_q12": {
+      "n_total": 120,
+      "question_id": "w1_Q12",
+      "question_text": "Q12. If a friend asked you about [neobank], how would you describe it? (Wave 1 switchers, n=120)",
+      "codes": [
+        {
+          "code": "w1_Q12_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 87,
+          "n_total": 120,
+          "pct": 73
+        },
+        {
+          "code": "w1_Q12_money_separation_through_pots_or_spaces",
+          "label": "Money Separation Through Pots Or Spaces",
+          "n_pos": 55,
+          "n_total": 120,
+          "pct": 46
+        },
+        {
+          "code": "w1_Q12_neobank_as_modern_banking_standard",
+          "label": "Neobank As Modern Banking Standard",
+          "n_pos": 52,
+          "n_total": 120,
+          "pct": 44
+        },
+        {
+          "code": "w1_Q12_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 45,
+          "n_total": 120,
+          "pct": 38
+        },
+        {
+          "code": "w1_Q12_acknowledged_neobank_limitations",
+          "label": "Acknowledged Neobank Limitations",
+          "n_pos": 39,
+          "n_total": 120,
+          "pct": 33
+        },
+        {
+          "code": "w1_Q12_real_time_transaction_notifications",
+          "label": "Real Time Transaction Notifications",
+          "n_pos": 38,
+          "n_total": 120,
+          "pct": 32
+        },
+        {
+          "code": "w1_Q12_switching_process_ease",
+          "label": "Switching Process Ease",
+          "n_pos": 37,
+          "n_total": 120,
+          "pct": 31
+        },
+        {
+          "code": "w1_Q12_neobank_legitimacy_perception",
+          "label": "Neobank Legitimacy Perception",
+          "n_pos": 28,
+          "n_total": 120,
+          "pct": 24
+        },
+        {
+          "code": "w1_Q12_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 17,
+          "n_total": 120,
+          "pct": 15
+        },
+        {
+          "code": "w1_Q12_cash_deposit_limitations",
+          "label": "Cash Deposit Limitations",
+          "n_pos": 17,
+          "n_total": 120,
+          "pct": 15
+        }
+      ]
+    },
+    "regret_recommend": {
+      "would_switch_again": {
+        "_note": "Q11 binary field not parsed in master; analyze response_text"
+      },
+      "would_recommend": {
+        "_note": "Q13 binary field not parsed in master; analyze response_text"
+      }
+    }
+  },
+  "chapter3_whos_next": {
+    "incumbent_frustrations_q6": {
+      "n_total": 160,
+      "question_id": "w2_Q6",
+      "question_text": "Q6. Do you have any particular frustrations with your current bank? (Wave 2 non-switchers, retirees excluded, n=160)",
+      "codes": [
+        {
+          "code": "w2_Q6_uncompetitive_savings_rates",
+          "label": "Uncompetitive Savings Rates",
+          "n_pos": 128,
+          "n_total": 160,
+          "pct": 80
+        },
+        {
+          "code": "w2_Q6_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 112,
+          "n_total": 160,
+          "pct": 70
+        },
+        {
+          "code": "w2_Q6_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 92,
+          "n_total": 160,
+          "pct": 58
+        },
+        {
+          "code": "w2_Q6_phone_customer_service_friction",
+          "label": "Phone Customer Service Friction",
+          "n_pos": 91,
+          "n_total": 160,
+          "pct": 57
+        },
+        {
+          "code": "w2_Q6_excessive_incumbent_fees",
+          "label": "Excessive Incumbent Fees",
+          "n_pos": 50,
+          "n_total": 160,
+          "pct": 32
+        },
+        {
+          "code": "w2_Q6_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 15,
+          "n_total": 160,
+          "pct": 10
+        },
+        {
+          "code": "w2_Q6_excessive_security_friction",
+          "label": "Excessive Security Friction",
+          "n_pos": 16,
+          "n_total": 160,
+          "pct": 10
+        },
+        {
+          "code": "w2_Q6_app_reliability_concerns",
+          "label": "App Reliability Concerns",
+          "n_pos": 11,
+          "n_total": 160,
+          "pct": 7
+        }
+      ]
+    },
+    "incumbent_appreciate_q5": {
+      "n_total": 160,
+      "question_id": "w2_Q5",
+      "question_text": "Q5. What do you appreciate about your current bank? (Wave 2 non-switchers, retirees excluded, n=160)",
+      "codes": [
+        {
+          "code": "w2_Q5_branch_access_as_safety_net",
+          "label": "Branch Access As Safety Net",
+          "n_pos": 115,
+          "n_total": 160,
+          "pct": 72
+        },
+        {
+          "code": "w2_Q5_incumbent_stability_as_retention_anchor",
+          "label": "Incumbent Stability As Retention Anchor",
+          "n_pos": 96,
+          "n_total": 160,
+          "pct": 60
+        },
+        {
+          "code": "w2_Q5_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 92,
+          "n_total": 160,
+          "pct": 58
+        }
+      ]
+    },
+    "awareness_three_tier": {
+      "Monzo_all_w2": {
+        "brand": "Monzo",
+        "cohort": "all_w2",
+        "n": 200,
+        "mentally_available_pct": 80,
+        "aware_not_linked_pct": 20,
+        "unaware_pct": 1,
+        "raw_counts": {
+          "mentally_available": 159,
+          "aware_not_linked": 40,
+          "unaware": 1
+        }
+      },
+      "Monzo_matched": {
+        "brand": "Monzo",
+        "cohort": "matched",
+        "n": 160,
+        "mentally_available_pct": 81,
+        "aware_not_linked_pct": 20,
+        "unaware_pct": 0,
+        "raw_counts": {
+          "mentally_available": 129,
+          "aware_not_linked": 31,
+          "unaware": 0
+        }
+      },
+      "Starling Bank_all_w2": {
+        "brand": "Starling Bank",
+        "cohort": "all_w2",
+        "n": 200,
+        "mentally_available_pct": 35,
+        "aware_not_linked_pct": 53,
+        "unaware_pct": 13,
+        "raw_counts": {
+          "mentally_available": 70,
+          "aware_not_linked": 105,
+          "unaware": 25
+        }
+      },
+      "Starling Bank_matched": {
+        "brand": "Starling Bank",
+        "cohort": "matched",
+        "n": 160,
+        "mentally_available_pct": 39,
+        "aware_not_linked_pct": 52,
+        "unaware_pct": 10,
+        "raw_counts": {
+          "mentally_available": 61,
+          "aware_not_linked": 83,
+          "unaware": 16
+        }
+      },
+      "Revolut_all_w2": {
+        "brand": "Revolut",
+        "cohort": "all_w2",
+        "n": 200,
+        "mentally_available_pct": 29,
+        "aware_not_linked_pct": 65,
+        "unaware_pct": 6,
+        "raw_counts": {
+          "mentally_available": 58,
+          "aware_not_linked": 130,
+          "unaware": 12
+        }
+      },
+      "Revolut_matched": {
+        "brand": "Revolut",
+        "cohort": "matched",
+        "n": 160,
+        "mentally_available_pct": 29,
+        "aware_not_linked_pct": 67,
+        "unaware_pct": 6,
+        "raw_counts": {
+          "mentally_available": 45,
+          "aware_not_linked": 106,
+          "unaware": 9
+        }
+      }
+    },
+    "brand_attribute_matrix": {
+      "Monzo": {
+        "appeal": [
+          {
+            "code": "w2_Q9_spending_visibility_through_categorization",
+            "label": "Spending Visibility Through Categorization",
+            "n_pos": 123,
+            "n_total": 160,
+            "pct": 77
+          },
+          {
+            "code": "w2_Q9_money_separation_through_pots_or_spaces",
+            "label": "Money Separation Through Pots Or Spaces",
+            "n_pos": 109,
+            "n_total": 160,
+            "pct": 69
+          },
+          {
+            "code": "w2_Q9_real_time_transaction_notifications",
+            "label": "Real Time Transaction Notifications",
+            "n_pos": 97,
+            "n_total": 160,
+            "pct": 61
+          },
+          {
+            "code": "w2_Q9_app_design_quality",
+            "label": "App Design Quality",
+            "n_pos": 52,
+            "n_total": 160,
+            "pct": 33
+          },
+          {
+            "code": "w2_Q9_in_app_chat_customer_service",
+            "label": "In App Chat Customer Service",
+            "n_pos": 46,
+            "n_total": 160,
+            "pct": 29
+          },
+          {
+            "code": "w2_Q9_budgeting_tools_for_active_management",
+            "label": "Budgeting Tools For Active Management",
+            "n_pos": 33,
+            "n_total": 160,
+            "pct": 21
+          },
+          {
+            "code": "w2_Q9_self_employed_financial_management_needs",
+            "label": "Self Employed Financial Management Needs",
+            "n_pos": 20,
+            "n_total": 160,
+            "pct": 13
+          }
+        ],
+        "concerns": [
+          {
+            "code": "w2_Q10_institutional_trust_deficit_for_neobanks",
+            "label": "Institutional Trust Deficit For Neobanks",
+            "n_pos": 118,
+            "n_total": 160,
+            "pct": 74
+          },
+          {
+            "code": "w2_Q10_branch_access_as_safety_net",
+            "label": "Branch Access As Safety Net",
+            "n_pos": 101,
+            "n_total": 160,
+            "pct": 64
+          },
+          {
+            "code": "w2_Q10_missing_complex_financial_products",
+            "label": "Missing Complex Financial Products",
+            "n_pos": 36,
+            "n_total": 160,
+            "pct": 23
+          },
+          {
+            "code": "w2_Q10_account_freeze_fears",
+            "label": "Account Freeze Fears",
+            "n_pos": 31,
+            "n_total": 160,
+            "pct": 20
+          }
+        ]
+      },
+      "Starling Bank": {
+        "appeal": [
+          {
+            "code": "w2_Q14_starling_business_banking_reputation",
+            "label": "Starling Business Banking Reputation",
+            "n_pos": 54,
+            "n_total": 160,
+            "pct": 34
+          },
+          {
+            "code": "w2_Q14_money_separation_through_pots_or_spaces",
+            "label": "Money Separation Through Pots Or Spaces",
+            "n_pos": 42,
+            "n_total": 160,
+            "pct": 27
+          },
+          {
+            "code": "w2_Q14_self_employed_financial_management_needs",
+            "label": "Self Employed Financial Management Needs",
+            "n_pos": 32,
+            "n_total": 160,
+            "pct": 20
+          },
+          {
+            "code": "w2_Q14_spending_visibility_through_categorization",
+            "label": "Spending Visibility Through Categorization",
+            "n_pos": 27,
+            "n_total": 160,
+            "pct": 17
+          }
+        ],
+        "concerns": [
+          {
+            "code": "w2_Q15_branch_access_as_safety_net",
+            "label": "Branch Access As Safety Net",
+            "n_pos": 130,
+            "n_total": 160,
+            "pct": 82
+          },
+          {
+            "code": "w2_Q15_starling_lower_brand_visibility",
+            "label": "Starling Lower Brand Visibility",
+            "n_pos": 108,
+            "n_total": 160,
+            "pct": 68
+          },
+          {
+            "code": "w2_Q15_institutional_trust_deficit_for_neobanks",
+            "label": "Institutional Trust Deficit For Neobanks",
+            "n_pos": 96,
+            "n_total": 160,
+            "pct": 60
+          },
+          {
+            "code": "w2_Q15_missing_complex_financial_products",
+            "label": "Missing Complex Financial Products",
+            "n_pos": 22,
+            "n_total": 160,
+            "pct": 14
+          }
+        ]
+      },
+      "Revolut": {
+        "appeal": [
+          {
+            "code": "w2_Q19_no_fee_foreign_transactions",
+            "label": "No Fee Foreign Transactions",
+            "n_pos": 153,
+            "n_total": 160,
+            "pct": 96
+          },
+          {
+            "code": "w2_Q19_revolut_premium_tier_appeal",
+            "label": "Revolut Premium Tier Appeal",
+            "n_pos": 51,
+            "n_total": 160,
+            "pct": 32
+          },
+          {
+            "code": "w2_Q19_app_design_quality",
+            "label": "App Design Quality",
+            "n_pos": 31,
+            "n_total": 160,
+            "pct": 20
+          }
+        ],
+        "concerns": [
+          {
+            "code": "w2_Q20_revolut_regulatory_trust_concerns",
+            "label": "Revolut Regulatory Trust Concerns",
+            "n_pos": 151,
+            "n_total": 160,
+            "pct": 95
+          },
+          {
+            "code": "w2_Q20_revolut_premium_tier_appeal",
+            "label": "Revolut Premium Tier Appeal",
+            "n_pos": 51,
+            "n_total": 160,
+            "pct": 32
+          },
+          {
+            "code": "w2_Q20_account_freeze_fears",
+            "label": "Account Freeze Fears",
+            "n_pos": 29,
+            "n_total": 160,
+            "pct": 19
+          }
+        ]
+      }
+    },
+    "general_concerns_q22": {
+      "n_total": 160,
+      "question_id": "w2_Q22",
+      "question_text": "Q22. What concerns do you think people have about banking with a digital-only bank? (Wave 2 non-switchers, retirees excluded, n=160)",
+      "codes": [
+        {
+          "code": "w2_Q22_branch_access_as_safety_net",
+          "label": "Branch Access As Safety Net",
+          "n_pos": 156,
+          "n_total": 160,
+          "pct": 98
+        },
+        {
+          "code": "w2_Q22_institutional_trust_deficit_for_neobanks",
+          "label": "Institutional Trust Deficit For Neobanks",
+          "n_pos": 152,
+          "n_total": 160,
+          "pct": 95
+        },
+        {
+          "code": "w2_Q22_older_demographic_digital_banking_barriers",
+          "label": "Older Demographic Digital Banking Barriers",
+          "n_pos": 109,
+          "n_total": 160,
+          "pct": 69
+        },
+        {
+          "code": "w2_Q22_account_freeze_fears",
+          "label": "Account Freeze Fears",
+          "n_pos": 57,
+          "n_total": 160,
+          "pct": 36
+        }
+      ]
+    },
+    "forward_intent": {
+      "likelihood": {},
+      "bank": {},
+      "_note": "Q23 forward intent not parsed in master; analyze response_text"
+    }
+  },
+  "retiree_subgroup": {
+    "n": 44,
+    "by_wave": {
+      "wave_1_switchers": 4,
+      "wave_2_non_switchers": 40
+    },
+    "primary_bank": [
+      {
+        "value": "Halifax",
+        "n": 9
+      },
+      {
+        "value": "HSBC",
+        "n": 7
+      },
+      {
+        "value": "Barclays",
+        "n": 7
+      },
+      {
+        "value": "Lloyds Bank",
+        "n": 6
+      },
+      {
+        "value": "NatWest",
+        "n": 5
+      },
+      {
+        "value": "Santander",
+        "n": 3
+      },
+      {
+        "value": "Starling Bank",
+        "n": 2
+      },
+      {
+        "value": "Monzo",
+        "n": 2
+      },
+      {
+        "value": "Royal Bank of Scotland",
+        "n": 2
+      },
+      {
+        "value": "Bank of Scotland",
+        "n": 1
+      }
+    ],
+    "incumbent_frustrations_q6_w2": {
+      "n_total": 40,
+      "question_id": "w2_Q6",
+      "question_text": "Q6 frustrations among Wave 2 retirees (n=40)",
+      "codes": [
+        {
+          "code": "w2_Q6_uncompetitive_savings_rates",
+          "label": "Uncompetitive Savings Rates",
+          "n_pos": 31,
+          "n_total": 40,
+          "pct": 78
+        },
+        {
+          "code": "w2_Q6_phone_customer_service_friction",
+          "label": "Phone Customer Service Friction",
+          "n_pos": 25,
+          "n_total": 40,
+          "pct": 63
+        },
+        {
+          "code": "w2_Q6_app_design_quality",
+          "label": "App Design Quality",
+          "n_pos": 23,
+          "n_total": 40,
+          "pct": 58
+        },
+        {
+          "code": "w2_Q6_excessive_incumbent_fees",
+          "label": "Excessive Incumbent Fees",
+          "n_pos": 14,
+          "n_total": 40,
+          "pct": 35
+        },
+        {
+          "code": "w2_Q6_spending_visibility_through_categorization",
+          "label": "Spending Visibility Through Categorization",
+          "n_pos": 13,
+          "n_total": 40,
+          "pct": 33
+        },
+        {
+          "code": "w2_Q6_excessive_security_friction",
+          "label": "Excessive Security Friction",
+          "n_pos": 6,
+          "n_total": 40,
+          "pct": 15
+        },
+        {
+          "code": "w2_Q6_app_reliability_concerns",
+          "label": "App Reliability Concerns",
+          "n_pos": 3,
+          "n_total": 40,
+          "pct": 8
+        },
+        {
+          "code": "w2_Q6_in_app_chat_customer_service",
+          "label": "In App Chat Customer Service",
+          "n_pos": 3,
+          "n_total": 40,
+          "pct": 8
+        }
+      ]
+    },
+    "monzo_concerns_q10": {
+      "n_total": 40,
+      "question_id": "w2_Q10",
+      "question_text": "Q10 Monzo concerns among Wave 2 retirees (n=40)",
+      "codes": [
+        {
+          "code": "w2_Q10_branch_access_as_safety_net",
+          "label": "Branch Access As Safety Net",
+          "n_pos": 34,
+          "n_total": 40,
+          "pct": 85
+        },
+        {
+          "code": "w2_Q10_institutional_trust_deficit_for_neobanks",
+          "label": "Institutional Trust Deficit For Neobanks",
+          "n_pos": 29,
+          "n_total": 40,
+          "pct": 73
+        },
+        {
+          "code": "w2_Q10_account_freeze_fears",
+          "label": "Account Freeze Fears",
+          "n_pos": 6,
+          "n_total": 40,
+          "pct": 15
+        },
+        {
+          "code": "w2_Q10_missing_complex_financial_products",
+          "label": "Missing Complex Financial Products",
+          "n_pos": 5,
+          "n_total": 40,
+          "pct": 13
+        }
+      ]
+    },
+    "general_concerns_q22": {
+      "n_total": 40,
+      "question_id": "w2_Q22",
+      "question_text": "Q22 general digital-banking concerns among Wave 2 retirees (n=40)",
+      "codes": [
+        {
+          "code": "w2_Q22_branch_access_as_safety_net",
+          "label": "Branch Access As Safety Net",
+          "n_pos": 39,
+          "n_total": 40,
+          "pct": 98
+        },
+        {
+          "code": "w2_Q22_institutional_trust_deficit_for_neobanks",
+          "label": "Institutional Trust Deficit For Neobanks",
+          "n_pos": 39,
+          "n_total": 40,
+          "pct": 98
+        },
+        {
+          "code": "w2_Q22_older_demographic_digital_banking_barriers",
+          "label": "Older Demographic Digital Banking Barriers",
+          "n_pos": 28,
+          "n_total": 40,
+          "pct": 70
+        },
+        {
+          "code": "w2_Q22_account_freeze_fears",
+          "label": "Account Freeze Fears",
+          "n_pos": 8,
+          "n_total": 40,
+          "pct": 20
+        }
+      ]
+    },
+    "brand_awareness": {
+      "n": 40,
+      "by_brand": {
+        "Monzo": {
+          "mentally_available_pct": 75,
+          "aware_not_linked_pct": 23,
+          "unaware_pct": 3,
+          "n": 40
+        },
+        "Starling Bank": {
+          "mentally_available_pct": 23,
+          "aware_not_linked_pct": 56,
+          "unaware_pct": 23,
+          "n": 40
+        },
+        "Revolut": {
+          "mentally_available_pct": 33,
+          "aware_not_linked_pct": 60,
+          "unaware_pct": 8,
+          "n": 40
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,193 @@
+---
+// UK Neobank Switching Study, Maze-branded edition at
+// /maze/uk-neobanks-report/. Content is identical to the canonical
+// /uk-neobanks-report/ page; only the chrome (cover, fonts, palette,
+// logo, favicon, page title) is rebranded to Maze. Chart fills,
+// callout accents, heatmap cells, and other data-carrying colors
+// keep BuyerVoice's red and ink so the meaning of each color is
+// preserved.
+//
+// Architecture note: the canonical UK Neobanks page uses
+// ReportLayout + ReportBody. ReportLayout owns the BuyerVoice
+// chrome (cover, fonts, accordion CSS, autonumbering, palette).
+// This Maze edition does NOT use ReportLayout because it needs
+// Maze-branded chrome; it inlines its own head, cover, accordion
+// CSS, and autonumbering script. ReportBody is still imported,
+// the body content stays in sync between the two editions
+// automatically (every content edit in ReportBody propagates
+// here without action). Pattern modeled on
+// /maze/retail-banking-report/ (April 2026 reference).
+//
+// BuyerVoice GA/GTM tags stay on the page so engagement signals
+// still land in our analytics when Maze forwards the URL.
+import ReportBody from '../../../components/uk-neobanks-report/ReportBody.astro';
+import reportStats from '../../../data/uk-neobanks/report-stats.json';
+
+const d: any = reportStats;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N7JWFV8H');</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8MZNTQVSZ5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/maze/favicon.svg">
+<meta name="theme-color" content="#F5F4F0">
+<title>UK Neobank Switching Study | Maze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style is:global>
+  :root {
+    --ink: #0E0E0E;
+    --paper: #F5F4F0;
+    --signal: #B8341B;          /* kept: chart accent + heat-max + insight border */
+    --rule: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: rgba(14, 14, 14, 0.10);
+    --card-bg: rgba(14, 14, 14, 0.04);
+    --maze-green: #CCE552;       /* available; used sparingly */
+    --serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--rule); font-family: var(--sans); font-size: 16px; line-height: 1.55; }
+  .report-container { max-width: 960px; margin: 0 auto; padding: 48px 32px 96px; }
+
+  /* Cover. Tightened to match retail-banking-report (no border, 64px
+     bottom padding) per the May 2026 standard. The cover stats sit
+     close to the executive summary copy below. */
+  .cover { text-align: center; padding: 64px 0 64px; margin-bottom: 0; }
+  .maze-cover-brand { display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 56px; }
+  .maze-logo { width: 270px; height: auto; display: block; }
+  .powered-by { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .powered-by .pb-label { opacity: 0.85; }
+  .bv-logo-small { font-family: var(--serif); font-size: 13px; font-weight: 700; letter-spacing: 0; color: var(--ink); text-decoration: none; text-transform: none; transition: opacity 0.15s; }
+  .bv-logo-small:hover { opacity: 0.65; }
+  .bv-logo-small .bv-logo-tld { color: var(--signal); }
+  /* Cover headline reads in Maze ink rather than BuyerVoice red. Every
+     other heading in the body keeps its canonical color. */
+  .report-title { font-family: var(--serif); font-size: 56px; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); margin: 0 0 16px; line-height: 1.1; }
+  .report-subtitle { font-family: var(--sans); font-size: 17px; color: var(--muted); margin: 0 auto 24px; max-width: 680px; }
+  .prepared-for { font-family: var(--sans); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 48px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 8px 0 0; width: 100%; }
+  .stat-card { padding: 24px 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; text-align: center; }
+  .stat-value { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .stat-label { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* Accordion chrome. Same structure as ReportLayout but inlined here
+     since the Maze page does not import ReportLayout. The
+     `.report-container` ancestor selector beats per-report scoped
+     `.<slug>-report h2 / p` rules so accordion-title and
+     accordion-subtitle margins stay tight (the same fix that was
+     made in ReportLayout in May 2026). */
+  .accordion { border-bottom: 1px solid var(--border); }
+  .accordion-header { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 16px; padding: 24px 0; }
+  .accordion-header::-webkit-details-marker { display: none; }
+  .accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+  .report-container .accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin: 0; flex: 1; line-height: 1.2; }
+  .report-container .accordion-subtitle { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 4px 0 0; line-height: 1.35; }
+  .accordion-icon { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--signal); transition: transform 0.2s; }
+  details[open] .accordion-icon { transform: rotate(45deg); }
+  .accordion-body { padding: 8px 0 40px 56px; font-family: var(--sans); font-size: 16px; color: var(--rule); line-height: 1.65; }
+  .accordion-body h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin: 32px 0 12px; }
+  .accordion-body h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--ink); margin: 24px 0 8px; }
+  .accordion-body p { margin: 0 0 16px; }
+
+  /* Print: expand all accordions so a Ctrl/Cmd+P export captures the
+     full report. The Maze edition does not show a "Save as PDF" button,
+     readers can use the browser print dialog directly. */
+  @media print {
+    body { background: white; }
+    .accordion-icon { display: none; }
+    details { page-break-inside: avoid; }
+    details > summary { cursor: default; }
+  }
+</style>
+</head>
+<body>
+  <main class="report-container">
+    <section class="cover">
+      <div class="maze-cover-brand">
+        <img src="/maze/wordmark-black.svg" alt="Maze" class="maze-logo" />
+        <div class="powered-by">
+          <span class="pb-label">Powered by</span>
+          <a href="/" class="bv-logo-small" aria-label="BuyerVoice.AI home">BuyerVoice<span class="bv-logo-tld">.AI</span></a>
+        </div>
+      </div>
+
+      <h1 class="report-title">UK Neobank Switching Study</h1>
+      <p class="report-subtitle">Interviews with switchers and non-switchers at top five incumbent banks in the United Kingdom</p>
+      <p class="prepared-for">April 2026</p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value">{d.study_meta.n_total}</div>
+          <div class="stat-label">Interviews</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">~17min</div>
+          <div class="stat-label">Avg Length</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">442K</div>
+          <div class="stat-label">Words Analyzed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">46</div>
+          <div class="stat-label">Thematic Codes</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="accordions">
+      <ReportBody />
+    </div>
+  </main>
+
+  <!-- GTM noscript fallback -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <script is:inline>
+    (function () {
+      // Auto-number accordions with zero-padded two-digit numbers.
+      // Identical to ReportLayout's autonumbering, copied here because
+      // the Maze page does not import ReportLayout.
+      const accordions = document.querySelectorAll('details.accordion');
+      accordions.forEach((el, i) => {
+        const num = String(i + 1).padStart(2, '0');
+        let numEl = el.querySelector('.accordion-num');
+        if (!numEl) {
+          const summary = el.querySelector('summary');
+          if (summary) {
+            numEl = document.createElement('span');
+            numEl.className = 'accordion-num';
+            summary.prepend(numEl);
+          }
+        }
+        if (numEl) numEl.textContent = num;
+      });
+
+      // Keep print behavior consistent (expand all on print, restore on
+      // afterprint). No PDF button on the Maze edition, but readers can
+      // still Ctrl/Cmd+P from the browser.
+      window.addEventListener('beforeprint', () => {
+        accordions.forEach((el) => { el.open = true; });
+      });
+    })();
+  </script>
+</body>
+</html>

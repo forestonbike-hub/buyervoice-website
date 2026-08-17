@@ -1,0 +1,1717 @@
+---
+// Market Segmentation Frameworks - BuyerVoice.AI Reference Page
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Market Segmentation Frameworks | BuyerVoice.AI</title>
+  <meta name="description" content="A practitioner's guide to market segmentation: frameworks, methods, and decision tools for B2B research." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+       ============================================ */
+    :root {
+      --color-green: var(--ink);
+      --color-deep-green: var(--ink);
+      --color-black: #1A1A1A;
+      --color-white: #FFFFFF;
+      --color-slate: var(--rule);
+      --color-light-gray: var(--card-bg);
+      --color-medium-gray: var(--border);
+      --color-teal: #2B8C96;
+      --color-amber: #D4A843;
+      --color-coral: #C75450;
+      --color-indigo: #5B6FD4;
+      --color-light-green: #6FCF7C;
+      --font-heading: var(--serif), Georgia, serif;
+      --font-body: var(--sans);
+      --font-mono: 'JetBrains Mono', monospace;
+      --max-width: 1200px;
+      --max-text-width: 720px;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-slate);
+      background: var(--color-white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+    h1, h2 {
+      font-family: var(--font-heading);
+      color: var(--color-black);
+      line-height: 1.2;
+    }
+    h3, h4 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--color-black);
+      line-height: 1.3;
+    }
+    h1 { font-size: 2.5rem; font-weight: 700; }
+    h2 { font-size: 1.75rem; font-weight: 600; margin-top: var(--space-3xl); margin-bottom: var(--space-lg); }
+    h3 { font-size: 1.25rem; margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
+    h4 { font-size: 1rem; margin-top: var(--space-xl); margin-bottom: var(--space-sm); }
+
+    p { margin-bottom: var(--space-md); max-width: var(--max-text-width); }
+    strong { font-weight: 600; color: var(--color-black); }
+
+    a { color: var(--color-green); text-decoration: none; }
+    a:hover { color: var(--color-deep-green); text-decoration: underline; }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    .site-header {
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+      background: var(--color-white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-link { display: flex; align-items: center; gap: var(--space-sm); text-decoration: none; }
+    .logo-link img { height: 32px; }
+    .logo-link span {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-black);
+    }
+    .header-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-slate);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      padding: var(--space-3xl) 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+    }
+    .hero .overline {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-green);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-md);
+    }
+    .hero h1 { margin-bottom: var(--space-lg); max-width: 700px; }
+    .hero .subtitle {
+      font-size: 1.125rem;
+      color: var(--color-slate);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       TABLE OF CONTENTS
+       ============================================ */
+    .toc {
+      background: var(--color-light-gray);
+      padding: var(--space-2xl) 0;
+    }
+    .toc h2 { margin-top: 0; font-size: 1.25rem; }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-white);
+      border-radius: 2px;
+      border: 1px solid var(--color-medium-gray);
+      text-decoration: none;
+      color: var(--color-slate);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .toc-item:hover {
+      border-color: var(--color-green);
+      box-shadow: 0 2px 8px rgba(58,166,85,0.1);
+      text-decoration: none;
+    }
+    .toc-number {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-green);
+      flex-shrink: 0;
+    }
+    .toc-label { font-weight: 500; color: var(--color-black); }
+
+    /* ============================================
+       SECTIONS
+       ============================================ */
+    .section { padding: var(--space-3xl) 0; border-bottom: 1px solid var(--color-medium-gray); }
+    .section:last-of-type { border-bottom: none; }
+    .section-number {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 3rem;
+      color: var(--color-green);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+    }
+
+    /* ============================================
+       VISUAL COMPONENTS
+       ============================================ */
+
+    /* Insight callout box */
+    .insight-box {
+      border-left: 4px solid var(--color-green);
+      background: rgba(58, 166, 85, 0.06);
+      padding: var(--space-lg);
+      border-radius: 0 6px 6px 0;
+      margin: var(--space-xl) 0;
+    }
+    .insight-box p { margin-bottom: var(--space-sm); }
+    .insight-box p:last-child { margin-bottom: 0; }
+    .insight-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-green);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* Stat cards */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+    .stat-card {
+      background: var(--color-light-gray);
+      padding: var(--space-xl) var(--space-lg);
+      border-radius: 2px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--color-green);
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--color-slate);
+      font-weight: 500;
+    }
+
+    /* 2x2 Matrix */
+    .matrix-wrapper { margin: var(--space-xl) 0; max-width: 700px; }
+    .matrix-title {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-black);
+      margin-bottom: var(--space-md);
+    }
+    .matrix {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      gap: 2px;
+      background: var(--color-medium-gray);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .matrix-corner { background: var(--color-white); padding: var(--space-md); }
+    .matrix-col-header, .matrix-row-header {
+      background: var(--color-light-gray);
+      padding: var(--space-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--color-black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .matrix-cell {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      font-size: 0.875rem;
+      color: var(--color-slate);
+      line-height: 1.5;
+    }
+    .matrix-cell.highlight {
+      background: rgba(58, 166, 85, 0.06);
+      border: 2px solid var(--color-green);
+    }
+    .matrix-cell-title {
+      font-weight: 600;
+      color: var(--color-black);
+      margin-bottom: var(--space-xs);
+      font-size: 0.9rem;
+    }
+
+    /* Comparison table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-xl) 0;
+      font-size: 0.9rem;
+    }
+    .comparison-table th {
+      background: var(--color-light-gray);
+      padding: var(--space-md);
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-black);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid var(--color-medium-gray);
+    }
+    .comparison-table td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-medium-gray);
+      color: var(--color-slate);
+      vertical-align: top;
+    }
+    .comparison-table tr:nth-child(even) td { background: var(--color-light-gray); }
+    .comparison-table .check { color: var(--color-green); font-weight: 600; }
+    .comparison-table .caution { color: var(--color-amber); font-weight: 600; }
+    .comparison-table .cross { color: var(--color-coral); font-weight: 600; }
+
+    /* Nested diagram (Bonoma & Shapiro) */
+    .nested-diagram {
+      margin: var(--space-xl) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .nest-ring {
+      border: 2px solid;
+      border-radius: 2px;
+      padding: var(--space-lg) var(--space-xl);
+      text-align: center;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+    .nest-ring:nth-child(1) { border-color: var(--color-medium-gray); background: var(--color-light-gray); padding-bottom: var(--space-3xl); z-index: 1; }
+    .nest-ring:nth-child(2) { border-color: var(--color-medium-gray); background: rgba(43,140,150,0.05); margin-top: -24px; padding-bottom: var(--space-3xl); max-width: 520px; z-index: 2; }
+    .nest-ring:nth-child(3) { border-color: var(--color-medium-gray); background: rgba(91,111,212,0.05); margin-top: -24px; padding-bottom: var(--space-3xl); max-width: 440px; z-index: 3; }
+    .nest-ring:nth-child(4) { border-color: var(--color-medium-gray); background: rgba(212,168,67,0.05); margin-top: -24px; padding-bottom: var(--space-3xl); max-width: 360px; z-index: 4; }
+    .nest-ring:nth-child(5) { border-color: var(--color-green); background: rgba(58,166,85,0.08); margin-top: -24px; max-width: 280px; z-index: 5; }
+    .nest-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--color-black);
+      margin-bottom: var(--space-xs);
+    }
+    .nest-detail {
+      font-size: 0.78rem;
+      color: var(--color-slate);
+    }
+    .nest-tag {
+      position: absolute;
+      top: -10px;
+      left: var(--space-md);
+      background: var(--color-white);
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 3px;
+    }
+    .nest-ring:nth-child(1) .nest-tag { color: var(--color-slate); }
+    .nest-ring:nth-child(2) .nest-tag { color: var(--color-teal); }
+    .nest-ring:nth-child(3) .nest-tag { color: var(--color-indigo); }
+    .nest-ring:nth-child(4) .nest-tag { color: var(--color-amber); }
+    .nest-ring:nth-child(5) .nest-tag { color: var(--color-green); }
+
+    /* Process steps */
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+    .process-step {
+      display: flex;
+      gap: var(--space-lg);
+      align-items: flex-start;
+    }
+    .step-number {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      background: var(--color-green);
+      color: var(--color-white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-content h4 { margin-top: 0; margin-bottom: var(--space-xs); }
+    .step-content p { margin-bottom: 0; font-size: 0.95rem; }
+
+    /* Decision cards */
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+    .decision-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-medium-gray);
+      border-radius: 2px;
+      padding: var(--space-xl);
+      transition: border-color 0.2s;
+    }
+    .decision-card:hover { border-color: var(--color-green); }
+    .decision-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-md);
+    }
+    .decision-card h4 { margin-top: 0; margin-bottom: var(--space-sm); }
+    .decision-card p { font-size: 0.9rem; margin-bottom: var(--space-sm); }
+    .decision-card .method-tag {
+      display: inline-block;
+      background: var(--color-light-gray);
+      color: var(--color-slate);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: var(--space-xs);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Citation style */
+    .citation {
+      font-size: 0.85rem;
+      color: var(--color-slate);
+      font-style: italic;
+      margin-top: var(--space-sm);
+    }
+    .citation-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-lg) 0;
+    }
+    .citation-list li {
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+      font-size: 0.875rem;
+      color: var(--color-slate);
+      line-height: 1.5;
+    }
+    .citation-list li:last-child { border-bottom: none; }
+    .citation-list .cite-author { font-weight: 600; color: var(--color-black); }
+    .citation-list .cite-title { font-style: italic; }
+    .citation-list .cite-contribution {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 0.8rem;
+      color: var(--color-green);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* Accordion */
+    .accordion { margin: var(--space-xl) 0; }
+    .accordion-item {
+      border: 1px solid var(--color-medium-gray);
+      border-radius: 2px;
+      margin-bottom: var(--space-sm);
+      overflow: hidden;
+    }
+    .accordion-trigger {
+      width: 100%;
+      background: var(--color-white);
+      border: none;
+      padding: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-black);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .accordion-trigger:hover { background: var(--color-light-gray); }
+    .accordion-trigger .icon {
+      font-size: 1.25rem;
+      color: var(--color-green);
+      transition: transform 0.3s;
+      font-weight: 400;
+    }
+    .accordion-item.open .accordion-trigger .icon { transform: rotate(45deg); }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .accordion-item.open .accordion-content { max-height: 2000px; }
+    .accordion-inner {
+      padding: 0 var(--space-lg) var(--space-lg);
+      font-size: 0.95rem;
+    }
+
+    /* Horizontal bar charts */
+    .bar-chart { margin: var(--space-xl) 0; }
+    .bar-chart-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-black);
+      margin-bottom: var(--space-md);
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-sm);
+    }
+    .bar-label {
+      width: 160px;
+      min-width: 160px;
+      font-size: 0.85rem;
+      color: var(--color-slate);
+      text-align: right;
+    }
+    .bar-track {
+      flex: 1;
+      background: var(--color-light-gray);
+      border-radius: 2px;
+      height: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: var(--space-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-white);
+      transition: width 0.6s ease;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--color-light-gray);
+      padding: var(--space-2xl) 0;
+      margin-top: var(--space-3xl);
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .footer-brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--color-black);
+      font-size: 1rem;
+    }
+    .footer-note { font-size: 0.8rem; color: var(--color-slate); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.75rem; }
+      h2 { font-size: 1.4rem; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .decision-grid { grid-template-columns: 1fr; }
+      .comparison-table { font-size: 0.8rem; }
+      .comparison-table th, .comparison-table td { padding: var(--space-sm); }
+      .bar-label { width: 100px; min-width: 100px; font-size: 0.75rem; }
+      .matrix { font-size: 0.8rem; }
+      .nested-diagram { gap: 0; }
+      .nest-ring { padding: var(--space-md); }
+      .process-step { gap: var(--space-md); }
+    }
+
+    /* ============================================
+       PRINT
+       ============================================ */
+    @media print {
+      .site-header { position: relative; }
+      .toc { break-after: page; }
+      .section { break-inside: avoid; }
+      .accordion-content { max-height: none !important; }
+      body { font-size: 11pt; }
+      .bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .stat-card, .insight-box, .nest-ring { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo-link">
+        <img src="/images/logo-nav.svg" alt="BuyerVoice.AI" />
+        <span>BuyerVoice.AI</span>
+      </a>
+      <span class="header-label">Research Reference</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="overline">Methodology Reference</div>
+      <h1>Market segmentation frameworks</h1>
+      <p class="subtitle">A practitioner's guide to segmentation: what it is, when each approach works, and how to apply it to B2B interview research.</p>
+    </div>
+  </section>
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc">
+    <div class="container">
+      <h2>Contents</h2>
+      <div class="toc-grid">
+        <a href="#first-question" class="toc-item">
+          <span class="toc-number">01</span>
+          <span class="toc-label">The first question to ask</span>
+        </a>
+        <a href="#taxonomies" class="toc-item">
+          <span class="toc-number">02</span>
+          <span class="toc-label">Foundational taxonomies</span>
+        </a>
+        <a href="#methods" class="toc-item">
+          <span class="toc-number">03</span>
+          <span class="toc-label">Methods and approaches</span>
+        </a>
+        <a href="#b2b" class="toc-item">
+          <span class="toc-number">04</span>
+          <span class="toc-label">B2B segmentation</span>
+        </a>
+        <a href="#cortez-review" class="toc-item">
+          <span class="toc-number">05</span>
+          <span class="toc-label">The Cortez systematic review</span>
+        </a>
+        <a href="#small-samples" class="toc-item">
+          <span class="toc-number">06</span>
+          <span class="toc-label">Small sample segmentation</span>
+        </a>
+        <a href="#evaluation" class="toc-item">
+          <span class="toc-number">07</span>
+          <span class="toc-label">Evaluating segment quality</span>
+        </a>
+        <a href="#decision-framework" class="toc-item">
+          <span class="toc-number">08</span>
+          <span class="toc-label">Decision framework</span>
+        </a>
+        <a href="#references" class="toc-item">
+          <span class="toc-number">09</span>
+          <span class="toc-label">References</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SECTION 1: THE FIRST QUESTION -->
+  <section class="section" id="first-question">
+    <div class="container">
+      <div class="section-number">01</div>
+      <h2>The first question to ask</h2>
+      <p>Before choosing a segmentation method, ask: <strong>What decision will this segmentation inform?</strong> The method follows the question, not the other way around.</p>
+      <p>Wendell Smith introduced market segmentation in 1956, distinguishing it from product differentiation. Product differentiation bends demand to fit the product (one offering, many customers). Market segmentation bends the product to fit demand (different approaches matched to different buyer groups). Segmentation is a strategic commitment to treat different buyers differently because doing so is more profitable.</p>
+
+      <div class="decision-grid">
+        <div class="decision-card">
+          <div class="decision-card-icon">&#9881;</div>
+          <h4>Product decisions</h4>
+          <p>What should we build or improve?</p>
+          <p>Segment on <strong>needs and jobs-to-be-done</strong>.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-card-icon">&#36;</div>
+          <h4>Pricing decisions</h4>
+          <p>How much will different buyers pay?</p>
+          <p>Segment on <strong>willingness to pay and price sensitivity</strong>.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-card-icon">&#9993;</div>
+          <h4>Messaging decisions</h4>
+          <p>How should we position and communicate?</p>
+          <p>Segment on <strong>pain points and evaluation criteria</strong>.</p>
+        </div>
+        <div class="decision-card">
+          <div class="decision-card-icon">&#127919;</div>
+          <h4>Sales targeting</h4>
+          <p>Who should we prioritize?</p>
+          <p>Segment on <strong>firmographics and buying behavior</strong>.</p>
+        </div>
+      </div>
+
+      <div class="citation">Smith, W. R. (1956). Product differentiation and market segmentation as alternative marketing strategies. Journal of Marketing, 21(1), 3-8.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: TAXONOMIES -->
+  <section class="section" id="taxonomies">
+    <div class="container">
+      <div class="section-number">02</div>
+      <h2>Foundational taxonomies</h2>
+      <p>Three frameworks shape how researchers classify segmentation approaches. Understanding these helps you choose the right method for your situation.</p>
+
+      <h3>A priori vs. post hoc</h3>
+      <p><strong>A priori segmentation</strong> defines segments before analysis. The researcher selects the variables ("segment by company size" or "segment by seniority"). The number and type of segments are predetermined.</p>
+      <p><strong>Post hoc segmentation</strong> discovers segments from data through clustering or classification. Patterns reveal natural groupings that the researcher did not predetermine.</p>
+      <p>Wind (1978) established this distinction and argued that the choice of segmentation basis (what you segment on) is more consequential than the choice of statistical method.</p>
+      <div class="citation">Wind, Y. (1978). Issues and advances in segmentation research. Journal of Marketing Research, 15(3), 317-337.</div>
+
+      <h3>Observable vs. unobservable bases</h3>
+      <p>Wedel and Kamakura (2000) added a second dimension, creating the standard 2x2 framework:</p>
+
+      <div class="matrix-wrapper">
+        <div class="matrix-title">Wedel & Kamakura's segmentation classification</div>
+        <div class="matrix">
+          <div class="matrix-corner"></div>
+          <div class="matrix-col-header">Observable bases<br/><span style="font-weight:400;font-size:0.75rem">(demographics, behavior)</span></div>
+          <div class="matrix-col-header">Unobservable bases<br/><span style="font-weight:400;font-size:0.75rem">(attitudes, needs, values)</span></div>
+
+          <div class="matrix-row-header">A priori</div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-title">Cross-tabulation</div>
+            Segment by industry, company size, or role. Simple and common.
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-title">Predefined typologies</div>
+            Apply existing frameworks (e.g., psychographic profiles) to your data.
+          </div>
+
+          <div class="matrix-row-header">Post hoc</div>
+          <div class="matrix-cell">
+            <div class="matrix-cell-title">Behavioral clustering</div>
+            Cluster on purchase data, usage patterns, or engagement.
+          </div>
+          <div class="matrix-cell highlight">
+            <div class="matrix-cell-title">Latent class / needs-based</div>
+            Discover segments from attitudes, needs, and preferences. Most actionable.
+          </div>
+        </div>
+      </div>
+      <div class="citation">Wedel, M., & Kamakura, W. A. (2000). Market Segmentation: Conceptual and Methodological Foundations (2nd ed.). Kluwer Academic Publishers.</div>
+
+      <h3>Descriptive, predictive, and prescriptive</h3>
+      <p>Sausen et al. (2005) proposed a third distinction based on what the segmentation tells you:</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart-title">Segmentation types by strategic value</div>
+        <div class="bar-row">
+          <span class="bar-label">Descriptive</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:40%; background: var(--color-teal);">Who</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Predictive</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:70%; background: var(--color-indigo);">What they'll do</div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Prescriptive</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);">How to act</div>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>Descriptive</strong> answers "who is different?" (demographics, firmographics). <strong>Predictive</strong> answers "what will customers do?" (purchase likelihood, churn risk). <strong>Prescriptive</strong> answers "how should we treat each group?" (optimal offer, channel, message). Prescriptive is the most actionable but hardest to implement.</p>
+      <div class="citation">Sausen, K., Tomczak, T., & Herrmann, A. (2005). Development of a taxonomy of strategic market segmentation. Journal of Strategic Marketing, 13(3), 151-173.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: METHODS -->
+  <section class="section" id="methods">
+    <div class="container">
+      <div class="section-number">03</div>
+      <h2>Methods and approaches</h2>
+      <p>Each segmentation method has specific strengths, limitations, and data requirements. Here are the major ones, organized by their underlying logic.</p>
+
+      <div class="accordion">
+        <!-- Needs-based -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Needs-based / benefit segmentation</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Russell Haley (1968) argued that the benefits customers seek are the most meaningful basis for segmentation. Demographics describe who people are; benefits describe why they buy.</p>
+              <p>His classic toothpaste example: the market segmented by benefit sought (decay prevention, brightness, flavor, price) rather than demographics. Each benefit segment had distinct brand preferences, but the benefit was the causal driver.</p>
+              <p><strong>Jobs-to-be-done (JTBD)</strong> is the modern evolution. Christensen et al. (2005) argued that segmentation should be based on the "job" the customer is trying to accomplish, not customer attributes.</p>
+              <p><strong>When to use:</strong> Product development, messaging, or value proposition design. Produces the most strategically useful segments but requires effort to collect and link to observable identifiers.</p>
+              <div class="insight-box">
+                <div class="insight-label">Key insight</div>
+                <p>"The benefits which people are seeking in consuming a given product are the basic reasons for the existence of true market segments." (Haley, 1968)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Firmographic -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Firmographic segmentation (B2B demographics)</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>The B2B equivalent of demographic segmentation. Segments by industry, company size, location, technology stack, or growth stage.</p>
+              <p><strong>Advantages:</strong> Easy to implement. Data is publicly available or collected early in sales conversations. Every company can be assigned to a segment. Sales teams understand it intuitively.</p>
+              <p><strong>Limitations:</strong> Describes who companies are, not what they need. Two 500-person tech companies may have completely different challenges. Competitors can copy firmographic segmentation because the data is public.</p>
+              <p><strong>Best use:</strong> As a targeting overlay on top of needs-based segments. The question becomes: "Which firmographic traits predict membership in our most attractive needs-based segment?"</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cluster analysis -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Cluster analysis (k-means, hierarchical, two-step)</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>The most common statistical technique for post hoc segmentation.</p>
+              <p><strong>K-means</strong> (MacQueen, 1967) partitions observations into k clusters where each observation belongs to the cluster with the nearest mean. Requires pre-specifying k. Sensitive to initial seed placement. Works best with continuous, roughly spherical data.</p>
+              <p><strong>Hierarchical / Ward's method</strong> (Ward, 1963) builds a tree (dendrogram) of nested cluster solutions. Does not require pre-specifying k. Useful for exploring possible structures, but computationally expensive.</p>
+              <p><strong>Two-step approach</strong> (Punj & Stewart, 1983): Use hierarchical clustering to determine the number of clusters, then apply k-means. This is the recommended best practice.</p>
+              <div class="insight-box">
+                <div class="insight-label">Caution</div>
+                <p>Punj & Stewart warned that clustering results are highly sensitive to the choice of distance metric, algorithm, and variable scaling. Always run multiple methods and compare. Never treat cluster output as "truth" without validation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LCA -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Latent class analysis (LCA) / mixture models</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>Magidson & Vermunt (2002) argued that LCA is superior to k-means for segmentation because it:</p>
+              <ol style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate);">
+                <li>Provides fit statistics (BIC, AIC) for selecting number of segments</li>
+                <li>Handles categorical, ordinal, and continuous variables simultaneously</li>
+                <li>Gives probabilistic segment membership (not a hard yes/no assignment)</li>
+                <li>Does not assume spherical clusters or equal variance</li>
+              </ol>
+              <p>Nylund et al. (2007) found that BIC was the best criterion for selecting the correct number of latent classes. With small samples (under 500), LCA can overfit or underfit, so interpret cautiously.</p>
+              <p><strong>When to use:</strong> Mixed variable types, formal model selection criteria needed, or when probabilistic membership is more realistic than hard assignment.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Factor-cluster -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Factor-cluster approach (and why to be cautious)</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p>A common practice: collect survey data, run factor analysis to reduce dimensions, then cluster on factor scores.</p>
+              <p><strong>Dolnicar & Grun (2009) challenged this approach</strong> through simulation and found that:</p>
+              <ul style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate);">
+                <li>Factor analysis distorts distances between data points, degrading subsequent clustering</li>
+                <li>The factor-cluster approach frequently fails to recover known segment structures</li>
+                <li>Direct clustering on raw variables often produces better results</li>
+              </ul>
+              <p><strong>Takeaway:</strong> If you have a manageable number of variables (under 15-20), cluster directly on the raw data rather than reducing with factor analysis first.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RFM -->
+        <div class="accordion-item">
+          <button class="accordion-trigger">
+            <span>Behavioral / RFM segmentation</span>
+            <span class="icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p><strong>RFM</strong> (Recency, Frequency, Monetary) segmentation (Hughes, 1994) scores customers on how recently they purchased, how often, and how much. Customers are scored in quintiles, creating segments from "5-5-5" (best) to "1-1-1" (least engaged).</p>
+              <p>Simple, actionable, and requires only transactional data. Recency is highly predictive of future behavior. Fader et al. (2005) extended RFM by connecting it to Customer Lifetime Value modeling.</p>
+              <p><strong>Limitation:</strong> Purely behavioral. Does not capture needs, attitudes, or motivations. Most relevant for direct marketing and retention, less so for interview-based research.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Methods at a glance</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Data type</th>
+            <th>Pre-specified?</th>
+            <th>Probabilistic?</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A priori rules</strong></td>
+            <td>Any</td>
+            <td><span class="check">Yes</span></td>
+            <td><span class="cross">No</span></td>
+            <td>Simple, known segments</td>
+          </tr>
+          <tr>
+            <td><strong>K-means</strong></td>
+            <td>Continuous</td>
+            <td><span class="caution">k is</span></td>
+            <td><span class="cross">No</span></td>
+            <td>Large datasets, continuous variables</td>
+          </tr>
+          <tr>
+            <td><strong>Hierarchical</strong></td>
+            <td>Continuous</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="cross">No</span></td>
+            <td>Exploratory, small-medium datasets</td>
+          </tr>
+          <tr>
+            <td><strong>Latent class</strong></td>
+            <td>Categorical / Mixed</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="check">Yes</span></td>
+            <td>Survey data, mixed variable types</td>
+          </tr>
+          <tr>
+            <td><strong>Mixture models</strong></td>
+            <td>Continuous</td>
+            <td><span class="cross">No</span></td>
+            <td><span class="check">Yes</span></td>
+            <td>Segmentation + response modeling</td>
+          </tr>
+          <tr>
+            <td><strong>RFM</strong></td>
+            <td>Transactional</td>
+            <td><span class="check">Yes</span></td>
+            <td><span class="cross">No</span></td>
+            <td>Direct marketing, retention</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4: B2B SEGMENTATION -->
+  <section class="section" id="b2b">
+    <div class="container">
+      <div class="section-number">04</div>
+      <h2>B2B segmentation</h2>
+      <p>B2B markets have unique characteristics that shape how segmentation works: fewer buyers, longer sales cycles, buying committees instead of individual consumers, and publicly available company data.</p>
+
+      <h3>Bonoma & Shapiro's nested approach</h3>
+      <p>The most influential B2B segmentation framework, published in Harvard Business Review in 1984. It proposes five levels, moving from outer (easy to observe, cheap to collect) to inner (harder to assess, more differentiating).</p>
+
+      <div class="nested-diagram">
+        <div class="nest-ring">
+          <span class="nest-tag">Easiest to observe</span>
+          <div class="nest-label">1. Firmographics</div>
+          <div class="nest-detail">Industry, company size, location</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Level 2</span>
+          <div class="nest-label">2. Operating variables</div>
+          <div class="nest-detail">Technology used, user status, capabilities</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Level 3</span>
+          <div class="nest-label">3. Purchasing approaches</div>
+          <div class="nest-detail">Buying center, policies, evaluation criteria</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Level 4</span>
+          <div class="nest-label">4. Situational factors</div>
+          <div class="nest-detail">Urgency, application, order size</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Most differentiating</span>
+          <div class="nest-label">5. Personal characteristics</div>
+          <div class="nest-detail">Risk attitude, loyalty, buyer values</div>
+        </div>
+      </div>
+
+      <p>The principle: start with the outer nest and only move inward when outer levels fail to differentiate. Each inner layer requires more data collection effort but provides more precise segmentation.</p>
+      <div class="citation">Bonoma, T. V., & Shapiro, B. P. (1984). How to segment industrial markets. Harvard Business Review, 62(3), 104-110.</div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">3-4</div>
+          <div class="stat-label">Typical number of B2B segments (vs. 10+ in consumer markets)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Levels in the nested approach (outer to inner)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">88</div>
+          <div class="stat-label">Papers reviewed in Cortez et al.'s 2021 systematic review</div>
+        </div>
+      </div>
+
+      <h3>The identifiability problem</h3>
+      <p>The central challenge: the most strategically useful segments (needs-based) are the hardest to identify in practice. Yankelovich & Meer (2006) argued that effective segmentation must pass three tests:</p>
+      <ol style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li>Does it reflect actual customer behavior and motivations?</li>
+        <li>Can we identify segment members in the real world?</li>
+        <li>Does it suggest a differentiated strategy for each segment?</li>
+      </ol>
+
+      <div class="insight-box">
+        <div class="insight-label">The "killer question" bridge</div>
+        <p>After identifying needs-based segments, find 1-3 simple, observable questions that predict segment membership. In B2B, these are often company size, hiring volume, technology maturity, or industry vertical. If a sales rep can determine segment membership in the first five minutes of a discovery call, the segmentation is operationally viable.</p>
+      </div>
+
+      <h3>Needs-based vs. firmographic: the trade-off</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>Firmographic</th>
+            <th>Needs-based</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Data availability</strong></td>
+            <td><span class="check">High</span> (public data)</td>
+            <td><span class="caution">Low</span> (requires research)</td>
+          </tr>
+          <tr>
+            <td><strong>Implementation ease</strong></td>
+            <td><span class="check">Easy</span></td>
+            <td><span class="caution">Hard</span></td>
+          </tr>
+          <tr>
+            <td><strong>Strategic differentiation</strong></td>
+            <td><span class="caution">Low</span> (competitors can copy)</td>
+            <td><span class="check">High</span> (unique insight)</td>
+          </tr>
+          <tr>
+            <td><strong>Actionability</strong></td>
+            <td><span class="check">High</span> (directly targetable)</td>
+            <td><span class="caution">Medium</span> (needs overlay)</td>
+          </tr>
+          <tr>
+            <td><strong>Explanatory power</strong></td>
+            <td><span class="caution">Low to medium</span></td>
+            <td><span class="check">High</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Best practice:</strong> Combine both. Use needs-based segmentation as the foundation, then identify firmographic proxies that predict segment membership. The result is strategically meaningful and practically targetable.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CORTEZ SYSTEMATIC REVIEW -->
+  <section class="section" id="cortez-review">
+    <div class="container">
+      <div class="section-number">05</div>
+      <h2>The Cortez systematic review</h2>
+      <p>In 2021, Roberto Cortez, Ann Clarke, and Per Vagn Freytag published the most comprehensive review of B2B segmentation research to date. Their systematic review of 88 papers spanning 34 years (1986-2019) reveals both how far the field has come and how much remains unresolved.</p>
+
+      <div class="citation">Cortez, R. M., Clarke, A. H., & Freytag, P. V. (2021). B2B market segmentation: A systematic review and research agenda. Journal of Business Research, 126, 415-428.</div>
+
+      <h3>What they reviewed</h3>
+      <p>The authors screened 836 articles across 17 journals (including top-tier outlets like the Journal of Marketing, Journal of Marketing Research, and Marketing Science, plus B2B-specialized journals like Industrial Marketing Management). Two experienced researchers independently scored each article, achieving 0.85 inter-rater reliability. Three researchers then coded every paper in the final set of 88.</p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">836</div>
+          <div class="stat-label">Articles initially screened across 17 journals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">88</div>
+          <div class="stat-label">Papers included in the final systematic review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">67%</div>
+          <div class="stat-label">Of papers had no theoretical foundation at all</div>
+        </div>
+      </div>
+
+      <h3>The state of B2B segmentation research</h3>
+      <p>Their findings paint a sobering picture. After three decades of research, the field still lacks comprehensive guidelines for developing robust B2B market segments. Academic interest is declining (publications dropped from 30 papers in 1986-96 to 25 in 2008-19). Nearly half of all papers came from a single journal (Industrial Marketing Management). Only 17% appeared in top-tier marketing journals.</p>
+
+      <p>Most concerning: 67% of the papers reviewed had no theoretical foundation. The research is overwhelmingly quantitative (52%) and heavily fragmented. Researchers keep studying pieces of the segmentation puzzle without assembling the full picture.</p>
+
+      <h3>The four-phase process</h3>
+      <p>The paper's central contribution is an integrative framework that treats segmentation as a continuous, four-phase process rather than a one-time analytical exercise.</p>
+
+      <div class="nested-diagram">
+        <div class="nest-ring">
+          <span class="nest-tag">Phase 1</span>
+          <div class="nest-label">Pre-segmentation</div>
+          <div class="nest-detail">Define your market boundaries and clarify why you are segmenting</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Phase 2</span>
+          <div class="nest-label">Segmentation</div>
+          <div class="nest-detail">Choose variables, select a model, and identify target segments</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Phase 3</span>
+          <div class="nest-label">Implementation</div>
+          <div class="nest-detail">Secure leadership, adjust the marketing mix, reorganize teams</div>
+        </div>
+        <div class="nest-ring">
+          <span class="nest-tag">Phase 4</span>
+          <div class="nest-label">Evaluation</div>
+          <div class="nest-detail">Measure impact on satisfaction, sales performance, and financials</div>
+        </div>
+      </div>
+
+      <p>Evaluation feeds back into the next cycle. Segmentation is never "done." Firms that have not resegmented in 10-20 years risk staying in unprofitable markets, losing differentiated positions, or targeting segments that lack growth potential.</p>
+
+      <h4>Phase 1: Pre-segmentation</h4>
+      <p>This phase is almost entirely absent from the literature, yet the authors argue it is foundational. Two questions must be answered before any analysis begins:</p>
+      <ol style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>What is the market?</strong> Few papers even define what market they are segmenting. Three views exist: demand-side (customer-centric, may span industries), supply-side (capabilities and competition), and technology-based (useful for firms developing new technologies). The authors recommend a customer-focused definition while considering upstream, competitor, and environmental factors.</li>
+        <li><strong>Why are you segmenting?</strong> Different purposes (marketing strategy, identifying target segments, managing future customer value, improving sales performance) have different ramifications and vary in implementation difficulty. The purpose shapes every downstream decision.</li>
+      </ol>
+
+      <div class="insight-box">
+        <div class="insight-label">BuyerVoice.AI implication</div>
+        <p>This validates something we already do in client engagements: starting with "what decision will this segmentation inform?" before choosing methods. Pre-segmentation is where most internal segmentation efforts fail because teams jump straight to analysis without aligning on market definition or purpose.</p>
+      </div>
+
+      <h4>Phase 2: Segmentation</h4>
+      <p>Three activities within this phase:</p>
+
+      <p><strong>Identifying variables.</strong> The review traces a clear evolution over decades:</p>
+      <ul style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>Macro-variables</strong> dominated the 1980s-90s: firm size, industry type, SIC codes, geography, application. Easy to observe, low cost. Industry/vertical segmentation remains the leading approach in practice today.</li>
+        <li><strong>Micro-variables</strong> gained momentum in the late 1990s: purchase responsibilities, buying behavior, price sensitivity, psychographics. Harder to acquire, requiring surveys or interviews.</li>
+        <li><strong>Newer variables</strong> now appearing: customer needs, relationship quality, branding importance, digital behavior, collaboration intentions, future value potential.</li>
+      </ul>
+      <p>A critical gap: while academic research has shifted toward micro-segmentation, there is no evidence that B2B firms have actually followed. Most companies still segment primarily on firmographics.</p>
+
+      <p><strong>Choosing a model.</strong> Five model categories appear in the literature:</p>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Model type</th>
+            <th>Approach</th>
+            <th>Usage in B2B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Network analysis</strong></td>
+            <td>Qualitative; maps value co-creation across network actors</td>
+            <td>Emerging</td>
+          </tr>
+          <tr>
+            <td><strong>Matrix analysis</strong></td>
+            <td>Predefined variables in 2x2 classifications</td>
+            <td>Common in practice</td>
+          </tr>
+          <tr>
+            <td><strong>Cluster analysis</strong></td>
+            <td>Hierarchical or K-means grouping</td>
+            <td>Most common in research</td>
+          </tr>
+          <tr>
+            <td><strong>Latent class analysis</strong></td>
+            <td>Regression-based; identifies unobservable clusters</td>
+            <td>Underused (requires econometric skill)</td>
+          </tr>
+          <tr>
+            <td><strong>Optimization procedures</strong></td>
+            <td>Includes profitability alongside needs/behavior</td>
+            <td>Growing but criticized</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The authors note that latent class analysis outperforms most cluster analysis approaches but remains underused in B2B because it requires advanced statistical expertise.</p>
+
+      <p><strong>Selecting target markets.</strong> The authors stress the importance of a formal <strong>segment attractiveness metric</strong> to avoid the temptation of total market coverage. Common selection criteria include: ability to reach buyers, competitive positioning, market size, compatibility with firm objectives, profitability, and expected growth.</p>
+
+      <h4>Phase 3: Implementation</h4>
+      <p>This is where segmentation most commonly fails. Three activities are required:</p>
+      <ol style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>Leadership and resources.</strong> Senior management involvement is critical. Managers often have limited experience with segmentation, and inadequate leadership leads to failure. Allocating real resources signals the organization takes the effort seriously.</li>
+        <li><strong>Marketing mix adjustment.</strong> Converting analytical results into actionable plans provokes resistance because it requires time, effort, and knowledge. Changes must minimize disruption to existing sales and distribution.</li>
+        <li><strong>Reorganization.</strong> Firms must often restructure: creating key account teams, deploying cross-functional groups, adapting the sales force, rearranging distribution channels. Managers perceive these changes as threats to their positions and power. Firms tend to hold onto old structures (product, territory, or industry units) even when new segments demand different organizational forms.</li>
+      </ol>
+
+      <div class="insight-box">
+        <div class="insight-label">BuyerVoice.AI implication</div>
+        <p>When we deliver segmentation in client reports, the segments are only as valuable as the client's ability to implement them. This research reinforces why our reports should include concrete implementation guidance: which teams need to change, what the marketing mix looks like per segment, and what "killer questions" let sales reps quickly identify segment membership in discovery calls.</p>
+      </div>
+
+      <h4>Phase 4: Evaluation</h4>
+      <p>Three outcome categories should be measured:</p>
+      <ul style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>Customer satisfaction:</strong> Segmenting by actual customer needs should improve satisfaction, especially when focused on end-users.</li>
+        <li><strong>Sales force performance:</strong> Initial evidence shows segmentation is significantly related to sales behavior, CRM effectiveness, and outcome performance.</li>
+        <li><strong>Financial performance:</strong> Profitability is the most common measure, but the link between segmentation and financial performance remains empirically unclear. Many studies create a tautological problem by using financial metrics as both segmentation variables and outcome measures.</li>
+      </ul>
+      <p>Evaluation feeds back into the next segmentation cycle, reinforcing the continuous nature of the process.</p>
+
+      <h3>Context factors that shape segmentation</h3>
+      <p>The framework identifies four contextual factors that influence the entire process:</p>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number" style="font-size: 1.4rem;">Geographical scope</div>
+          <div class="stat-label">Local vs. international. International segmentation tends to be more transactional and often neglects customer needs.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size: 1.4rem;">Market coverage</div>
+          <div class="stat-label">Horizontal (across industries) vs. vertical (niche within one industry). Each demands different segmentation depth.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size: 1.4rem;">Type of offering</div>
+          <div class="stat-label">Goods vs. services vs. solutions. Services increase complexity; solutions require relationship-based segmentation.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" style="font-size: 1.4rem;">Offering status</div>
+          <div class="stat-label">New vs. existing. New offerings require a constructive, exploratory approach shaped by early-user interactions.</div>
+        </div>
+      </div>
+
+      <h3>Why this matters for practitioners</h3>
+      <p>The review's most important takeaways for anyone doing B2B segmentation in practice:</p>
+      <ol style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>Segmentation is a process, not a project.</strong> Treat it as continuous. Markets change; segments that made sense three years ago may no longer reflect reality.</li>
+        <li><strong>Start with pre-segmentation.</strong> Define your market and your purpose before choosing variables or methods. Skipping this step is the most common source of wasted effort.</li>
+        <li><strong>The gap between research and practice is real.</strong> Academics recommend micro-variables and latent class analysis. Most firms still use industry and company size. Neither side is entirely right. The best approach combines macro-variables for targeting with micro-variables for strategic differentiation.</li>
+        <li><strong>Implementation eats strategy.</strong> The most elegant analytical segmentation is worthless if the organization cannot act on it. Plan for leadership buy-in, resource allocation, and team restructuring from the start.</li>
+        <li><strong>Develop a segment attractiveness metric.</strong> Without one, firms default to total market coverage, which dilutes resources and undermines the entire point of segmenting.</li>
+        <li><strong>Build an identifiability bridge.</strong> Needs-based segments are strategically powerful but operationally useless unless you can identify members through observable traits that sales teams can spot quickly.</li>
+      </ol>
+
+      <div class="citation">Based on the systematic review in Cortez, R. M., Clarke, A. H., & Freytag, P. V. (2021). B2B market segmentation: A systematic review and research agenda. Journal of Business Research, 126, 415-428.</div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: SMALL SAMPLES -->
+  <section class="section" id="small-samples">
+    <div class="container">
+      <div class="section-number">06</div>
+      <h2>Segmentation from interview data</h2>
+      <p>When working with interview samples of 15 to 100 participants, the approach shifts from statistical clustering to qualitative typology building. Here is what the literature says about validity at these sample sizes.</p>
+
+      <h3>What the research supports</h3>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-number">9-17</div>
+          <div class="stat-label">Interviews for code saturation in homogeneous populations (Hennink & Kaiser, 2022)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">20-40</div>
+          <div class="stat-label">Interviews for saturation in heterogeneous samples</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2-4</div>
+          <div class="stat-label">Credible segments from 50-100 qualitative interviews</div>
+        </div>
+      </div>
+
+      <p>Malterud et al. (2016) introduced the concept of <strong>information power</strong>: the more relevant information each participant holds, the fewer participants you need. Five factors determine required sample size: study aim breadth, sample specificity, use of established theory, quality of dialogue, and analysis strategy.</p>
+
+      <h3>What you can claim (and what you can't)</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Sample size</th>
+            <th>Feasible</th>
+            <th>Positioning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>15-25 interviews</strong></td>
+            <td>2-3 qualitative typologies</td>
+            <td>Exploratory, hypothesis-generating</td>
+          </tr>
+          <tr>
+            <td><strong>25-50 interviews</strong></td>
+            <td>2-4 qualitative segments</td>
+            <td>Directional, sufficient for initial strategy</td>
+          </tr>
+          <tr>
+            <td><strong>50-100 interviews</strong></td>
+            <td>3-4 segments with reasonable confidence</td>
+            <td>Strong qualitative evidence</td>
+          </tr>
+          <tr>
+            <td><strong>100-300 surveys</strong></td>
+            <td>Basic cluster analysis or LCA</td>
+            <td>Pilot quantitative segmentation</td>
+          </tr>
+          <tr>
+            <td><strong>300+ surveys</strong></td>
+            <td>Full LCA, mixture models</td>
+            <td>Statistically robust</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>With interview samples, you <strong>cannot</strong> claim statistical generalizability, precise segment sizes, or confidence intervals. You <strong>can</strong> claim: "Our interviews revealed distinct patterns of needs and behaviors suggesting X segments that warrant further quantitative validation."</p>
+
+      <h3>The qualitative segmentation process</h3>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Code interviews thematically</h4>
+            <p>Use thematic analysis (Braun & Clarke, 2006): familiarization, initial coding, generating themes, reviewing, defining, and naming themes.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Identify recurring patterns</h4>
+            <p>Look for clusters of participants who share similar needs, behaviors, attitudes, and pain points across multiple dimensions.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Group and characterize</h4>
+            <p>Define 2-4 segments, each with a descriptive label, primary needs, tool preferences, spending patterns, and firmographic profile.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Build the identifiability bridge</h4>
+            <p>Map observable traits (company size, industry, role) that correlate with each segment. These become the "killer questions" for sales teams.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h4>Validate by differentiation</h4>
+            <p>Check: do the segments respond differently to key questions (tool preference, willingness to pay, frustrations)? If two segments look the same on outcomes, they are not meaningfully different.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: EVALUATION -->
+  <section class="section" id="evaluation">
+    <div class="container">
+      <div class="section-number">07</div>
+      <h2>Evaluating segment quality</h2>
+      <p>Not all segmentation solutions are useful. Here are the established frameworks for evaluating whether your segments are worth acting on.</p>
+
+      <h3>Kotler's five criteria</h3>
+      <p>The textbook standard from Marketing Management (Kotler & Keller, 2016):</p>
+
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">Measurable</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);"></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Substantial</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);"></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Accessible</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);"></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Differentiable</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);"></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Actionable</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%; background: var(--color-green);"></div>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>Measurable:</strong> Segment size and characteristics can be measured. <strong>Substantial:</strong> Large and profitable enough to serve. <strong>Accessible:</strong> Can be reached through marketing channels. <strong>Differentiable:</strong> Segments respond differently to different marketing strategies. <strong>Actionable:</strong> Programs can be designed to serve each segment.</p>
+
+      <h3>Extended criteria</h3>
+      <p>Wedel & Kamakura (2000) added three more:</p>
+      <ul style="margin: var(--space-md) 0; padding-left: var(--space-xl); color: var(--color-slate); line-height: 1.8;">
+        <li><strong>Stability:</strong> Segments should hold up over time, not shift quarter to quarter.</li>
+        <li><strong>Responsiveness:</strong> Segments should respond differently to marketing actions (the predictive validity test).</li>
+        <li><strong>Parsimony:</strong> Fewer segments are preferable when explanatory power is similar.</li>
+      </ul>
+
+      <h3>Dolnicar's validation framework</h3>
+      <p>The most rigorous modern approach (Dolnicar et al., 2018):</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Internal validity</h4>
+            <p>Do segments make structural sense? Separation between clusters, compactness within them.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Stability</h4>
+            <p>Do segments replicate across bootstrap samples? If not, they may be statistical artifacts.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>External validity</h4>
+            <p>Do segments differ on variables NOT used to create them? If needs-based segments also show demographic differences, confidence increases.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Predictive validity</h4>
+            <p>Do segments predict meaningful outcomes (purchase behavior, brand choice, willingness to pay)?</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h4>Managerial usefulness</h4>
+            <p>Can the organization identify members, reach them, and design programs for them?</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Why implementations fail</h3>
+      <p>Dibb (1998) identified four common failure modes:</p>
+      <div class="decision-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+        <div class="decision-card">
+          <h4>Infrastructure barriers</h4>
+          <p>IT systems cannot support segment-level decisions or reporting.</p>
+        </div>
+        <div class="decision-card">
+          <h4>Organizational barriers</h4>
+          <p>Departments cannot agree on segment definitions.</p>
+        </div>
+        <div class="decision-card">
+          <h4>Implementation barriers</h4>
+          <p>Segments are created but never acted upon. The most common failure.</p>
+        </div>
+        <div class="decision-card">
+          <h4>Process barriers</h4>
+          <p>Segmentation is treated as a one-time project rather than an ongoing capability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: DECISION FRAMEWORK -->
+  <section class="section" id="decision-framework">
+    <div class="container">
+      <div class="section-number">08</div>
+      <h2>Decision framework</h2>
+      <p>Use these guides to match your situation to the right segmentation approach.</p>
+
+      <h3>By business question</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Segment on</th>
+            <th>Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>"Who should we target?"</strong></td>
+            <td>Firmographics + needs</td>
+            <td>Nested approach (Bonoma & Shapiro)</td>
+          </tr>
+          <tr>
+            <td><strong>"What should we build?"</strong></td>
+            <td>Needs / jobs-to-be-done</td>
+            <td>Benefit segmentation (Haley)</td>
+          </tr>
+          <tr>
+            <td><strong>"How should we message?"</strong></td>
+            <td>Pain points + evaluation criteria</td>
+            <td>Needs-based with persona overlay</td>
+          </tr>
+          <tr>
+            <td><strong>"How should we price?"</strong></td>
+            <td>Willingness to pay + value perception</td>
+            <td>WTP-based clustering</td>
+          </tr>
+          <tr>
+            <td><strong>"Which customers are most valuable?"</strong></td>
+            <td>Behavioral + spend</td>
+            <td>RFM or CLV-based segmentation</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>By data available</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Data available</th>
+            <th>Recommended approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Interview transcripts only</strong></td>
+            <td>Thematic analysis into qualitative typologies</td>
+          </tr>
+          <tr>
+            <td><strong>Survey data (Likert, ratings)</strong></td>
+            <td>Latent class analysis or k-means clustering</td>
+          </tr>
+          <tr>
+            <td><strong>Transactional / behavioral data</strong></td>
+            <td>RFM analysis or behavioral clustering</td>
+          </tr>
+          <tr>
+            <td><strong>Mixed (interviews + structured)</strong></td>
+            <td>Qualitative typologies validated against structured variables</td>
+          </tr>
+          <tr>
+            <td><strong>Large dataset (1,000+)</strong></td>
+            <td>LCA, mixture models, or ML approaches</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight-box">
+        <div class="insight-label">The bottom line</div>
+        <p><strong>For interview-based B2B research (the typical BuyerVoice.AI engagement):</strong> Start by coding themes, look for natural groupings in needs and behaviors, define 2-4 segments, then map them to observable firmographic traits that sales and marketing teams can use. Position segments as directional buyer profiles backed by qualitative evidence, not statistically proven market structures.</p>
+        <p>The most useful segmentation is the one that gets implemented. A simple, identifiable 3-segment model that sales teams actually use beats a sophisticated 7-segment model that sits in a slide deck.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: REFERENCES -->
+  <section class="section" id="references">
+    <div class="container">
+      <div class="section-number">09</div>
+      <h2>References</h2>
+      <p>All sources cited on this page, organized by contribution area.</p>
+
+      <h3>Foundational works</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Smith, W. R.</span> (1956). <span class="cite-title">Product differentiation and market segmentation as alternative marketing strategies.</span> Journal of Marketing, 21(1), 3-8.
+          <span class="cite-contribution">Introduced market segmentation as a formal concept.</span>
+        </li>
+        <li>
+          <span class="cite-author">Haley, R. I.</span> (1968). <span class="cite-title">Benefit segmentation: A decision-oriented research tool.</span> Journal of Marketing, 32(3), 30-36.
+          <span class="cite-contribution">Established that benefits sought are the most meaningful segmentation basis.</span>
+        </li>
+        <li>
+          <span class="cite-author">Wind, Y.</span> (1978). <span class="cite-title">Issues and advances in segmentation research.</span> Journal of Marketing Research, 15(3), 317-337.
+          <span class="cite-contribution">Foundational taxonomy: a priori vs. post hoc segmentation.</span>
+        </li>
+      </ul>
+
+      <h3>Methodological references</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Ward, J. H.</span> (1963). <span class="cite-title">Hierarchical grouping to optimize an objective function.</span> Journal of the American Statistical Association, 58(301), 236-244.
+          <span class="cite-contribution">Foundation for hierarchical clustering.</span>
+        </li>
+        <li>
+          <span class="cite-author">MacQueen, J.</span> (1967). <span class="cite-title">Some methods for classification and analysis of multivariate observations.</span> Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability, 1, 281-297.
+          <span class="cite-contribution">K-means clustering method.</span>
+        </li>
+        <li>
+          <span class="cite-author">Punj, G., & Stewart, D. W.</span> (1983). <span class="cite-title">Cluster analysis in marketing research: Review and suggestions for application.</span> Journal of Marketing Research, 20(2), 134-148.
+          <span class="cite-contribution">Recommended running multiple methods and validating solutions.</span>
+        </li>
+        <li>
+          <span class="cite-author">Wedel, M., & Kamakura, W. A.</span> (2000). <span class="cite-title">Market Segmentation: Conceptual and Methodological Foundations</span> (2nd ed.). Kluwer Academic Publishers.
+          <span class="cite-contribution">Standard graduate-level reference. Observable vs. unobservable bases taxonomy.</span>
+        </li>
+        <li>
+          <span class="cite-author">Magidson, J., & Vermunt, J. K.</span> (2002). <span class="cite-title">Latent class models for clustering: A comparison with k-means.</span> Canadian Journal of Marketing Research, 20(1), 37-44.
+          <span class="cite-contribution">Made the case for LCA over k-means in segmentation.</span>
+        </li>
+        <li>
+          <span class="cite-author">Nylund, K. L., Asparouhov, T., & Muthen, B. O.</span> (2007). <span class="cite-title">Deciding on the number of classes in latent class analysis.</span> Structural Equation Modeling, 14(4), 535-569.
+          <span class="cite-contribution">BIC as best criterion for selecting number of latent classes.</span>
+        </li>
+        <li>
+          <span class="cite-author">Dolnicar, S., & Grun, B.</span> (2009). <span class="cite-title">Challenging "factor-cluster segmentation."</span> Journal of Travel Research, 47(1), 63-71.
+          <span class="cite-contribution">Demonstrated that the factor-cluster approach frequently fails.</span>
+        </li>
+        <li>
+          <span class="cite-author">Dolnicar, S., Grun, B., & Leisch, F.</span> (2018). <span class="cite-title">Market Segmentation Analysis: Understanding It, Doing It, and Making It Useful.</span> Springer (Open Access).
+          <span class="cite-contribution">Most comprehensive modern methodological guide. Bootstrap stability validation.</span>
+        </li>
+      </ul>
+
+      <h3>B2B segmentation</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Wind, Y., & Cardozo, R. N.</span> (1974). <span class="cite-title">Industrial market segmentation.</span> Industrial Marketing Management, 3(3), 153-165.
+          <span class="cite-contribution">First formal two-stage model for industrial segmentation.</span>
+        </li>
+        <li>
+          <span class="cite-author">Bonoma, T. V., & Shapiro, B. P.</span> (1984). <span class="cite-title">How to segment industrial markets.</span> Harvard Business Review, 62(3), 104-110.
+          <span class="cite-contribution">The nested approach: five levels from firmographics to personal characteristics.</span>
+        </li>
+        <li>
+          <span class="cite-author">Cortez, R. M., Clarke, A. H., & Freytag, P. V.</span> (2021). <span class="cite-title">B2B market segmentation: A systematic review and research agenda.</span> Journal of Business Research, 126, 415-428.
+          <span class="cite-contribution">Reviewed 88 papers; proposed four-phase segmentation process.</span>
+        </li>
+      </ul>
+
+      <h3>Practitioner frameworks</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Christensen, C. M., Cook, S., & Hall, T.</span> (2005). <span class="cite-title">Marketing malpractice: The cause and the cure.</span> Harvard Business Review, 83(12), 74-83.
+          <span class="cite-contribution">Jobs-to-be-done as alternative to demographic segmentation.</span>
+        </li>
+        <li>
+          <span class="cite-author">Sausen, K., Tomczak, T., & Herrmann, A.</span> (2005). <span class="cite-title">Development of a taxonomy of strategic market segmentation.</span> Journal of Strategic Marketing, 13(3), 151-173.
+          <span class="cite-contribution">Descriptive vs. predictive vs. prescriptive segmentation.</span>
+        </li>
+        <li>
+          <span class="cite-author">Yankelovich, D., & Meer, D.</span> (2006). <span class="cite-title">Rediscovering market segmentation.</span> Harvard Business Review, 84(2), 122-131.
+          <span class="cite-contribution">Most segmentation fails because it segments on demographics instead of behaviors.</span>
+        </li>
+        <li>
+          <span class="cite-author">Dibb, S.</span> (1998). <span class="cite-title">Market segmentation: Strategies for success.</span> Marketing Intelligence & Planning, 16(7), 394-406.
+          <span class="cite-contribution">Four failure modes in segmentation implementation.</span>
+        </li>
+      </ul>
+
+      <h3>Segment evaluation</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Kotler, P., & Keller, K. L.</span> (2016). <span class="cite-title">Marketing Management</span> (15th ed.). Pearson.
+          <span class="cite-contribution">Five criteria: measurable, substantial, accessible, differentiable, actionable.</span>
+        </li>
+      </ul>
+
+      <h3>Qualitative methods and sample size</h3>
+      <ul class="citation-list">
+        <li>
+          <span class="cite-author">Braun, V., & Clarke, V.</span> (2006). <span class="cite-title">Using thematic analysis in psychology.</span> Qualitative Research in Psychology, 3(2), 77-101.
+          <span class="cite-contribution">Six-step thematic analysis process.</span>
+        </li>
+        <li>
+          <span class="cite-author">Malterud, K., Siersma, V. D., & Guassora, A. D.</span> (2016). <span class="cite-title">Sample size in qualitative interview studies: Guided by information power.</span> Qualitative Health Research, 26(13), 1753-1760.
+          <span class="cite-contribution">Information power concept for determining adequate sample size.</span>
+        </li>
+        <li>
+          <span class="cite-author">Hennink, M., & Kaiser, B. N.</span> (2022). <span class="cite-title">Sample sizes for saturation in qualitative research: A systematic review.</span> Social Science & Medicine, 292, 114523.
+          <span class="cite-contribution">Code saturation achievable in 9-17 interviews for homogeneous populations.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">BuyerVoice.AI.ai</div>
+        <div class="footer-note">Market segmentation methodology reference. Sources verified as of April 2026.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ACCORDION SCRIPT -->
+  <script>
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

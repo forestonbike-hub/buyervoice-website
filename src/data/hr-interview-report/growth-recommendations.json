@@ -1,0 +1,567 @@
+{
+  "awareness_gap": {
+    "non_user_count": 82,
+    "non_user_aware": 81,
+    "non_user_unaware": 1,
+    "gap_pct": 1.2,
+    "competitor_comparison": {
+      "BambooHR": {
+        "awareness_pct": 98.8
+      },
+      "Workday": {
+        "awareness_pct": 96.7
+      },
+      "Greenhouse": {
+        "awareness_pct": 87.3
+      }
+    }
+  },
+  "cep_gaps": [
+    {
+      "cep": "Lack of analytics/reporting",
+      "cep_code": "lack_of_analytics",
+      "frequency": 21,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 6.2,
+      "greenhouse_pct": 18.8,
+      "no_brand_pct": 56.2,
+      "gap_vs_competitors": 18.8,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Acquisition/merger integration",
+      "cep_code": "acquisition_merger",
+      "frequency": 18,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 18.8,
+      "no_brand_pct": 75.0,
+      "gap_vs_competitors": 18.8,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Backfilling departures/turnover",
+      "cep_code": "backfill_departures",
+      "frequency": 50,
+      "bamboohr_pct": 2.3,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 2.3,
+      "no_brand_pct": 95.5,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Slow time-to-hire / losing to speed",
+      "cep_code": "slow_time_to_hire",
+      "frequency": 30,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Seasonal hiring surge",
+      "cep_code": "seasonal_hiring",
+      "frequency": 25,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Department/team expansion",
+      "cep_code": "department_expansion",
+      "frequency": 25,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "New location/office opening",
+      "cep_code": "new_location_opening",
+      "frequency": 24,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "High turnover / revolving door",
+      "cep_code": "high_turnover_cycle",
+      "frequency": 22,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Sourcing difficulty",
+      "cep_code": "sourcing_difficulty",
+      "frequency": 21,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Recruiting process overhaul",
+      "cep_code": "process_overhaul",
+      "frequency": 15,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Post-funding hiring push",
+      "cep_code": "post_funding_hiring",
+      "frequency": 13,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Hiring manager responsiveness",
+      "cep_code": "hiring_manager_responsiveness",
+      "frequency": 13,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Interview scheduling coordination",
+      "cep_code": "interview_scheduling",
+      "frequency": 12,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 91.7,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Candidate drop-off/ghosting",
+      "cep_code": "candidate_dropoff",
+      "frequency": 11,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "DEI/diversity hiring initiative",
+      "cep_code": "dei_diversity_hiring",
+      "frequency": 10,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Resume screening overload",
+      "cep_code": "resume_screening_overload",
+      "frequency": 8,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Communication gaps with hiring managers",
+      "cep_code": "communication_gaps",
+      "frequency": 7,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Offer approval bottleneck",
+      "cep_code": "offer_approval_bottleneck",
+      "frequency": 6,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "No-shows (interviews or day one)",
+      "cep_code": "no_shows",
+      "frequency": 4,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Candidate quality issues",
+      "cep_code": "candidate_quality",
+      "frequency": 4,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Agency dependency and cost",
+      "cep_code": "agency_dependency",
+      "frequency": 2,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Competitor disruption creating opportunity",
+      "cep_code": "competitor_disruption",
+      "frequency": 1,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Poor candidate experience",
+      "cep_code": "poor_candidate_experience",
+      "frequency": 1,
+      "bamboohr_pct": 0.0,
+      "workday_pct": 0.0,
+      "greenhouse_pct": 0.0,
+      "no_brand_pct": 100.0,
+      "gap_vs_competitors": 0.0,
+      "opportunity_type": "open_territory"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "frequency": 70,
+      "bamboohr_pct": 31.0,
+      "workday_pct": 10.3,
+      "greenhouse_pct": 6.9,
+      "no_brand_pct": 53.4,
+      "gap_vs_competitors": -20.7,
+      "opportunity_type": "open_territory"
+    }
+  ],
+  "messaging_quotes": [
+    {
+      "cep": "Backfilling departures/turnover",
+      "cep_code": "backfill_departures",
+      "quote": "We had a bit of a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving and fixing comp bands.",
+      "respondent_id": 1,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "High turnover / revolving door",
+      "cep_code": "high_turnover_cycle",
+      "quote": "We had a bit of a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving and fixing comp bands.",
+      "respondent_id": 1,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "Yeah, we closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast.",
+      "respondent_id": 1,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Post-funding hiring push",
+      "cep_code": "post_funding_hiring",
+      "quote": "Yeah, we closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast.",
+      "respondent_id": 1,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "I'd say it's like an eight out of ten on the frustration scale.",
+      "respondent_id": 1,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Candidate drop-off/ghosting",
+      "cep_code": "candidate_dropoff",
+      "quote": "The biggest frustration is candidate drop-off.",
+      "respondent_id": 1,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Seasonal hiring surge",
+      "cep_code": "seasonal_hiring",
+      "quote": "Honestly, it's been all about preparing for the spring seasonal ramp-up.",
+      "respondent_id": 2,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Recruiting process overhaul",
+      "cep_code": "process_overhaul",
+      "quote": "Our VP wanted to standardize everything.",
+      "respondent_id": 2,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "Each store needs about 30 people.",
+      "respondent_id": 2,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Seasonal hiring surge",
+      "cep_code": "seasonal_hiring",
+      "quote": "So on top of the seasonal hiring, we're also trying to staff three brand new locations.",
+      "respondent_id": 2,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "New location/office opening",
+      "cep_code": "new_location_opening",
+      "quote": "Yeah, so we're opening three new stores in the next quarter, which is exciting but also, you know, a lot of work from a hiring perspective.",
+      "respondent_id": 2,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "No-shows (interviews or day one)",
+      "cep_code": "no_shows",
+      "quote": "No-shows.",
+      "respondent_id": 2,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "DEI/diversity hiring initiative",
+      "cep_code": "dei_diversity_hiring",
+      "quote": "First, building out our DEI hiring programs, which is an ongoing priority but we've been putting more muscle behind it lately.",
+      "respondent_id": 3,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Recruiting process overhaul",
+      "cep_code": "process_overhaul",
+      "quote": "And second, we've been rebuilding our onboarding program from scratch because we shifted to a hybrid model last year and the old onboarding didn't work for remote hires.",
+      "respondent_id": 3,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Acquisition/merger integration",
+      "cep_code": "acquisition_merger",
+      "quote": "We have an in-house talent acquisition team, six people.",
+      "respondent_id": 3,
+      "source_question": "Q2.1"
+    },
+    {
+      "cep": "Slow time-to-hire / losing to speed",
+      "cep_code": "slow_time_to_hire",
+      "quote": "Losing candidates to competing offers because we moved too slowly.",
+      "respondent_id": 3,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "I'd say the sales hiring push is new in terms of the volume, but sales hiring itself is always part of what we do.",
+      "respondent_id": 4,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Department/team expansion",
+      "cep_code": "department_expansion",
+      "quote": "The past two months we've been heavily focused on hiring for the sales team.",
+      "respondent_id": 4,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "So the company is trying to capitalize on that by, you know, ramping up sales fast.",
+      "respondent_id": 4,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Post-funding hiring push",
+      "cep_code": "post_funding_hiring",
+      "quote": "So the company is trying to capitalize on that by, you know, ramping up sales fast.",
+      "respondent_id": 4,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Acquisition/merger integration",
+      "cep_code": "acquisition_merger",
+      "quote": "Um, yeah, so our biggest competitor got acquired, which has created this window where their customers are nervous and looking around.",
+      "respondent_id": 4,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Competitor disruption creating opportunity",
+      "cep_code": "competitor_disruption",
+      "quote": "Um, yeah, so our biggest competitor got acquired, which has created this window where their customers are nervous and looking around.",
+      "respondent_id": 4,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "I'd put it at like a seven or eight on the frustration scale.",
+      "respondent_id": 4,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Slow time-to-hire / losing to speed",
+      "cep_code": "slow_time_to_hire",
+      "quote": "And it directly impacts our time-to-fill because the candidate is sitting there waiting.",
+      "respondent_id": 4,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Hiring manager responsiveness",
+      "cep_code": "hiring_manager_responsiveness",
+      "quote": "Hiring manager responsiveness. Getting them to review resumes, schedule interviews, submit feedback. It's like pulling teeth sometimes.",
+      "respondent_id": 4,
+      "source_question": "Q2.6"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "The biggest priority has been this massive engineering hiring push.",
+      "respondent_id": 5,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Department/team expansion",
+      "cep_code": "department_expansion",
+      "quote": "The biggest priority has been this massive engineering hiring push.",
+      "respondent_id": 5,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Slow time-to-hire / losing to speed",
+      "cep_code": "slow_time_to_hire",
+      "quote": "And then the third thing, which is more of an ongoing thing, is just trying to reduce our time-to-fill because it's been creeping up.",
+      "respondent_id": 5,
+      "source_question": "Q1.3"
+    },
+    {
+      "cep": "Rapid headcount growth",
+      "cep_code": "rapid_headcount_growth",
+      "quote": "And that's cascaded directly into my world because now everyone wants their headcount filled yesterday.",
+      "respondent_id": 5,
+      "source_question": "Q1.4"
+    },
+    {
+      "cep": "Backfilling departures/turnover",
+      "cep_code": "backfill_departures",
+      "quote": "So we've been trying to backfill those roles while also managing this crazy req load.",
+      "respondent_id": 5,
+      "source_question": "Q1.4"
+    }
+  ],
+  "brand_consistency": {
+    "BambooHR": {
+      "non_user_top_themes": [
+        "HRIS / HR management focused",
+        "Small/mid-market fit",
+        "Good ATS / recruiting features",
+        "Limited features / basic",
+        "Ease of use / simplicity"
+      ],
+      "user_top_themes": [
+        "HRIS / HR management focused",
+        "Ease of use / simplicity",
+        "Limited features / basic",
+        "Affordable / good value",
+        "Powerful / comprehensive / feature-rich"
+      ],
+      "overlap": [
+        "Ease of use / simplicity",
+        "Limited features / basic",
+        "HRIS / HR management focused"
+      ],
+      "consistency_score": 42.9
+    },
+    "Workday": {
+      "non_user_top_themes": [
+        "Enterprise / large company",
+        "Powerful / comprehensive / feature-rich",
+        "HRIS / HR management focused",
+        "Complex / clunky / hard to use",
+        "Expensive / high cost"
+      ],
+      "user_top_themes": [
+        "HRIS / HR management focused",
+        "Powerful / comprehensive / feature-rich",
+        "Enterprise / large company",
+        "Complex / clunky / hard to use",
+        "Ease of use / simplicity"
+      ],
+      "overlap": [
+        "Powerful / comprehensive / feature-rich",
+        "Enterprise / large company",
+        "HRIS / HR management focused",
+        "Complex / clunky / hard to use"
+      ],
+      "consistency_score": 66.7
+    },
+    "Greenhouse": {
+      "non_user_top_themes": [
+        "Structured / process-oriented",
+        "Tech company standard / gold standard",
+        "Small/mid-market fit",
+        "Data-driven / strong analytics",
+        "Good ATS / recruiting features"
+      ],
+      "user_top_themes": [
+        "Structured / process-oriented",
+        "Data-driven / strong analytics",
+        "Good integrations",
+        "Tech company standard / gold standard",
+        "Small/mid-market fit"
+      ],
+      "overlap": [
+        "Data-driven / strong analytics",
+        "Structured / process-oriented",
+        "Tech company standard / gold standard",
+        "Small/mid-market fit"
+      ],
+      "consistency_score": 66.7
+    }
+  }
+}

@@ -1,0 +1,851 @@
+---
+// Executive Summary - BambooHR Recruiting Software
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Executive Summary | BambooHR Recruiting Software</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: var(--ink);
+      --deep-green: var(--ink);
+      --dark: var(--ink);
+      --light-bg: var(--card-bg);
+      --medium-gray: var(--border);
+      --white: #FFFFFF;
+      --bamboo: var(--ink);
+      --workday: #3B82F6;
+      --greenhouse: #F59E0B;
+      --max-width: 1200px;
+      --font-heading: var(--serif), Georgia, serif;
+      --font-body: var(--sans), -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--medium-gray);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--dark);
+      background: var(--light-bg);
+    }
+
+    .nav-links a.active {
+      color: var(--deep-green);
+      border-bottom: 2px solid var(--green);
+      border-radius: 2px 6px 0 0;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--white) !important;
+      background: var(--green);
+      padding: 8px 16px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover { background: var(--deep-green); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--medium-gray);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 12px; font-size: 0.875rem; }
+      .nav-cta-mobile {
+        display: inline-flex;
+        margin-top: 8px;
+      }
+      .nav-cta-desktop { display: none; }
+    }
+
+    @media (min-width: 769px) {
+      .nav-cta-mobile { display: none; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #f0faf3 0%, var(--light-bg) 50%, #f0f4ff 100%);
+      padding: 80px 24px 64px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--deep-green);
+      background: rgba(58, 166, 85, 0.12);
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero h2 {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .hero .meta {
+      font-size: 0.875rem;
+      color: #888;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 1.75rem; }
+      .hero h2 { font-size: 1rem; }
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 40px;
+      max-width: 640px;
+    }
+
+    /* ===== CALLOUT CARDS ===== */
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+
+    .callout-card {
+      background: var(--white);
+      border: 1px solid var(--medium-gray);
+      border-radius: 2px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .callout-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    .callout-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .callout-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--dark);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .callout-detail {
+      font-size: 0.8125rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      .callout-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .callout-card { padding: 20px 16px; }
+      .callout-number { font-size: 2rem; }
+    }
+
+    /* ===== RECOMMENDATION SECTION ===== */
+    .rec-section {
+      margin-bottom: 48px;
+      padding-top: 48px;
+      border-top: 1px solid var(--medium-gray);
+    }
+    .rec-section-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .rec-section-desc {
+      font-size: 0.9375rem;
+      color: #666;
+      margin-bottom: 24px;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+    .rec-stat-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .rec-stat-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+    .rec-stat-text {
+      font-size: 0.9375rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .perception-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 640px) {
+      .perception-row { grid-template-columns: 1fr; }
+    }
+    .perception-box {
+      border: 1px solid var(--medium-gray);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .perception-box-num {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .perception-box-num.red { color: #EF4444; }
+    .perception-box-num.green { color: var(--green); }
+    .perception-box-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .perception-box p {
+      font-size: 0.8125rem;
+      color: #555;
+      line-height: 1.5;
+    }
+    .rec-callout {
+      background: var(--light-bg);
+      border: 1px solid var(--medium-gray);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .rec-callout-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .rec-callout p {
+      font-size: 0.875rem;
+      color: #333;
+      line-height: 1.5;
+    }
+    .compare-note {
+      font-size: 0.8125rem;
+      color: #666;
+      padding-left: 12px;
+      border-left: 2px solid var(--medium-gray);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* ===== CEP LIST ===== */
+    .cep-list {
+      list-style: none;
+      counter-reset: cep;
+    }
+    .cep-item {
+      counter-increment: cep;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .cep-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .cep-item-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .cep-item-rank {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--green);
+      min-width: 24px;
+    }
+    .cep-item-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .cep-item-pct {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-left: auto;
+    }
+    .cep-item-quotes {
+      padding-left: 34px;
+    }
+    .cep-item-quote {
+      border-left: 3px solid var(--green);
+      padding: 8px 12px;
+      background: var(--light-bg);
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 8px;
+    }
+    .cep-item-quote p {
+      font-size: 0.8125rem;
+      font-style: italic;
+      color: #444;
+      line-height: 1.5;
+    }
+    .cep-item-quote cite {
+      display: block;
+      font-size: 0.75rem;
+      font-style: normal;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    /* ===== NAV CARDS ===== */
+    .nav-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+
+    .nav-card {
+      display: block;
+      text-decoration: none;
+      color: var(--dark);
+      background: var(--light-bg);
+      border: 1px solid var(--medium-gray);
+      border-radius: 2px;
+      padding: 28px 24px;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .nav-card:hover {
+      border-color: var(--green);
+      box-shadow: 0 8px 24px rgba(58, 166, 85, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-card-number {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .nav-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .nav-card p {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .nav-card-arrow {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    /* ===== METHODOLOGY ===== */
+    .methodology {
+      background: var(--light-bg);
+      border-radius: 16px;
+      padding: 48px;
+    }
+
+    .methodology h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+    }
+
+    .method-item h3 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--deep-green);
+      margin-bottom: 8px;
+    }
+
+    .method-item p {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .method-note {
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: var(--white);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.8125rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .methodology { padding: 32px 20px; }
+      .method-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      padding: 40px 24px;
+      margin-top: 64px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .footer-method {
+      font-size: 0.8125rem;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/internal/hr-interview-report/" class="nav-logo">BuyerVoice.AI</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/internal/hr-interview-report/" class="active">Executive Summary</a></li>
+        <li><a href="/internal/hr-interview-report/sample">Sample</a></li>
+        <li><a href="/internal/hr-interview-report/mental-availability">Mental Availability</a></li>
+        <li><a href="/internal/hr-interview-report/category-entry-points">CEPs</a></li>
+        <li><a href="/internal/hr-interview-report/supporting-context">Supporting Data</a></li>
+        <li><a href="/internal/hr-interview-report/themes-evidence">Themes &amp; Evidence</a></li>
+        <li class="nav-cta-mobile"><a href="/internal/hr-interview-report/full-report" class="nav-cta">Download PDF</a></li>
+      </ul>
+      <a href="/internal/hr-interview-report/full-report" class="nav-cta nav-cta-desktop">Download PDF</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>BambooHR Recruiting Software</h1>
+      <h2>Mental Availability, Category Entry Points, and Growth Recommendations</h2>
+      <p class="meta">Based on 100 HR Leader Interviews | March 2026</p>
+    </div>
+  </section>
+
+  <!-- KEY FINDINGS -->
+  <section class="section">
+    <h2 class="section-title">Key Findings at a Glance</h2>
+
+    <div class="callout-grid">
+      <div class="callout-card">
+        <div class="callout-number">70%</div>
+        <div class="callout-label">Top Trigger: Rapid Headcount Growth</div>
+        <div class="callout-detail">The most common situation prompting HR leaders to evaluate recruiting tools.</div>
+      </div>
+      <div class="callout-card">
+        <div class="callout-number">Open</div>
+        <div class="callout-label">Most CEPs Are Unclaimed</div>
+        <div class="callout-detail">Category Entry Points have no dominant brand linked, creating opportunity to build fresh associations.</div>
+      </div>
+      <div class="callout-card">
+        <div class="callout-number">99%</div>
+        <div class="callout-label">Aided Awareness</div>
+        <div class="callout-detail">Nearly universal recognition, but most HR leaders associate BambooHR with HRIS, not ATS.</div>
+      </div>
+      <div class="callout-card">
+        <div class="callout-number">90%</div>
+        <div class="callout-label">Non-User Perception: "HRIS Company"</div>
+        <div class="callout-detail">Among non-users, 74 out of 82 associate BambooHR primarily with HRIS, not recruiting.</div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDATIONS SUMMARY -->
+    <div class="rec-section">
+      <h2 class="rec-section-title">Recommendations</h2>
+
+      <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600; color: var(--dark); margin-bottom: 12px;">Awareness Is Not the Barrier. Perception Is.</h3>
+
+      <div class="rec-stat-row">
+        <div class="rec-stat-number">99%</div>
+        <div class="rec-stat-text">Non-user awareness is near-universal. The growth barrier is not that people don't know BambooHR. The barrier is what they think it <strong>is</strong>.</div>
+      </div>
+
+      <div class="perception-row">
+        <div class="perception-box">
+          <div class="perception-box-num red">90%</div>
+          <div class="perception-box-label">Non-User Associations</div>
+          <p>90% of non-users (74 of 82) associate BambooHR with "HRIS / HR management." The dominant perception centers on core HR, not recruiting.</p>
+        </div>
+        <div class="perception-box">
+          <div class="perception-box-num green">29%</div>
+          <div class="perception-box-label">Recruiting/ATS Mentions</div>
+          <p>Only 29% of non-users (24 of 82) associate BambooHR with recruiting or ATS capabilities.</p>
+        </div>
+      </div>
+
+      <div class="rec-callout">
+        <div class="rec-callout-label">Recommendation</div>
+        <p>BambooHR should consider repositioning as a recruiting solution, not just confirm the existing HRIS perception.</p>
+      </div>
+
+      <p class="compare-note">For comparison: Greenhouse has 87% awareness but is strongly linked to "structured recruiting" and "tech company standard."</p>
+    </div>
+
+    <!-- DEPICT THE BUYING SITUATIONS -->
+    <div class="rec-section">
+      <h2 class="rec-section-title">Depict the Buying Situations</h2>
+      <p class="rec-section-desc">Marketing creative should depict the buying situations (CEPs) that HR leaders experience, with strong BambooHR branding. These five CEPs have the highest frequency among the 100 HR leaders interviewed.</p>
+
+      <ul class="cep-list">
+        <li class="cep-item">
+          <div class="cep-item-header">
+            <span class="cep-item-rank">1</span>
+            <span class="cep-item-name">Rapid Headcount Growth</span>
+            <span class="cep-item-pct">70%</span>
+          </div>
+          <div class="cep-item-quotes">
+            <div class="cep-item-quote">
+              <p>"We closed a Series C in January, so there's been a lot of pressure to scale the engineering team fast."</p>
+              <cite>HR Director, 400-person SaaS company</cite>
+            </div>
+            <div class="cep-item-quote">
+              <p>"We went from 150 to 400 people in 18 months. The old process just couldn't keep up."</p>
+              <cite>VP People, 400-person tech company</cite>
+            </div>
+          </div>
+        </li>
+        <li class="cep-item">
+          <div class="cep-item-header">
+            <span class="cep-item-rank">2</span>
+            <span class="cep-item-name">Backfilling Departures</span>
+            <span class="cep-item-pct">50%</span>
+          </div>
+          <div class="cep-item-quotes">
+            <div class="cep-item-quote">
+              <p>"We had a turnover spike in Q4, so the past couple months have been about figuring out why people were leaving."</p>
+              <cite>VP People Operations, 600-person company</cite>
+            </div>
+            <div class="cep-item-quote">
+              <p>"Losing three senior engineers in a month meant we had to scramble to backfill before projects stalled."</p>
+              <cite>Director of Talent, 350-person company</cite>
+            </div>
+          </div>
+        </li>
+        <li class="cep-item">
+          <div class="cep-item-header">
+            <span class="cep-item-rank">3</span>
+            <span class="cep-item-name">Slow Time-to-Hire</span>
+            <span class="cep-item-pct">30%</span>
+          </div>
+          <div class="cep-item-quotes">
+            <div class="cep-item-quote">
+              <p>"Losing candidates to competing offers because we moved too slowly."</p>
+              <cite>Talent Acquisition Manager, 350-person company</cite>
+            </div>
+            <div class="cep-item-quote">
+              <p>"The biggest frustration is candidate drop-off. We'll get someone through two rounds and then they ghost us."</p>
+              <cite>Head of Recruiting, 500-person company</cite>
+            </div>
+          </div>
+        </li>
+        <li class="cep-item">
+          <div class="cep-item-header">
+            <span class="cep-item-rank">4</span>
+            <span class="cep-item-name">Seasonal Hiring Surge</span>
+            <span class="cep-item-pct">25%</span>
+          </div>
+          <div class="cep-item-quotes">
+            <div class="cep-item-quote">
+              <p>"Every January we ramp up for the season. It's the same scramble every year, and we never feel ready."</p>
+              <cite>Director of HR, 800-person hospitality company</cite>
+            </div>
+            <div class="cep-item-quote">
+              <p>"We need 200 seasonal hires and two months to do it. The pressure is constant from October through January."</p>
+              <cite>HR Manager, 500-person retail company</cite>
+            </div>
+          </div>
+        </li>
+        <li class="cep-item">
+          <div class="cep-item-header">
+            <span class="cep-item-rank">5</span>
+            <span class="cep-item-name">Department/Team Expansion</span>
+            <span class="cep-item-pct">25%</span>
+          </div>
+          <div class="cep-item-quotes">
+            <div class="cep-item-quote">
+              <p>"We stood up an entirely new customer success function. Went from zero to 15 people in about six weeks."</p>
+              <cite>VP People, 300-person SaaS company</cite>
+            </div>
+            <div class="cep-item-quote">
+              <p>"Building out the data team from scratch meant hiring five specialized roles we'd never recruited for before."</p>
+              <cite>Head of HR, 450-person company</cite>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SECTION NAV CARDS -->
+    <h2 class="section-title">Explore the Full Report</h2>
+
+    <div class="nav-cards">
+      <a class="nav-card" href="/internal/hr-interview-report/sample">
+        <div class="nav-card-number">01</div>
+        <h3>Sample Description</h3>
+        <p>Who we interviewed: 100 HR leaders segmented by seniority, industry, company size, and BambooHR usage.</p>
+        <span class="nav-card-arrow">View section &#8594;</span>
+      </a>
+      <a class="nav-card" href="/internal/hr-interview-report/mental-availability">
+        <div class="nav-card-number">02</div>
+        <h3>Mental Availability Scorecard</h3>
+        <p>How BambooHR stacks up on brand salience, awareness, and associations versus competitors.</p>
+        <span class="nav-card-arrow">View section &#8594;</span>
+      </a>
+      <a class="nav-card" href="/internal/hr-interview-report/category-entry-points">
+        <div class="nav-card-number">03</div>
+        <h3>Category Entry Points</h3>
+        <p>The buying situations and triggers that matter most, and which brands HR leaders link to each.</p>
+        <span class="nav-card-arrow">View section &#8594;</span>
+      </a>
+      <a class="nav-card" href="/internal/hr-interview-report/supporting-context">
+        <div class="nav-card-number">04</div>
+        <h3>Supporting Data</h3>
+        <p>Verbatim quotes, detailed tables, and supplementary analysis behind each finding.</p>
+        <span class="nav-card-arrow">View section &#8594;</span>
+      </a>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <div class="methodology">
+      <h2>Methodology</h2>
+      <div class="method-grid">
+        <div class="method-item">
+          <h3>Research Method (RMB)</h3>
+          <p>We used the Reach-Match-Build method to assess BambooHR's mental availability. This involves mapping the Category Entry Points (situations that trigger evaluation), measuring which brands come to mind in each, and identifying opportunities to build new associations.</p>
+        </div>
+        <div class="method-item">
+          <h3>Two-Pass Qualitative Coding</h3>
+          <p>All 100 interviews were analyzed using a structured two-pass coding process. The first pass identified themes and associations. The second pass validated codes, resolved ambiguities, and ensured consistent categorization across the full dataset.</p>
+        </div>
+        <div class="method-item">
+          <h3>Buyer/Non-Buyer Segmentation</h3>
+          <p>Every metric in this report is segmented by BambooHR users (n=18) and non-users (n=82). Non-users represent the growth audience. This distinction surfaces where brand perception gaps are largest and where investment will have the greatest impact.</p>
+        </div>
+      </div>
+      <div class="method-note">
+        <strong>Note on CEP-brand linkage:</strong> Brand associations with Category Entry Points are inferred from interview responses, not measured through direct linkage questions. Results should be treated as directional indicators, not precise share-of-mind metrics.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Prepared by BuyerVoice.AI &copy; 2026</div>
+      <div class="footer-note">Analysis based on 100 HR leader interviews, March 2026</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

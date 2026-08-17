@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <rect width="320" height="80" fill="#003366"/>
+  <text x="160" y="33" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="1">MARKETING</text>
+  <text x="160" y="56" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="1">SCIENCE</text>
+  <text x="160" y="72" font-family="Arial, sans-serif" font-size="9" fill="#99bbdd" text-anchor="middle" letter-spacing="2">INFORMS</text>
+</svg>

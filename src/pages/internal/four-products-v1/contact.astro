@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../../layouts/FourProductsBaseLayout.astro';
+import ContactForm from '../../../components/four-products/ContactForm.astro';
+
+const breadcrumbs = [{ label: 'Contact' }];
+---
+
+<BaseLayout
+  title="Contact us"
+  description="Have a research question? Get in touch with KwantumLabs. We typically respond within one business day."
+  breadcrumbs={breadcrumbs}
+>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="contact-form-col">
+        <h1>Get in touch</h1>
+        <p class="contact-intro">Tell us about your research need and we'll get back to you with an approach.</p>
+        <ContactForm />
+      </div>
+
+      <div class="contact-context">
+        <div class="context-card">
+          <h3>What happens next</h3>
+          <p>We typically respond within one business day. If your project is a fit, we'll schedule a 30-minute discovery call to understand your research needs and recommend an approach.</p>
+        </div>
+
+        <div class="context-card">
+          <h3>You'll work directly with our researchers</h3>
+          <p>Not a junior account manager. Our PhD researchers are involved from the first conversation through final delivery.</p>
+          <div class="mini-team">
+            <img src="/images/team/rogier.jpg" alt="Rogier" width="40" height="40" loading="lazy" />
+            <img src="/images/team/marco.jpg" alt="Marco" width="40" height="40" loading="lazy" />
+            <img src="/images/team/forest.jpg" alt="Forest" width="40" height="40" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="context-card">
+          <h3>Prefer email?</h3>
+          <p>Reach us directly at <a href="mailto:contact@kwantumlabs.ai">contact@kwantumlabs.ai</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+  }
+
+  h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact-intro {
+    font-size: 17px;
+    color: var(--color-slate);
+    margin-bottom: var(--space-xl);
+  }
+
+  .context-card {
+    padding: var(--space-lg);
+    background: var(--color-light-gray);
+    border-radius: var(--radius);
+    margin-bottom: var(--space-md);
+  }
+
+  .context-card h3 {
+    font-size: 17px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .context-card p {
+    font-size: 15px;
+    color: var(--color-slate);
+    margin: 0;
+    max-width: none;
+  }
+
+  .mini-team {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .mini-team img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-white);
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

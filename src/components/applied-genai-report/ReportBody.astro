@@ -1,0 +1,1218 @@
+---
+// ReportBody.astro — Applied Generative AI Course Concept, findings report body.
+// Shared between the internal (/internal/applied-genai-report/) and public
+// (/applied-genai-report/) pages so both stay in sync. Reproduces the
+// hr-report visual vocabulary (stat cards, INSIGHT/VULN/OPP callouts,
+// raw-% inline bar charts, crosstabs, 2x2 freq x intensity scatter,
+// recommendation tables, click-to-view-quotes drilldown) scoped under
+// the .genai-report wrapper class.
+import stats from '../../data/applied-genai-report/report-stats.json';
+import vx from '../../data/applied-genai-report/verbatim-exemplars.json';
+
+const m = stats.meta;
+const ceil = (v: number) => Math.ceil(v);
+
+// Embed the drilldown payload for the client-side modal handler.
+const vxScript =
+  '<' + 'script>window.__VX=' +
+  JSON.stringify(vx).replace(/<\//g, '<\\/') +
+  ';<' + '/script>';
+
+// ---- inline bar chart helper data ----
+type Row = {
+  code: string; n: number; pct: number; pos: number; neg: number;
+  pos_pct: number; pos_share_raisers: number;
+  hot_n: number; warm_n: number; cold_n: number;
+  hot_pct: number; warm_pct: number;
+  hot_vs_warm_p: number | null; hot_vs_warm_sig: boolean;
+  source_questions: string[];
+};
+
+// 2x2 freq x intensity scatter (inline SVG). Points filtered to the
+// meaningfully-frequent codes so the plot stays legible.
+function median(nums: number[]): number {
+  const s = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+}
+type Pt = { label: string; freq_pct: number; mean_bws: number; n: number };
+function buildScatter(points: Pt[], minFreq: number) {
+  const pts = points.filter((p) => p.freq_pct >= minFreq);
+  const W = 720, H = 430;
+  const padL = 66, padR = 188, padT = 28, padB = 56;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const xMin = 0, xMax = 100;
+  const ys = pts.map((p) => p.mean_bws);
+  const yMin = Math.min(-0.6, ...ys) - 0.05;
+  const yMax = Math.max(0.6, ...ys) + 0.05;
+  const xOf = (v: number) => padL + ((v - xMin) / (xMax - xMin)) * plotW;
+  const yOf = (v: number) => padT + (1 - (v - yMin) / (yMax - yMin)) * plotH;
+  const xMed = median(pts.map((p) => p.freq_pct));
+  const yMed = median(pts.map((p) => p.mean_bws));
+  // Axis scales: numeric ticks along both axes.
+  const xTicks = [0, 20, 40, 60, 80, 100];
+  const yStep = 0.25;
+  const yTicks: number[] = [];
+  for (let v = Math.ceil(yMin / yStep) * yStep; v <= yMax + 1e-9; v += yStep) {
+    yTicks.push(Math.round(v * 100) / 100);
+  }
+  const fmtY = (v: number) => (v > 0 ? '+' + v : '' + v);
+  // Label layout: all labels sit to the right of their point (using the
+  // reserved right gutter). A single vertical de-collision pass nudges
+  // labels apart so text never overlaps.
+  const labels = pts
+    .map((p) => ({ label: p.label, cx: xOf(p.freq_pct), cy: yOf(p.mean_bws), lx: xOf(p.freq_pct) + 10, ly: yOf(p.mean_bws) + 3 }))
+    .sort((a, b) => a.ly - b.ly);
+  const GAP = 15;
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].ly - labels[i - 1].ly < GAP) labels[i].ly = labels[i - 1].ly + GAP;
+  }
+  return { pts, labels, W, H, padL, padR, padT, padB, plotW, plotH, xOf, yOf, xMed, yMed, yMin, yMax, xTicks, yTicks, fmtY };
+}
+const scConcept = buildScatter(stats.bws.concept_appeal as Pt[], 24);
+const scBarriers = buildScatter(stats.bws.barriers_price as Pt[], 24);
+
+// cohort composition helper
+const aiHot = (stats.cohort_demo.ai_familiarity.hot ?? {}) as Record<string, number>;
+const aiWarm = (stats.cohort_demo.ai_familiarity.warm ?? {}) as Record<string, number>;
+const aiOrder = ['Regular user', 'Occasional user', 'Non-user'];
+
+// cohort-gap paired rows: significant gaps first (sorted by gap size),
+// then the themes where the two cohorts broadly agree (sorted by prevalence).
+const gapRowsAll = [...(stats.cohort_gaps as Row[])];
+const sigRows = gapRowsAll
+  .filter((r) => r.hot_vs_warm_sig)
+  .sort((a, b) => Math.abs(b.hot_pct - b.warm_pct) - Math.abs(a.hot_pct - a.warm_pct));
+const agreeRows = gapRowsAll
+  .filter((r) => !r.hot_vs_warm_sig)
+  .sort((a, b) => b.hot_pct - a.hot_pct);
+
+// Every single-percentage bar chart renders highest prevalence at the top.
+const sortPct = (arr: Row[]) => [...arr].sort((a, b) => b.pct - a.pct);
+
+const medianExpectation = '$' + Number(stats.price_expectations.median_expectation_midpoint).toLocaleString('en-US');
+const fc = stats.funding_contingency;
+
+// Verbatim interview questions, quoted above every question-based chart so
+// the reader knows exactly what participants were asked.
+const Q = stats.question_text as Record<string, string>;
+
+// Real high- vs low-intensity quote pairs (trimmed from actual interviews)
+// used in the "how to read intensity" explainer box. Same theme each row, so
+// the contrast isolates weight, not topic.
+const intensityExamples = [
+  {
+    topic: 'Worrying the content might be too basic',
+    high: "I genuinely worry about investing in something that's going to spend significant time on things I already know. If the first three weeks are 'here's what generative AI is and here's how to write a basic prompt,' I'm going to feel like my time isn't being respected.",
+    low: "The level concern, I don't want to spend eight weeks reviewing things I already know.",
+  },
+  {
+    topic: 'Reacting to the $3,000 price',
+    high: "It's a stretch, and for me specifically it would be very difficult to self-fund that amount. I'd have to make a formal case to my executive director for reimbursement, and even then our professional-development budget is quite small.",
+    low: "It's a reasonable ask for what's described. I'd expect employer support to be either fully available or likely available.",
+  },
+  {
+    topic: 'The "no coding required" promise',
+    high: "Every time I've tried to get my head around AI on my own, I hit a wall where it starts feeling very technical and I don't have that background. Knowing that's not a prerequisite is genuinely reassuring.",
+    low: "The no-coding angle is fine, though for me it's not a selling point, since I've never felt coding was a barrier.",
+  },
+];
+---
+
+<Fragment set:html={vxScript} />
+
+<div class="genai-report">
+
+<!-- ============================================================ -->
+<!-- 01 EXECUTIVE SUMMARY -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Executive Summary</h2>
+          <p class="accordion-subtitle">The launch verdict, seven decision-shaping findings, and the three conditions attached</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <p>This study answers one question: should the university launch "Applied Generative AI for Professionals," an eight-week online certificate that teaches non-technical professionals to use generative artificial intelligence (AI) in their daily work? Fifty working professionals in the target market evaluated the concept in depth, including its $3,000 price.</p>
+
+    <div class="verdict">
+      <p><strong>The verdict: a conditional yes.</strong> The concept, the format, and the hands-on approach draw near-universal approval, and 62% say they would seriously consider enrolling. But that demand is heavily contingent on employer funding, and the price sits at the ceiling of what the market expected. The evidence supports launching, on three conditions: build enrollment around an employer-sponsorship channel, publish the full curriculum with a level-fit path for experienced AI users, and lead the recruitment message with opportunity rather than fear. Each condition traces to a specific finding below.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">{m.n}</div><div class="stat-label">Professionals interviewed</div></div>
+      <div class="stat-card"><div class="stat-num">96%</div><div class="stat-label">Positive first reaction to the concept</div></div>
+      <div class="stat-card"><div class="stat-num">62%</div><div class="stat-label">Likely to seriously consider enrolling</div></div>
+      <div class="stat-card"><div class="stat-num">96%</div><div class="stat-label">Say who funds it shapes the decision</div></div>
+    </div>
+
+    <h2>The Concept as Participants Heard It</h2>
+    <p>Every finding in this report is a reaction to the exact description below, read aloud by the interviewer. No visuals, brand name, or price accompanied it; the $3,000 price was revealed separately, later in the interview, after participants had formed their impression of the offer.</p>
+    <div class="concept-box">
+      <span class="concept-label">Program Description</span>
+      <p>"I'd like to describe a new course idea and get your honest reactions. It's called <strong>Applied Generative AI for Professionals</strong>, a new 8-week online certificate from a well-known university that teaches working professionals how to actually use generative AI in their day-to-day jobs. It's built for people in roles like marketing, operations, finance, and HR, with no coding or technical background required. You meet online one evening a week for a live, hands-on session, plus about three hours of your own project work, so roughly four to five hours a week total. Instead of theory, you work with the real tools, like ChatGPT and Copilot, on projects from your own job: automating routine tasks, drafting and analyzing documents, and building simple AI assistants that handle repetitive work. By the end, you can confidently put AI to work in your role, and you earn a professional certificate from the university to show for it. It's positioned as a way to stay ahead as AI reshapes your field, rather than get left behind."</p>
+    </div>
+
+    <h2>Who Was Interviewed</h2>
+    <p>Fifty working professionals in the Greater Toronto Area, all currently employed, all with at least six years of work experience, all aged 25 or older. There was no company-size or seniority screen, and the sample was deliberately spread across levels of current AI use so the concept was tested on skeptics and non-users, not only enthusiasts.</p>
+    <div class="demo-box">
+      <div class="demo-grid">
+        <div class="demo-cell">
+          <div class="demo-head">Function</div>
+          {stats.demographics.function.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+        </div>
+        <div class="demo-cell">
+          <div class="demo-head">Industry</div>
+          {stats.demographics.industry.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+        </div>
+        <div class="demo-cell">
+          <div class="demo-head">Seniority</div>
+          {stats.demographics.seniority.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+          <div class="demo-head" style="margin-top: 14px;">Current AI use</div>
+          {stats.demographics.ai_familiarity.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+        </div>
+        <div class="demo-cell">
+          <div class="demo-head">Age band</div>
+          {stats.demographics.age_band.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+          <div class="demo-head" style="margin-top: 14px;">Years of experience</div>
+          {stats.demographics.years_experience.map((d) => (
+            <div class="demo-row"><span>{d.label}</span><span class="demo-n">{d.n}</span></div>
+          ))}
+        </div>
+      </div>
+      <p class="demo-note">Counts of the 50 participants in each category.</p>
+    </div>
+
+    <h2>Seven Findings That Shape the Launch Decision</h2>
+
+    <div class="insight">
+      <p><strong>1. The concept lands almost universally, with an honest asterisk on format.</strong> 96% reacted positively to the concept (78% without any qualification), and 96% found the eight-week duration acceptable outright. The weekly time commitment reads as workable but conditional: nearly every participant treated it as feasible, yet only 58% affirmed it without reservation; most of the rest made it contingent on flexibility like session recordings. Neither the premise nor the format blocks a launch, but the format needs the flexibility features in Finding 6. <em>Owner: Program leadership.</em></p>
+    </div>
+    <div class="insight">
+      <p><strong>2. "No coding required" plus "use your own work" is the accessibility engine.</strong> 78% named the no-coding framing as what makes the program feel built for them, and 92% valued applying it to their actual job tasks over generic exercises. This pairing is the core of the concept's appeal and should anchor the top of every recruitment message. <em>Owner: Enrollment marketing.</em></p>
+    </div>
+    <div class="opp-callout">
+      <p><strong>3. The stated demand is employer-funding-contingent demand.</strong> 96% said who pays shapes whether they would enroll, and 88% would prefer their employer to fund or split the cost. The dependence runs deepest exactly where intent is highest: of the 31 likely enrollees, 27 prefer employer funding, and only 4 participants in the entire sample (8%) look both willing and able to self-fund at $3,000. Enrollment planning should treat the employer-sponsorship channel as the primary route and individual self-pay as the exception. <em>Owner: Corporate partnerships.</em></p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>4. The price has no headroom.</strong> Before the reveal, participants expected the program to cost about $2,150 at the median, and $3,000 sits at or above what 80% of the sample anticipated; nobody expected more. 70% still judged it reasonable once framed as a university certificate with live instruction, but acceptance splits along conviction: 84% of the likely cohort versus 50% of the unsure cohort, a statistically significant gap. Hold the price, defend it with proof, and do not raise it. <em>Owner: Program leadership.</em></p>
+    </div>
+    <div class="insight">
+      <p><strong>5. Fear-based positioning preaches to the choir.</strong> The "stay ahead rather than get left behind" framing resonates with the already-convinced likely cohort (87%) but the persuadable unsure cohort resists it (50% resist versus 23% of the likely cohort, a significant gap). Opportunity framing, cited by 68% overall, is the safer lead message for moving the middle. <em>Owner: Enrollment marketing.</em></p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>6. The unsure cohort needs proof, not persuasion.</strong> The unsure cohort significantly over-indexes on wanting an advanced or intermediate track (22% versus 3%), payment-plan flexibility (28% versus 6%), and lower price acceptance. The advanced-track question is concentrated among regular AI users, 95% of whom worry the content is too basic for them. These are solvable objections about proof and fit, not rejections of the concept. <em>Owner: Program design.</em></p>
+    </div>
+    <div class="opp-callout">
+      <p><strong>7. Structure beats free content.</strong> What justifies paying over free online material is structure and accountability (86%), the limits of self-directed free content (92%), and the inadequacy of employer-provided training (78%), not the raw information. The value story is the guided path, the live cohort, and the credential. <em>Owner: Enrollment marketing and Program design.</em></p>
+    </div>
+
+    <h2>The Three Conditions</h2>
+    <table class="rec-table">
+      <thead><tr><th>Condition</th><th>Description</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1. Build enrollment around employer sponsorship</td>
+          <td>Lead every enrollment path with an employer-funded option, an approval toolkit prospective learners can hand their manager, and a split-cost fallback. Individual self-pay is the exception route, not the default.</td>
+          <td>96% say funding shapes the decision; 27 of the 31 likely enrollees prefer employer funding; only 8% of the sample looks self-pay viable.</td>
+        </tr>
+        <tr>
+          <td>2. Lead the recruitment message with opportunity, not fear</td>
+          <td>Retire "get left behind" as the lead. Anchor on becoming more effective and staying ahead as an opportunity. Reserve urgency language for warm audiences already leaning in.</td>
+          <td>68% prefer opportunity framing; the unsure cohort resists fear framing at 50% versus 23% of the likely cohort.</td>
+        </tr>
+        <tr>
+          <td>3. Publish the curriculum and offer a level-fit path</td>
+          <td>Publish a week-by-week syllabus and a placement or advanced-track option so experienced users can see the program is not too basic for them. This directly answers the unsure cohort's top objection.</td>
+          <td>52% raise a "too basic" concern, rising to 95% among regular AI users; advanced-track demand runs 22% in the unsure cohort versus 3% in the likely cohort.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Report Navigation</h2>
+    <table>
+      <thead><tr><th>Section</th><th>Primary audience</th></tr></thead>
+      <tbody>
+        <tr><td>02. How the Concept Lands</td><td>All readers</td></tr>
+        <tr><td>03. Price, Funding, and Positioning</td><td>Program leadership, Enrollment marketing</td></tr>
+        <tr><td>04. The Intent Cohorts</td><td>Program leadership</td></tr>
+        <tr><td>05. Program Positioning and Recruitment</td><td>Enrollment marketing</td></tr>
+        <tr><td>06. Program Design and Curriculum</td><td>Program design, Faculty</td></tr>
+        <tr><td>07. Enrollment Strategy and Employer Partnerships</td><td>Corporate partnerships</td></tr>
+        <tr><td>08. Barriers, Risk, and Pre-Launch Validation</td><td>All readers</td></tr>
+        <tr><td>09. Methodology</td><td>All readers</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 02 HOW THE CONCEPT LANDS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">How the Concept Lands</h2>
+          <p class="accordion-subtitle">First reaction, what justifies paying, the credential, format fit, and career value</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>First Reaction and Self-Relevance</h2>
+    <p>The unaided first reaction to the concept is strongly positive and remarkably consistent across roles, industries, and levels of AI experience. What stands out is not a single feature but a pairing: the program removes the technical-barrier assumption ("no coding required") and grounds the learning in the participant's own job rather than abstract exercises.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked, immediately after the concept was described and before any price was mentioned</span>
+      <p class="q-asked-text">"{Q.Q4}"</p>
+      <p class="q-asked-text">"{Q.Q5}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="first_reaction">
+      {sortPct(stats.first_reaction as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill teal" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="insight">
+      <p><strong>The "no coding" hook and the own-work framing are the accessibility engine.</strong> 78% cited the no-coding signal and 92% wanted to apply the learning to their own job. Within the 96% positive first reaction, 78% were positive without qualification and the rest paired enthusiasm with a caveat, most often about content depth. Two-thirds (66%) described a latent gap between how much they use AI today and how much they feel they should, a signal that the concept meets a felt need rather than manufacturing one.</p>
+    </div>
+
+    <h2>What Justifies Paying Over Free Content</h2>
+    <p>The most common threat to the concept is not a competitor program. It is the belief that the same material is available free online or through an employer. What flips that objection is structure, not information. Professionals who have tried to self-direct their AI learning describe abandoning free courses and value a guided path with accountability.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q7}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="why_pay">
+      {sortPct(stats.why_pay as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="insight">
+      <p><strong>Structure and accountability are the paid-value story.</strong> 86% valued a structured program over self-directed learning, 92% named the limits of free content, and 78% found employer-provided training insufficient. The information is a commodity. The guided path, the live cohort, and the finish line are what people will pay for.</p>
+    </div>
+
+    <h2>The University Credential</h2>
+    <p>The university name adds credibility and signals quality, but most participants are clear that at their career stage the skill matters more than the certificate. The credential is a supporting asset, not the primary purchase reason. Skepticism, where it exists, is about whether the content goes deep enough, not about the university's legitimacy.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q6}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="credential">
+      {sortPct(stats.credential as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill plum" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+
+    <h2>Format Fit</h2>
+    <p>The eight-week, one-live-evening, four-to-five-hours-a-week format is broadly workable, with a caveat the direction coding makes visible: nearly every participant treated the weekly commitment as feasible, but only 58% affirmed it without reservation, and most of the rest made it conditional. The eight-week duration, by contrast, was endorsed outright by everyone who discussed it. The frictions are real but specific: unpredictable work demands and seasonal cycles (tax season, healthcare crises, public-sector budget periods) are the recurring scheduling risks, and a majority want session recordings so a missed evening does not mean falling behind.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q8}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="format_fit">
+      {sortPct(stats.format_fit as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill slate" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="vuln-callout">
+      <p><strong>The live evening is a draw and an obstacle at once.</strong> 58% asked for recorded sessions and 56% flagged unpredictable work demands as a scheduling risk. A recorded-and-catch-up option would defuse the single most common format objection without giving up the live cohort experience that others value.</p>
+    </div>
+
+    <h2>Career Value</h2>
+    <p>Belief in career payoff is real but uneven. Private-sector and mid-career participants see clearer advancement value; public-sector, nonprofit, and later-career participants expect relevance but not a salary jump. A recurring frame is defensive value, staying relevant and not falling behind, as much as offensive value like promotion or new roles.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q9}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="career_value">
+      {sortPct(stats.career_value as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill ink" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+
+    <h2>Which Appeal Drivers Carry the Most Weight</h2>
+
+    <div class="intensity-box">
+      <span class="intensity-title">How to read "intensity"</span>
+      <p class="intensity-lead">Two things about a theme are worth separating. <strong>Prevalence</strong> is how many people raised it. <strong>Intensity</strong> is how much weight sat behind those mentions. "The price is a bit high" and "there is no way I could justify $3,000 to my director" are coded to the same theme, but they are not the same signal. The scatter charts in this report plot both: how often a theme came up along the horizontal axis, and how heavily it was weighted along the vertical axis. Below are real pairs from these interviews, each showing the same idea expressed with high and low intensity.</p>
+      {intensityExamples.map((ex) => (
+        <div class="intensity-example">
+          <div class="ix-topic">{ex.topic}</div>
+          <div class="ix-pair">
+            <div class="iq-card high">
+              <span class="iq-tag">Higher intensity</span>
+              <p class="iq-quote">"{ex.high}"</p>
+            </div>
+            <div class="iq-card low">
+              <span class="iq-tag">Lower intensity</span>
+              <p class="iq-quote">"{ex.low}"</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p>The chart below applies this to the concept-appeal themes: it plots how often each appeared (horizontal) against its mean intensity, scored with a method called Best-Worst Scaling and labeled BWS on the vertical axis. Themes in the upper-right are both frequent and heavily weighted.</p>
+    <div class="scatter-wrap">
+      <svg class="scatter-svg" viewBox={`0 0 ${scConcept.W} ${scConcept.H}`} xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frequency by intensity scatter, concept appeal drivers">
+        {scConcept.xTicks.map((v) => (
+          <>
+            <line x1={scConcept.xOf(v)} y1={scConcept.H - scConcept.padB} x2={scConcept.xOf(v)} y2={scConcept.H - scConcept.padB + 4} stroke="rgba(11,31,58,0.35)" />
+            <text x={scConcept.xOf(v)} y={scConcept.H - scConcept.padB + 16} text-anchor="middle" class="sc-tick">{v}%</text>
+          </>
+        ))}
+        {scConcept.yTicks.map((v) => (
+          <>
+            <line x1={scConcept.padL - 4} y1={scConcept.yOf(v)} x2={scConcept.padL} y2={scConcept.yOf(v)} stroke="rgba(11,31,58,0.35)" />
+            <text x={scConcept.padL - 8} y={scConcept.yOf(v) + 3} text-anchor="end" class="sc-tick">{scConcept.fmtY(v)}</text>
+          </>
+        ))}
+        <line x1={scConcept.padL} y1={scConcept.yOf(scConcept.yMed)} x2={scConcept.W - scConcept.padR} y2={scConcept.yOf(scConcept.yMed)} stroke="rgba(11,31,58,0.18)" stroke-dasharray="4 4" />
+        <line x1={scConcept.xOf(scConcept.xMed)} y1={scConcept.padT} x2={scConcept.xOf(scConcept.xMed)} y2={scConcept.H - scConcept.padB} stroke="rgba(11,31,58,0.18)" stroke-dasharray="4 4" />
+        <line x1={scConcept.padL} y1={scConcept.padT} x2={scConcept.padL} y2={scConcept.H - scConcept.padB} stroke="rgba(11,31,58,0.25)" />
+        <line x1={scConcept.padL} y1={scConcept.H - scConcept.padB} x2={scConcept.W - scConcept.padR} y2={scConcept.H - scConcept.padB} stroke="rgba(11,31,58,0.25)" />
+        <text x={scConcept.padL + scConcept.plotW / 2} y={scConcept.H - 12} text-anchor="middle" class="sc-axis">How often the theme came up (% of participants)</text>
+        <text x={16} y={scConcept.padT + scConcept.plotH / 2} text-anchor="middle" class="sc-axis" transform={`rotate(-90 16 ${scConcept.padT + scConcept.plotH / 2})`}>Mean intensity (BWS)</text>
+        <text x={scConcept.W - scConcept.padR - 6} y={scConcept.padT + 14} text-anchor="end" class="sc-quad">Lead with these</text>
+        <text x={scConcept.padL + 6} y={scConcept.padT + 14} class="sc-quad">Heavy for a few</text>
+        <text x={scConcept.W - scConcept.padR - 6} y={scConcept.H - scConcept.padB - 8} text-anchor="end" class="sc-quad">Table stakes</text>
+        <text x={scConcept.padL + 6} y={scConcept.H - scConcept.padB - 8} class="sc-quad">Background</text>
+        {scConcept.pts.map((p) => (
+          <circle cx={scConcept.xOf(p.freq_pct)} cy={scConcept.yOf(p.mean_bws)} r="6" fill="#2A7A6E" fill-opacity="0.75" />
+        ))}
+        {scConcept.labels.map((l) => (
+          <>
+            <line x1={l.cx + 3} y1={l.cy} x2={l.lx - 2} y2={l.ly - 3} stroke="rgba(11,31,58,0.20)" stroke-width="1" />
+            <text x={l.lx} y={l.ly} class="sc-label">{l.label}</text>
+          </>
+        ))}
+      </svg>
+    </div>
+    <p class="source-note">Concept-appeal themes from the two first-reaction questions quoted at the top of this section. Horizontal position is prevalence; vertical position is mean Best-Worst Scaling intensity. Dashed lines mark the medians of the plotted set. Best-Worst Scaling reliability for this grouping: Krippendorff ordinal alpha = 0.84 (n = 50). Showing themes raised by at least a quarter of participants.</p>
+    <div class="insight">
+      <p><strong>Applying AI to your own job is both the most frequent and the most heavily weighted appeal driver.</strong> Own-job application and the no-coding signal sit in the frequent-and-weighty quadrant. Role-relevance confirmation and "systematic AI use" appear often but carry lower weight, which is consistent with participants treating relevance as table stakes and hands-on application as the real draw.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 03 PRICE, FUNDING, AND POSITIONING -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Price, Funding, and Positioning</h2>
+          <p class="accordion-subtitle">The $3,000 reaction, the funding pivot, and how the "stay ahead" message lands</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>The $3,000 Reaction</h2>
+    <p>Before the price was revealed, expectations commonly landed in the $1,500 to $3,000 range, so $3,000 is more often described as the higher end of what people expected than as a shock. Judgments of reasonableness are conditional: many call it fair for a university certificate with live instruction, provided the content is proven deep enough. Nearly everyone wants confidence in the return on investment (ROI) before committing, and self-funding is a genuine stretch for lower-income, nonprofit, and individual-contributor participants.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked, after first naming the price they expected</span>
+      <p class="q-asked-text">"This program costs $3,000. What's your reaction to that price? Does it feel worth it for what's offered?"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="price">
+      {sortPct(stats.price as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill warm" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="vuln-callout">
+      <p><strong>Return on investment (ROI) confidence is the gate, not sticker shock.</strong> 94% said they need confidence in the return before investing, and 86% named the burden of self-funding. Only 70% called $3,000 reasonable outright. The price is defensible, but it is defended by proof of outcomes and by who pays, not by the number itself.</p>
+    </div>
+
+    <h2>What They Expected It to Cost</h2>
+    <p>Every participant was asked to name an expected price before the $3,000 figure was revealed, which gives a clean read on where the price sits against market expectations. The typical expectation centered near {medianExpectation} at the median, and the pattern is one-sided.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked, before the price was revealed</span>
+      <p class="q-asked-text">"Before I tell you, what would you expect a program like this to cost?"</p>
+    </div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">Expected less than $3,000</span>
+        <div class="bar-track"><div class="bar-fill warm" style={`width:${stats.price_expectations.below_pct}%`}><span class="bar-val">{ceil(stats.price_expectations.below_pct)}%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$3,000 was the top of their expected range</span>
+        <div class="bar-track"><div class="bar-fill warm" style={`width:${stats.price_expectations.at_top_pct}%`}><span class="bar-val">{ceil(stats.price_expectations.at_top_pct)}%</span></div></div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">$3,000 was comfortably within their range</span>
+        <div class="bar-track"><div class="bar-fill warm" style={`width:${stats.price_expectations.within_pct}%`}><span class="bar-val">{ceil(stats.price_expectations.within_pct)}%</span></div></div>
+      </div>
+    </div>
+    <p class="source-note">Expectations hand-coded from each participant's stated range (n = {stats.price_expectations.n}). Not clickable; this chart reflects analyst-coded price bands rather than a thematic code.</p>
+    <div class="vuln-callout">
+      <p><strong>$3,000 sits at or above what 80% of the market expected, and nobody expected more.</strong> The price has no headroom. It is not a launch blocker (70% still judge it reasonable once the university framing is applied), but it rules out any price increase and raises the stakes on proof of value. If enrollment underperforms, the first lever to examine is the funding channel, not a higher or lower sticker price.</p>
+    </div>
+
+    <h2>The Funding Pivot</h2>
+    <p>If there is one structural finding that should shape the entire enrollment strategy, it is this: enrolling is a funding decision before it is a personal one. Nearly every participant said the source of funding changes how they feel, and a clear majority would prefer their employer to cover or split the cost. A meaningful group anticipates friction getting employer approval, which is where an approval toolkit earns its keep.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q12}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="funding">
+      {sortPct(stats.funding as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="opp-callout">
+      <p><strong>Funding is the highest-leverage lever in the study.</strong> 96% said funding source shapes the decision and 88% prefer employer funding. Positioning the program as a manager-approved professional-development investment, complete with a business-case template, converts a $3,000 personal stretch into a routine line item.</p>
+    </div>
+
+    <h3>How Contingent Is the Stated Demand?</h3>
+    <p>Crossing enrollment intent with funding expectations shows how much of the study's headline demand depends on someone else paying. The answer: nearly all of it.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num">{ceil(100 * stats.intent.Likely / m.n)}%</div><div class="stat-label">Likely to seriously consider enrolling</div></div>
+      <div class="stat-card"><div class="stat-num">{fc.hot_employer_pref} of {fc.n_hot}</div><div class="stat-label">Likely enrollees who prefer employer funding</div></div>
+      <div class="stat-card"><div class="stat-num">{ceil(fc.hot_funding_shapes_pct)}%</div><div class="stat-label">Of likely enrollees say funding source shapes the decision</div></div>
+      <div class="stat-card"><div class="stat-num">{ceil(fc.self_pay_viable_pct)}%</div><div class="stat-label">Of the full sample looks willing and able to self-fund</div></div>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>The launch case is an employer-channel case.</strong> Only {fc.hot_without_employer_pref} of the {fc.n_hot} likely enrollees expressed intent without also preferring employer funding. Read literally, a launch that relies on individuals paying $3,000 out of pocket addresses roughly {ceil(fc.self_pay_viable_pct)}% of this market. The same intent number supported by an employer-sponsorship channel addresses the full 62%. Enrollment projections and the recruitment budget should be built on the second scenario, with the first as the downside case.</p>
+    </div>
+
+    <h2>Where the Weight Sits on Price and Barriers</h2>
+    <p>The scatter below applies the same intensity lens to the price-and-barriers themes. Themes in the upper-right are both frequently raised and heavily weighted, marking the objections that most deserve a direct answer.</p>
+    <div class="scatter-wrap">
+      <svg class="scatter-svg" viewBox={`0 0 ${scBarriers.W} ${scBarriers.H}`} xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frequency by intensity scatter, barriers and price sensitivity">
+        {scBarriers.xTicks.map((v) => (
+          <>
+            <line x1={scBarriers.xOf(v)} y1={scBarriers.H - scBarriers.padB} x2={scBarriers.xOf(v)} y2={scBarriers.H - scBarriers.padB + 4} stroke="rgba(11,31,58,0.35)" />
+            <text x={scBarriers.xOf(v)} y={scBarriers.H - scBarriers.padB + 16} text-anchor="middle" class="sc-tick">{v}%</text>
+          </>
+        ))}
+        {scBarriers.yTicks.map((v) => (
+          <>
+            <line x1={scBarriers.padL - 4} y1={scBarriers.yOf(v)} x2={scBarriers.padL} y2={scBarriers.yOf(v)} stroke="rgba(11,31,58,0.35)" />
+            <text x={scBarriers.padL - 8} y={scBarriers.yOf(v) + 3} text-anchor="end" class="sc-tick">{scBarriers.fmtY(v)}</text>
+          </>
+        ))}
+        <line x1={scBarriers.padL} y1={scBarriers.yOf(scBarriers.yMed)} x2={scBarriers.W - scBarriers.padR} y2={scBarriers.yOf(scBarriers.yMed)} stroke="rgba(11,31,58,0.18)" stroke-dasharray="4 4" />
+        <line x1={scBarriers.xOf(scBarriers.xMed)} y1={scBarriers.padT} x2={scBarriers.xOf(scBarriers.xMed)} y2={scBarriers.H - scBarriers.padB} stroke="rgba(11,31,58,0.18)" stroke-dasharray="4 4" />
+        <line x1={scBarriers.padL} y1={scBarriers.padT} x2={scBarriers.padL} y2={scBarriers.H - scBarriers.padB} stroke="rgba(11,31,58,0.25)" />
+        <line x1={scBarriers.padL} y1={scBarriers.H - scBarriers.padB} x2={scBarriers.W - scBarriers.padR} y2={scBarriers.H - scBarriers.padB} stroke="rgba(11,31,58,0.25)" />
+        <text x={scBarriers.padL + scBarriers.plotW / 2} y={scBarriers.H - 12} text-anchor="middle" class="sc-axis">How often the theme came up (% of participants)</text>
+        <text x={16} y={scBarriers.padT + scBarriers.plotH / 2} text-anchor="middle" class="sc-axis" transform={`rotate(-90 16 ${scBarriers.padT + scBarriers.plotH / 2})`}>Mean intensity (BWS)</text>
+        <text x={scBarriers.W - scBarriers.padR - 6} y={scBarriers.padT + 14} text-anchor="end" class="sc-quad">Address before launch</text>
+        <text x={scBarriers.padL + 6} y={scBarriers.padT + 14} class="sc-quad">Acute for a few</text>
+        <text x={scBarriers.W - scBarriers.padR - 6} y={scBarriers.H - scBarriers.padB - 8} text-anchor="end" class="sc-quad">Common but mild</text>
+        <text x={scBarriers.padL + 6} y={scBarriers.H - scBarriers.padB - 8} class="sc-quad">Background</text>
+        {scBarriers.pts.map((p) => (
+          <circle cx={scBarriers.xOf(p.freq_pct)} cy={scBarriers.yOf(p.mean_bws)} r="6" fill="#B8341B" fill-opacity="0.72" />
+        ))}
+        {scBarriers.labels.map((l) => (
+          <>
+            <line x1={l.cx + 3} y1={l.cy} x2={l.lx - 2} y2={l.ly - 3} stroke="rgba(11,31,58,0.20)" stroke-width="1" />
+            <text x={l.lx} y={l.ly} class="sc-label">{l.label}</text>
+          </>
+        ))}
+      </svg>
+    </div>
+    <p class="source-note">Price-and-barrier themes pooled from the two price questions and the funding question quoted in this section, plus the two barrier questions quoted in the Barriers section. Horizontal position is prevalence; vertical position is mean Best-Worst Scaling intensity. Dashed lines mark the medians of the plotted set. Best-Worst Scaling reliability for this grouping: Krippendorff ordinal alpha = 0.81 (n = 50). Showing themes raised by at least a quarter of participants.</p>
+
+    <h2>How the "Stay Ahead" Message Lands</h2>
+    <p>The concept was pitched as a way to "stay ahead as AI reshapes your field, rather than get left behind." That framing works, but it works unevenly, and the pattern matters for the lead recruitment message. Fear-of-being-left-behind resonates with people already leaning in. The professionals still on the fence, the audience the recruitment effort actually needs to move, are noticeably more likely to push back on it and to prefer an opportunity or productivity angle.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked</span>
+      <p class="q-asked-text">"{Q.Q10}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="positioning">
+      {sortPct(stats.positioning as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill ink" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <div class="insight">
+      <p><strong>Fear framing preaches to the choir.</strong> It resonates with the likely cohort (87%) but the unsure cohort resists it at 50% versus 23% of the likely cohort, a statistically significant gap. Opportunity framing (68% overall) and a "make me more effective" angle are the safer lead for the persuadable middle. Save urgency for audiences already leaning in.</p>
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 04 THE INTENT COHORTS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">The Intent Cohorts</h2>
+          <p class="accordion-subtitle">Who leans in, who is on the fence, and where the two diverge</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <p>Rather than impose a statistical clustering on a sample of this size, we group participants by their stated likelihood of enrolling. That intent measure is the study's outcome variable, so grouping on it gives a direct read on what separates buyers from fence-sitters. Three cohorts emerge.</p>
+
+    <div class="scorecard" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="scorecard-header">Likely (hot)</div>
+      <div class="scorecard-header">Unsure (warm)</div>
+      <div class="scorecard-header">Unlikely (cold)</div>
+      <div class="scorecard-cell win"><strong>{stats.intent.Likely} of {m.n}</strong> &middot; {ceil(100 * stats.intent.Likely / m.n)}%</div>
+      <div class="scorecard-cell"><strong>{stats.intent.Unsure} of {m.n}</strong> &middot; {ceil(100 * stats.intent.Unsure / m.n)}%</div>
+      <div class="scorecard-cell lose"><strong>{stats.intent.Unlikely} of {m.n}</strong> &middot; {ceil(100 * stats.intent.Unlikely / m.n)}%</div>
+      <div class="scorecard-cell">Sold on the concept and the price; need a funding path and a nudge.</div>
+      <div class="scorecard-cell">Like the concept; need proof of depth, level fit, and flexibility.</div>
+      <div class="scorecard-cell">Single participant; not interpreted.</div>
+    </div>
+    <div class="seg-note">
+      <p>The unlikely cohort is a single participant. We report the count for completeness but draw no conclusions from it. All cohort comparisons below are between the likely cohort (n = {stats.meta.n_hot}) and the unsure cohort (n = {stats.meta.n_warm}). At these sample sizes, only differences that pass a significance test are treated as real; everything else is read as directional at most.</p>
+    </div>
+
+    <h2>Where Likely and Unsure Diverge</h2>
+    <p>The two cohorts part ways on conviction: the likely cohort finds the price reasonable, feels a personal AI gap, and treats structure as clearly worth paying for. The unsure cohort withholds on price, wants proof the content is not too basic, and pushes back on fear-based urgency. Unlike the single-question charts earlier in the report, these themes aggregate each participant's full interview, so no single question is quoted above the chart; click any theme to read the underlying quotes, each shown with the verbatim question that prompted it. The first chart shows only the gaps that pass a two-proportion significance test at the 0.10 level (marked with an asterisk); the second shows the themes where the two cohorts broadly agree.</p>
+
+    <div class="paired-legend"><span class="pl-swatch pl-hot"></span> Likely (n = {stats.meta.n_hot}) &nbsp;&nbsp; <span class="pl-swatch pl-warm"></span> Unsure (n = {stats.meta.n_warm})</div>
+
+    <h3>The Significant Gaps</h3>
+    <div class="paired-chart" data-drilldown-chart="cohort_gaps">
+      {sigRows.map((s) => (
+        <div class="paired-block" data-code={s.code}>
+          <span class="paired-label">{s.code}<span class="sig-star">*</span></span>
+          <div class="paired-bars">
+            <div class="pb-track"><div class="pb-fill pl-hot" style={`width:${s.hot_pct}%`}><span class="pb-val">{ceil(s.hot_pct)}%</span></div></div>
+            <div class="pb-track"><div class="pb-fill pl-warm" style={`width:${s.warm_pct}%`}><span class="pb-val">{ceil(s.warm_pct)}%</span></div></div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Themes where the likely-versus-unsure difference is individually significant at alpha = 0.10, two-tailed (two-proportion z-test, with Fisher's exact test where expected cell counts fall below five). Sorted by gap size. <span class="vb-hint">Click a theme to read participant quotes with the question that prompted each.</span></p>
+
+    <h3>Where They Broadly Agree</h3>
+    <div class="paired-chart" data-drilldown-chart="cohort_gaps">
+      {agreeRows.map((s) => (
+        <div class="paired-block" data-code={s.code}>
+          <span class="paired-label">{s.code}</span>
+          <div class="paired-bars">
+            <div class="pb-track"><div class="pb-fill pl-hot" style={`width:${s.hot_pct}%`}><span class="pb-val">{ceil(s.hot_pct)}%</span></div></div>
+            <div class="pb-track"><div class="pb-fill pl-warm" style={`width:${s.warm_pct}%`}><span class="pb-val">{ceil(s.warm_pct)}%</span></div></div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Themes where the cohort difference does not reach significance at alpha = 0.10; both cohorts give the concept a warm reception, need ROI confidence, and prefer employer funding. Sorted by prevalence in the likely cohort. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+
+    <div class="insight">
+      <p><strong>The likely cohort buys the value story; the unsure cohort has not been given enough proof yet.</strong> Significant gaps favor the likely cohort on finding the price reasonable (84% versus 50%), valuing structure over free content (94% versus 72%), seeing free content as limited (100% versus 78%), and feeling a personal AI gap (77% versus 50%). The unsure cohort significantly over-indexes only on resisting fear framing and on wanting an advanced track, both of which are addressable by message and product changes rather than discounting.</p>
+    </div>
+
+    <h2>Who Is in Each Cohort</h2>
+    <p>The cohorts are not cleanly split by AI experience. The unsure cohort is bimodal: it holds both a larger share of non-users (who need reassurance the program is not too advanced) and the experienced users who worry it is too basic. The likely cohort is anchored by the occasional-user middle, the group for whom a structured push is exactly what they have been missing. The depth concern maps almost perfectly onto experience: 95% of regular AI users worry the content is too basic, versus 40% of occasional users and 9% of non-users (the Program Design section quantifies this and sizes the advanced-track case).</p>
+    <div class="crosstab">
+      <table>
+        <thead>
+          <tr><th style="text-align:left">Current AI use</th><th>Likely cohort</th><th>Unsure cohort</th></tr>
+        </thead>
+        <tbody>
+          {aiOrder.map((k) => (
+            <tr>
+              <td style="text-align:left">{k}</td>
+              <td style="text-align:center">{aiHot[k] ?? 0} ({ceil(100 * (aiHot[k] ?? 0) / stats.meta.n_hot)}%)</td>
+              <td style="text-align:center">{aiWarm[k] ?? 0} ({ceil(100 * (aiWarm[k] ?? 0) / stats.meta.n_warm)}%)</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="source-note">Current AI use by intent cohort. Likely cohort n = {stats.meta.n_hot}; unsure cohort n = {stats.meta.n_warm}.</p>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 05 PROGRAM POSITIONING AND RECRUITMENT -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Program Positioning and Recruitment</h2>
+          <p class="accordion-subtitle">The lead message, who to recruit first, and what to avoid saying</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Positioning Recommendation</h2>
+    <div class="opp-callout">
+      <p><strong>Lead with opportunity, not fear.</strong> Anchor the lead message on becoming demonstrably more effective at your actual job with no coding required. Opportunity framing is preferred by 68% and, critically, does not repel the persuadable unsure cohort the way "get left behind" does. Reserve urgency and "stay ahead" language for audiences who have already shown intent.</p>
+    </div>
+    <div class="vuln-callout">
+      <p><strong>Message that backfires:</strong> a fear-first headline. The undecided cohort resists it (50% versus 23% of the likely cohort, a significant gap). It converts people who were already going to convert and alienates the ones you need to persuade.</p>
+    </div>
+
+    <h2>Who to Recruit First</h2>
+    <table class="rec-table">
+      <thead><tr><th>Priority</th><th>Audience</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Primary</td><td>Occasional AI users in mid-career knowledge-work roles</td><td>They anchor the likely cohort. They feel a real gap, have tried and abandoned free content, and respond to a structured, guided path.</td></tr>
+        <tr><td>Secondary</td><td>Managers and team leads who buy for their people</td><td>Many framed the program as valuable for their team rather than only themselves. 44% preferred a team-leadership framing, which doubles as an employer-funded entry point.</td></tr>
+        <tr><td>Nurture</td><td>The unsure cohort</td><td>Not lost. Move them with a published curriculum, proof of outcomes, and payment flexibility rather than urgency.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Message Pillars</h2>
+    <table class="rec-table">
+      <thead><tr><th>Pillar</th><th>Evidence</th><th>How to say it</th></tr></thead>
+      <tbody>
+        <tr><td>Built for non-technical professionals</td><td>78% cite the no-coding hook</td><td>"No coding. No computer-science background. Just your real work, done better with AI."</td></tr>
+        <tr><td>Structure beats scattered free content</td><td>86% value structure; 92% cite free-content limits</td><td>"You have watched the free videos. This is the guided path that actually gets you there, with a cohort and a finish line."</td></tr>
+        <tr><td>A credential from a university you know</td><td>54% say the university signals rigor</td><td>Use the credential as a proof point and an employer-justification asset, not the lead promise.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 06 PROGRAM DESIGN AND CURRICULUM -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Program Design and Curriculum</h2>
+          <p class="accordion-subtitle">Level fit, curriculum transparency, and format flexibility</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Close the Level-Fit Gap</h2>
+    <p>The most common depth concern is that the program will be too basic for experienced users: 52% of the full sample raised it. Splitting that concern by how much each participant already uses AI shows it is not a diffuse worry. It is concentrated almost entirely among the market's most experienced segment.</p>
+    <div class="paired-legend">Share raising the "too basic for advanced users" concern, by current AI use</div>
+    <div class="bar-chart">
+      {stats.too_basic_by_familiarity.rows.map((r) => (
+        <div class="bar-row">
+          <span class="bar-label">{r.label} (n = {r.n})</span>
+          <div class="bar-track"><div class="bar-fill plum" style={`width:${r.too_basic_pct}%`}><span class="bar-val">{ceil(r.too_basic_pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Share of each experience group raising the "content too basic for advanced users" concern anywhere in their interview. The regular-user rate is significantly higher than the rest of the sample combined (alpha = 0.10, two-tailed; the difference is significant well beyond that threshold). Not clickable by group; the theme's quotes are available from the barriers chart.</p>
+    <div class="vuln-callout">
+      <p><strong>The advanced-track question is a regular-user question, and regular users are 36% of this market.</strong> 95% of regular AI users worry the content is too basic for them, versus 40% of occasional users and 9% of non-users, a statistically significant concentration. Five of the eighteen regular users went further and proposed a concrete mechanism (an advanced track, tier, or placement diagnostic). A published level-fit mechanism, whether a placement diagnostic, a labeled advanced track, or clear prerequisites, turns the single most common objection into a reason to trust the program, and it defines exactly who the second-cohort or advanced offering should serve.</p>
+    </div>
+
+    <h2>Publish the Curriculum</h2>
+    <p>A quarter of participants (26%) said a detailed, publicly visible curriculum breakdown is a precondition for enrolling. This is a low-cost, high-trust asset: a week-by-week syllabus that shows the depth, the tools covered, and the outputs each learner will produce. It answers the depth question, the level-fit question, and the employer-justification question at once.</p>
+
+    <h2>Add Format Flexibility Without Losing the Cohort</h2>
+    <table class="rec-table">
+      <thead><tr><th>Change</th><th>Evidence</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>Record every live session</td><td>58% asked for session recordings</td><td>Removes the biggest format objection. A missed evening should never mean falling behind or losing the sunk cost.</td></tr>
+        <tr><td>Publish cohort dates well ahead</td><td>56% flagged unpredictable work demands; 34% named seasonal conflicts</td><td>Lets professionals in tax, healthcare, and public-sector cycles pick a cohort that avoids their crunch.</td></tr>
+        <tr><td>Offer sector-relevant project options</td><td>58% wanted content tied to their function or sector</td><td>The own-work framing is the top appeal driver. Sector-tailored project prompts deepen it.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 07 ENROLLMENT STRATEGY AND EMPLOYER PARTNERSHIPS -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Enrollment Strategy and Employer Partnerships</h2>
+          <p class="accordion-subtitle">Recruit through the employer, de-risk the price, and equip the internal champion</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>Build Enrollment Around Employer Sponsorship</h2>
+    <div class="opp-callout">
+      <p><strong>Enrolling is a funding decision first.</strong> 96% said who pays shapes it, 88% prefer employer funding, and 27 of the 31 likely enrollees tie their intent to employer support. The default enrollment path should be an employer-sponsored one, with a self-pay option as the exception rather than the headline. This single structural choice does more for enrollment than any price change.</p>
+    </div>
+
+    <h2>Equip the Internal Champion</h2>
+    <p>Over half of participants (54%) anticipated friction getting employer approval. The people who want the program are often not the people who control the budget. Give the would-be learner a ready-made business case: a one-page justification with the curriculum, the outcomes, the credential, and a cost-versus-value framing they can forward to a manager. This directly addresses approval friction and the toolkit that a fifth of participants explicitly asked for.</p>
+
+    <h2>De-Risk the Price</h2>
+    <table class="rec-table">
+      <thead><tr><th>Lever</th><th>Evidence</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Prove the return</td><td>94% need confidence in the return before investing</td><td>Lead with outcomes: what graduates can do afterward, with concrete before-and-after work examples. Publish alumni results as they accrue.</td></tr>
+        <tr><td>Offer payment plans</td><td>Payment-plan demand runs 28% in the unsure cohort versus 6% in the likely cohort</td><td>A monthly plan meaningfully lowers the barrier for self-funders and the fence-sitters, without touching the headline price.</td></tr>
+        <tr><td>Hold the price, sell the value</td><td>70% already find $3,000 reasonable; expectations clustered at $1,500 to $3,000</td><td>The number is defensible. Do not discount broadly. Defend the price with proof and funding pathways instead.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 08 BARRIERS, RISK, AND PRE-LAUNCH VALIDATION -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Barriers, Risk, and Pre-Launch Validation</h2>
+          <p class="accordion-subtitle">What stops enrollment, who owns each fix, and what a pilot should prove</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h2>The Barrier Landscape</h2>
+    <p>Asked directly what would stop them from enrolling and what single change would move them, participants named a consistent set of barriers. Cost and the confidence to justify it dominate, followed by depth and level-fit concerns and the practical friction of fitting a live cohort around unpredictable work.</p>
+    <div class="q-asked">
+      <span class="q-asked-label">Participants were asked two questions</span>
+      <p class="q-asked-text">"{Q.Q13}"</p>
+      <p class="q-asked-text">"{Q.Q15}"</p>
+    </div>
+    <p class="source-note">Share of all 50 participants whose interview raised each theme; themes are counted once per participant. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
+    <div class="bar-chart" data-drilldown-chart="barriers">
+      {sortPct(stats.barriers as Row[]).map((s) => (
+        <div class="bar-row" data-code={s.code}>
+          <span class="bar-label">{s.code}</span>
+          <div class="bar-track"><div class="bar-fill signal" style={`width:${s.pct}%`}><span class="bar-val">{ceil(s.pct)}%</span></div></div>
+        </div>
+      ))}
+    </div>
+
+    <h2>Barrier-to-Fix Map</h2>
+    <table class="rec-table">
+      <thead><tr><th>Barrier</th><th>Prevalence</th><th>Fix already in this report</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>Self-funded cost burden</td><td>86%</td><td>Employer-sponsorship pathway and payment plans.</td><td>Corporate partnerships</td></tr>
+        <tr><td>Time and the confidence to justify it</td><td>76% name time as the primary learning barrier</td><td>Recorded sessions, dates published ahead, and a business case for the employer.</td><td>Program design</td></tr>
+        <tr><td>Program-quality and depth uncertainty</td><td>60%</td><td>Published curriculum and outcome proof.</td><td>Program design, Faculty</td></tr>
+        <tr><td>Sector-specific relevance</td><td>58% want function or sector fit</td><td>Sector-tailored project options.</td><td>Faculty</td></tr>
+        <tr><td>Too basic for experienced users</td><td>52% (95% of regular AI users)</td><td>Advanced or intermediate track and a placement diagnostic.</td><td>Program design, Faculty</td></tr>
+      </tbody>
+    </table>
+
+    <div class="seg-note">
+      <p>Every high-prevalence barrier in this study maps to a change the program can make, not to a flaw in the concept itself. The risk is not that professionals dislike the offering. The risk is friction: an unclear return, an approval process without a champion's toolkit, and a depth question left unanswered. Each is addressable before launch.</p>
+    </div>
+
+    <h2>What to Validate Before a Full Launch</h2>
+    <p>Concept-test findings tell you what the market says it will do; a pilot cohort tells you what it actually does. The standard path from this evidence to a full launch is a single pilot cohort, ideally filled through two or three employer partners, which tests the sponsorship channel and the program in the same pass. Four things are worth measuring deliberately.</p>
+    <table class="rec-table">
+      <thead><tr><th>What to validate</th><th>How</th><th>Decision it informs</th></tr></thead>
+      <tbody>
+        <tr><td>Real conversion from stated intent</td><td>Track how many expressions of interest become paid enrollments in the pilot. Stated intent in concept tests overstates purchase, so the pilot's conversion rate becomes the planning number for cohort-size and revenue projections.</td><td>Full-launch enrollment targets and recruitment budget.</td></tr>
+        <tr><td>The employer channel</td><td>Fill part of the pilot through employer partners using the approval toolkit. Measure how long approvals take and where they stall.</td><td>Whether corporate partnerships or individual recruitment leads the full launch.</td></tr>
+        <tr><td>Self-pay demand</td><td>Keep an individual enrollment path open during the pilot and count uptake, including payment-plan usage.</td><td>Whether the 8% self-pay estimate holds, and whether payment plans move it.</td></tr>
+        <tr><td>Advanced-track demand</td><td>Include a placement diagnostic at pilot intake and record how many entrants score above the core curriculum's level.</td><td>Whether to build the advanced track for the second cohort or defer it.</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- 09 METHODOLOGY -->
+<!-- ============================================================ -->
+<details class="accordion">
+  <summary class="accordion-header">
+    <div style="flex:1;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="flex:1;">
+          <h2 class="accordion-title">Methodology</h2>
+          <p class="accordion-subtitle">Sample, statistical conventions, coding and reliability, and known gaps</p>
+        </div>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </div>
+    </div>
+  </summary>
+  <div class="accordion-body">
+
+    <h3>Sample design</h3>
+    <p>This is a concept-acceptance study. Fifty working professionals in the Greater Toronto Area, all currently employed with at least six years of experience and aged 25 or older, took part in a structured 15-question interview. Each reacted to a described continuing-education certificate: an eight-week online university program teaching non-technical professionals to use generative AI in their daily work, one live evening a week plus about four to five hours total, hands-on with real tools, ending in a university professional certificate. The concept was presented without a price; the $3,000 price was revealed partway through the interview. There was no company-size or seniority screen, so the sample spans individual contributors through senior leaders and small organizations through large enterprises, with a deliberate spread of AI familiarity (regular, occasional, and non-users).</p>
+
+    <h3>Statistical methodology</h3>
+    <p>All significance tests use an alpha of 0.10, two-tailed. Comparisons between the likely and unsure cohorts use a two-proportion z-test where all expected cell counts reach five, with Fisher's exact test as the fallback for smaller cells. At a sample of 50, with cohorts of {stats.meta.n_hot} and {stats.meta.n_warm}, only differences that pass this test are reported as real. Non-significant differences are described as directional at most, and uncorroborated non-significant differences are not claimed. All percentages are rounded up to the nearest whole number.</p>
+
+    <h3>Coding and reliability</h3>
+    <p>Every interview was coded on three dimensions: a thematic code, a direction (positive, negative, or neutral) per meaning unit, and a Best-Worst Scaling (BWS) intensity score that captures how heavily each theme was weighted within a question grouping. Thematic and direction coding used two independent coders with a third resolving disagreements. Agreement was almost perfect: Cohen's kappa of 0.905 on thematic codes and 0.934 on direction. Intensity used a two-stage Best-Worst Scaling design (identifying each participant's peak mention, then scaling those peaks), with reliability reported per question grouping. Krippendorff's ordinal alpha ran from 0.70 to 0.84 across the four groupings (0.84 for concept appeal, 0.81 for barriers and price, 0.70 for both program evaluation and AI readiness), with Spearman rank correlations between coders in the same range. The two scatter plots in this report draw on the two most reliable groupings.</p>
+    <p>Where a reception claim pairs a prevalence figure with an "affirmed outright" figure (for example, the weekly time commitment), the first counts everyone who raised the theme and the second counts only those whose statements carried a positive direction; the gap between them is the share who engaged with the theme conditionally. One analysis is analyst-coded rather than pipeline-coded: pre-reveal price expectations were hand-classified from each participant's stated expectation range into three bands relative to the $3,000 price (entirely below it, topping out at it, or comfortably containing it), following the participant's own characterization where one was given.</p>
+
+    <h3>Known gaps</h3>
+    <p>Stated intent overstates real enrollment: nothing was actually purchased, so the 62% "likely" figure is a relative signal, not a conversion forecast, and it is expected to compress in a larger and more representative sample. Segments here are intent cohorts, not a formal statistical segmentation, which a sample of this size cannot reliably support. The unlikely cohort is a single participant and is not interpreted. The sample is limited to the Greater Toronto Area and to employed professionals with six or more years of experience, so findings should not be generalized to students, early-career workers, or other regions without further research.</p>
+
+  </div>
+</details>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- VERBATIM DRILLDOWN MODAL -->
+<!-- ============================================================ -->
+<div class="vb-overlay" id="vb-overlay">
+  <div class="vb-dialog">
+    <button class="vb-close" id="vb-close" aria-label="Close">&times;</button>
+    <div class="vb-header">
+      <h3 id="vb-title">Participant quotes</h3>
+      <p id="vb-sub"></p>
+    </div>
+    <div class="vb-body" id="vb-body"></div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var VX = window.__VX || { participants: [], charts: {} };
+    var overlay = document.getElementById('vb-overlay');
+    var titleEl = document.getElementById('vb-title');
+    var subEl = document.getElementById('vb-sub');
+    var bodyEl = document.getElementById('vb-body');
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Filterable drilldown state. Each card carries participant tags across
+    // six dimensions; clicking a tag toggles a filter on that dimension.
+    var DIMS = ['func', 'ind', 'sen', 'age', 'ai', 'intent'];
+    var currentCards = [];
+    var filters = {};
+
+    function cardHtml(c) {
+      var tags = DIMS.map(function (d) {
+        var v = c.tags[d];
+        if (!v) return '';
+        var active = filters[d] === v ? ' active' : '';
+        return '<button class="vb-tagf' + active + '" data-dim="' + d + '" data-val="' + esc(v) + '" title="Filter by ' + esc(v) + '">' + esc(v) + '</button>';
+      }).join('');
+      return '<div class="vb-card">' +
+        (c.qtext ? '<div class="vb-q">In response to: ' + esc(c.qtext) + '</div>' : '') +
+        '<div class="vb-quote">&ldquo;' + esc(c.text) + '&rdquo;</div>' +
+        '<div class="vb-meta">' + tags + '</div>' +
+      '</div>';
+    }
+
+    function renderCards() {
+      var active = Object.keys(filters);
+      var shown = currentCards.filter(function (c) {
+        return active.every(function (d) { return c.tags[d] === filters[d]; });
+      });
+      var header = shown.length + ' of ' + currentCards.length + ' participant quotes shown &middot; <span class="vb-filter-hint">Click any tag to filter; click it again to remove the filter.</span>';
+      if (active.length) {
+        var chips = active.map(function (d) {
+          return '<button class="vb-fchip" data-dim="' + d + '">' + esc(filters[d]) + ' &#215;</button>';
+        }).join('');
+        header += '<span class="vb-fbar">' + chips + '<button class="vb-clear">Clear all filters</button></span>';
+      }
+      subEl.innerHTML = header;
+      bodyEl.innerHTML = shown.length
+        ? shown.map(cardHtml).join('')
+        : '<p style="color:var(--muted);font-size:13px;">No quotes match the selected filters.</p>';
+    }
+
+    function openDrill(chartId, code) {
+      // Prevalence bars are aggregated by code across every question, so the
+      // drilldown searches all of a participant's coded questions for the code
+      // (not a fixed question subset). This keeps the quote count equal to the
+      // prevalence shown on the bar.
+      titleEl.textContent = code;
+      var questions = VX.questions || {};
+      filters = {};
+      currentCards = [];
+      VX.participants.forEach(function (p) {
+        if (!p.c) return;
+        var hitQids = [];
+        for (var q in p.c) {
+          if (p.c[q].indexOf(code) !== -1) hitQids.push(q);
+        }
+        if (!hitQids.length) return;
+        // prefer the question where this theme carries a Best-Worst Scaling
+        // score (the participant's peak mention); else the first match.
+        var chosen = hitQids[0];
+        for (var i = 0; i < hitQids.length; i++) {
+          if (p.b && p.b[hitQids[i]] && p.b[hitQids[i]][code] != null) { chosen = hitQids[i]; break; }
+        }
+        currentCards.push({
+          qtext: questions[chosen] || '',
+          text: (p.v && p.v[chosen]) || '',
+          tags: {
+            func: p.func || '',
+            ind: p.ind || '',
+            sen: p.sen || '',
+            age: p.age || '',
+            ai: p.ai || '',
+            intent: p.intent ? p.intent + ' to enroll' : '',
+          },
+        });
+      });
+      renderCards();
+      bodyEl.scrollTop = 0;
+      overlay.classList.add('open');
+    }
+
+    // Tag clicks toggle filters; header chips remove them.
+    bodyEl.addEventListener('click', function (e) {
+      var tag = e.target.closest('.vb-tagf');
+      if (!tag) return;
+      var dim = tag.getAttribute('data-dim');
+      var val = tag.getAttribute('data-val');
+      if (filters[dim] === val) { delete filters[dim]; } else { filters[dim] = val; }
+      renderCards();
+    });
+    subEl.addEventListener('click', function (e) {
+      var chip = e.target.closest('.vb-fchip');
+      if (chip) { delete filters[chip.getAttribute('data-dim')]; renderCards(); return; }
+      if (e.target.closest('.vb-clear')) { filters = {}; renderCards(); }
+    });
+
+    document.querySelectorAll('[data-drilldown-chart]').forEach(function (chartEl) {
+      var chartId = chartEl.getAttribute('data-drilldown-chart');
+      chartEl.querySelectorAll('.bar-row, .paired-block').forEach(function (row) {
+        row.addEventListener('click', function () {
+          var code = row.getAttribute('data-code');
+          if (code) openDrill(chartId, code);
+        });
+      });
+    });
+
+    function close() { overlay.classList.remove('open'); }
+    document.getElementById('vb-close').addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+</script>
+
+<style is:global>
+  /* ===== Applied GenAI report body, scoped visual vocabulary ===== */
+  .genai-report h2 { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); margin: 32px 0 10px; letter-spacing: -0.02em; }
+  .genai-report h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin: 26px 0 8px; }
+  .genai-report p { font-size: 15px; color: var(--rule); margin: 0 0 14px; line-height: 1.65; }
+
+  /* stat grid (in-body) */
+  .genai-report .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; width: 100%; }
+  .genai-report .stat-card { text-align: center; padding: 18px 12px; background: rgba(11,31,58,0.04); border: 1px solid var(--border); border-radius: 8px; }
+  .genai-report .stat-num { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--signal); line-height: 1; }
+  .genai-report .stat-label { font-size: 11.5px; color: var(--muted); margin-top: 8px; line-height: 1.35; }
+
+  /* bar charts: 100% gray track, fill at raw %, value inside fill, one color per chart */
+  .genai-report .bar-chart { margin: 16px 0 8px; }
+  .genai-report .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .genai-report .bar-label { width: 300px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; color: var(--ink); }
+  .genai-report .bar-track { flex: 1; height: 24px; background: rgba(11,31,58,0.06); border-radius: 4px; overflow: hidden; }
+  .genai-report .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 34px; }
+  .genai-report .bar-fill.signal { background: var(--signal); }
+  .genai-report .bar-fill.ink { background: var(--ink); }
+  .genai-report .bar-fill.warm { background: #C4784A; }
+  .genai-report .bar-fill.slate { background: #5A7A94; }
+  .genai-report .bar-fill.teal { background: #2A7A6E; }
+  .genai-report .bar-fill.plum { background: #6B4C6E; }
+  .genai-report .bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+  .genai-report [data-drilldown-chart] .bar-row, .genai-report [data-drilldown-chart] .paired-block { cursor: pointer; }
+  .genai-report [data-drilldown-chart] .bar-row:hover .bar-label, .genai-report [data-drilldown-chart] .paired-block:hover .paired-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 2px; }
+
+  /* paired cohort bars: fixed-width label so all rows share a bar origin */
+  .genai-report .paired-legend { font-size: 12px; color: var(--muted); margin: 8px 0 12px; }
+  .genai-report .pl-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: middle; margin-right: 4px; }
+  .genai-report .pl-hot { background: var(--signal); }
+  .genai-report .pl-warm { background: #5A7A94; }
+  .genai-report .paired-block { display: grid; grid-template-columns: 300px 1fr; gap: 12px; align-items: center; margin-bottom: 10px; }
+  .genai-report .paired-label { width: 300px; font-size: 13px; font-weight: 500; text-align: right; color: var(--ink); }
+  .genai-report .sig-star { color: var(--signal); font-weight: 700; margin-left: 3px; }
+  .genai-report .paired-bars { display: flex; flex-direction: column; gap: 3px; }
+  .genai-report .pb-track { height: 15px; background: rgba(11,31,58,0.06); border-radius: 3px; overflow: hidden; }
+  .genai-report .pb-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; min-width: 30px; }
+  .genai-report .pb-fill.pl-hot { background: var(--signal); }
+  .genai-report .pb-fill.pl-warm { background: #5A7A94; }
+  .genai-report .pb-val { font-size: 10px; font-weight: 700; color: #fff; }
+
+  /* scatter */
+  .genai-report .scatter-wrap { width: 100%; max-width: 740px; margin: 16px 0 4px; }
+  .genai-report .scatter-svg { width: 100%; height: auto; font-family: var(--sans); }
+  .genai-report .sc-axis { font-size: 11px; fill: var(--muted); }
+  .genai-report .sc-label { font-size: 11px; fill: var(--ink); }
+  .genai-report .sc-quad { font-size: 10px; fill: rgba(11,31,58,0.38); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .genai-report .sc-tick { font-size: 10px; fill: var(--muted); }
+
+  /* verdict box (exec summary) */
+  .genai-report .verdict { border: 1px solid rgba(11,31,58,0.25); border-left: 5px solid var(--ink); background: rgba(11,31,58,0.05); padding: 18px 22px; border-radius: 0 6px 6px 0; margin: 20px 0; }
+  .genai-report .verdict p { font-size: 15px; margin: 0; line-height: 1.65; }
+  .genai-report .verdict strong { color: var(--ink); font-size: 16px; }
+
+  /* callouts */
+  .genai-report .insight { border-left: 4px solid var(--signal); background: rgba(184,52,27,0.06); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .genai-report .insight p, .genai-report .vuln-callout p, .genai-report .opp-callout p, .genai-report .seg-note p { font-size: 13.5px; margin: 0; }
+  .genai-report .insight strong { color: var(--signal); }
+  .genai-report .vuln-callout { border-left: 4px solid #C4784A; background: rgba(196,120,74,0.08); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .genai-report .vuln-callout strong { color: #B5622F; }
+  .genai-report .opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42,122,110,0.08); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .genai-report .opp-callout strong { color: #216157; }
+  .genai-report .seg-note { border-left: 4px solid #5A7A94; background: rgba(90,122,148,0.08); padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+
+  /* intensity explainer box */
+  .genai-report .intensity-box { border: 1px solid var(--border); background: rgba(11,31,58,0.03); border-radius: 8px; padding: 20px 24px; margin: 16px 0 24px; }
+  .genai-report .intensity-title { display: block; font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .genai-report .intensity-lead { font-size: 14px; line-height: 1.65; margin: 0 0 18px; }
+  .genai-report .intensity-example { margin-bottom: 16px; }
+  .genai-report .intensity-example:last-child { margin-bottom: 0; }
+  .genai-report .ix-topic { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
+  .genai-report .ix-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .genai-report .iq-card { padding: 12px 14px; border-radius: 0 6px 6px 0; background: #fff; }
+  .genai-report .iq-card.high { border-left: 3px solid var(--signal); background: rgba(184,52,27,0.05); }
+  .genai-report .iq-card.low { border-left: 3px solid #5A7A94; background: rgba(90,122,148,0.06); }
+  .genai-report .iq-tag { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+  .genai-report .iq-card.high .iq-tag { color: var(--signal); }
+  .genai-report .iq-card.low .iq-tag { color: #3f5a70; }
+  .genai-report .iq-quote { font-style: italic; font-size: 13px; line-height: 1.55; color: var(--rule); margin: 0; }
+  @media (max-width: 760px) { .genai-report .ix-pair { grid-template-columns: 1fr; } }
+
+  /* concept-stimulus box (exec summary) */
+  .genai-report .concept-box { border: 1px solid var(--border); border-left: 4px solid var(--ink); background: rgba(11,31,58,0.03); padding: 18px 22px; border-radius: 0 6px 6px 0; margin: 16px 0 24px; }
+  .genai-report .concept-label { display: block; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .genai-report .concept-box p { font-style: italic; font-size: 14px; line-height: 1.75; margin: 0; }
+  .genai-report .concept-box strong { font-style: normal; color: var(--ink); }
+
+  /* demographic breakdown box (exec summary) */
+  .genai-report .demo-box { border: 1px solid var(--border); background: rgba(11,31,58,0.03); padding: 18px 22px 12px; border-radius: 6px; margin: 16px 0 24px; }
+  .genai-report .demo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 24px; }
+  .genai-report .demo-head { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); border-bottom: 1px solid rgba(11,31,58,0.12); padding-bottom: 4px; margin-bottom: 6px; }
+  .genai-report .demo-row { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; line-height: 1.4; padding: 2px 0; color: var(--rule); }
+  .genai-report .demo-n { font-weight: 700; color: var(--ink); flex-shrink: 0; }
+  .genai-report .demo-note { font-size: 11px; color: var(--muted); margin: 12px 0 0; font-style: italic; }
+  @media (max-width: 760px) { .genai-report .demo-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* verbatim question quote above question-based charts */
+  .genai-report .q-asked { margin: 14px 0 10px; padding: 10px 16px; border-left: 3px solid rgba(11,31,58,0.20); background: rgba(11,31,58,0.03); border-radius: 0 4px 4px 0; }
+  .genai-report .q-asked-label { display: block; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 5px; }
+  .genai-report .q-asked-text { font-style: italic; font-size: 13.5px; color: var(--rule); line-height: 1.55; margin: 0 0 6px; }
+  .genai-report .q-asked-text:last-child { margin-bottom: 0; }
+
+  /* source notes + drilldown hint */
+  .genai-report .source-note { font-size: 12px; color: var(--muted); margin: 8px 0 12px; }
+  .genai-report .vb-hint { color: var(--signal); }
+  .genai-report .vb-hint::before { content: '\203A  '; }
+
+  /* tables */
+  .genai-report table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 13px; }
+  .genai-report th { text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid rgba(11,31,58,0.12); }
+  .genai-report td { padding: 10px 12px; border-bottom: 1px solid rgba(11,31,58,0.06); vertical-align: top; }
+  .genai-report .rec-table th { background: rgba(11,31,58,0.04); }
+  .genai-report .rec-table td:first-child { font-weight: 600; width: 26%; }
+  .genai-report .crosstab { overflow-x: auto; }
+  .genai-report .crosstab .highlight { background: rgba(184,52,27,0.10); font-weight: 700; }
+
+  /* scorecard */
+  .genai-report .scorecard { display: grid; gap: 2px; margin: 18px 0; background: rgba(11,31,58,0.08); border-radius: 8px; overflow: hidden; }
+  .genai-report .scorecard-header { background: var(--ink); color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 600; text-align: center; }
+  .genai-report .scorecard-cell { background: var(--paper); padding: 12px 16px; font-size: 13px; text-align: center; }
+  .genai-report .scorecard-cell.win { background: rgba(42,122,110,0.12); }
+  .genai-report .scorecard-cell.lose { background: rgba(196,120,74,0.12); }
+
+  /* verbatim modal */
+  .vb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; }
+  .vb-overlay.open { display: flex; justify-content: center; align-items: center; }
+  .vb-dialog { background: var(--paper); border-radius: 12px; max-width: 760px; width: 95%; max-height: 85vh; display: flex; flex-direction: column; position: relative; }
+  .vb-header { padding: 20px 24px 12px; border-bottom: 1px solid rgba(11,31,58,0.10); }
+  .vb-header h3 { font-family: var(--serif); font-size: 18px; color: var(--ink); margin: 0; }
+  .vb-header p { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; line-height: 1.5; }
+  .vb-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--muted); line-height: 1; }
+  .vb-close:hover { color: var(--ink); }
+  .vb-body { padding: 16px 24px 24px; overflow-y: auto; flex: 1; }
+  .vb-card { background: rgba(11,31,58,0.04); border-left: 3px solid var(--signal); padding: 14px 16px; border-radius: 0 6px 6px 0; margin-bottom: 12px; }
+  .vb-card .vb-q { font-size: 11px; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.01em; }
+  .vb-card .vb-quote { font-style: italic; font-size: 13.5px; color: var(--rule); line-height: 1.65; margin-bottom: 10px; }
+  .vb-card .vb-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 11.5px; color: var(--muted); }
+  .vb-tagf { font-family: var(--sans); font-size: 11px; background: rgba(11,31,58,0.07); color: var(--rule); padding: 2px 9px; border-radius: 10px; border: 1px solid transparent; cursor: pointer; line-height: 1.5; }
+  .vb-tagf:hover { border-color: rgba(11,31,58,0.25); }
+  .vb-tagf.active { background: var(--signal); color: #fff; }
+  .vb-filter-hint { color: var(--muted); }
+  .vb-fbar { display: block; margin-top: 8px; }
+  .vb-fchip { font-family: var(--sans); font-size: 11px; font-weight: 600; background: var(--signal); color: #fff; border: none; padding: 3px 10px; border-radius: 10px; cursor: pointer; margin-right: 6px; }
+  .vb-fchip:hover { background: #8E2514; }
+  .vb-clear { font-family: var(--sans); font-size: 11px; background: none; border: none; color: var(--signal); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
+
+  @media print {
+    .vb-overlay { display: none !important; }
+    .genai-report [data-drilldown-chart] .bar-row { cursor: default; }
+    .genai-report .bar-fill.signal { background: var(--signal) !important; }
+    .genai-report .bar-fill.ink { background: var(--ink) !important; }
+    .genai-report .bar-fill.warm { background: #C4784A !important; }
+    .genai-report .bar-fill.slate { background: #5A7A94 !important; }
+    .genai-report .bar-fill.teal { background: #2A7A6E !important; }
+    .genai-report .bar-fill.plum { background: #6B4C6E !important; }
+    .genai-report .pb-fill.pl-hot { background: var(--signal) !important; }
+    .genai-report .pb-fill.pl-warm { background: #5A7A94 !important; }
+  }
+</style>

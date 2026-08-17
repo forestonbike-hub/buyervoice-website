@@ -1,0 +1,171 @@
+---
+
+---
+
+<form class="contact-form" id="contact-form">
+  <div class="form-row">
+    <div class="form-group">
+      <label for="firstName">First name <span class="required">*</span></label>
+      <input type="text" id="firstName" name="firstName" required />
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last name <span class="required">*</span></label>
+      <input type="text" id="lastName" name="lastName" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Business email <span class="required">*</span></label>
+    <input type="email" id="email" name="email" required />
+  </div>
+
+  <div class="form-group">
+    <label for="company">Company name <span class="required">*</span></label>
+    <input type="text" id="company" name="company" required />
+  </div>
+
+  <div class="form-group">
+    <label for="role">Your role</label>
+    <select id="role" name="role">
+      <option value="">Select your role</option>
+      <option value="vp-marketing">VP/Director of Marketing</option>
+      <option value="head-product">Head of Product</option>
+      <option value="vp-insights">VP/Director of Consumer Insights</option>
+      <option value="c-suite">C-Suite</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="service">What are you looking for?</label>
+    <select id="service" name="service">
+      <option value="">Select a service</option>
+      <option value="foundational">Foundational Research</option>
+      <option value="conjoint">Conjoint Analysis & Pricing Research</option>
+      <option value="brand">Brand Measurement & Tracking</option>
+      <option value="unstructured-data">Unstructured Data Analysis</option>
+      <option value="not-sure">Not sure yet</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="message">Tell us more <span class="optional">(optional)</span></label>
+    <textarea id="message" name="message" rows="4"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Send</button>
+
+  <div class="form-confirmation" id="form-confirmation" hidden>
+    <p>Thank you. We typically respond within one business day.</p>
+  </div>
+</form>
+
+<style>
+  .contact-form {
+    max-width: 520px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-black);
+    margin-bottom: var(--space-xs);
+  }
+
+  .required {
+    color: var(--color-coral);
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--color-slate);
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    background: var(--color-white);
+    color: var(--color-black);
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-green);
+    box-shadow: 0 0 0 2px rgba(58, 166, 85, 0.15);
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  button[type="submit"] {
+    margin-top: var(--space-sm);
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+    padding: 14px 24px;
+  }
+
+  .form-confirmation {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: var(--color-light-gray);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--color-green);
+  }
+
+  .form-confirmation p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-black);
+    font-weight: 500;
+  }
+
+  @media (max-width: 480px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const confirmation = document.getElementById('form-confirmation');
+
+  if (form && confirmation) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Form UI only for now (no backend integration)
+      form.querySelectorAll('input, select, textarea, button').forEach(el => {
+        (el as HTMLInputElement).disabled = true;
+      });
+      confirmation.hidden = false;
+    });
+  }
+</script>

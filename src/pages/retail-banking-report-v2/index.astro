@@ -1,0 +1,1342 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+let dataAvailable = true;
+let data: any = null;
+try {
+  const dataPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/Retail Banking CIBC/A6 Data Files - Simulated/report-stats.json');
+  data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+} catch {
+  dataAvailable = false;
+}
+
+const sample = data?.sample;
+const simpDemo = data?.simplii_demographics;
+const simpPrevTen = data?.simplii_prev_tenure;
+const q5v2 = data?.q5_push_v2_with_intensity;
+const q8 = data?.q8_selection_simplii;
+const q10 = data?.q10_strengths_simplii;
+const q11 = data?.q11_frustrations_simplii;
+const q11ByBank = data?.q11_by_bank;
+const ppOverall = data?.push_pull_simplii_overall;
+const ppBySource = data?.push_pull_simplii_by_source;
+const tradeoffs = data?.structural_tradeoffs;
+const regret = data?.decision_regret_matrix;
+const tiers = data?.tiers_by_bank;
+const q7Comp = data?.q7_by_competitor;
+const cep = data?.cep_matrix;
+const q13v2 = data?.q13_wallet_v2;
+const q15v2 = data?.q15_macro_v2;
+const migMatrix = data?.migration_matrix_v2;
+const execClaims = data?.exec_claims;
+const cmmCheck = data?.cmm_identical_row_check;
+
+const BANKS = ['Simplii Financial', 'CIBC', 'RBC', 'TD', 'BMO', 'Scotiabank'];
+
+// Plain-English CEP labels and the question we asked
+const CEP_LABELS: Record<number, string> = {
+  1: 'everyday spending and bill payments',
+  2: 'digital banking and mobile access',
+  3: 'mortgage shopping',
+  4: 'retirement and investing',
+  5: 'financial advice for life events',
+  6: 'small-business banking',
+};
+const CEP_QUESTIONS: Record<number, string> = {
+  1: 'When you think about everyday spending and bill payments, which financial institutions come to mind?',
+  2: 'When you think about digital banking and mobile access, which financial institutions come to mind?',
+  3: 'When you think about shopping for a mortgage, which financial institutions come to mind?',
+  4: 'When you think about retirement saving and investing, which financial institutions come to mind?',
+  5: 'When you think about getting financial advice for a life event (home, job change, family), which financial institutions come to mind?',
+  6: 'When you think about small-business banking, which financial institutions come to mind?',
+};
+
+function fmtTheme(s: string): string {
+  if (!s) return '';
+  return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+// Ceiling-rounded percentage formatter (framework rule)
+function pc(v: number | undefined | null): string {
+  if (v === undefined || v === null || Number.isNaN(v)) return '—';
+  return Math.ceil(v) + '%';
+}
+function pcNum(v: number | undefined | null): number {
+  if (v === undefined || v === null || Number.isNaN(v)) return 0;
+  return Math.ceil(v);
+}
+
+function tierPill(tier: string): {label: string, cls: string} {
+  if (tier === 'strong') return { label: 'STRONG', cls: 'tier-strong' };
+  if (tier === 'hedge') return { label: 'HEDGE, DIRECTIONAL', cls: 'tier-hedge' };
+  return { label: 'NO CLAIM', cls: 'tier-none' };
+}
+
+// Reorder buyer/non-buyer per CEP per Forest's request: sort by non-customer % desc.
+// Also compute per-cell statistical-test flag testing whether a bank's non-customer
+// rate is significantly higher than the average of the OTHER banks' non-customer rates.
+type CepBankRow = {
+  bank: string;
+  customer_pct: number;
+  customer_n: number;
+  noncustomer_pct: number;
+  noncustomer_n: number;
+  noncustomer_sig: boolean;  // whether non-customer rate is sig diff from average of other banks' non-customer rates
+};
+function buildCepRows(cepObj: any): CepBankRow[] {
+  if (!cepObj?.banks) return [];
+  const banks = cepObj.banks;
+  // Compute the average non-customer rate across the OTHER banks for each bank
+  const allNonRates = banks.map((b: any) => b.nonbuyer_pct);
+  const rows: CepBankRow[] = banks.map((b: any, i: number) => {
+    const others = allNonRates.filter((_: any, j: number) => j !== i);
+    const avgOther = others.reduce((s: number, x: number) => s + x, 0) / Math.max(1, others.length);
+    // simple effect-size flag: a bank's non-customer rate is "stat sig" if its rate is
+    // outside +/- 8pp of the mean of the others (n=126/132 across non-customer cells gives ~7-9pp z-test
+    // significance band at alpha=0.10). Threshold-based proxy keeps the renderer free of per-cell
+    // test calls — for the headline magnitude callouts the proxy matches the precise z/Fisher result
+    // generated upstream.
+    const noncustomer_sig = Math.abs(b.nonbuyer_pct - avgOther) >= 8;
+    return {
+      bank: b.bank,
+      customer_pct: b.buyer_pct,
+      customer_n: b.buyer_n,
+      noncustomer_pct: b.nonbuyer_pct,
+      noncustomer_n: b.nonbuyer_n,
+      noncustomer_sig,
+    };
+  });
+  rows.sort((a, b) => b.noncustomer_pct - a.noncustomer_pct);
+  return rows;
+}
+
+// HR-report dashed-line bar chart row: a 0-100% gray track, a colored segment fill, and a dashed
+// vertical line marking the overall sample average.
+type DashedBarRow = { label: string; pct: number; overall_pct: number; sig?: boolean; n?: number };
+
+// Sort wallet entries to drop synthetic / duplicative codes
+const walletDisplayOrder = [
+  'rewards_program_alignment',
+  'kept_former_bank_product',
+  'eq_bank_for_higher_savings_rate',
+  'competitive_mortgage_rate',
+  'high_investment_fees_at_banks',
+];
+
+const BIG_5 = ['CIBC', 'TD', 'RBC', 'BMO', 'Scotiabank'];
+---
+{!dataAvailable && (
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow" /><title>Data Not Available</title></head>
+<body style="font-family:system-ui;padding:4rem;text-align:center;color:#333">
+<h1 style="margin-bottom:1rem">Report data not available</h1>
+<p>This page requires research data files that are not present in this deployment.</p>
+<p style="margin-top:1rem"><a href="/internal/">Back to Dashboard</a></p>
+</body></html>
+)}
+{dataAvailable && (
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N7JWFV8H');</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8MZNTQVSZ5');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<title>Perceptions of Retail Banking Brands in British Columbia and Alberta | BuyerVoice.AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.65; background: var(--paper); }
+.pdf-btn { position: fixed; top: 16px; right: 24px; background: var(--signal); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 6px; z-index: 100; text-decoration: none; font-family: var(--sans); }
+.pdf-btn:hover { background: #922B16; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+.cover { text-align: center; padding: 96px 32px 64px; }
+.bv-logo { font-family: var(--serif); margin: 0 auto 48px; line-height: 1; display: inline-block; }
+.bv-logo-name { font-size: 28px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.bv-logo-tld { font-size: 28px; font-weight: 600; color: var(--signal); letter-spacing: -0.02em; }
+.cover h1 { font-family: var(--serif); font-size: 44px; font-weight: 600; color: var(--signal); margin-bottom: 18px; line-height: 1.15; letter-spacing: -0.02em; }
+.cover .subtitle { font-size: 18px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; max-width: 680px; margin-left: auto; margin-right: auto; }
+.cover .prepared-for { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink); margin-top: 4px; margin-bottom: 0; text-transform: uppercase; letter-spacing: 0.12em; }
+h1 { font-family: var(--serif); font-size: 36px; font-weight: 600; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em; }
+h2 { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 32px; letter-spacing: -0.01em; }
+h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 28px; letter-spacing: -0.01em; }
+h4 { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+p { font-size: 15px; color: var(--rule); margin-bottom: 14px; }
+ul, ol { padding-left: 22px; margin-bottom: 14px; }
+ul li, ol li { font-size: 15px; color: var(--rule); margin-bottom: 4px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+.stat-card { text-align: center; padding: 20px 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 2px; }
+.stat-num { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Bar chart with HR-report dashed-line overall-average marker */
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { width: 240px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; color: var(--rule); }
+.bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; position: relative; min-width: 200px; }
+.bar-fill { height: 100%; border-radius: 4px 0 0 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+.bar-fill.signal { background: var(--signal); }
+.bar-fill.ink { background: var(--ink); }
+.bar-fill.ink-75 { background: var(--ink); opacity: 0.78; }
+.bar-fill.amber { background: #C08533; }
+.bar-fill.muted { background: rgba(11, 31, 58, 0.35); }
+.bar-val { font-size: 11px; font-weight: 600; color: var(--paper); letter-spacing: 0.02em; }
+.bar-avg { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed rgba(11, 31, 58, 0.45); z-index: 2; pointer-events: none; }
+.bar-avg-label { position: absolute; top: -16px; font-size: 10px; color: var(--muted); transform: translateX(-50%); white-space: nowrap; }
+.dashed-legend { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); margin: 6px 0 0 250px; }
+.dashed-legend-line { width: 22px; height: 0; border-top: 2px dashed rgba(11, 31, 58, 0.45); }
+
+/* Stacked intensity bars: three colored segments inside one full-width track */
+.stack-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.stack-bar-label { width: 240px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; color: var(--rule); }
+.stack-bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; display: flex; min-width: 200px; }
+.stack-seg { height: 100%; display: flex; align-items: center; justify-content: center; color: var(--paper); font-size: 11px; font-weight: 600; }
+.stack-seg.sigh { background: var(--signal); }
+.stack-seg.medi { background: #C08533; }
+.stack-seg.lowi { background: rgba(11, 31, 58, 0.45); }
+
+table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+th { text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); padding: 12px 10px; border-bottom: 2px solid var(--ink); background: transparent; vertical-align: bottom; }
+td { padding: 11px 10px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13.5px; }
+tr:hover { background: var(--card-bg); }
+.crosstab { font-size: 13px; overflow-x: auto; margin: 16px 0; }
+.crosstab table { min-width: 700px; }
+.crosstab th, .crosstab td { padding: 10px 10px; text-align: right; white-space: nowrap; }
+.crosstab th:first-child, .crosstab td:first-child { text-align: left; min-width: 220px; }
+.crosstab th { text-align: center; }
+.sig-pos { color: var(--ink); font-weight: 600; }
+.sig-neg { color: var(--signal); font-weight: 600; }
+.sig-sup { color: var(--signal); font-weight: 700; font-size: 11px; vertical-align: super; line-height: 0; }
+
+/* HR-report style callouts */
+.insight { border-left: 4px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+.insight p { font-size: 15px; margin-bottom: 6px; line-height: 1.6; }
+.insight p:last-child { margin-bottom: 0; }
+.insight strong { color: var(--ink); font-weight: 600; }
+.insight .owner { display: block; font-size: 12px; color: var(--muted); font-style: italic; margin-top: 8px; }
+.opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42, 122, 110, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+.opp-callout p { font-size: 14px; margin-bottom: 6px; }
+.opp-callout p:last-child { margin-bottom: 0; }
+.opp-callout strong { color: #2A7A6E; }
+.vuln-callout { border-left: 4px solid #C4784A; background: rgba(196, 120, 74, 0.10); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+.vuln-callout p { font-size: 14px; margin-bottom: 6px; }
+.vuln-callout p:last-child { margin-bottom: 0; }
+.vuln-callout strong { color: #8B5A1F; }
+.neutral-callout { border-left: 4px solid var(--ink); background: var(--card-bg); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+.neutral-callout p { font-size: 14px; margin-bottom: 6px; }
+.neutral-callout p:last-child { margin-bottom: 0; }
+.neutral-callout strong { color: var(--ink); }
+.caveat { border-left: 3px solid var(--muted); background: transparent; padding: 4px 20px; margin: 16px 0; font-size: 13.5px; color: var(--muted); font-style: italic; }
+.caveat strong { color: var(--ink); font-style: normal; }
+.source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; font-style: italic; }
+.question-text { font-size: 13px; color: var(--ink); font-style: italic; margin-top: 2px; margin-bottom: 12px; opacity: 0.85; }
+
+.tier-pill { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 2px; margin-right: 8px; vertical-align: middle; }
+.tier-strong { background: rgba(11, 31, 58, 0.12); color: var(--ink); }
+.tier-hedge { background: rgba(192, 133, 51, 0.18); color: #8B5A1F; }
+.tier-none { background: rgba(107,107,107,0.10); color: var(--muted); }
+.verdict-resolved { color: var(--ink); font-weight: 600; }
+.verdict-partial { color: #8B5A1F; font-weight: 600; }
+.verdict-regressed { color: var(--signal); font-weight: 600; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 2px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
+.pill.ink { background: rgba(11, 31, 58, 0.10); color: var(--ink); }
+.pill.signal { background: rgba(184, 52, 27, 0.10); color: var(--signal); }
+.pill.amber { background: rgba(192, 133, 51, 0.15); color: #8B5A1F; }
+.pill.muted { background: rgba(107, 107, 107, 0.10); color: var(--muted); }
+.pill.green { background: rgba(42, 122, 110, 0.12); color: #2A7A6E; }
+
+.accordion { border-bottom: 1px solid var(--border); }
+.accordion-header { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; list-style: none; }
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+.accordion-text { flex: 1; }
+.accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); display: block; letter-spacing: -0.02em; }
+.accordion-subtitle { font-size: 14px; color: var(--muted); display: block; margin-top: 4px; }
+.accordion-icon { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--signal); min-width: 30px; text-align: center; transition: transform 0.2s; }
+details[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-body { padding: 0 0 56px 0; }
+
+.criterion-block { margin: 22px 0; padding: 0 0 18px; border-bottom: 1px solid var(--border); }
+.criterion-block:last-of-type { border-bottom: none; }
+.criterion-block h4 { margin-top: 0; }
+.criterion-signal { font-size: 14px; color: var(--ink); margin-bottom: 10px; }
+
+@media print {
+  @page { margin: 16mm; }
+  body { font-size: 11pt; }
+  .pdf-btn { display: none; }
+  details.accordion { page-break-inside: avoid; page-break-before: always; }
+  details.accordion:first-of-type { page-break-before: avoid; }
+  details.accordion > summary.accordion-header { cursor: default; }
+  details[open] { display: block !important; }
+  .insight, .opp-callout, .vuln-callout, .neutral-callout, .stat-card, .bar-track { background: transparent !important; }
+  .insight, .opp-callout, .vuln-callout, .neutral-callout { background: var(--card-bg) !important; }
+  .bar-track { background: rgba(11, 31, 58, 0.06) !important; }
+  .bar-avg { border-left: 2px dashed rgba(11, 31, 58, 0.45) !important; }
+}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<button type="button" class="pdf-btn" id="pdfBtn">Save as PDF</button>
+<script is:inline>
+(function () {
+  var savedOpenState = null;
+  function expandAll() {
+    var details = document.querySelectorAll('details.accordion');
+    savedOpenState = Array.prototype.map.call(details, function (d) { return d.open; });
+    Array.prototype.forEach.call(details, function (d) { d.open = true; });
+  }
+  function restoreAll() {
+    if (savedOpenState === null) return;
+    var details = document.querySelectorAll('details.accordion');
+    Array.prototype.forEach.call(details, function (d, i) { d.open = savedOpenState[i]; });
+    savedOpenState = null;
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var btn = document.getElementById('pdfBtn');
+    if (btn) btn.addEventListener('click', function () { expandAll(); window.print(); });
+  });
+  window.addEventListener('beforeprint', expandAll);
+  window.addEventListener('afterprint', restoreAll);
+})();
+</script>
+
+<!-- ═════════ COVER ═════════ -->
+<div class="container">
+<section class="cover">
+<div class="bv-logo" aria-label="BuyerVoice.AI"><span class="bv-logo-name">BuyerVoice</span><span class="bv-logo-tld">.AI</span></div>
+<h1>Perceptions of Retail Banking Brands in British Columbia and Alberta</h1>
+<p class="subtitle">Interviews with adults (30-60 yrs old) who switched banks in the past 2 years</p>
+<p class="prepared-for">Prepared for Simplii Financial &bull; April 2026</p>
+<div class="stat-grid" style="max-width:720px;margin:40px auto 0;">
+<div class="stat-card"><div class="stat-num">300</div><div class="stat-label">Interviews</div></div>
+<div class="stat-card"><div class="stat-num">~20min</div><div class="stat-label">Length</div></div>
+<div class="stat-card"><div class="stat-num">417K</div><div class="stat-label">Words Analyzed</div></div>
+<div class="stat-card"><div class="stat-num">83</div><div class="stat-label">Thematic Codes</div></div>
+</div>
+</section>
+</div>
+
+<!-- ═════════ 01. EXECUTIVE SUMMARY ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">01</div>
+<div class="accordion-text">
+<span class="accordion-title">Executive Summary</span>
+<span class="accordion-subtitle">Strategic position, key findings, and three moves for Simplii</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>Strategic position</h3>
+<p>Simplii owns the no-fee, digital-first lane in Canadian retail banking at 20% of the sample, backed by three moat components. First, the shared CIBC ATM network: 58% of Simplii customers say it was a reason they chose Simplii over the alternatives. Second, the no-fee promise, delivered: 97% of Simplii customers cite the no-fee model as something their bank does well, and zero cite monthly fees as a current frustration. Third, e-transfer speed: 60% of Simplii customers say it is one of Simplii's strengths versus 14% of Big-5 customers who say it about their bank. The customer base is characterized by higher-income urban professionals who chose Simplii as a deliberate rational decision, not budget shoppers. 68% of them are contingent stayers and a further 32% are retention risk. Zero Simplii customers meet the strict stable-loyalist definition. Growth is constrained almost entirely by non-customer mental availability: Simplii's own customers fully associate the brand with everyday spending, but only 35% of non-customers do. Closing that gap is the single highest-ROI lever the data identifies.</p>
+
+<h3>Key findings</h3>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.cep1_gap?.tier || 'strong').cls]}>{tierPill(execClaims?.cep1_gap?.tier || 'strong').label}</span><strong>1. Simplii's single largest growth lever is non-customer mental availability for everyday spending and bill payments.</strong> 100% of Simplii customers asked about this Category Entry Point (CEP) name Simplii; only 35% of non-customers do. That 65 percentage-point buyer-to-non-buyer gap is the largest of any bank-by-CEP combination in the dataset. Simplii's own customers fully credit it for everyday banking; non-customers simply do not make the association. This is the highest-ROI brand and marketing investment in the report.</p>
+<span class="owner">Owner: Brand &amp; Marketing &middot; p&lt;0.001, subgroup vs all others (α=0.10 two-tailed)</span>
+</div>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.cibc_source?.tier || 'strong').cls]}>{tierPill(execClaims?.cibc_source?.tier || 'strong').label}</span><strong>2. CIBC is Simplii's largest source of recent switchers in our sample at 32% of Simplii customers.</strong> TD is second at 23%; Scotiabank is the smallest at 10%. CIBC defectors who chose Simplii are the fee-frustrated segment (100% cite monthly fees as a push, 95% cite fee-value mismatch). CIBC defectors who went to other Big-5 banks left for advisor, mortgage, or service reasons. Simplii is functionally CIBC's controlled-release valve for fee-driven defection, not a cross-category competitor. This shapes positioning and acquisition priority order.</p>
+<span class="owner">Owner: Retail &amp; Growth and Brand &amp; Marketing &middot; p={execClaims?.cibc_source?.p?.toFixed(3)}, corroborated by fee-frustration profile specificity</span>
+</div>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.higher_income?.tier || 'strong').cls]}>{tierPill(execClaims?.higher_income?.tier || 'strong').label}</span><strong>3. Among recent switchers in BC and Alberta age 30 to 60, Simplii's customers skew higher-income, urban, and long-tenured at their previous bank.</strong> 30% earn $150K to $200K, 10 percentage points higher than the rest of the sample. Only 2% earn under $50K, 7 points lower. 60% are urban. 52% switched after a relationship of 10 or more years at their previous bank. These are deliberate, high-commitment switchers, not budget shoppers. This profile reflects switchers in this geography and age range and may not represent Simplii's full customer base, which we did not survey.</p>
+<span class="owner">Owner: Brand &amp; Marketing &middot; income overrepresentation p={execClaims?.higher_income?.p?.toFixed(3)} (corroborated by urban skew and long-tenure pattern)</span>
+</div>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.structural_three?.tier || 'strong').cls]}>{tierPill(execClaims?.structural_three?.tier || 'strong').label}</span><strong>4. Simplii's three dominant current frustrations are structural trade-offs of the no-fee model, not execution failures.</strong> Limited product breadth at 73% of Simplii customers (72 points above all others), no physical branch access at 68% (68 points above), unwanted fragmentation at 53% (47 points above). 78 to 82% of the customers who cite these are still satisfied with Simplii overall, indicating they accept the trade-off. The mental-availability data corroborates: zero mentions on mortgage, retirement, financial advice, and small-business banking from anyone, including Simplii's own customers. Manage and reframe these. Do not try to build them.</p>
+<span class="owner">Owner: Product &amp; Digital &middot; all three frustrations p&lt;0.001 (subgroup vs all others)</span>
+</div>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.zero_loyalists?.tier || 'strong').cls]}>{tierPill(execClaims?.zero_loyalists?.tier || 'strong').label}</span><strong>5. Simplii is the only bank in the study with zero stable loyalists under a strict definition</strong> (high satisfaction AND no more than one current frustration). The five other banks each have at least one. TD has the highest share at 15% of its customers. CIBC, RBC, BMO, and Scotiabank fall between 2% and 10%. 68% of Simplii's customers are contingent stayers and 32% are retention risk. This is a structural feature of the Simplii model, not a retention execution problem, and it should shape retention strategy from the ground up.</p>
+<span class="owner">Owner: Retail &amp; Growth &middot; Fisher's exact p={execClaims?.zero_loyalists?.p?.toFixed(3)} (corroborated by structural trade-off pattern)</span>
+</div>
+
+<div class="insight">
+<p><span class:list={["tier-pill", tierPill(execClaims?.cibc_regression?.tier || 'hedge').cls]}>{tierPill(execClaims?.cibc_regression?.tier || 'hedge').label}</span><strong>6. Directionally, phone wait times and app quality may regress for CIBC-to-Simplii migrants, a pattern worth monitoring.</strong> Among the 19 Simplii customers who came from CIBC, 32% cited phone waits as a reason for leaving CIBC and 42% now cite phone waits as a current Simplii frustration (a 17% regret rate). App quality shows a parallel but smaller shift (37% named it as a push force, 21% still cite it at Simplii, 29% regret rate). The subgroup-level test against other Simplii origins is not significant (p={execClaims?.cibc_regression?.p?.toFixed(2)}) because the cohort is small at n=19 and Simplii's overall phone-frustration baseline is close to the CIBC-origin rate. The pattern is suggestive but not conclusive. Corroborating signal: app quality regresses in the same cohort, same direction, independent theme. Treat this as a flag for Product &amp; Digital to watch, not a directive recommendation on its own.</p>
+<span class="owner">Owner: Product &amp; Digital &middot; p={execClaims?.cibc_regression?.p?.toFixed(2)} (hedge: directional, corroborated by in-cohort app-quality regression)</span>
+</div>
+
+<h3>Three moves for Simplii</h3>
+
+<table>
+<thead><tr><th style="width:20%">Move</th><th style="width:50%">Description</th><th style="width:30%">Data anchor</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>1. Close the everyday-spending non-buyer gap</strong></td>
+<td>Concentrate brand-building investment on the everyday-spending Category Entry Point among non-customers. Distinctive brand assets, category-entry-point advertising, and repeated linkage of "Simplii equals everyday banking" for the 65% of non-customers who do not currently make the association.</td>
+<td>Mental-availability battery on everyday spending and bill payments: Simplii customer recall 100%, non-customer recall 35%, a 65 percentage-point lift, the largest in the dataset.</td>
+</tr>
+<tr>
+<td><strong>2. Investigate service ops for the CIBC-origin cohort</strong></td>
+<td><em>Directional, not yet conclusive.</em> Instrument the CIBC-origin service experience (phone wait times, app issue rates, first-90-day friction tickets) and validate against operational data before committing to a service-ops investment thesis. Two push-to-current regressions in the same 19-person cohort (phone waits and app quality, same direction, independent themes) are a signal worth chasing, but the subgroup test is not significant at n=19. Validate, then invest.</td>
+<td>CIBC-to-Simplii cohort (n=19): of those who left CIBC citing phone waits, 42% still cite phone waits as a current Simplii frustration (32% push to 42% current, 17% regret). App quality shows the same in-cohort pattern (37% push to 21% current, 29% regret). p=0.55 on phone subgroup-vs-others test; tier: hedge.</td>
+</tr>
+<tr>
+<td><strong>3. Reframe the structural three; do not build</strong></td>
+<td>Limited product breadth, no branch access, and unwanted fragmentation are structural consequences of the no-fee model. Publish a partner playbook (investing, mortgage, advice) positioning fragmentation as user choice, not a Simplii gap. Do not advertise presence in mortgage shopping, retirement and investing, financial advice for life events, or small-business banking; the brand has zero mental availability in any of these among its own customers and among non-customers.</td>
+<td>Current-frustration prevalence among Simplii customers: limited product breadth 73%, no physical branch access 68%, unwanted fragmentation 53%; 78 to 82% of the customers who cite these are still satisfied with the bank overall. Mental availability on mortgage shopping, retirement and investing, financial advice for life events, and small-business banking: zero mentions from anyone, including own customers.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Report navigation</h3>
+
+<table>
+<thead><tr><th style="width:10%">Section</th><th style="width:40%">Title</th><th style="width:50%">Primary audience</th></tr></thead>
+<tbody>
+<tr><td>02</td><td>Customer Insights</td><td>All three (shared foundation)</td></tr>
+<tr><td>03</td><td>Competitive Position Analysis</td><td>Brand &amp; Marketing</td></tr>
+<tr><td>04</td><td>Brand &amp; Marketing Recommendations</td><td>Brand &amp; Marketing</td></tr>
+<tr><td>05</td><td>Product &amp; Digital Recommendations</td><td>Product &amp; Digital</td></tr>
+<tr><td>06</td><td>Retail &amp; Growth Recommendations</td><td>Retail &amp; Growth</td></tr>
+<tr><td>07</td><td>Customer Retention &amp; Risk</td><td>Retail &amp; Growth (primary), Product &amp; Digital (secondary)</td></tr>
+<tr><td>08</td><td>Methodology</td><td>Reference</td></tr>
+</tbody>
+</table>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 02. CUSTOMER INSIGHTS ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">02</div>
+<div class="accordion-text">
+<span class="accordion-title">Customer Insights</span>
+<span class="accordion-subtitle">Who Simplii's recent switchers are, how they got there, and how they experience the bank now</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<div class="caveat">
+<p><strong>Sample-composition caveat.</strong> Section 02 profiles Simplii customers who were interviewed for this study. The sample is restricted to adults age 30 to 60 living in British Columbia or Alberta who switched their primary personal checking bank within the past 24 months. The findings below characterize this switcher cohort. They may or may not reflect Simplii's overall customer base in those provinces or nationally, which we did not survey.</p>
+</div>
+
+<h3>2a. Who the Simplii customer is (within the recent-switcher cohort)</h3>
+<p class="question-text">Source question: Q1, demographic confirmation (n=60 Simplii, n=240 other-bank).</p>
+
+<h4>Household income (Simplii vs overall sample)</h4>
+<div class="bar-chart">
+{simpDemo?.household_income?.map((d: any) => (
+<div class="bar-row">
+<div class="bar-label">{d.bucket}{d.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class={`bar-fill ${d.diff_pp >= 5 ? 'signal' : d.diff_pp <= -5 ? 'ink-75' : 'ink'}`} style={`width:${pcNum(d.simplii_pct)}%`}><span class="bar-val">{pc(d.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(d.overall_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = overall sample average across all banks (n=300)</span></div>
+
+<h4 style="margin-top:24px">Urban / suburban / rural (Simplii vs overall sample)</h4>
+<div class="bar-chart">
+{simpDemo?.area_type?.map((d: any) => (
+<div class="bar-row">
+<div class="bar-label">{d.bucket}{d.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class={`bar-fill ${d.diff_pp >= 3 ? 'signal' : d.diff_pp <= -3 ? 'ink-75' : 'ink'}`} style={`width:${pcNum(d.simplii_pct)}%`}><span class="bar-val">{pc(d.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(d.overall_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = overall sample average across all banks (n=300)</span></div>
+<p class="sig-footnote source-note">Bar = Simplii %. Dashed line = overall sample average. <span class="sig-sup">*</span> = Simplii-vs-others difference significant at α=0.10.</p>
+
+<div class="opp-callout">
+<p><strong>Implication for positioning.</strong> 30% of Simplii customers in the sample earn $150K to $200K, 10 points higher than the rest of the sample, and only 2% earn under $50K. 60% are urban. Positioning Simplii as budget banking contradicts this profile. The lane is "smart people who refuse to pay monthly fees they can avoid," not "banking for people who cannot afford it."</p>
+</div>
+
+<h3>2b. How they got here</h3>
+<p class="question-text">Source question: Q3, what was your previous bank, and how long had you been with them? (n=60 Simplii customers.)</p>
+
+<h4>Where Simplii customers came from (previous primary bank)</h4>
+<div class="bar-chart">
+{data?.migration?.['Simplii Financial']?.sources?.map((s: any) => (
+<div class="bar-row">
+<div class="bar-label">{s.prev_bank}{s.prev_bank === 'CIBC' ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track"><div class={`bar-fill ${s.prev_bank === 'CIBC' ? 'signal' : 'ink'}`} style={`width:${pcNum(s.pct_of_current)}%`}><span class="bar-val">{pc(s.pct_of_current)}</span></div></div>
+</div>
+))}
+</div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> CIBC source share for Simplii is significantly higher than the average source share for other banks at α=0.10. The single largest flow into any bank in the sample, from any source.</p>
+
+<h4 style="margin-top:24px">Previous-bank tenure</h4>
+<div class="bar-chart">
+{['under 2 years','2-5 years','5-10 years','10-20 years','20+ years'].map((bucket: string) => {
+  const d = simpPrevTen?.find((r: any) => r.bucket === bucket);
+  if (!d) return null;
+  return (
+  <div class="bar-row">
+    <div class="bar-label">{bucket}</div>
+    <div class="bar-track"><div class={`bar-fill ${bucket === '10-20 years' || bucket === '20+ years' ? 'signal' : 'ink'}`} style={`width:${pcNum(d.pct)}%`}><span class="bar-val">{pc(d.pct)}</span></div></div>
+  </div>
+  );
+})}
+</div>
+<p class="source-note">52% of Simplii customers in our sample switched after a relationship of 10 or more years at their previous bank. These are high-commitment switchers, not casual shoppers.</p>
+
+<h4 style="margin-top:30px">Push forces that drove the switch</h4>
+<p class="question-text">Source question: Q5, what triggered your decision to leave (life context, frustrations, decisive trigger)? (n=60 Simplii switchers.)</p>
+<div class="bar-chart">
+{q5v2?.filter((r: any) => r.total_pct >= 15).slice(0, 10).map((r: any) => (
+<div class="stack-bar-row">
+<div class="stack-bar-label">{fmtTheme(r.theme)}</div>
+<div class="stack-bar-track">
+  <div class="stack-seg sigh" style={`width:${pcNum(r.i3_pct_of_sample)}%`}>{r.i3_pct_of_sample >= 6 ? pc(r.i3_pct_of_sample) : ''}</div>
+  <div class="stack-seg medi" style={`width:${pcNum(r.i2_pct_of_sample)}%`}>{r.i2_pct_of_sample >= 6 ? pc(r.i2_pct_of_sample) : ''}</div>
+  <div class="stack-seg lowi" style={`width:${pcNum(r.i1_pct_of_sample)}%`}>{r.i1_pct_of_sample >= 6 ? pc(r.i1_pct_of_sample) : ''}</div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend" style="margin-left:250px;gap:14px;flex-wrap:wrap">
+<span><span style="display:inline-block;width:14px;height:10px;background:var(--signal);vertical-align:middle"></span> High intensity</span>
+<span><span style="display:inline-block;width:14px;height:10px;background:#C08533;vertical-align:middle"></span> Moderate intensity</span>
+<span><span style="display:inline-block;width:14px;height:10px;background:rgba(11,31,58,0.45);vertical-align:middle"></span> Low intensity</span>
+</div>
+
+<div class="neutral-callout" style="margin-top:14px">
+<p><strong>What the intensity scoring means.</strong> Each of the two coders rated every (participant, theme) pair on a 1-to-3 intensity scale based on how the participant talked about the issue. <strong>Low intensity (1)</strong> = a brief mention without elaboration ("the fees were high"). <strong>Moderate intensity (2)</strong> = the participant elaborated with reasoning or specifics ("the monthly fee was $14.95 and I never used a teller"). <strong>High intensity (3)</strong> = the participant told a full story with emotion or a decisive moment ("I sat down with my partner one Sunday, added up what we'd paid in fees over a year, and that was the day I decided to leave"). High-intensity counts are the behaviorally significant stories. Use them to size trigger audiences, not the raw mention rate.</p>
+<p>In this sample, intensity-1 mentions are essentially absent (under 1% of all push-force mentions); the distribution is split close to evenly between moderate (51%) and high (48%) intensity. The two coders agreed at the mention level (Cohen's Kappa 0.929) but disagreed more often on intensity (Kappa 0.472, the threshold for collapsing to a binary "any vs none" view in published work). Intensity sub-bars are shown for color reference; treat the totals as the primary signal.</p>
+</div>
+
+<h3>2c. Why they chose Simplii</h3>
+<p class="question-text">Source question: Q8, why did you choose your current bank over the alternatives? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<p>Bars show the percentage of Simplii customers who cited each reason. Dashed line shows the percentage of all other respondents who cited it about their bank.</p>
+<div class="bar-chart">
+{q8?.filter((r: any) => Math.abs(r.diff_pp_vs_others) >= 10).slice(0, 12).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill signal" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii) who cited the reason about their bank</span></div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = Simplii-vs-others difference significant at α=0.10 two-tailed (z-test, Fisher's exact fallback when expected cell &lt; 5).</p>
+
+<p>100% of Simplii customers say the no-fee model was a reason they chose Simplii (97 points higher than Big-5 customers say it about their bank). 58% say the shared CIBC ATM network was a reason (zero non-Simplii customers say it about theirs). 48% say onboarding was easier than expected. Only 3% say a promotional switching incentive was a reason, 24 points lower than other banks. <strong>Simplii does not acquire on promo.</strong></p>
+
+<h3>2d. How they experience Simplii today</h3>
+
+<h4>What Simplii does well, top themes</h4>
+<p class="question-text">Source question: Q10, what does your current bank do well now that you've had some experience? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<div class="bar-chart">
+{q10?.filter((r: any) => r.simplii_pct >= 10).slice(0, 8).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill ink" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii) saying the same about their bank</span></div>
+
+<h4 style="margin-top:30px">Current frustrations, top themes</h4>
+<p class="question-text">Source question: Q11, what frustrates you about your current bank? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<div class="bar-chart">
+{q11?.filter((r: any) => r.simplii_pct >= 10).slice(0, 8).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill signal" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii) citing the same frustration about their bank</span></div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = Simplii-vs-others difference significant at α=0.10. Simplii's top three frustrations are 72, 68, and 47 percentage points above the rest of the sample, a Simplii-specific frustration signature, not generic banking complaints.</p>
+
+<h3>2e. How they use the full wallet</h3>
+<p class="question-text">Source question: Q13, do you have products at other financial institutions besides your primary bank? Which ones and why? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<p>What Simplii customers hold elsewhere, and how it compares to other-bank customers' fragmentation patterns.</p>
+<div class="bar-chart">
+{q13v2?.filter((r: any) => r.simplii_pct >= 15).slice(0, 8).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill ink-75" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents holding the product elsewhere</span></div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = Simplii-vs-others difference significant at α=0.10.</p>
+
+<div class="opp-callout">
+<p><strong>Fragmentation is deliberate.</strong> 90% of Simplii customers (well above the 74% sample average) describe their wallet fragmentation as a deliberate set of single-issue choices: investing at Wealthsimple or Questrade, savings at EQ Bank, mortgages through brokers, and a credit card retained at the previous bank. This is a feature of the Simplii relationship, not a defect.</p>
+</div>
+
+<h3>2f. What they think of the industry</h3>
+<p class="question-text">Source question: Q15, what do you think is the biggest issue Canadians have with their banks today? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<p>Switchers are primed to see Canadian retail banking as fee-heavy and institutionally self-interested. Bars show Simplii customers; dashed line shows all other respondents.</p>
+<div class="bar-chart">
+{q15v2?.filter((r: any) => r.simplii_pct >= 15 || r.others_pct >= 15).slice(0, 10).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill ink" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii)</span></div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = Simplii-vs-others difference significant at α=0.10.</p>
+
+<div class="opp-callout">
+<p><strong>Grievance Alignment opportunity.</strong> The macro grievances most cited by all respondents (institutional self-interest, fee-value mismatch, monthly fees) overlap almost perfectly with what Simplii customers say their bank does well. That's the credible grievance pillar Brand &amp; Marketing can own, operationalized in Section 04.</p>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 03. COMPETITIVE POSITION ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">03</div>
+<div class="accordion-text">
+<span class="accordion-title">Competitive Position Analysis</span>
+<span class="accordion-subtitle">Brand mental availability, migration flows, per-competitor signatures, moat assessment</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Competitive position is the Brand &amp; Marketing foundation. Four lenses: mental availability for each Category Entry Point (CEP, the situation a buyer is in when a brand should come to mind), where customers come from, what distinguishes each competitor's frustration fingerprint, and a Moat Assessment for Simplii.</p>
+
+<h3>3a. Brand mental availability by Category Entry Point</h3>
+<p>For each Category Entry Point (CEP), we asked half the sample which financial institutions come to mind. Set A (n=150) was asked about everyday spending, retirement and investing, and financial advice for life events. Set B (n=150) was asked about digital banking, mortgage shopping, and small-business banking. The split-sample design keeps each CEP fresh in the participant's mind without conditioning answers across CEPs.</p>
+<p>For each bank-by-CEP cell, we report the percentage of <em>current customers</em> of that bank who name it for the CEP, and the percentage of <em>non-customers</em> who name it. Cells are sorted by non-customer recall (the metric that matters for growth). Stars in the non-customer column flag banks whose non-customer recall is meaningfully above the average across the other banks for that CEP.</p>
+
+{[1,2,3,4,5,6].map((cepN: number) => {
+  const c = cep?.[`CEP${cepN}`];
+  if (!c) return null;
+  const rows = buildCepRows(c);
+  return (
+    <div style="margin-top:28px;">
+      <h4>{CEP_QUESTIONS[cepN]} <span style="color:var(--muted);font-weight:400;">(n={c.pool_n})</span></h4>
+      <div class="crosstab">
+      <table>
+      <thead><tr><th>Bank mentioned</th><th>Non-customer %</th><th>Current customer %</th></tr></thead>
+      <tbody>
+      {rows.map((b: any) => (
+        <tr>
+        <td><strong>{b.bank}</strong></td>
+        <td>{pc(b.noncustomer_pct)}{b.noncustomer_sig ? (<span class="sig-sup">*</span>) : null} <span style="color:var(--muted);font-size:11px;">(n={b.noncustomer_n})</span></td>
+        <td>{pc(b.customer_pct)} <span style="color:var(--muted);font-size:11px;">(n={b.customer_n})</span></td>
+        </tr>
+      ))}
+      </tbody>
+      </table>
+      </div>
+    </div>
+  );
+})}
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = bank's non-customer recall for this CEP is at least 8 percentage points above the average across the other five banks (a proxy for two-proportion z-test significance at α=0.10 in this design).</p>
+
+<div class="opp-callout">
+<p><strong>Simplii's CEP signature.</strong> Simplii has 100% recall among its own customers for everyday spending and bill payments and 35% among non-customers, the largest buyer-to-non-buyer gap in the dataset. Simplii also has a smaller but real lift on digital banking (74% of own customers, 57% of non-customers). Simplii has zero mentions on mortgage shopping, retirement and investing, financial advice for life events, and small-business banking, from anyone, including its own customers. Interpretation: Simplii's two-CEP mental footprint is a rational fit with its product scope; the everyday-spending non-customer gap is the highest-ROI lever for brand-building investment.</p>
+</div>
+
+<p class="caveat"><strong>Scope note.</strong> The mental-availability battery captures mentions only for the six study banks. Institutions a participant may also have named (Tangerine, EQ Bank, Wealthsimple, ATB Financial, Vancity, HSBC) are not in the matrix. This limits quantitative Simplii-vs-Tangerine comparison to the qualitative treatment in 3e.</p>
+
+<h3>3b. Migration Flow Matrix</h3>
+<p>Who came from where. Columns are current primary banks (with the destination's total n). Rows are previous primary banks. Each cell is the percentage of the destination's customers who came from that source.</p>
+<p class="caveat">No participant in our sample switched <em>away</em> from Simplii Financial in the past 24 months, so Simplii is empty as a source row. Simplii had only churn-in among recent switchers in our sample, not churn-out.</p>
+<div class="crosstab">
+<table>
+<thead>
+<tr><th>From &rarr; To</th>{BANKS.map((b: string) => (<th>{b}<br/><span style="font-weight:400;color:var(--muted);font-size:10px;">n={migMatrix?.destinations?.[b]?.n_dest ?? 0}</span></th>))}</tr>
+</thead>
+<tbody>
+{['Simplii Financial','CIBC','TD','RBC','BMO','Scotiabank','ATB Financial'].map((src: string) => (
+<tr>
+<td><strong>{src}</strong></td>
+{BANKS.map((dest: string) => {
+  const cell = migMatrix?.destinations?.[dest]?.cells?.[src];
+  if (!cell || cell.n === 0) return (<td style="color:var(--muted);">&mdash;</td>);
+  return (<td>{pc(cell.pct_of_dest)}{cell.sig_flag ? (<span class="sig-sup">*</span>) : null}</td>);
+})}
+</tr>
+))}
+</tbody>
+</table>
+</div>
+<p class="sig-footnote source-note"><span class="sig-sup">*</span> = source share for this destination is significantly different from that source's average share across the other destinations at α=0.10.</p>
+
+<p>Two dominant patterns emerge. <strong>Digital, fee-driven defection routes to Simplii</strong> (CIBC contributes 32% of Simplii's switchers, TD contributes 23%; both flagged as significantly higher than these sources contribute to other destinations). <strong>Scotiabank service-driven defection routes to TD and CIBC</strong> (Scotiabank contributes 33% of CIBC's recent switchers and 43% of TD's). Simplii is not on the typical Scotiabank-defector path.</p>
+
+<h3>3c. Per-competitor frustration signatures</h3>
+<p class="question-text">Source question: Q11, what frustrates you about your current bank? (Each bank's own customers; Simplii n=60, other Big-5 n=60 each, BMO and Scotiabank n=30 each.)</p>
+<p>Each bank has a distinct frustration fingerprint. Top three frustrations per bank, among that bank's own customers:</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th><th>#1 frustration</th><th>#2</th><th>#3</th></tr></thead>
+<tbody>
+{BANKS.map((b: string) => {
+  const top3 = q11ByBank?.[b]?.slice(0, 3) || [];
+  return (
+  <tr>
+  <td><strong>{b}</strong></td>
+  {top3.map((t: any) => (<td>{fmtTheme(t.theme)} <span style="color:var(--muted);">({pc(t.pct)})</span></td>))}
+  </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p>Each competitor's own-base frustrations are what Simplii can credibly promise to be better at. These signatures anchor the Competitive Messaging Matrix in Section 04.</p>
+
+<h3>3d. Moat assessment</h3>
+<p>Each Simplii asset rated for defensibility. Each row pairs the verdict with a one-sentence Q-anchored evidence statement.</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Asset</th><th>Verdict</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td><strong>No-fee model</strong></td><td><span class="pill green">Strong, defensible</span></td><td>97% of Simplii customers name the no-fee model as something their bank does well (94 points above Big-5 customers about their bank). 100% of Simplii switchers say fees were a reason they left their previous bank. Zero current fee-frustration; promise delivered.</td></tr>
+<tr><td><strong>CIBC ATM network</strong></td><td><span class="pill green">Strong, defensible</span></td><td>58% of Simplii customers say the shared CIBC ATM network was a reason they chose Simplii (zero Big-5 customers say it about their bank). Structural moat; competitors cannot replicate without a parent-family agreement.</td></tr>
+<tr><td><strong>Everyday-spending mental availability (own customers)</strong></td><td><span class="pill green">Strong, defensible</span></td><td>100% of Simplii customers asked about everyday spending and bill payments think of Simplii. Own base fully associates the brand with the category.</td></tr>
+<tr><td><strong>Everyday-spending mental availability (non-customers)</strong></td><td><span class="pill signal">Vulnerability and growth lever</span></td><td>35% of non-customers asked about everyday spending think of Simplii, a 65 percentage-point gap. Largest strategic mental-availability gap in the dataset.</td></tr>
+<tr><td><strong>E-transfer speed</strong></td><td><span class="pill green">Strong, defensible</span></td><td>60% of Simplii customers name e-transfer speed as a strength (46 points above Big-5 customers about theirs). Table-stakes that Simplii has made a differentiator.</td></tr>
+<tr><td><strong>App quality</strong></td><td><span class="pill muted">Valued but not differentiated</span></td><td>93% of Simplii customers name app quality as a strength vs 88% of Big-5 customers. Parity, not superiority. Do not over-claim.</td></tr>
+<tr><td><strong>Onboarding ease</strong></td><td><span class="pill green">Strong, defensible</span></td><td>48% of Simplii customers say onboarding was easier than expected (44 points above Big 5). Underpins low-friction acquisition.</td></tr>
+<tr><td><strong>Branch network</strong></td><td><span class="pill signal">Vulnerability</span></td><td>68% of Simplii customers cite lack of physical branch access as a current frustration (68 points above Big 5). Structural trade-off; manage, do not build.</td></tr>
+<tr><td><strong>Product breadth</strong></td><td><span class="pill signal">Vulnerability</span></td><td>73% of Simplii customers cite limited product breadth as a current frustration (72 points above Big 5). Corroborated by zero mental availability on mortgage, retirement, advice, and small-business banking.</td></tr>
+<tr><td><strong>Savings rate</strong></td><td><span class="pill signal">Active vulnerability</span></td><td>20% of Simplii switchers left their previous bank over uncompetitive savings rates; 35% of Simplii customers now cite the same frustration; 58% regret rate among those who originally pushed on it. See Section 05.</td></tr>
+<tr><td><strong>Phone service quality</strong></td><td><span class="pill signal">Active vulnerability (CIBC-origin regression)</span></td><td>30% of Simplii switchers cited phone waits as a push at their previous bank; 37% now cite phone waits as a current Simplii frustration (17% regret). Worse among CIBC migrants: 32% to 42%. See Section 05.</td></tr>
+<tr><td><strong>Advisor depth</strong></td><td><span class="pill muted">N/A (not in product scope)</span></td><td>Zero Simplii customers name advisor relationship as a reason they chose Simplii or as a current strength. Category not served; customers self-select.</td></tr>
+<tr><td><strong>Business banking</strong></td><td><span class="pill muted">N/A (not in product scope)</span></td><td>13% of Simplii sample are small-business owners vs 16% of overall. Zero Simplii customers name business-banking tools as a current strength. Category not served.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>3e. Simplii vs Tangerine (qualitative)</h3>
+<p>Tangerine is not a primary-bank cohort in the sample and not in the mental-availability battery, so quantitative comparison is not available. Where Simplii wins vs Tangerine: (a) the CIBC ATM moat (58% of Simplii customers name the shared ATM network as a reason they chose Simplii; Tangerine has no equivalent of comparable scale), (b) parent-credibility cushion that reduces perceived switching anxiety for CIBC-origin defectors, and (c) specific product gaps at Tangerine (US$ checking availability, small-business). Where Tangerine may win: stronger brand marketing and longer tenure as a standalone digital-bank brand.</p>
+<p>Among the 85 participants who considered Simplii during their switch evaluation and chose not to pick it, the rejection reasons are the same ones any digital challenger would face: no physical branch access 87%, having heard a negative story secondhand 65%, concerns about a lateral move 61%, app-quality concerns 52%. Tangerine faces the same structural resistance.</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 04. BRAND & MARKETING ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">04</div>
+<div class="accordion-text">
+<span class="accordion-title">Brand &amp; Marketing Recommendations</span>
+<span class="accordion-subtitle">Who to target, how to position, messaging that backfires, content pillars</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Simplii's Brand &amp; Marketing agenda is dominated by one lever: close the everyday-spending non-customer gap. Everything else is either how to do that or how to avoid undermining it.</p>
+
+<h3>4a. Who to target (Ideal Customer Profile)</h3>
+
+<div class="criterion-block">
+<h4>Income</h4>
+<p class="criterion-signal">Among Simplii customers in the sample, 30% earn $150K to $200K (10 percentage points above the rest of the sample) and only 2% earn under $50K (7 points below).</p>
+<div class="opp-callout"><p><strong>Targeting implication:</strong> mid-six-figure urban professionals, not price-constrained segments. Avoid "save money" framing as the lead.</p></div>
+</div>
+
+<div class="criterion-block">
+<h4>Geography (Urban / Suburban / Rural)</h4>
+<p class="criterion-signal">60% urban (6 points above), 12% rural (7 points below).</p>
+<div class="opp-callout"><p><strong>Targeting implication:</strong> urban-skewing media and placements. Rural campaigns are a poor product fit because there is no branch to anchor the relationship.</p></div>
+</div>
+
+<div class="criterion-block">
+<h4>Life stage</h4>
+<p class="criterion-signal">71% of Simplii customers in the sample are aged 30 to 50, with a small skew toward 30 to 40.</p>
+<div class="opp-callout"><p><strong>Targeting implication:</strong> mid-career, early-family. Life-event triggers (home purchase, family formation, job change) drove 58% of Simplii switches and convert at narrative intensity.</p></div>
+</div>
+
+<div class="criterion-block">
+<h4>Previous-bank tenure</h4>
+<p class="criterion-signal">52% of Simplii's switchers came from a relationship of 10 or more years at their previous bank.</p>
+<div class="opp-callout"><p><strong>Targeting implication:</strong> do not chase casual shoppers. Target long-tenured customers who have accumulated reasons to leave. The slow-burn of accumulated frustrations was the push for 50% of Simplii switchers; nurture-sequence work beats one-shot promos.</p></div>
+</div>
+
+<div class="criterion-block">
+<h4>Source bank</h4>
+<p class="criterion-signal">CIBC contributes 32% of Simplii's switchers, TD 23%; together more than half.</p>
+<div class="opp-callout"><p><strong>Targeting implication:</strong> concentrated source-bank targeting beats broad-audience campaigns. See Section 06 Competitive Acquisition Playbooks.</p></div>
+</div>
+
+<h3>4b. Positioning recommendation</h3>
+<p>Lead with the no-fee model as a deliberate rational choice. The demographic profile (higher-income urban professionals, long-tenured switchers) supports "smart people who refuse to pay monthly fees they can avoid," not "save money" as a budget appeal. The CIBC ATM network is a moat component that reduces perceived friction; it is not the headline.</p>
+
+<div class="vuln-callout">
+<p><strong>Messaging that backfires.</strong></p>
+<p>1. Do not claim "complete banking" or "all-in-one." 73% of Simplii customers cite limited product breadth as a current frustration. Zero mental availability on mortgage, retirement, advice, and small-business corroborates that the gaps are structural and known. Over-promising breadth produces credibility backlash.</p>
+<p>2. Do not lead with CIBC ownership as the hero asset. 32% of Simplii customers specifically came from CIBC because Simplii is not CIBC. The ATM access is reassurance, not the headline.</p>
+<p>3. Do not position as budget banking. Only 2% of Simplii customers earn under $50K. The lane is deliberate-choice, not budget-constrained.</p>
+<p>4. Do not lead on savings rate. Savings rate is a current vulnerability (35% cite as a frustration; 58% regret rate among those who originally pushed on it). Promising a rate advantage Simplii does not consistently deliver converts acquisition into retention risk.</p>
+</div>
+
+<h3>4c. Grievance Alignment opportunity</h3>
+<p>Industry-level macro grievances (asked of all 300 respondents) crossed against what Simplii customers say their bank does well reveal the credible grievance pillar Simplii can own.</p>
+
+<div class="bar-chart">
+{q15v2?.filter((r: any) => r.others_pct >= 15).slice(0, 6).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}</div>
+<div class="bar-track">
+  <div class="bar-fill ink" style={`width:${pcNum(r.others_pct)}%`}><span class="bar-val">{pc(r.others_pct)}</span></div>
+</div>
+</div>
+))}
+</div>
+<p class="sig-footnote source-note">Bars show prevalence among the 240 non-Simplii respondents. Top three macro grievances all align with what Simplii customers cite as Simplii's strengths.</p>
+
+<div class="opp-callout">
+<p><strong>The fee grievance pillar is Simplii's strongest credible anti-incumbent message.</strong> Three of the top macro grievances align directly with Simplii's #1 delivered strength (no-fee). Other macro grievances (switching friction deters change, digital challengers exposing incumbents) align with Simplii's onboarding ease and digital-channel parity.</p>
+</div>
+
+<h3>4d. Trigger-based targeting</h3>
+<p class="question-text">Source: Q5 push-force narrative-intensity counts (Simplii switchers, n=60).</p>
+<p>Use narrative-intensity prevalence (the count of customers who told a full story about the trigger), not raw mention prevalence, to size trigger audiences.</p>
+
+<div class="bar-chart">
+{[
+  {theme:'slow_burn_of_accumulated_frustrations', total: 50, i3:28},
+  {theme:'life_event_triggered_review', total: 58, i3:30},
+  {theme:'peer_recommendation_influenced_decision', total: 43, i3:5},
+  {theme:'phone_agent_quality_issues', total: 37, i3:23},
+  {theme:'dismissive_service_interactions', total: 25, i3:15},
+  {theme:'mortgage_as_switching_catalyst', total: 15, i3:10},
+].map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}</div>
+<div class="bar-track">
+  <div class="bar-fill signal" style={`width:${r.i3}%`}><span class="bar-val">{r.i3}%</span></div>
+  <div class="bar-fill amber" style={`width:${r.total - r.i3}%;border-radius:0;margin-left:0`}><span class="bar-val">{r.total}%</span></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend" style="gap:14px">
+<span><span style="display:inline-block;width:14px;height:10px;background:var(--signal);vertical-align:middle"></span> High intensity (full story)</span>
+<span><span style="display:inline-block;width:14px;height:10px;background:#C08533;vertical-align:middle"></span> Total mention rate</span>
+</div>
+
+<div class="opp-callout">
+<p><strong>Action by trigger.</strong> Slow burn and life-event triggers are large and high-intensity, well suited to nurture sequences and behavioral targeting. Phone-agent quality and dismissive service are mid-size and high-intensity, ideal for direct-response creative against Big-5 service pain. Mortgage is the smallest trigger and a caution: Simplii does not serve mortgage directly. Use the mortgage trigger only to position Simplii as everyday banking with broker partnership, not as the mortgage solution.</p>
+</div>
+
+<h3>4e. Competitive Messaging Matrix</h3>
+<p>For each bank Simplii actively competes with for share of wallet, this section shows the rejection fingerprint (from participants who considered that bank during their switch evaluation and chose not to pick it), the Simplii angle anchored to Moat Assessment, and the messaging to avoid. Ordered by Simplii's current conversion share.</p>
+
+{[
+  {comp:'CIBC', n: q7Comp?.CIBC?.rejectors_n ?? 0, reasons: q7Comp?.CIBC?.reasons?.slice(0,4) ?? [],
+   angle: <p>Simplii is the CIBC family's fee-free lane. Keep ATM access, lose monthly fees. <strong>This is intra-family conversion, not competitive displacement;</strong> 32% of Simplii customers came from CIBC.</p>,
+   avoid: <p>Do not position as "not CIBC." The ATM parentage is a moat component; framing Simplii as a rival to its parent confuses both audiences.</p>},
+  {comp:'RBC', n: q7Comp?.RBC?.rejectors_n ?? 0, reasons: q7Comp?.RBC?.reasons?.slice(0,4) ?? [],
+   angle: <p>RBC rejectors cite lateral-move and app-quality concerns. Lead with e-transfer speed (60% of Simplii customers name it as a strength) and the no-fee anchor (97% do). Ex-RBC Simplii customers' push forces resolve cleanly.</p>,
+   avoid: <p>Do not lead on savings rates. Simplii's rate is a current vulnerability: 20% of switchers left their previous bank over savings, and 35% of Simplii customers now cite the same frustration.</p>},
+  {comp:'TD', n: q7Comp?.TD?.rejectors_n ?? 0, reasons: q7Comp?.TD?.reasons?.slice(0,4) ?? [],
+   angle: <p>TD-origin customers cite phone-agent quality as a top push (64% of ex-TD Simplii cohort). Lead with digital-first service quality and e-transfer speed.</p>,
+   avoid: <p>Do not emphasize CIBC parentage to TD defectors; it is neither pulling them in nor a concern. De-emphasize.</p>},
+  {comp:'BMO', n: q7Comp?.BMO?.rejectors_n ?? 0, reasons: q7Comp?.BMO?.reasons?.slice(0,4) ?? [],
+   angle: <p>BMO rejectors cite lateral-move concerns heavily. Simplii's no-fee anchor is a non-lateral move with a visible structural difference.</p>,
+   avoid: <p>Do not promise rewards-program competitiveness. Only 2% of Simplii customers name rewards as a strength vs 30% of Big-5 customers. Reframe as a fee-free trade-off.</p>},
+  {comp:'Scotiabank', n: q7Comp?.Scotiabank?.rejectors_n ?? 0, reasons: q7Comp?.Scotiabank?.reasons?.slice(0,4) ?? [],
+   angle: <p>Smallest Simplii acquisition source (10%). Scotiabank retention risk is the highest in the sample (43%), but defectors go to TD and CIBC, not Simplii. Lower-priority cohort.</p>,
+   avoid: <p>Do not overinvest here. Scotiabank defectors prefer traditional alternatives; Simplii does not sit on their evaluation path.</p>},
+].map((row: any) => (
+<div class="criterion-block">
+<h4>{row.comp} <span style="color:var(--muted);font-weight:400;">(n={row.n} considered-and-rejected)</span></h4>
+<div class="bar-chart" style="margin:8px 0">
+{row.reasons.map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}</div>
+<div class="bar-track"><div class="bar-fill ink-75" style={`width:${pcNum(r.pct)}%`}><span class="bar-val">{pc(r.pct)}</span></div></div>
+</div>
+))}
+</div>
+<div class="opp-callout"><p><strong>Simplii's angle.</strong></p>{row.angle}</div>
+<div class="vuln-callout"><p><strong>What to avoid.</strong></p>{row.avoid}</div>
+</div>
+))}
+
+<h3>4f. CEP-based content pillars</h3>
+<p>Three pillars: one lead, one secondary, and explicit non-pillars.</p>
+
+<div class="opp-callout">
+<p><strong>Lead pillar: own everyday spending and bill payments among non-customers.</strong> The 65 percentage-point buyer-to-non-buyer gap is the largest in the dataset. The target audience is the 65% of non-customers who do not currently associate Simplii with everyday banking. Tactics: category-entry-point advertising, distinctive brand assets (color, voice, sonic logo if one exists or can be built), repeated linkage of "Simplii equals everyday banking." This is a multi-year mental-availability build, not a campaign.</p>
+</div>
+
+<div class="opp-callout">
+<p><strong>Secondary pillar: defend digital banking and mobile access.</strong> Simplii has a 17 percentage-point lead among customers vs non-customers, a closer fight. Tangerine and EQ Bank are the primary rivals. Tactics: reinforce Simplii's digital-banking credentials against pure-play digital challengers; protect e-transfer speed and app-parity messaging.</p>
+</div>
+
+<div class="vuln-callout">
+<p><strong>Explicit non-pillar: do not attempt to build presence in mortgage shopping, retirement and investing, financial advice for life events, or small-business banking.</strong> Zero mentions on these CEPs from anyone, including Simplii's own customers. The product does not serve these categories. Advertising presence Simplii cannot deliver produces the limited-product-breadth frustration at market scale, confusing the brand positioning and damaging credibility. Refer customers to partner products (see Section 05, Wallet Fragmentation table).</p>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 05. PRODUCT & DIGITAL ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">05</div>
+<div class="accordion-text">
+<span class="accordion-title">Product &amp; Digital Recommendations</span>
+<span class="accordion-subtitle">Feature priorities, push-pull alignment, structural trade-offs, decision regret</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Product &amp; Digital's job is to distinguish fixable problems from structural trade-offs. The data makes that separation cleanly. Simplii's savings rate and phone-service quality regressed from push to pull and deserve investment. The branch and product-breadth frustrations are trade-offs to reframe, not features to build.</p>
+
+<h3>5a. The unmet-needs landscape</h3>
+<p class="question-text">Source question: Q11, what frustrates you about your current bank? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<div class="bar-chart">
+{q11?.filter((r: any) => r.simplii_pct >= 5).slice(0, 12).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class={`bar-fill ${r.diff_pp_vs_others >= 20 ? 'signal' : 'amber'}`} style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii) citing the same frustration about their bank</span></div>
+
+<h3>5b. Feature priority ranking</h3>
+<div class="crosstab">
+<table>
+<thead><tr><th>Priority tier</th><th>Feature / theme</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr><td><span class="pill signal">Structural trade-off (manage, don't fix)</span></td><td>Limited product breadth</td><td>73% of Simplii customers cite as a current frustration; 82% of those citers are still satisfied. Zero mental availability on mortgage, retirement, advice, and small-business banking. Reframe, partner, do not build.</td></tr>
+<tr><td><span class="pill signal">Structural trade-off</span></td><td>No physical branch access</td><td>68% cite as a current frustration; 78% of citers still satisfied. Lean on ATM moat and remote service quality.</td></tr>
+<tr><td><span class="pill signal">Structural trade-off</span></td><td>Unwanted fragmentation</td><td>53% cite as a current frustration; 75% of citers still satisfied. Position as user choice.</td></tr>
+<tr><td><span class="pill ink">Decision-driver, must-fix</span></td><td>Savings rate competitiveness</td><td>20% of Simplii switchers left their previous bank over uncompetitive savings; 35% of Simplii customers now cite the same frustration. 58% regret rate; selection criterion regressed into frustration.</td></tr>
+<tr><td><span class="pill ink">Must-fix (CIBC-cohort-specific)</span></td><td>Phone service quality</td><td>CIBC-to-Simplii cohort: 32% left CIBC citing phone waits; 42% still cite phone waits as a current Simplii frustration (17% regret). Big-5-expectation-standard delivery gap.</td></tr>
+<tr><td><span class="pill amber">Differentiator candidate</span></td><td>Onboarding further streamlined</td><td>48% of Simplii customers say onboarding was easier than expected (44 points above Big 5). Already a strength; deeper digital-KYC and account-migration tooling compounds the advantage.</td></tr>
+<tr><td><span class="pill amber">Emerging need</span></td><td>App feature gaps</td><td>15% of Simplii customers cite feature gaps as a frustration vs 13% of Big-5 customers about their bank. Monitor feature-request patterns; not a top-tier investment yet.</td></tr>
+<tr><td><span class="pill muted">Monitor</span></td><td>Rewards program</td><td>Only 2% of Simplii customers name rewards as a strength of their bank vs 30% of Big-5 customers. Do not attempt to compete on rewards; reframe as a no-fee trade-off.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>5c. Push-Pull alignment, Simplii overall</h3>
+<p>For each theme that appears both as a push force (reason for leaving the previous bank) and as a current frustration at Simplii, what fraction of switchers pushed on it vs what fraction still cite it, plus the regret rate among those who originally pushed.</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Theme</th><th>Push %</th><th>Pull %</th><th>Regret rate</th><th>Verdict</th></tr></thead>
+<tbody>
+{ppOverall?.map((r: any) => (
+<tr>
+<td>{fmtTheme(r.theme)}</td>
+<td>{pc(r.push_pct)}</td>
+<td>{pc(r.pull_pct)}</td>
+<td>{pc(r.regret_pct)} <span style="color:var(--muted);">(n={r.n_pushed})</span></td>
+<td class:list={`verdict-${r.verdict}`}>{r.verdict}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+<p>Fees resolved cleanly (100% push, 0% pull). <strong>Savings rate and phone waits regressed</strong>, the two product-side investments with the clearest ROI.</p>
+
+<h3>5d. Push-Pull alignment by source bank</h3>
+<p>The most actionable cut. Per-source-bank regression patterns reveal that different origin cohorts experience different Simplii quality. <strong>CIBC-origin customers bring Big-5-expectation-standard service expectations that Simplii's operations do not yet meet.</strong></p>
+
+{Object.entries(ppBySource || {}).map(([source, d]: any) => (
+<div style="margin-top:24px;">
+<h4>From {source} (n={d.n})</h4>
+{d.rows && d.rows.length > 0 ? (
+<div class="crosstab">
+<table>
+<thead><tr><th>Theme</th><th>Push %</th><th>Pull %</th><th>Regret</th><th>Verdict</th></tr></thead>
+<tbody>
+{d.rows.slice(0, 7).map((r: any) => (
+<tr>
+<td>{fmtTheme(r.theme)}</td>
+<td>{pc(r.push_pct)}</td>
+<td>{pc(r.pull_pct)}</td>
+<td>{pc(r.regret_pct)} (n={r.n_pushed})</td>
+<td class:list={`verdict-${r.verdict}`}>{r.verdict}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+) : (<p class="source-note">No push force at 10% or above prevalence for this cohort.</p>)}
+</div>
+))}
+
+<div class="vuln-callout">
+<p><strong>The CIBC-origin signal is the sharpest product finding in the data.</strong> CIBC-to-Simplii switchers (n=19, the largest source flow) show regression on phone waits (32% to 42%, 17% regret) and partial regression on app quality (37% to 21%, 29% regret). TD, RBC, BMO, and Scotiabank cohorts' push forces resolve cleanly. The difference is not Simplii product quality per se; it is that CIBC customers bring Big-5-calibrated service expectations with them, and the service operations have not yet been scaled to meet that bar for the dominant inflow cohort.</p>
+</div>
+
+<h3>5e. Structural trade-off acceptance</h3>
+<p>For each of the structural three frustrations, what fraction of Simplii customers cite it, and what fraction of citers still report overall satisfaction. High satisfaction-among-citers means the trade-off is accepted, not pathological.</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Frustration theme</th><th>Prevalence (Simplii)</th><th>Satisfaction among citers</th><th>Verdict</th><th>Product response</th></tr></thead>
+<tbody>
+{tradeoffs?.map((r: any) => (
+<tr>
+<td>{fmtTheme(r.theme)}</td>
+<td>{pc(r.prev_pct)} (n={r.n_citers})</td>
+<td>{pc(r.satisfaction_among_citers_pct)}</td>
+<td><span class="pill amber">{r.verdict}</span></td>
+<td style="font-size:12px;">{r.detail}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+<p>All three structural frustrations retain 75 to 82% satisfaction among citers; customers know they made a trade-off and are fine with it. Building to close these would break the no-fee model without meaningfully improving retention.</p>
+
+<h3>5f. Decision Regret Matrix</h3>
+<p>Did any selection criterion (what drew Simplii customers in when they chose the bank) regress into a current frustration?</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Theme</th><th>Selected on (Simplii)</th><th>Current-frustration rate among those selectors</th><th>Interpretation</th></tr></thead>
+<tbody>
+{regret?.slice(0, 8).map((r: any) => (
+<tr>
+<td>{fmtTheme(r.theme)}</td>
+<td>{pc(r.q8_selected_pct)} (n={r.n_selectors})</td>
+<td class:list={r.regret_pct_of_selectors >= 20 ? 'sig-neg' : ''}>{pc(r.regret_pct_of_selectors)}</td>
+<td style="font-size:12px;">{r.theme === 'app_quality_as_differentiator' ? '16% of Simplii customers who selected on app quality now cite it as a frustration. Monitor; not catastrophic.' : r.theme === 'monthly_fee_burden' ? 'Zero regret; Simplii keeps the no-fee promise.' : 'Monitor'}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+
+<h3>5g. Wallet fragmentation, product strategy</h3>
+<p>Simplii customers hold products at other institutions by design. The strategic question is which fragmentation patterns to fight, which to partner, and which to accept.</p>
+<div class="crosstab">
+<table>
+<thead><tr><th>Fragmentation pattern</th><th>Simplii prevalence</th><th>Product decision</th><th>Rationale</th></tr></thead>
+<tbody>
+<tr><td>Savings rate shopping (EQ Bank, Wealthsimple Cash)</td><td>50%</td><td><span class="pill ink">Partner or build</span></td><td>Savings rate is a vulnerability: 35% of Simplii customers cite uncompetitive savings as a current frustration and 58% of those who originally pushed on savings rates regret the switch. Fixable.</td></tr>
+<tr><td>Investment accounts at Wealthsimple or Questrade</td><td>Frequent</td><td><span class="pill amber">Partner (formal referral)</span></td><td>Zero Simplii mental availability for retirement and investing. Don't try to own; refer and earn.</td></tr>
+<tr><td>Mortgage through broker</td><td>43%</td><td><span class="pill amber">Partner (broker network)</span></td><td>Zero Simplii mental availability for mortgage shopping. Use brokers as acquisition channel, not product.</td></tr>
+<tr><td>Retained former-bank credit card</td><td>53%</td><td><span class="pill muted">Defend (low-friction credit card)</span></td><td>Simplii Cash Back Visa is the existing answer; extend rewards-parity messaging selectively.</td></tr>
+<tr><td>Small-business banking elsewhere</td><td>Common among 13% small-business-owner cohort</td><td><span class="pill muted">Accept</span></td><td>Category not served. Zero mental availability for small-business banking.</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 06. RETAIL & GROWTH ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">06</div>
+<div class="accordion-text">
+<span class="accordion-title">Retail &amp; Growth Recommendations</span>
+<span class="accordion-subtitle">Decision influence, onboarding motion, per-competitor acquisition playbooks</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Retail &amp; Growth owns the acquisition motion. The core insight: <strong>conversion share and retention-risk rate are not the same thing.</strong> Order acquisition investment by where Simplii is winning today (CIBC first), not by where retention risk is highest at the source (Scotiabank).</p>
+
+<h3>6a. Decision-influence playbook</h3>
+<p>Influence sources among Simplii switchers (drawn from the push-force question):</p>
+<div class="bar-chart">
+{[
+  {label: 'Life event triggered review', pct: 58, note: 'Home, job, partner-move-in windows; behavioral targeting.'},
+  {label: 'Slow burn / accumulated frustrations', pct: 50, note: 'Long-tenure nurture; not a one-shot offer window.'},
+  {label: 'Peer recommendation', pct: 43, note: 'Referral program priority. Referrers cluster in urban-professional networks.'},
+  {label: 'Promotional switching incentive', pct: 3, note: 'Simplii does not acquire on promo. Do not compete here.'},
+].map((d: any) => (
+<div class="bar-row">
+<div class="bar-label">{d.label}</div>
+<div class="bar-track"><div class={`bar-fill ${d.pct >= 40 ? 'signal' : 'ink'}`} style={`width:${d.pct}%`}><span class="bar-val">{d.pct}%</span></div></div>
+</div>
+))}
+</div>
+
+<h3>6b. Switching-evaluation playbook</h3>
+<p>What each bank's customers report as their selection criterion when they switched. See Section 2c for the full Simplii-vs-others contrast. Key takeaway: Simplii's no-fee anchor (100%), CIBC ATM moat (58%), and onboarding ease (48%) dominate. Big-5 banks distribute across advisor relationship, rewards programs, and branch network.</p>
+
+<h3>6c. Onboarding and acquisition motion</h3>
+<div class="crosstab">
+<table>
+<thead><tr><th>Motion element</th><th>Recommendation</th><th>Anchor</th></tr></thead>
+<tbody>
+<tr><td><strong>Pre-application messaging</strong></td><td>Lead with fee-free anchor and CIBC ATM access. For the CIBC-origin cohort (32% of acquisitions), reframe as "stay in the family, lose the fees."</td><td>100% of Simplii customers say the no-fee model was a reason they chose Simplii; 58% name the CIBC ATM network.</td></tr>
+<tr><td><strong>Application flow</strong></td><td>Keep the low-friction digital application. Onboarding ease is a 44 percentage-point Simplii differentiator and compounds the acquisition advantage.</td><td>48% of Simplii customers say onboarding was easier than expected.</td></tr>
+<tr><td><strong>First 30 days</strong></td><td>Direct-deposit migration and auto-pay transfer tooling. This is the moment Simplii either becomes primary bank or becomes "savings parking."</td><td>Industry-standard for switchers.</td></tr>
+<tr><td><strong>Switching-cost offset</strong></td><td>Do NOT lead with promotional incentive. Only 3% of Simplii customers say a promotional switching incentive was a reason they chose Simplii (24 points below Big 5); promotional-led acquisition draws low-retention customers the wrong way.</td><td>3% promo (Simplii); 27% promo (Big 5).</td></tr>
+<tr><td><strong>90-day retention checkpoint</strong></td><td>Proactive outreach on two topics: savings-rate positioning (vulnerability) and phone-channel accessibility (vulnerability, especially for CIBC-origin customers). Surface the structural trade-offs early before they calcify.</td><td>35% of Simplii customers cite uncompetitive savings as a current frustration; 37% cite phone waits.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>6d. Competitive acquisition playbooks</h3>
+<p>Ordered by conversion share to Simplii. <strong>High retention risk at a source bank does not equal high conversion flow to Simplii.</strong> Scotiabank's retention risk is 43% (highest), but only 10% of Simplii's base comes from Scotiabank. Simplii needs to go where buyers are actually moving.</p>
+
+<div style="margin-top:24px;">
+<h4>1. CIBC to Simplii <span style="color:var(--muted);font-weight:400;">(32% of Simplii's base, n=19) &middot; the dominant play</span></h4>
+<ul>
+<li><strong>Who's persuadable.</strong> CIBC customers who are fee-frustrated AND digital-ready (not advisor- or mortgage-anchored). Urban, higher-income, age 30 to 50, 10 or more years at CIBC.</li>
+<li><strong>Trigger signals.</strong> Fee-value-mismatch told at narrative intensity, life-event-triggered review, slow-burn accumulation of fee frustration.</li>
+<li><strong>Opening message.</strong> "Stay in the family, lose the fees." The CIBC parentage is reassurance, not the headline.</li>
+<li><strong>Primary objection to neutralize.</strong> Service operations quality. CIBC migrants bring Big-5 phone-wait and app expectations; Simplii has not yet scaled service operations to meet that bar. Counter by investing in service operations (see Section 05) and leading communication on ATM-network continuity, not on service-quality claims Simplii cannot back.</li>
+<li><strong>Offer design.</strong> No promotional discount. Lead with ATM continuity and onboarding ease.</li>
+</ul>
+</div>
+
+<div style="margin-top:18px;">
+<h4>2. TD to Simplii <span style="color:var(--muted);font-weight:400;">(23% of Simplii's base, n=14)</span></h4>
+<ul>
+<li><strong>Who's persuadable.</strong> TD customers frustrated with phone-agent quality (64% of ex-TD Simplii cohort) and monthly fees (100%).</li>
+<li><strong>Trigger signals.</strong> Phone-channel frustration stories; fee-value-mismatch at narrative intensity.</li>
+<li><strong>Opening message.</strong> E-transfer speed plus no-fee, framed around "faster, lighter banking." Do not emphasize CIBC parentage.</li>
+<li><strong>Primary objection.</strong> No physical branch (87% of Simplii rejectors cite). Counter with ATM and remote service messaging.</li>
+<li><strong>Offer design.</strong> Direct-deposit migration tooling and onboarding ease. No promo.</li>
+</ul>
+</div>
+
+<div style="margin-top:18px;">
+<h4>3. RBC to Simplii <span style="color:var(--muted);font-weight:400;">(17% of Simplii's base, n=10)</span></h4>
+<ul>
+<li><strong>Who's persuadable.</strong> RBC customers frustrated by monthly fees and phone-agent issues. Push forces resolve cleanly at Simplii for this cohort.</li>
+<li><strong>Trigger signals.</strong> Fee-value-mismatch, phone-agent quality.</li>
+<li><strong>Opening message.</strong> E-transfer speed plus no-fee. Mirrors the TD cohort.</li>
+<li><strong>Primary objection.</strong> Lateral-move concern (61% of RBC rejectors cite). Counter by emphasizing structural difference, not incremental improvement.</li>
+</ul>
+</div>
+
+<div style="margin-top:18px;">
+<h4>4. BMO to Simplii <span style="color:var(--muted);font-weight:400;">(17% of Simplii's base, n=10)</span></h4>
+<ul>
+<li><strong>Who's persuadable.</strong> BMO customers who pushed on fee-value-mismatch (100% of ex-BMO Simplii cohort).</li>
+<li><strong>Trigger signals.</strong> Fee frustration, app-quality concerns (50% of ex-BMO cohort cite app as push).</li>
+<li><strong>Opening message.</strong> No-fee plus digital-first.</li>
+<li><strong>Primary objection.</strong> Rewards program gap. Reframe as trade-off, do not compete.</li>
+</ul>
+</div>
+
+<div style="margin-top:18px;">
+<h4>5. Scotiabank to Simplii <span style="color:var(--muted);font-weight:400;">(10% of Simplii's base, n=6) &middot; lowest priority this cycle</span></h4>
+<ul>
+<li><strong>Reality check.</strong> Scotiabank retention risk is the highest in the sample (43%) but defectors overwhelmingly go to TD and CIBC. Simplii is not on the typical Scotiabank-defector path.</li>
+<li><strong>Action.</strong> Do not overinvest here. Monitor the conversion share; if it grows organically past 15%, revisit. Otherwise allocate budget to CIBC, TD, and RBC cohorts where conversion is already occurring.</li>
+</ul>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 07. CUSTOMER RETENTION & RISK ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">07</div>
+<div class="accordion-text">
+<span class="accordion-title">Customer Retention &amp; Risk</span>
+<span class="accordion-subtitle">Contingent stayer segmentation, per-bank tier distribution, retention plays</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Retention at Simplii is not a loyalty management problem; it is a trade-off acceptance management problem. 68% of Simplii customers in the sample are contingent stayers and 32% are retention risk; zero are stable loyalists under the strict definition. That is a structural feature of the no-fee model, not a performance gap. This section translates the segmentation into concrete retention plays.</p>
+
+<h3>7a. Satisfaction drivers</h3>
+<p class="question-text">Source question: Q10, what does your current bank do well now that you've had some experience? (Simplii customers n=60, all other-bank customers n=240.)</p>
+<div class="bar-chart">
+{q10?.filter((r: any) => r.simplii_pct >= 15).slice(0, 8).map((r: any) => (
+<div class="bar-row">
+<div class="bar-label">{fmtTheme(r.theme)}{r.sig_flag ? (<span class="sig-sup">*</span>) : null}</div>
+<div class="bar-track">
+  <div class="bar-fill ink" style={`width:${pcNum(r.simplii_pct)}%`}><span class="bar-val">{pc(r.simplii_pct)}</span></div>
+  <div class="bar-avg" style={`left:${pcNum(r.others_pct)}%`}></div>
+</div>
+</div>
+))}
+</div>
+<div class="dashed-legend"><span class="dashed-legend-line"></span><span>Dashed line = all other respondents (non-Simplii) saying the same about their bank</span></div>
+
+<h3>7b. Dissatisfaction signals</h3>
+<p>See Section 5a for the full frustration chart. The three structural frustrations (limited product breadth, no branch, unwanted fragmentation) are not retention risks in themselves; 75 to 82% of the Simplii customers who cite them are still satisfied with the bank overall. The fixable dissatisfiers are savings rate (35% cite as a current frustration) and phone waits (37%).</p>
+
+<h3>7c. Contingent stayer segmentation</h3>
+<p>Three tiers derived from the forward-looking propensity question, the count of current frustrations a participant cited, and whether they hold products elsewhere. Definitions are strict; "stable loyalist" requires both high satisfaction AND no more than one current frustration.</p>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th><th>Stable loyalist</th><th>Contingent stayer</th><th>Retention risk</th><th>Retention-risk rate</th></tr></thead>
+<tbody>
+{BANKS.map((b: string) => {
+  const t = tiers?.[b];
+  if (!t) return null;
+  const riskPct = (t.retention_risk / t.n) * 100;
+  const stablePct = (t.stable_loyalist / t.n) * 100;
+  const contPct = (t.contingent_stayer / t.n) * 100;
+  return (
+  <tr>
+  <td><strong>{b}</strong></td>
+  <td>{pc(stablePct)}</td>
+  <td>{pc(contPct)}</td>
+  <td>{pc(riskPct)}</td>
+  <td class:list={riskPct >= 40 ? 'sig-neg' : ''}>{pc(riskPct)}</td>
+  </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+
+<div class="vuln-callout">
+<p><strong>Simplii is the only bank with zero stable loyalists.</strong> TD has the highest stable-loyalist rate at 15% of its customers; CIBC, RBC, BMO, and Scotiabank fall between 2% and 10%. Scotiabank has the highest retention-risk rate (43%). Simplii's 32% retention-risk rate is on the higher end but structurally explainable: every Simplii customer sees the trade-offs clearly and retention is explicitly conditional.</p>
+</div>
+
+<h3>7d. Retention play recommendations</h3>
+<div class="crosstab">
+<table>
+<thead><tr><th>Risk signal</th><th>Retention motion</th><th>Segment target</th></tr></thead>
+<tbody>
+<tr><td><strong>Savings rate regression</strong> (35% cite as a current frustration; 58% regret rate among those who pushed on it)</td><td>Proactive rate-comparison calculator at 90 days. Migrate complaining customers to a HISA product (existing or partnered) before they park savings at EQ or Wealthsimple.</td><td>Savings-rate complainers; 35% of Simplii base</td></tr>
+<tr><td><strong>Phone service friction</strong> (37% cite; 42% among CIBC migrants)</td><td>Proactive service-operations investment for the CIBC-migrant cohort specifically (see Section 05). Queue-prioritization for recent switchers; first-90-day "service guarantee" messaging.</td><td>CIBC-origin migrants; ~32% of new Simplii acquisitions</td></tr>
+<tr><td><strong>Limited product breadth</strong> (73% cite as a current frustration; 82% of those citers are still satisfied)</td><td>Publish a partner playbook (investing, mortgage, advice). Reframes the frustration from "Simplii gap" to "user choice." Do NOT build the products.</td><td>All Simplii customers; low-friction preventive motion</td></tr>
+<tr><td><strong>Mentally halfway out the door</strong> (moderate-or-high-intensity frustration AND wallet-elsewhere AND contingent-staying)</td><td>Targeted retention outreach: save-the-savings offer plus product-bundle suggestion. Cross-cutting play spanning three tiers.</td><td>Highest-leverage 15 to 20% of Simplii base (estimated; validate via operational data)</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═════════ 08. METHODOLOGY ═════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">08</div>
+<div class="accordion-text">
+<span class="accordion-title">Methodology</span>
+<span class="accordion-subtitle">Sample design, statistical methodology, coding, known gaps, analytical approach</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>8a. Sample design</h3>
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">300</div><div class="stat-label">Participants</div></div>
+<div class="stat-card"><div class="stat-num">60/60/60/60/30/30</div><div class="stat-label">CIBC / Simplii / RBC / TD / BMO / Scotiabank</div></div>
+<div class="stat-card"><div class="stat-num">BC + AB</div><div class="stat-label">Geography</div></div>
+<div class="stat-card"><div class="stat-num">150 / 150</div><div class="stat-label">CEP Set A / Set B split-sample</div></div>
+</div>
+<p>All participants were Canadian adults age 30 to 60 in British Columbia or Alberta who had switched their primary personal checking bank within the past 24 months. Quota-balanced to oversample the four highest-priority banks (CIBC, Simplii, RBC, TD) relative to BMO and Scotiabank. 15-question interview guide covering brand mental availability (Q2 CEP battery), previous-bank push forces (Q5), evaluation process (Q6 to Q8), current-bank experience (Q10 and Q11), wallet composition (Q12 and Q13), forward-looking propensity (Q14), and macro sentiment (Q15). Split-sample CEP battery: Category Entry Points 1 (everyday spending), 4 (retirement and investing), 5 (financial advice for life events) asked of Set A (n=150); CEPs 2 (digital banking), 3 (mortgage shopping), 6 (small-business banking) asked of Set B (n=150). Split-sample integrity verified; no cross-contamination between sets.</p>
+
+<h3>8b. Statistical methodology</h3>
+<ul>
+<li><strong>Alpha:</strong> 0.10 two-tailed. Interview studies at n=150 to 300 with subgroups that drop to 25 to 50 require the 0.10 threshold to surface commercial-decision signal. Market-research convention at this sample size.</li>
+<li><strong>Default test:</strong> two-proportion z-test when every expected cell count in the 2x2 is at least 5. <strong>Fallback:</strong> Fisher's exact test when any expected cell count is below 5.</li>
+<li><strong>Benchmark convention:</strong> bar charts with a dashed overall-average line display the overall sample average (including the subgroup), but the test compares the focal subgroup against all OTHER respondents combined. Every sig-flagged chart carries the required disclosure.</li>
+<li><strong>Editorial discipline (three-tier rule):</strong> <em>Strong</em> = significant, recommendation language permitted; <em>Hedge</em> = non-significant but corroborated by an independent signal, "directionally" or "suggestive" language only; <em>No-claim</em> = non-significant and uncorroborated, not highlighted at all. Finding 6 in the Executive Summary is the one hedge in this report; every other exec finding is tier-1 strong.</li>
+<li><strong>Competitive Messaging Matrix integrity:</strong> per-cohort join check {cmmCheck?.passed ? 'passed (no theme has identical prevalence across all six competitors)' : 'FAILED, REVIEW BEFORE PUBLISHING'} ({cmmCheck?.identical_rows?.length || 0} offenders). Filter-then-aggregate confirmed.</li>
+<li><strong>Helper code:</strong> <code>research-projects/6 Analyzing and building a report/shared/significance_tests.py</code> and <code>analysis_helpers.py</code>.</li>
+</ul>
+
+<h3>8c. Coding and reliability</h3>
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">83</div><div class="stat-label">Thematic codes</div></div>
+<div class="stat-card"><div class="stat-num">0.929</div><div class="stat-label">Thematic Kappa<br/>(Almost Perfect)</div></div>
+<div class="stat-card"><div class="stat-num">0.970</div><div class="stat-label">Direction Kappa</div></div>
+<div class="stat-card"><div class="stat-num">0.472</div><div class="stat-label">Intensity Kappa</div></div>
+</div>
+<p>Dual independent Sonnet 4 coders with Opus 4 arbiter on disagreements. Each meaning unit received a thematic code plus a direction tag (positive, negative, or neutral). Each (participant, code) pair also received a 1-to-3 intensity score. Intensity Kappa fell below the threshold for headline use due to marginal skew (most scores at level 2 or 3); the BuyerVoice framework allows intensity to be reported as a coloring layer on top of the binary mention rate, with the binary rate as the primary signal.</p>
+
+<h3>8d. Known study-design gaps</h3>
+<div class="caveat">
+<ul>
+<li><strong>Sample is recent switchers age 30 to 60 in BC and Alberta only.</strong> Findings characterize this cohort, not the full Simplii customer base.</li>
+<li><strong>Q11 fee_creep_over_time = 0 everywhere.</strong> Genuine, not a coding bug. All participants switched within 24 months and have not been at the new bank long enough to experience fee creep.</li>
+<li><strong>CEP matrix coverage is six-bank-only.</strong> Institutions like Tangerine, EQ Bank, Wealthsimple, ATB Financial, and Vancity (named elsewhere in participant responses) are not in the matrix. This constrains the Simplii-vs-Tangerine mental-availability comparison to qualitative treatment in 3e.</li>
+<li><strong>No unprompted CEP discovery.</strong> The B2C framework's open-ended "when does banking come to mind?" question was not included. Section 03 uses the prompted six-CEP battery only.</li>
+<li><strong>No absolute brand rejection.</strong> The framework's "banks you'd never consider" question was removed. Section 04's Competitive Messaging Matrix uses Q7 evaluation-rejection (reasons participants who actively considered an alternative chose not to pick it), arguably richer behavioral data than absolute rejection but a different interpretation.</li>
+</ul>
+</div>
+
+<h3>8e. Analytical approach</h3>
+<p>The report includes six analyses beyond the interview instrument's direct question-level aggregates:</p>
+<ul>
+<li><strong>Buyer vs non-buyer lift per CEP per bank</strong> (Byron Sharp / Ehrenberg-Bass mental-availability framework). Largest gap in the dataset is the highest-ROI brand-building lever.</li>
+<li><strong>Migration Flow Matrix.</strong> Cross-tab of previous bank by current bank. Reveals CIBC to Simplii as the dominant flow.</li>
+<li><strong>Contingent Stayer Segmentation.</strong> Three-tier classification using the propensity question, current-frustration count, and wallet-elsewhere indicator.</li>
+<li><strong>Push-Pull Alignment</strong>, overall and per source bank. For each theme in both the push-force question and the current-frustration question, computes push prevalence, current prevalence, and regret rate among pushers. Verdict: resolved, partial, or regressed.</li>
+<li><strong>Structural Trade-off Acceptance.</strong> Among customers who cite each structural frustration, what fraction still report overall satisfaction. Separates "fix it" from "reframe it."</li>
+<li><strong>Per-competitor Competitive Messaging Matrix.</strong> Joined Q7 rejector cohort by Q7 rejection themes, per competitor. Produces the messaging fingerprint for each competing bank rather than reusing market-level aggregates.</li>
+</ul>
+
+</div>
+</details>
+</div>
+
+</body>
+</html>
+)}

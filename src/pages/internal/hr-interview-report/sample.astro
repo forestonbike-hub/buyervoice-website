@@ -1,0 +1,989 @@
+---
+// Sample Description - BambooHR Recruiting Software
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Sample Description | BambooHR Recruiting Software</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: var(--ink);
+      --deep-green: var(--ink);
+      --dark: var(--ink);
+      --light-bg: var(--card-bg);
+      --medium-gray: var(--border);
+      --white: #FFFFFF;
+      --bamboo: var(--ink);
+      --workday: #3B82F6;
+      --greenhouse: #F59E0B;
+      --max-width: 1200px;
+      --font-heading: var(--serif), Georgia, serif;
+      --font-body: var(--sans), -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--medium-gray);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--dark);
+      background: var(--light-bg);
+    }
+
+    .nav-links a.active {
+      color: var(--deep-green);
+      border-bottom: 2px solid var(--green);
+      border-radius: 2px 6px 0 0;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--white) !important;
+      background: var(--green);
+      padding: 8px 16px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover { background: var(--deep-green); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--medium-gray);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 10px 12px; font-size: 0.875rem; }
+      .nav-cta-mobile { display: inline-flex; margin-top: 8px; }
+      .nav-cta-desktop { display: none; }
+    }
+
+    @media (min-width: 769px) {
+      .nav-cta-mobile { display: none; }
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      background: var(--light-bg);
+      padding: 56px 24px 48px;
+      border-bottom: 1px solid var(--medium-gray);
+    }
+
+    .page-header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .page-header .breadcrumb {
+      font-size: 0.8125rem;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .page-header .breadcrumb a {
+      color: var(--green);
+      text-decoration: none;
+    }
+
+    .page-header .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 1.0625rem;
+      color: #555;
+      max-width: 680px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .page-header { padding: 40px 20px 32px; }
+      .page-header h1 { font-size: 1.5rem; }
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+
+    .section + .section { padding-top: 0; }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9375rem;
+      color: #666;
+      margin-bottom: 32px;
+      max-width: 640px;
+    }
+
+    /* ===== OVERVIEW STATS ===== */
+    .overview-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .overview-stat {
+      background: var(--light-bg);
+      border: 1px solid var(--medium-gray);
+      border-radius: 2px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .overview-stat .big-num {
+      font-family: var(--font-heading);
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .overview-stat .label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #555;
+    }
+
+    /* ===== BAR CHART ===== */
+    .chart-container {
+      margin-bottom: 48px;
+    }
+
+    .chart-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .bar-label {
+      width: 200px;
+      min-width: 200px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--dark);
+      text-align: right;
+      padding-right: 16px;
+    }
+
+    .bar-track {
+      flex: 1;
+      background: var(--light-bg);
+      border-radius: 20px;
+      height: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      min-width: 36px;
+      transition: width 0.6s ease;
+    }
+
+    .bar-fill.blue { background: var(--workday); }
+    .bar-fill.amber { background: var(--greenhouse); }
+
+    .bar-value {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .bar-value-outside {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #555;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .bar-label { width: 120px; min-width: 120px; font-size: 0.75rem; padding-right: 10px; }
+      .bar-track { height: 24px; }
+      .bar-fill { min-width: 28px; }
+    }
+
+    /* ===== COMPARISON PANEL ===== */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    .comparison-panel {
+      background: var(--light-bg);
+      border: 1px solid var(--medium-gray);
+      border-radius: 2px;
+      padding: 28px 24px;
+    }
+
+    .comparison-panel.user-panel {
+      border-left: 4px solid var(--green);
+    }
+
+    .comparison-panel.nonuser-panel {
+      border-left: 4px solid var(--workday);
+    }
+
+    .comparison-panel h3 {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .comparison-panel .count {
+      font-size: 0.8125rem;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .comparison-section {
+      margin-bottom: 20px;
+    }
+
+    .comparison-section:last-child { margin-bottom: 0; }
+
+    .comparison-section h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .mini-bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .mini-bar-label {
+      width: 160px;
+      min-width: 160px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--dark);
+      text-align: right;
+      padding-right: 12px;
+    }
+
+    .mini-bar-track {
+      flex: 1;
+      background: var(--white);
+      border-radius: 2px;
+      height: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      min-width: 28px;
+    }
+
+    .mini-bar-fill.green { background: var(--green); }
+    .mini-bar-fill.blue { background: var(--workday); }
+
+    .mini-bar-value {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .comparison { grid-template-columns: 1fr; gap: 20px; }
+      .mini-bar-label { width: 120px; min-width: 120px; }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.7);
+      padding: 40px 24px;
+      margin-top: 64px;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .footer-method {
+      font-size: 0.8125rem;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/internal/hr-interview-report/" class="nav-logo">BuyerVoice.AI</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="/internal/hr-interview-report/">Executive Summary</a></li>
+        <li><a href="/internal/hr-interview-report/sample" class="active">Sample</a></li>
+        <li><a href="/internal/hr-interview-report/mental-availability">Mental Availability</a></li>
+        <li><a href="/internal/hr-interview-report/category-entry-points">CEPs</a></li>
+        <li><a href="/internal/hr-interview-report/supporting-context">Supporting Data</a></li>
+        <li><a href="/internal/hr-interview-report/themes-evidence">Themes &amp; Evidence</a></li>
+        <li class="nav-cta-mobile"><a href="/internal/hr-interview-report/full-report" class="nav-cta">Download PDF</a></li>
+      </ul>
+      <a href="/internal/hr-interview-report/full-report" class="nav-cta nav-cta-desktop">Download PDF</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb"><a href="/internal/hr-interview-report/">Executive Summary</a> / Sample Description</div>
+      <h1>Sample Description</h1>
+      <p>100 HR leaders segmented by seniority, industry, company size, and BambooHR usage status. Non-users (82%) represent the primary growth audience.</p>
+    </div>
+  </header>
+
+  <!-- OVERVIEW STATS -->
+  <section class="section">
+    <div class="overview-row">
+      <div class="overview-stat">
+        <div class="big-num">100</div>
+        <div class="label">Total Participants</div>
+      </div>
+      <div class="overview-stat">
+        <div class="big-num">18</div>
+        <div class="label">BambooHR Users</div>
+      </div>
+      <div class="overview-stat">
+        <div class="big-num">82</div>
+        <div class="label">Non-Users (Growth Audience)</div>
+      </div>
+      <div class="overview-stat">
+        <div class="big-num">3</div>
+        <div class="label">Seniority Levels</div>
+      </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS (moved above charts) -->
+    <div style="background: var(--light-bg); border-radius: 2px; padding: 32px; border: 1px solid var(--medium-gray); margin-bottom: 48px;">
+      <h3 style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600; color: var(--dark); margin-bottom: 16px;">Key Sample Takeaways</h3>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 8px 0; font-size: 0.875rem; color: #444; border-bottom: 1px solid var(--medium-gray); display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--green); font-weight: 700; font-size: 1rem;">1</span>
+          <span><strong>BambooHR users concentrate in smaller, non-tech companies.</strong> 78% of users are in the 100-500 employee range. Healthcare and Retail dominate their industry mix.</span>
+        </li>
+        <li style="padding: 8px 0; font-size: 0.875rem; color: #444; border-bottom: 1px solid var(--medium-gray); display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--green); font-weight: 700; font-size: 1rem;">2</span>
+          <span><strong>The growth audience skews Tech/Software and mid-market.</strong> 46% of non-users work in Tech/Software, and 77% are at companies with 500+ employees.</span>
+        </li>
+        <li style="padding: 8px 0; font-size: 0.875rem; color: #444; border-bottom: 1px solid var(--medium-gray); display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--green); font-weight: 700; font-size: 1rem;">3</span>
+          <span><strong>No BambooHR users in the 2,000-10,000 employee segment.</strong> This represents a clear penetration ceiling for the current product and brand positioning.</span>
+        </li>
+        <li style="padding: 8px 0; font-size: 0.875rem; color: #444; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--green); font-weight: 700; font-size: 1rem;">4</span>
+          <span><strong>LinkedIn Recruiter is the category default.</strong> Mentioned by 85% of participants (well ahead of Indeed at 54%), it functions as the baseline platform across all segments.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SENIORITY -->
+    <div class="chart-container">
+      <div class="chart-title">Seniority Distribution</div>
+      <div class="bar-row">
+        <div class="bar-label">Manager</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 33%;">
+            <span class="bar-value">33%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Director</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 30%;">
+            <span class="bar-value">30%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">VP</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 37%;">
+            <span class="bar-value">37%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INDUSTRY -->
+    <div class="chart-container">
+      <div class="chart-title">Industry Distribution</div>
+      <div class="bar-row">
+        <div class="bar-label">Tech / Software</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 78%;">
+            <span class="bar-value">39%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Retail</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 32%;">
+            <span class="bar-value">16%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Healthcare</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 30%;">
+            <span class="bar-value">15%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Prof. Services / Finance</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 26%;">
+            <span class="bar-value">13%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Other Industries</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 30%; opacity: 0.6;">
+            <span class="bar-value">15%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPANY SIZE -->
+    <div class="chart-container">
+      <div class="chart-title">Company Size Distribution</div>
+      <div class="bar-row">
+        <div class="bar-label">100 - 500 employees</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 66%;">
+            <span class="bar-value">33%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">500 - 2,000 employees</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 76%;">
+            <span class="bar-value">38%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">2,000 - 10,000 employees</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 58%;">
+            <span class="bar-value">29%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION LANDSCAPE -->
+  <section class="section">
+    <h2 class="section-title">Solution Landscape</h2>
+    <p class="section-subtitle">Percentage of participants who mentioned each recruiting tool as a current solution.</p>
+
+    <div class="chart-container">
+      <div class="bar-row">
+        <div class="bar-label">LinkedIn Recruiter</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 100%; background: #94A3B8;">
+            <span class="bar-value">85%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Indeed</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 63.5%; background: #94A3B8;">
+            <span class="bar-value">54%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Lever</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 25.9%; background: #94A3B8;">
+            <span class="bar-value">22%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Greenhouse</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 24.7%; background: #94A3B8;">
+            <span class="bar-value">21%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Gem</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 23.5%; background: #94A3B8;">
+            <span class="bar-value">20%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label" style="font-weight: 700; color: var(--green);">BambooHR</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 21.2%; background: var(--green);">
+            <span class="bar-value">18%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">iCIMS</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 18.8%; background: #94A3B8;">
+            <span class="bar-value">16%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">GoodTime</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 12.9%; background: #94A3B8;">
+            <span class="bar-value">11%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Workday</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 11.8%; background: #94A3B8;">
+            <span class="bar-value">10%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Handshake</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 9.4%; background: #94A3B8;">
+            <span class="bar-value">8%</span>
+          </div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">JazzHR</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width: 5.9%; background: #94A3B8;">
+            <span class="bar-value">5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUYER VS NON-BUYER COMPARISON -->
+  <section class="section">
+    <h2 class="section-title">BambooHR Users vs. Non-Users</h2>
+    <p class="section-subtitle">Side-by-side demographic comparison of the two segments. Non-users skew toward Tech/Software, larger companies, and more evenly distributed seniority.</p>
+
+    <div class="comparison">
+      <!-- USERS -->
+      <div class="comparison-panel user-panel">
+        <h3>BambooHR Users</h3>
+        <div class="count">n = 18</div>
+
+        <div class="comparison-section">
+          <h4>Seniority</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Manager</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 22.2%;">
+                <span class="mini-bar-value">22%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Director</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 33.3%;">
+                <span class="mini-bar-value">33%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">VP</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 44.4%;">
+                <span class="mini-bar-value">44%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-section">
+          <h4>Top Industries</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Healthcare</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 27.8%;">
+                <span class="mini-bar-value">28%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Retail</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 22.2%;">
+                <span class="mini-bar-value">22%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Prof. Svcs / Finance</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 16.7%;">
+                <span class="mini-bar-value">17%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Nonprofit</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 11.1%;">
+                <span class="mini-bar-value">11%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Tech / Software</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 5.6%;">
+                <span class="mini-bar-value">6%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-section">
+          <h4>Company Size</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">100 - 500</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 77.8%;">
+                <span class="mini-bar-value">78%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">500 - 2,000</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 22.2%;">
+                <span class="mini-bar-value">22%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">2,000 - 10,000</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill green" style="width: 0%;">
+              </div>
+            </div>
+            <span class="bar-value-outside">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NON-USERS -->
+      <div class="comparison-panel nonuser-panel">
+        <h3>Non-Users (Growth Audience)</h3>
+        <div class="count">n = 82</div>
+
+        <div class="comparison-section">
+          <h4>Seniority</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Manager</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 35.4%;">
+                <span class="mini-bar-value">35%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Director</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 29.3%;">
+                <span class="mini-bar-value">29%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">VP</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 35.4%;">
+                <span class="mini-bar-value">35%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-section">
+          <h4>Top Industries</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Tech / Software</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 46.3%;">
+                <span class="mini-bar-value">46%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Retail</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 14.6%;">
+                <span class="mini-bar-value">15%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Prof. Svcs / Finance</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 12.2%;">
+                <span class="mini-bar-value">12%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Healthcare</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 12.2%;">
+                <span class="mini-bar-value">12%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">Other (10 industries)</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 14.6%; opacity: 0.6;">
+                <span class="mini-bar-value">15%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-section">
+          <h4>Company Size</h4>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">100 - 500</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 23.2%;">
+                <span class="mini-bar-value">23%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">500 - 2,000</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 41.5%;">
+                <span class="mini-bar-value">41%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">2,000 - 10,000</div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill blue" style="width: 35.4%;">
+                <span class="mini-bar-value">35%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">Prepared by BuyerVoice.AI &copy; 2026</div>
+      <div class="footer-note">Analysis based on 100 HR leader interviews, March 2026</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

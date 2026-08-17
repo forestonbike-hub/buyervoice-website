@@ -1,0 +1,254 @@
+---
+const services = [
+  { name: 'Buyer Journey + Preferences', desc: 'Why do people buy in your category?', href: '/services/buyer-journey-analysis' },
+  { name: 'Brand Associations + CSV', desc: 'What do people think about your brand?', href: '/services/brand-associations-csv' },
+  { name: 'Conjoint: Pricing and Packaging', desc: 'How should you price to maximize revenue?', href: '/services/conjoint-pricing-packaging' },
+  { name: 'Brand + CSV Tracking', desc: 'How is your brand perception changing over time?', href: '/services/brand-csv-tracking' },
+];
+
+const methodology = [
+  { name: 'Consumer Surplus Value', desc: 'The economic value of brand perception', href: '/methodology/consumer-surplus-value' },
+  { name: 'Brand Density', desc: 'How customers think about your brand', href: '/methodology/brand-density' },
+  { name: 'Holistic Conjoint', desc: 'Behavioral science meets preference measurement', href: '/methodology/holistic-conjoint' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="header-inner container">
+    <a href="/internal/four-products-v1/" class="logo" aria-label="KwantumLabs home">
+      <img src="/images/kwantumlabs-logo.png" alt="KwantumLabs" width="240" height="60" />
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          Services
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          {services.map(s => (
+            <a href={s.href} class="dropdown-item" role="menuitem">
+              <span class="dropdown-name">{s.name}</span>
+              <span class="dropdown-desc">{s.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="nav-item has-dropdown">
+        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          Methodology
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dropdown" role="menu">
+          {methodology.map(m => (
+            <a href={m.href} class="dropdown-item" role="menuitem">
+              <span class="dropdown-name">{m.name}</span>
+              <span class="dropdown-desc">{m.desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <a href="/internal/four-products-v1/about" class={`nav-link ${currentPath.includes('/about') ? 'active' : ''}`}>About</a>
+    </nav>
+
+    <a href="/internal/four-products-v1/contact" class="btn btn-primary header-cta">Contact us</a>
+
+    <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" role="dialog" aria-label="Navigation menu">
+    <div class="mobile-menu-inner">
+      <div class="mobile-section">
+        <p class="mobile-section-label">Services</p>
+        {services.map(s => (
+          <a href={s.href} class="mobile-link">{s.name}</a>
+        ))}
+      </div>
+      <div class="mobile-section">
+        <p class="mobile-section-label">Methodology</p>
+        {methodology.map(m => (
+          <a href={m.href} class="mobile-link">{m.name}</a>
+        ))}
+      </div>
+      <a href="/internal/four-products-v1/about" class="mobile-link">About</a>
+      <a href="/internal/four-products-v1/contact" class="btn btn-primary" style="margin-top: var(--space-md); width: 100%; justify-content: center;">Contact us</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    height: 72px;
+    gap: var(--space-xl);
+  }
+
+  .logo img {
+    height: 54px;
+    width: auto;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-left: auto;
+  }
+
+  .nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-slate);
+    text-decoration: none;
+    padding: var(--space-sm) 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-body);
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--color-black);
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -16px;
+    background: var(--color-white);
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    padding: var(--space-sm) 0;
+    min-width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+  }
+
+  .nav-item:hover .dropdown,
+  .nav-item:focus-within .dropdown {
+    display: block;
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: var(--space-sm) var(--space-md);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .dropdown-item:hover {
+    background: var(--color-light-gray);
+    text-decoration: none;
+  }
+
+  .dropdown-name {
+    display: block;
+    font-weight: 500;
+    color: var(--color-black);
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .dropdown-desc {
+    display: block;
+    font-size: 13px;
+    color: var(--color-slate);
+  }
+
+  .header-cta {
+    margin-left: var(--space-md);
+    font-size: 14px;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-slate);
+    cursor: pointer;
+    padding: var(--space-sm);
+    margin-left: auto;
+  }
+
+  .mobile-menu {
+    display: none;
+    background: var(--color-white);
+    border-top: 1px solid var(--color-medium-gray);
+    padding: var(--space-lg);
+  }
+
+  .mobile-menu.open {
+    display: block;
+  }
+
+  .mobile-section {
+    margin-bottom: var(--space-md);
+  }
+
+  .mobile-section-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-slate);
+    margin-bottom: var(--space-sm);
+  }
+
+  .mobile-link {
+    display: block;
+    padding: var(--space-sm) 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-light-gray);
+  }
+
+  @media (max-width: 900px) {
+    .main-nav, .header-cta {
+      display: none;
+    }
+    .mobile-toggle {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.mobile-toggle');
+  const menu = document.querySelector('.mobile-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+</script>

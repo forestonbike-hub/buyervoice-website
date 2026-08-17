@@ -1,0 +1,77 @@
+---
+interface Props {
+  items: { label: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kwantumlabs.ai/" },
+    ...items.map((item, i) => ({
+      "@type": "ListItem",
+      "position": i + 2,
+      "name": item.label,
+      ...(item.href ? { "item": `https://kwantumlabs.ai${item.href}` } : {})
+    }))
+  ]
+};
+---
+
+<nav class="breadcrumbs container" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/internal/four-products-v1/">Home</a></li>
+    {items.map((item, i) => (
+      <li>
+        <span class="sep" aria-hidden="true">&rsaquo;</span>
+        {item.href && i < items.length - 1
+          ? <a href={item.href}>{item.label}</a>
+          : <span aria-current="page">{item.label}</span>
+        }
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<style>
+  .breadcrumbs {
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  ol {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  a {
+    color: var(--color-slate);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-green);
+  }
+
+  .sep {
+    color: var(--color-medium-gray);
+  }
+
+  span[aria-current] {
+    color: var(--color-black);
+    font-weight: 500;
+  }
+</style>

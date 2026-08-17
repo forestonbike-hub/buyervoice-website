@@ -1,0 +1,449 @@
+{
+  "n_matched": 160,
+  "summary": {
+    "n_high": 28,
+    "n_mid": 4,
+    "n_low": 89,
+    "n_unclassified": 39,
+    "band_distribution": {
+      "neutral": 4,
+      "unclassified": 39,
+      "low": 84,
+      "high": 18,
+      "very_high": 2,
+      "somewhat_high": 8,
+      "somewhat_low": 5
+    },
+    "method": "Each Wave 2 matched non-switcher's Q23 response is regex-classified into one of 7 likelihood bands (very_high to very_low + neutral). The 7 bands collapse to high / mid / low / unclassified for cohort comparison. The classifier biases toward primary-switching cues (e.g., 'I'd say I'm likely' wins over 'fifty-fifty on opening a secondary')."
+  },
+  "demographics": {
+    "high": {
+      "n": 28,
+      "primary_bank": [
+        {
+          "value": "Lloyds Bank",
+          "n": 6,
+          "pct": 22
+        },
+        {
+          "value": "Santander",
+          "n": 6,
+          "pct": 22
+        },
+        {
+          "value": "Halifax",
+          "n": 5,
+          "pct": 18
+        },
+        {
+          "value": "HSBC",
+          "n": 4,
+          "pct": 15
+        },
+        {
+          "value": "NatWest",
+          "n": 4,
+          "pct": 15
+        },
+        {
+          "value": "Barclays",
+          "n": 2,
+          "pct": 8
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 1,
+          "pct": 4
+        }
+      ],
+      "age_band": [
+        {
+          "value": "18-24",
+          "n": 15,
+          "pct": 54
+        },
+        {
+          "value": "25-34",
+          "n": 13,
+          "pct": 47
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 14,
+          "pct": 50
+        },
+        {
+          "value": "Under £25,000",
+          "n": 4,
+          "pct": 15
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 4,
+          "pct": 15
+        },
+        {
+          "value": "£100,000+",
+          "n": 3,
+          "pct": 11
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 3,
+          "pct": 11
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "London",
+          "n": 12,
+          "pct": 43
+        },
+        {
+          "value": "Smaller town or suburban area",
+          "n": 9,
+          "pct": 33
+        },
+        {
+          "value": "Other major urban area",
+          "n": 6,
+          "pct": 22
+        },
+        {
+          "value": "Rural area",
+          "n": 1,
+          "pct": 4
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 17,
+          "pct": 61
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 6,
+          "pct": 22
+        },
+        {
+          "value": "Part-time employed",
+          "n": 5,
+          "pct": 18
+        }
+      ]
+    },
+    "low": {
+      "n": 89,
+      "primary_bank": [
+        {
+          "value": "Lloyds Bank",
+          "n": 26,
+          "pct": 30
+        },
+        {
+          "value": "NatWest",
+          "n": 15,
+          "pct": 17
+        },
+        {
+          "value": "Santander",
+          "n": 12,
+          "pct": 14
+        },
+        {
+          "value": "Halifax",
+          "n": 11,
+          "pct": 13
+        },
+        {
+          "value": "Barclays",
+          "n": 11,
+          "pct": 13
+        },
+        {
+          "value": "HSBC",
+          "n": 8,
+          "pct": 9
+        },
+        {
+          "value": "Royal Bank of Scotland",
+          "n": 5,
+          "pct": 6
+        },
+        {
+          "value": "Bank of Scotland",
+          "n": 1,
+          "pct": 2
+        }
+      ],
+      "age_band": [
+        {
+          "value": "25-34",
+          "n": 28,
+          "pct": 32
+        },
+        {
+          "value": "35-44",
+          "n": 20,
+          "pct": 23
+        },
+        {
+          "value": "45-54",
+          "n": 16,
+          "pct": 18
+        },
+        {
+          "value": "18-24",
+          "n": 11,
+          "pct": 13
+        },
+        {
+          "value": "65+",
+          "n": 7,
+          "pct": 8
+        },
+        {
+          "value": "55-64",
+          "n": 7,
+          "pct": 8
+        }
+      ],
+      "household_income": [
+        {
+          "value": "£25,000-£49,999",
+          "n": 37,
+          "pct": 42
+        },
+        {
+          "value": "£50,000-£74,999",
+          "n": 18,
+          "pct": 21
+        },
+        {
+          "value": "£75,000-£99,999",
+          "n": 13,
+          "pct": 15
+        },
+        {
+          "value": "Under £25,000",
+          "n": 11,
+          "pct": 13
+        },
+        {
+          "value": "£100,000+",
+          "n": 6,
+          "pct": 7
+        },
+        {
+          "value": "Prefer not to say",
+          "n": 4,
+          "pct": 5
+        }
+      ],
+      "urbanicity": [
+        {
+          "value": "Smaller town or suburban area",
+          "n": 33,
+          "pct": 38
+        },
+        {
+          "value": "London",
+          "n": 26,
+          "pct": 30
+        },
+        {
+          "value": "Other major urban area",
+          "n": 23,
+          "pct": 26
+        },
+        {
+          "value": "Rural area",
+          "n": 7,
+          "pct": 8
+        }
+      ],
+      "employment_status": [
+        {
+          "value": "Full-time employed",
+          "n": 70,
+          "pct": 79
+        },
+        {
+          "value": "Part-time employed",
+          "n": 15,
+          "pct": 17
+        },
+        {
+          "value": "Self-employed or freelance",
+          "n": 4,
+          "pct": 5
+        }
+      ]
+    }
+  },
+  "frustrations_top": [
+    {
+      "theme": "Spending Visibility Through Categorization",
+      "high_pct": 72,
+      "low_pct": 50,
+      "delta_pp": 22,
+      "abs_delta": 22
+    },
+    {
+      "theme": "Phone Customer Service Friction",
+      "high_pct": 40,
+      "low_pct": 61,
+      "delta_pp": -21,
+      "abs_delta": 21
+    },
+    {
+      "theme": "Excessive Incumbent Fees",
+      "high_pct": 43,
+      "low_pct": 27,
+      "delta_pp": 16,
+      "abs_delta": 16
+    },
+    {
+      "theme": "Uncompetitive Savings Rates",
+      "high_pct": 75,
+      "low_pct": 84,
+      "delta_pp": -9,
+      "abs_delta": 9
+    },
+    {
+      "theme": "In App Chat Customer Service",
+      "high_pct": 15,
+      "low_pct": 9,
+      "delta_pp": 6,
+      "abs_delta": 6
+    },
+    {
+      "theme": "App Design Quality",
+      "high_pct": 75,
+      "low_pct": 70,
+      "delta_pp": 5,
+      "abs_delta": 5
+    },
+    {
+      "theme": "App Reliability Concerns",
+      "high_pct": 4,
+      "low_pct": 9,
+      "delta_pp": -5,
+      "abs_delta": 5
+    },
+    {
+      "theme": "Excessive Security Friction",
+      "high_pct": 8,
+      "low_pct": 13,
+      "delta_pp": -5,
+      "abs_delta": 5
+    }
+  ],
+  "trust_x_likelihood": {
+    "high": {
+      "n_cohort": 28,
+      "any_trust_n": 28,
+      "any_trust_pct": 100,
+      "by_question": {
+        "Q22_institutional_trust_deficit_for_neobanks": 93,
+        "Q10_institutional_trust_deficit_for_neobanks": 68,
+        "Q15_institutional_trust_deficit_for_neobanks": 40,
+        "Q20_revolut_regulatory_trust_concerns": 97
+      }
+    },
+    "low": {
+      "n_cohort": 89,
+      "any_trust_n": 89,
+      "any_trust_pct": 100,
+      "by_question": {
+        "Q15_institutional_trust_deficit_for_neobanks": 70,
+        "Q20_revolut_regulatory_trust_concerns": 96,
+        "Q22_institutional_trust_deficit_for_neobanks": 96,
+        "Q10_institutional_trust_deficit_for_neobanks": 77
+      }
+    },
+    "delta_pp": 0,
+    "interpretation": "Post-rationalization (likely-to-switch participants cite trust at similar or higher rates than unlikely-to-switch)"
+  },
+  "by_primary_bank": [
+    {
+      "bank": "Santander",
+      "n_cohort": 23,
+      "n_high": 6,
+      "n_low": 12,
+      "high_pct": 27,
+      "low_pct": 53
+    },
+    {
+      "bank": "HSBC",
+      "n_cohort": 18,
+      "n_high": 4,
+      "n_low": 8,
+      "high_pct": 23,
+      "low_pct": 45
+    },
+    {
+      "bank": "Halifax",
+      "n_cohort": 24,
+      "n_high": 5,
+      "n_low": 11,
+      "high_pct": 21,
+      "low_pct": 46
+    },
+    {
+      "bank": "Lloyds Bank",
+      "n_cohort": 38,
+      "n_high": 6,
+      "n_low": 26,
+      "high_pct": 16,
+      "low_pct": 69
+    },
+    {
+      "bank": "NatWest",
+      "n_cohort": 26,
+      "n_high": 4,
+      "n_low": 15,
+      "high_pct": 16,
+      "low_pct": 58
+    },
+    {
+      "bank": "Barclays",
+      "n_cohort": 18,
+      "n_high": 2,
+      "n_low": 11,
+      "high_pct": 12,
+      "low_pct": 62
+    },
+    {
+      "bank": "Royal Bank of Scotland",
+      "n_cohort": 10,
+      "n_high": 1,
+      "n_low": 5,
+      "high_pct": 10,
+      "low_pct": 50
+    }
+  ],
+  "retirees": {
+    "n": 40,
+    "band_distribution": {
+      "very_high": 3,
+      "somewhat_low": 2,
+      "unclassified": 3,
+      "low": 28,
+      "somewhat_high": 1,
+      "neutral": 1,
+      "high": 2
+    },
+    "collapsed": {
+      "high": 6,
+      "mid": 1,
+      "low": 30,
+      "unclassified": 3
+    },
+    "high_pct": 15,
+    "low_pct": 75
+  }
+}

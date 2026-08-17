@@ -1,0 +1,263 @@
+---
+// ReportLayout.astro — canonical layout for every BuyerVoice research report.
+// Enforces cover structure, typography, palette, accordion pattern,
+// "Save as PDF" button, and print behavior (all accordions expand before
+// printing). Use this for every new B2B and B2C report so the house
+// style can't drift per study.
+//
+// Usage:
+//   <ReportLayout
+//     studyName="Retail Banking"
+//     client="CIBC"
+//     preparedOn="April 2026"
+//     geography="Canada"
+//     scope="B2C buyers of primary banks"
+//     stats={{ interviews: 300, avgLengthMin: 24, wordsAnalyzedK: 820, thematicCodes: 73 }}
+//     includeAnalytics={false}  // true for public page copies; false for internal
+//     noindex={true}            // true for internal; false for public
+//   >
+//     <section id="01-executive-summary">...</section>
+//   </ReportLayout>
+//
+// The PDF button is rendered automatically; it expands every <details>
+// on the page before firing window.print() and collapses them back
+// afterward. Tune the cover copy by passing slots:
+//   <slot name="cover-tagline" /> — optional subtitle override
+//   <slot name="stat-cards" />    — optional override of the 4-card grid
+//
+// Every section should be a <details class="accordion"> with an
+// <summary class="accordion-header">; the layout wires the two-digit
+// numbering, +/- icon, and print-expand handler for you.
+interface StatCard { label: string; value: string; }
+interface Props {
+  studyName: string;
+  client: string;
+  preparedOn: string;        // "April 2026"
+  geography?: string;
+  scope?: string;
+  stats?: {
+    interviews: number;
+    avgLengthMin: number;
+    wordsAnalyzedK: number;
+    thematicCodes: number;
+  };
+  includeAnalytics?: boolean;
+  noindex?: boolean;
+  title?: string;
+  // When true, the cover's prepared-for line shows ONLY the date (no client
+  // name). Use this for studies where the brief is illustrative or where
+  // the client side wants a cleaner cover.
+  hideClientOnCover?: boolean;
+}
+const {
+  studyName,
+  client,
+  preparedOn,
+  geography,
+  scope,
+  stats,
+  includeAnalytics = false,
+  noindex = true,
+  title,
+  hideClientOnCover = false,
+} = Astro.props;
+const pageTitle = title ?? `${studyName} — ${client}`;
+const statCards: StatCard[] = stats
+  ? [
+      { label: "Interviews", value: `${stats.interviews}` },
+      { label: "Avg Length", value: `~${stats.avgLengthMin}min` },
+      { label: "Words Analyzed", value: `${stats.wordsAnalyzedK}K` },
+      { label: "Thematic Codes", value: `${stats.thematicCodes}` },
+    ]
+  : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#F7F5EF" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+    {includeAnalytics && (
+      <>
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8MZNTQVSZ5');`}></script>
+        <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N7JWFV8H');`}></script>
+      </>
+    )}
+  </head>
+  <body>
+    {includeAnalytics && (
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    )}
+
+    <button class="pdf-button" id="pdf-save" aria-label="Save as PDF">Save as PDF</button>
+
+    <main class="report-container">
+      <section class="cover">
+        <div
+          class="bv-logo"
+          aria-label="BuyerVoice.AI"
+          style="display:inline-block;font-family:var(--serif);line-height:1;margin:0 auto 48px;"
+        >
+          <span style="font-size:28px;font-weight:600;color:var(--ink);letter-spacing:-0.02em;">BuyerVoice</span><span style="font-size:28px;font-weight:600;color:var(--signal);letter-spacing:-0.02em;margin-left:1px;">.AI</span>
+        </div>
+
+        <h1 class="report-title">{studyName}</h1>
+        <p class="report-subtitle">
+          <slot name="cover-tagline">
+            {scope ?? "Interview-Based Research Report"}
+            {geography ? ` Based on Buyer Interviews in ${geography}` : ""}
+          </slot>
+        </p>
+        <p class="prepared-for">
+          {hideClientOnCover ? preparedOn : (<>Prepared for {client} &bull; {preparedOn}</>)}
+        </p>
+
+        <slot name="stat-cards">
+          {statCards.length > 0 && (
+            <div class="stat-grid">
+              {statCards.map((c) => (
+                <div class="stat-card">
+                  <div class="stat-value">{c.value}</div>
+                  <div class="stat-label">{c.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </slot>
+      </section>
+
+      <div class="accordions">
+        <slot />
+      </div>
+    </main>
+
+    <script is:inline>
+      (function () {
+        // Auto-number accordions with zero-padded two-digit numbers.
+        const accordions = document.querySelectorAll('details.accordion');
+        accordions.forEach((el, i) => {
+          const num = String(i + 1).padStart(2, '0');
+          let numEl = el.querySelector('.accordion-num');
+          if (!numEl) {
+            const summary = el.querySelector('summary');
+            if (summary) {
+              numEl = document.createElement('span');
+              numEl.className = 'accordion-num';
+              summary.prepend(numEl);
+            }
+          }
+          if (numEl) numEl.textContent = num;
+        });
+
+        // PDF: expand all accordions, print, restore.
+        const btn = document.getElementById('pdf-save');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            const prevStates = [];
+            accordions.forEach((el) => {
+              prevStates.push(el.open);
+              el.open = true;
+            });
+            setTimeout(() => {
+              window.print();
+              setTimeout(() => {
+                accordions.forEach((el, i) => {
+                  el.open = prevStates[i];
+                });
+              }, 500);
+            }, 100);
+          });
+        }
+
+        // Keep print behavior consistent even if the user triggers it from the menu.
+        window.addEventListener('beforeprint', () => {
+          accordions.forEach((el) => { el.open = true; });
+        });
+      })();
+    </script>
+
+    <style is:global>
+      :root {
+        --ink: #0B1F3A;
+        --paper: #F7F5EF;
+        --signal: #B8341B;
+        --rule: #1A1A1A;
+        --muted: #6B6B6B;
+        --border: rgba(11, 31, 58, 0.10);
+        --card-bg: rgba(11, 31, 58, 0.03);
+        --serif: 'Fraunces', Georgia, serif;
+        --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { margin: 0; padding: 0; background: var(--paper); color: var(--rule); font-family: var(--sans); font-size: 16px; line-height: 1.55; }
+      .report-container { max-width: 960px; margin: 0 auto; padding: 48px 32px 96px; }
+
+      /* Cover. Tightened to match retail-banking-report: no bottom border
+         and shorter bottom padding so the executive summary sits closer
+         to the four hero-stat cards. The first accordion's own border
+         provides the only horizontal rule below the cover. */
+      .cover { text-align: center; padding: 64px 0 64px; margin-bottom: 0; }
+      .report-title { font-family: var(--serif); font-size: 56px; font-weight: 600; letter-spacing: -0.02em; color: var(--signal); margin: 0 0 16px; line-height: 1.1; }
+      .report-subtitle { font-family: var(--sans); font-size: 17px; color: var(--muted); margin: 0 auto 24px; max-width: 640px; }
+      .prepared-for { font-family: var(--sans); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 48px; }
+      /* Cover stat-grid: stretch across the full container width so the four
+         hero numbers feel evenly spaced rather than clustered tightly in
+         the middle. Matches the in-body .stat-grid pattern in retail-banking-
+         report (margin 20px 0, no max-width) so hero stat boxes look the
+         same on the cover and in section bodies. */
+      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 8px 0 0; width: 100%; }
+      .stat-card { padding: 24px 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; }
+      .stat-value { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 8px; }
+      .stat-label { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+      /* Accordions. Header padding is the dominant lever for closed-state
+         spacing; keep it tight to match retail-banking-report. The
+         `.report-container .accordion-*` selectors below have higher
+         specificity than per-report `.<slug>-report h2` / `p` rules so
+         they survive without per-report defensive CSS. Without this,
+         report-scoped h2/p margins (e.g. `.ukn-report h2 { margin-top:
+         28px }`) bleed into the accordion title and subtitle and inflate
+         the closed-accordion height. */
+      .accordion { border-bottom: 1px solid var(--border); }
+      .accordion-header { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 16px; padding: 24px 0; }
+      .accordion-header::-webkit-details-marker { display: none; }
+      .accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+      .report-container .accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin: 0; flex: 1; line-height: 1.2; }
+      .report-container .accordion-subtitle { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 4px 0 0; line-height: 1.35; }
+      .accordion-icon { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--signal); transition: transform 0.2s; }
+      details[open] .accordion-icon { transform: rotate(45deg); }
+      .accordion-body { padding: 8px 0 40px 56px; font-family: var(--sans); font-size: 16px; color: var(--rule); line-height: 1.65; }
+      .accordion-body h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin: 32px 0 12px; }
+      .accordion-body h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--ink); margin: 24px 0 8px; }
+      .accordion-body p { margin: 0 0 16px; }
+
+      /* PDF button */
+      .pdf-button { position: fixed; top: 16px; right: 16px; background: var(--signal); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+      .pdf-button:hover { background: #8E2514; }
+
+      /* Print */
+      @media print {
+        @page { margin: 16mm; }
+        .pdf-button { display: none !important; }
+        .accordion { page-break-inside: auto; }
+        .accordion-header { page-break-after: avoid; }
+        details.accordion { page-break-before: always; }
+        details.accordion:first-of-type { page-break-before: auto; }
+        h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+        table { page-break-inside: auto; }
+        tr { page-break-inside: avoid; }
+      }
+    </style>
+  </body>
+</html>

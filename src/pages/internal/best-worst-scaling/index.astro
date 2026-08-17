@@ -1,0 +1,990 @@
+---
+import InternalLayout from '../../../layouts/InternalLayout.astro';
+---
+
+<InternalLayout title="Best-Worst Scaling for intensity coding" description="Methodology reference for the BuyerVoice intensity-coding approach. Why we replaced 1/2/3 ordinal rating with Best-Worst Scaling, what BWS measures, how the pipeline runs, and the citations behind the choice.">
+  <article class="bws-doc">
+    <header class="doc-header">
+      <p class="overline">Methodology / Magnitude coding</p>
+      <h1>Best-Worst Scaling for intensity coding</h1>
+      <p class="lead">
+        Why we replaced the 1/2/3 ordinal intensity scale with Best-Worst Scaling in May 2026, what BWS actually measures, how the pipeline runs it, and the citations behind the choice. Read this when a colleague asks "what does the BWS score mean?" or "why did we change?"
+      </p>
+    </header>
+
+    <section class="doc-section">
+      <h2>The headline</h2>
+      <p>
+        Every BuyerVoice study produces three layers of coding per meaning unit: <strong>thematic</strong> (what topic), <strong>direction</strong> (+ / - / ~), and <strong>intensity</strong> (how strongly the code is held). Direction is unchanged. The intensity dimension used to be a 1/2/3 ordinal rating assigned per (participant, code) pair. As of May 2026, intensity is produced by <strong>Best-Worst Scaling</strong> at the verbatim level, partitioned by question grouping. The output is a continuous score in [&minus;1, +1] per verbatim, aggregated to per-attribute mean, top-tier rate, and distribution shape.
+      </p>
+      <div class="callout">
+        <h4>One-sentence version</h4>
+        <p>
+          Humans (and AI coders mirroring human conventions) are unreliable on absolute ordinal judgments at 3+ tiers but are dramatically more reliable when making relative judgments. BWS replaces "score this on 1 to 3" with "of these four, which is most intense and which is least?" and aggregates the picks into continuous per-verbatim scores.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Why we retired the 1/2/3 ordinal scale</h2>
+      <p>
+        The prior version of this pipeline asked dual AI coders to rate each (participant, code) pair on a 1/2/3 ordinal scale anchored to behavioral exemplars: 1 = "brief mention," 2 = "elaborated," 3 = "narrative incident." On paper it was defensible: it followed Saldana's (2021) magnitude-coding terminology, the anchors were concrete, and the dual-coder + arbiter pattern matched the rest of the pipeline.
+      </p>
+      <p>
+        In practice it had three compounding problems.
+      </p>
+
+      <div class="problem-list">
+        <div class="problem">
+          <span class="problem-num">1</span>
+          <div class="problem-body">
+            <h3>Cohen's unweighted kappa is the wrong statistic for ordinal data</h3>
+            <p>
+              We were reporting Cohen's kappa on the 1/2/3 disagreements. Cohen's unweighted kappa is designed for nominal categories where all disagreements are equally serious. On an ordinal 1/2/3 scale, a 2-vs-3 disagreement is far less serious than a 1-vs-3 disagreement, and unweighted kappa treats them identically. The right statistics are <strong>weighted kappa</strong> (Cohen, 1968) or <strong>Krippendorff's ordinal alpha</strong> (Krippendorff, 2018). Switching to weighted kappa or ordinal alpha on the existing data typically lifts the reported number by 0.10-0.25 with no change to the coding itself. The original 0.30-0.40 was partly an artifact.
+            </p>
+          </div>
+        </div>
+
+        <div class="problem">
+          <span class="problem-num">2</span>
+          <div class="problem-body">
+            <h3>3+ tier ordinal human coding is empirically hard</h3>
+            <p>
+              Even with the right statistic, the underlying problem persists. The norm across content analysis, sentiment annotation, and computational linguistics is that human raters achieve high agreement on binary distinctions, decent agreement on 3-tier nominal, and degrade rapidly past 3 ordinal tiers without explicit anchors. Mohammad &amp; Bravo-Marquez (2017) and the broader WASSA shared-task work moved <em>away</em> from direct rating scales for exactly this reason: human raters are unreliable on absolute ordinal judgments. Our coders averaging kappa ~0.35 was the published norm, not a pathology.
+            </p>
+          </div>
+        </div>
+
+        <div class="problem">
+          <span class="problem-num">3</span>
+          <div class="problem-body">
+            <h3>The distributions were heavily skewed</h3>
+            <p>
+              Even after a binary collapse (high = 2 or 3, low = 1) the distribution typically ended up 90%+ in one bucket. UK Neobanks shipped with the binary collapse and most theme bars rendered ~98% "high intensity." The stacked-bar visualization that depended on intensity variation added visual noise without analytical information. The data was carrying less signal than the methodology promised.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Two reasonable responses to this situation: (a) keep 1/2/3, switch to weighted kappa, accept the modest improvement; or (b) change the measurement instrument itself. The literature on text-annotation intensity is unusually clear on which option pays back better.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Why Best-Worst Scaling is the right alternative</h2>
+      <p>
+        Best-Worst Scaling was developed by Jordan Louviere and Gary Woodworth (1991) as a choice-modeling method. It was adapted to text annotation by Saif Mohammad and collaborators in the SemEval and WASSA shared tasks (Mohammad &amp; Bravo-Marquez, 2017). The premise: <strong>relative judgments are reliable, absolute ordinal judgments are not.</strong>
+      </p>
+      <p>
+        Instead of asking the coder "is this verbatim a 1, 2, or 3?", BWS presents the coder with four verbatims at a time and asks two questions:
+      </p>
+      <ol class="numbered-list">
+        <li>Which of these four is the <strong>most intense</strong> expression?</li>
+        <li>Which is the <strong>least intense</strong>?</li>
+      </ol>
+      <p>
+        Across many tuples, every verbatim ends up with a continuous score in [&minus;1, +1] computed as <code>(n_best &minus; n_worst) / n_appearances</code>. A verbatim picked as "most intense" every time it appeared and never as "least intense" scores +1. The opposite scores &minus;1. Even-distribution scores 0.
+      </p>
+
+      <div class="callout callout-amber">
+        <h4>The reliability difference is dramatic, not marginal</h4>
+        <p>
+          Mohammad &amp; Bravo-Marquez (2017) report that BWS achieves substantially higher inter-annotator consistency than direct rating scales on the same intensity construct. Our pipeline expectation is Krippendorff's ordinal alpha of 0.65-0.80 per question grouping, vs the 0.30-0.40 Cohen's kappa the prior pipeline was hitting. The improvement comes from changing what the coder is asked to do, not from training the coder harder.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>What "question grouping" means and why partitioning matters</h2>
+      <p>
+        BWS is run separately for each <strong>question grouping</strong>, not pooled across the whole study. A question grouping is one report section: drivers of selection, rejection reasons, current pain points, switching forces, retained value, etc.
+      </p>
+      <p>
+        The reason: <strong>intensity is question-relative.</strong> The verbatims that come from a "what frustrated you" question are answering a different emotional prompt than the verbatims from "what attracted you to this product." Frustration language is naturally more intense than praise language across most populations. Pooling them in one BWS pass would give us scores that mostly reflect "frustration vs praise," not "intensely-held frustration vs casually-held frustration." That would be a bias artifact, not a finding.
+      </p>
+      <p>
+        Question groupings are declared in <code>study_config.json</code> under a <code>bws_groupings</code> block. Each grouping lists the question IDs whose verbatims feed one BWS pass. Each grouping produces its own scale; we don't compare BWS scores across groupings.
+      </p>
+      <div class="example-card">
+        <h4>Example: a B2C banking study's question groupings</h4>
+        <ul>
+          <li><strong>Drivers of selection</strong> &mdash; Q4 ("what attracted you to your primary bank?")</li>
+          <li><strong>Rejection reasons</strong> &mdash; Q6 ("which other banks did you consider but not choose?") + Q7 ("why didn't you pick them?")</li>
+          <li><strong>Current pain points</strong> &mdash; Q10 ("what frustrates you about your bank today?")</li>
+          <li><strong>Switching push forces</strong> &mdash; Q12 ("what would push you to leave?")</li>
+        </ul>
+        <p>
+          Each of these is one self-contained BWS pass. A theme like "fees" can appear in both "rejection reasons" and "current pain points"; it gets two separate BWS scores, one per context. That's the right answer, not a bug.
+        </p>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Why max-of-peaks aggregation, not mean-of-all-verbatims</h2>
+      <p>
+        Before walking through how the pipeline runs, one design choice that took us several iterations to land on: each participant contributes exactly one BWS score per attribute, and that score reflects their <strong>peak</strong> expression, not the mean of every time they raised the theme.
+      </p>
+      <p>
+        Two reasons this is the right convention, and not the verbatim-level aggregation our first implementation used.
+      </p>
+      <p>
+        <strong>Participant over-weighting.</strong> If we aggregate at the verbatim level, a participant who mentioned an attribute three times contributes three data points; a participant who mentioned it once contributes one. Talkative participants get multiple votes. The standard convention in survey methodology and qualitative content analysis (Saldana, 2021) is one data point per participant per attribute. Aligning BWS aggregation with that convention removes the talkativeness artifact.
+      </p>
+      <p>
+        <strong>Peak intensity is what's psychologically operative, not average intensity.</strong> Three converging literatures support taking the participant's peak verbatim as the relevant signal, not their mean:
+      </p>
+      <ul class="lit-list">
+        <li><strong>Peak-end rule (Kahneman, Fredrickson, Schreiber &amp; Redelmeier, 1993).</strong> People remember experiences not by their average but by their peak intensity and how the experience ended. A participant who had one severe overdraft incident encodes their relationship with fees around that peak, not around the average affect across every fee interaction. Their peak verbatim is closer to what would surface at the point of purchase than the mean of their verbatims.</li>
+        <li><strong>Gricean conversational maxims (Grice, 1975).</strong> The Maxim of Quantity says: make your contribution as informative as required, and no more. A speaker who has produced a fully intense expression of a topic violates this maxim if they keep restating it at the same intensity. The cooperative move is to background later mentions.</li>
+        <li><strong>Given-new contract (Haviland &amp; Clark, 1974; Clark &amp; Haviland, 1977).</strong> Once information is in the conversational common ground, the speaker treats it as "given" and produces it in compressed form. Repeated mentions are by-products of conversational structure, not additional intensity data.</li>
+      </ul>
+      <p>
+        All three converge on the same prediction: in a semi-structured interview, a participant's most intense expression is the analytically meaningful one. Mean-of-verbatims dilutes this signal; max-of-peaks captures it.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>How the two-stage pipeline runs</h2>
+      <p>
+        <code>run_bws_intensity.py</code> auto-chains after <code>run_coding.py</code> completes. For each question grouping it runs two stages: max-identification, then BWS on the surviving peaks.
+      </p>
+
+      <h3>Stage 1: Max-identification</h3>
+      <p>
+        For each (participant, attribute) pair within a question grouping where the participant has 2+ coded meaning units assigned to the attribute, two AI agents independently pick which mention is the participant's most intense expression of that attribute. Single-mention pairs skip this step entirely; their one mention is the peak by definition.
+      </p>
+      <p>
+        Within-participant max-identification is a much more constrained task than full-pool BWS. The comparison is between 2-6 verbatims from the same speaker about the same attribute, so writing style, vocabulary, and baseline emotional register are held constant. Picks are typically high-reliability because the intensity signals (specific incidents, named amounts, narrative structure) are easy to compare when the speaker and topic are fixed.
+      </p>
+      <div class="step-list">
+        <div class="step-row">
+          <div class="step-circle">1</div>
+          <div class="step-content">
+            <h4>Filter to multi-mention pairs</h4>
+            <p>For each grouping, identify (participant, attribute) pairs with 2+ verbatims. Single-mention pairs skip Stage 1; their one verbatim is the peak.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">2</div>
+          <div class="step-content">
+            <h4>Two Sonnet coders pick the peak independently</h4>
+            <p>M1 (Sonnet, temp 0, narrative lean) and M2 (Sonnet, temp 0.3, specificity lean) each pick the most intense mention from the set. Persona divergence creates productive independence: M1 weights narrative elaboration and emotional framing; M2 weights concrete specifics (named amounts, temporal markers, named outcomes).</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">3</div>
+          <div class="step-content">
+            <h4>Opus arbiter resolves disagreements</h4>
+            <p>For multi-mention pairs where M1 and M2 picked different verbatims, M3 (Opus, temp 0, balanced) sees the same set and both coders' reasoning and decides. Typically 10-20% of multi-mention pairs.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">4</div>
+          <div class="step-content">
+            <h4>Output one peak per (participant, attribute) pair</h4>
+            <p>After Stage 1, every mentioning participant has exactly one peak verbatim per attribute in this grouping. The Stage 2 pool is the union of all peaks across the grouping.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Stage 2: BWS on peaks with participant-disjoint tuples</h3>
+      <p>
+        Each peak is now compared against other participants' peaks via Best-Worst Scaling. Two design rules matter here.
+      </p>
+      <p>
+        <strong>Participant-disjoint tuples.</strong> Each tuple of 4 peaks must come from 4 distinct participants. If two peaks from the same participant (different attributes) appeared in the same tuple, the BWS comparison would partly reflect that speaker's shared style, undoing the within-participant work Stage 1 just did. The participant-disjoint constraint ensures every tuple is a fair comparison across four different people. Feasibility: the constraint holds as long as no single participant contributed more than 25% of the grouping's peaks, which is the typical case.
+      </p>
+      <p>
+        <strong>Attributes mixed within tuples.</strong> A tuple typically contains peaks for four different attributes (from four different participants). This makes the resulting BWS scores cross-attribute comparable within the grouping, which is what powers the 2x2 frequency &times; intensity scatter chart.
+      </p>
+      <div class="step-list">
+        <div class="step-row">
+          <div class="step-circle">5</div>
+          <div class="step-content">
+            <h4>Generate participant-disjoint balanced tuples</h4>
+            <p>Tuple size K=4. Replication r=4 (each peak appears in 4 tuples). Total tuples per grouping = N peaks. Constraint: no two peaks in the same tuple share a participant. The combinatorial design is generated deterministically.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">6</div>
+          <div class="step-content">
+            <h4>Two Sonnet coders judge every tuple</h4>
+            <p>B1 (Sonnet, temp 0, narrative lean) and B2 (Sonnet, temp 0.3, specificity lean) independently pick the most-intense and least-intense verbatim in each tuple. Two picks per tuple. No absolute scoring. Same coder personas as Stage 1 (M1's voice = B1's voice; same for M2 and B2).</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">7</div>
+          <div class="step-content">
+            <h4>Opus arbiter resolves disagreed tuples</h4>
+            <p>Any tuple where B1 and B2 disagree on either pick (most, least, or both) goes to B3 (Opus, temp 0, balanced) for full re-resolution. Volume typically 10-20% of tuples.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">8</div>
+          <div class="step-content">
+            <h4>Compute per-verbatim BWS scores</h4>
+            <p>For each peak verbatim: <code>score = (n_picked_as_most &minus; n_picked_as_least) / n_appearances</code>. Range &minus;1 to +1. The score is calibrated against other participants' peaks, not against the participant's own non-peak mentions or other participants' filler.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">9</div>
+          <div class="step-content">
+            <h4>Aggregate to attribute level (participant-level inputs)</h4>
+            <p>Each participant contributes exactly one BWS score per attribute (their peak's BWS). Attribute-level mean is the mean of those per-participant peak scores. Top-tier rate is % of mentioners whose peak BWS exceeds +0.30. Distribution shape is the participant-level histogram across low / mid / high bands.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">10</div>
+          <div class="step-content">
+            <h4>Compute and report reliability</h4>
+            <p>Stage 1: raw agreement rate and set-size-adjusted Cohen's kappa for max-id picks. Stage 2: Krippendorff's ordinal alpha and Spearman rank correlation between the two coders' per-verbatim score arrays, plus tuple-level agreement rate as a diagnostic. Reliability is measured pre-arbiter; the arbiter's role is to clean up final picks, not to inflate the reported reliability number.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>The agent system at a glance</h2>
+      <p>
+        Same Sonnet personas carry through both stages. The narrative-lean agent in max-identification is the same persona as the narrative-lean agent in BWS. Coder personalities are consistent across the pipeline.
+      </p>
+      <div class="agent-table-wrap">
+        <table class="agent-table">
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Stage</th>
+              <th>Model</th>
+              <th>Temp</th>
+              <th>Persona</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>M1</td>
+              <td>1</td>
+              <td>Sonnet</td>
+              <td>0</td>
+              <td>Narrative lean</td>
+              <td>Picks peak per multi-mention (participant, attribute) pair</td>
+            </tr>
+            <tr>
+              <td>M2</td>
+              <td>1</td>
+              <td>Sonnet</td>
+              <td>0.3</td>
+              <td>Specificity lean</td>
+              <td>Picks peak per multi-mention (participant, attribute) pair</td>
+            </tr>
+            <tr>
+              <td>M3</td>
+              <td>1</td>
+              <td>Opus</td>
+              <td>0</td>
+              <td>Balanced arbiter</td>
+              <td>Resolves max-id disagreements</td>
+            </tr>
+            <tr>
+              <td>B1</td>
+              <td>2</td>
+              <td>Sonnet</td>
+              <td>0</td>
+              <td>Narrative lean</td>
+              <td>Picks most + least intense per BWS tuple</td>
+            </tr>
+            <tr>
+              <td>B2</td>
+              <td>2</td>
+              <td>Sonnet</td>
+              <td>0.3</td>
+              <td>Specificity lean</td>
+              <td>Picks most + least intense per BWS tuple</td>
+            </tr>
+            <tr>
+              <td>B3</td>
+              <td>2</td>
+              <td>Opus</td>
+              <td>0</td>
+              <td>Balanced arbiter</td>
+              <td>Resolves BWS tuple disagreements</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small-note">
+        Sonnet handles high-volume comparison work; Opus arbitrates the bounded set of disagreements. Same pattern as thematic and direction coding elsewhere in the pipeline.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>What the analyst sees in the report</h2>
+      <p>
+        Every report section anchored on a BWS grouping carries two visual elements.
+      </p>
+      <div class="visual-grid">
+        <div class="visual-card">
+          <h4>2x2 frequency &times; intensity scatter</h4>
+          <p>X-axis: % of cohort mentioning the attribute. Y-axis: mean BWS score within the grouping. Quadrant lines at medians. Upper-right quadrant (high frequency &times; high intensity) gets the strategic callout box.</p>
+          <p class="visual-note">This is the chart that powers the "what should we act on" conversation. Without intensity, the upper-right quadrant is just "most frequent." With BWS intensity, it's "frequent <em>and</em> deeply held."</p>
+        </div>
+        <div class="visual-card">
+          <h4>Distribution-shape table</h4>
+          <p>One row per attribute. Columns: % low (&lt; &minus;0.20) / % mid (&minus;0.20 to +0.20) / % high (&gt; +0.20). Same data the scatter plots, but it shows whether an attribute's intensity comes from a few standouts or uniformly weighted mentions.</p>
+          <p class="visual-note">An attribute with 70 mentions evenly distributed across intensity bands tells a different story than an attribute with 18 mentions concentrated in the high band. Two flat bar charts would look the same.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>Trade-offs to be honest about</h2>
+      <p>
+        BWS is materially better than direct ordinal rating for our use case, but it has costs and caveats worth knowing.
+      </p>
+
+      <div class="tradeoff-list">
+        <div class="tradeoff">
+          <h4>Scores are relative within each grouping, not absolute</h4>
+          <p>
+            A study with 10 weakly-held rejection reasons still produces some verbatims at "high intensity" within that set. It just means highest <em>among</em> that set, not high in some universal sense. Methodology section needs to acknowledge this. Cross-study comparisons of raw BWS scores are not meaningful.
+          </p>
+        </div>
+        <div class="tradeoff">
+          <h4>Each grouping needs enough verbatims to produce stable scores</h4>
+          <p>
+            With N verbatims and r=4 replication, individual-verbatim score variance scales with 1/&radic;r. Attribute-level means are stable; individual-verbatim noise is moderate. As a rule of thumb, groupings below ~30 verbatims produce noisy attribute scores. We typically have 100-300 verbatims per grouping, well above the floor.
+          </p>
+        </div>
+        <div class="tradeoff">
+          <h4>Participant-level analysis is built in by design, not an aggregation choice</h4>
+          <p>
+            The two-stage pipeline produces one BWS score per (participant, attribute, grouping). This is the canonical participant-level intensity for that combination. Downstream analyses (quartile cross-tabs against behavioral outcomes, segmentation basis variables, "high-intensity mentioner" classification) read this score directly. No need to aggregate after the fact.
+          </p>
+        </div>
+        <div class="tradeoff">
+          <h4>No published BWS-of-brand-verbatims study validates the predictive claim</h4>
+          <p>
+            The brand-equity literature establishes association <em>strength</em> as a behaviorally predictive dimension (Keller, 1993; Maison, Greenwald &amp; Bruin, 2004). The text-annotation literature establishes BWS as a more reliable instrument than direct rating (Mohammad &amp; Bravo-Marquez, 2017). The peak-end and Gricean literatures support max-of-peaks aggregation (Kahneman et al., 1993; Grice, 1975). The intersection &mdash; two-stage BWS-coded brand-interview verbatims predicting purchase, market share, or NPS &mdash; has not been peer-reviewed in head-to-head form. Our claim rests on construct validity from each adjacent literature, not on a direct empirical validation that doesn't exist.
+          </p>
+        </div>
+        <div class="tradeoff">
+          <h4>Cost is lower than the original convention</h4>
+          <p>
+            The two-stage approach is materially cheaper than the single-stage version we originally documented. Stage 1 max-identification: ~$2-3 per study (only multi-mention pairs trigger Sonnet calls). Stage 2 BWS on peaks: ~$6-8 per study (fewer peaks than the full-verbatim pool means fewer tuples). Total typically $8-11 per study, vs $15-30 for the retired single-stage convention.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section">
+      <h2>How to interpret BWS scores in absolute terms</h2>
+      <p>
+        The relative-scoring property in the trade-off list above is the question every methodologically careful customer asks: "If +0.5 is just 'more intense than the others in this set,' how do I know the +0.5 in your rejection-reasons grouping is actually meaningful, and how do I compare it to a +0.5 in your pain-points grouping?"
+      </p>
+      <p>
+        The honest answer is that BWS scores are calibrated <strong>within the question they came from</strong>. They are not absolute on some universal intensity scale. This is a property of BWS as a method, not a defect of our implementation: direct rating scales offer absolute anchors at the cost of being unreliable; BWS offers reliability at the cost of giving up absolute calibration. We build interpretive scaffolding around the relative scores so customers can take them as meaningful behavioral signals.
+      </p>
+
+      <h3>Five tactics, ranked by impact</h3>
+
+      <div class="problem-list">
+        <div class="problem">
+          <span class="problem-num">1</span>
+          <div class="problem-body">
+            <h3>Anchor verbatims (the cleanest calibration, biggest investment)</h3>
+            <p>
+              Maintain a stable library of 4-6 anchor verbatims that span the intensity spectrum. Insert them into every BWS pass alongside the study's real verbatims. If the "very high" anchor scores +0.7 in study A and +0.4 in study B, you know study B's verbatims are absolutely more intense than study A's (they pushed the anchor down the scale), and you have a meaningful threshold to compare attribute-level means against. This is the practice the Mohammad / WASSA group uses for cross-study calibration. Setup cost: one round of analyst calibration. Per-study cost: trivial (~5 added verbatims per grouping).
+            </p>
+          </div>
+        </div>
+        <div class="problem">
+          <span class="problem-num">2</span>
+          <div class="problem-body">
+            <h3>Top-tier rate above a fixed threshold (cheap, works today)</h3>
+            <p>
+              Lead with the top-tier rate at a fixed absolute threshold (default +0.30), not the raw mean. "40% of fees mentions are in the top intensity tier" reads as absolute even though it is built from relative judgments. It says: across the relative judgments, 40% of the time a "fees" verbatim came up against three competitors, it got picked as the most intense one (or close to it). That is a real signal regardless of what the comparison set looked like. The threshold doesn't move across studies, which makes top-tier rate more robust for cross-study comparison than raw means.
+            </p>
+          </div>
+        </div>
+        <div class="problem">
+          <span class="problem-num">3</span>
+          <div class="problem-body">
+            <h3>Verbatim drilldown as the qualitative truth check</h3>
+            <p>
+              The BWS score is a sort order; the verbatim is the proof. When a customer asks "is +0.5 really intense?", the right response is: click the bar, read the top three verbatims that drove it. If they read as deeply held convictions with specific incidents and dollar amounts, the score is meaningful. If they read as casual asides, the score is telling you the comparison set was weak. The drilldown is the methodological honesty layer. Don't try to make BWS do work that the verbatims can do better.
+            </p>
+          </div>
+        </div>
+        <div class="problem">
+          <span class="problem-num">4</span>
+          <div class="problem-body">
+            <h3>Behavioral correlation as the predictive validity check</h3>
+            <p>
+              For any study where behavioral outcomes are measured (switching, NPS, purchase intent, retention), correlate per-participant BWS scores with the outcome. This converts "is +0.5 really intense?" into "do high-BWS mentioners actually behave differently?" Bin participants by BWS quartile for an attribute (e.g., fees), then show the switching rate per quartile. If Q4 mentioners switch at 41% while Q1 mentioners switch at 8%, the BWS scale has earned its meaning behaviorally, not by comparison to an external anchor. Always include this table in the methodology section when behavioral outcomes are in the data.
+            </p>
+          </div>
+        </div>
+        <div class="problem">
+          <span class="problem-num">5</span>
+          <div class="problem-body">
+            <h3>Distribution shape over single statistics</h3>
+            <p>
+              The shape of the BWS distribution within an attribute carries information the mean obscures. Right-skewed (long tail of high scores) means a small but intense advocate/detractor base. Even distribution means widely shared at moderate intensity, often category-level rather than differentiating. Left-skewed means surface complaint, not a deep driver. The distribution-shape table below the 2x2 scatter does this work; the report narrative needs to teach the reader to read the shape, not just the height.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-amber">
+        <h4>What to say when a customer asks the threshold question</h4>
+        <p>
+          "BWS scores are calibrated within the question they came from. A +0.5 means this verbatim was consistently picked as more intense than others answering the same kind of question, not that it crosses some absolute threshold. To make absolute claims, we lean on three things: (a) the distribution shape within the question, (b) the actual verbatims behind the score, which you can read by clicking through, and (c) the behavioral correlation in the same data, where we can show that high-BWS mentioners are X times more likely to have switched or churned. The score is a sort order; the proof is in the quotes and the behavior."
+        </p>
+      </div>
+
+      <h3>Default practice and when to escalate</h3>
+      <p>
+        <strong>For every study (default):</strong> lead with top-tier rate (tactic 2) as the headline statistic, lean on the verbatim drilldown (tactic 3) for the qualitative truth check, and always render the distribution-shape table (tactic 5) below the 2x2 scatter. These three work today with the existing pipeline at no additional cost.
+      </p>
+      <p>
+        <strong>When behavioral outcomes are measured:</strong> always run the BWS-by-outcome correlation table (tactic 4) and surface it in the methodology section. This is the strongest answer to "do high BWS scores really mean anything" because it shows them meaning something in this customer's data.
+      </p>
+      <p>
+        <strong>When cross-study comparison matters or a new study type opens:</strong> invest in anchor verbatims (tactic 1). Pilot a 4-anchor library on one grouping, validate that the anchor scores are stable across pilot vs full runs, and decide whether to make it standard. The setup cost is one analyst day; the payback is calibrated cross-study comparison going forward. This is the long-term answer to "what does +0.5 mean across our portfolio of studies."
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>When a colleague asks "what does the BWS score mean?"</h2>
+      <div class="callout">
+        <h4>The plain-English answer</h4>
+        <p>
+          "The BWS score is a continuous intensity score from &minus;1 to +1 for each verbatim within its question grouping. It's built from many pairwise comparisons against other verbatims in the same grouping. A score above +0.30 means the verbatim was repeatedly judged among the most intense expressions of that kind of content. A score below &minus;0.30 means it was repeatedly judged among the least intense. The attribute-level number you see on the chart is the average of all that attribute's verbatim scores within the grouping."
+        </p>
+      </div>
+      <p>
+        If they push harder on what "intense" means: it's about specific incidents, named amounts, strong evaluative language, personal narrative, length, and elaboration &mdash; the signals defined in the BWS prompt. The coder is not assigning anything; they are picking the most and least intense among four candidates in front of them.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>Legacy studies and back-compatibility</h2>
+      <p>
+        Five studies were coded with the retired 1/2/3 ordinal layer and continue to ship their original deliverables.
+      </p>
+      <ul class="legacy-list">
+        <li><strong>UK Neobanks</strong> &mdash; two-wave switcher + non-switcher study. Carries <code>final_codes_with_intensity.json</code>.</li>
+        <li><strong>Retail Banking CIBC</strong> &mdash; 300-participant B2C switcher study.</li>
+        <li><strong>Intercom Fin</strong> &mdash; two-cohort B2B study.</li>
+        <li><strong>Retinol Switching</strong> &mdash; 240-participant B2C upgrader/defector study.</li>
+        <li><strong>HR Syndicated 2026</strong> &mdash; the syndicated B2B build (if it had reached the intensity pass before the switchover).</li>
+      </ul>
+      <p>
+        These remain as-is. Their reports show the older stacked-by-intensity bar pattern. If any of them comes back for a follow-up analysis, the BWS pass can be run retroactively on the frozen thematic + direction coding; the new output ships as <code>final_codes_with_bws_v2.json</code> alongside the original.
+      </p>
+      <p>
+        Historical studies that pre-date the magnitude layer entirely (HR Leaders BGR, HR Leaders BambooHR, CEP &amp; Brand, JTBD Switch) carry <code>final_codes.json</code> without direction or intensity. They are left untouched.
+      </p>
+    </section>
+
+    <section class="doc-section">
+      <h2>What this page does not replace</h2>
+      <ul class="ref-list">
+        <li><a href="/internal/how-to-code-transcripts/">How to Code Transcripts</a> &mdash; the full operational workflow including the BWS prompt template, agent personas, and run commands. Read first if you're actually running a study.</li>
+        <li><code>research-projects/4 Coding transcripts/magnitude-coding-framework.md</code> &mdash; the technical specification in the repo. Single source of truth for decision rules, reliability thresholds, and pipeline integration.</li>
+        <li><code>research-projects/Interview Study Workflow.md</code> &mdash; where the BWS pass sits in the end-to-end study workflow (Phase 2a, Step 2.4).</li>
+        <li><a href="/internal/aided-vs-unaided-brand-research/">Unaided vs aided brand perception research</a> &mdash; the related methodology page on why our open-ended interview approach reveals things rating-scale trackers cannot.</li>
+      </ul>
+    </section>
+
+    <section class="doc-section doc-section-refs">
+      <h2>Citations</h2>
+      <div class="refs">
+        <div class="ref">
+          <div class="ref-authors">Louviere, J.J. &amp; Woodworth, G.G.</div>
+          <div class="ref-year">1991</div>
+          <div class="ref-title">Best-Worst Scaling: A Model for the Largest Difference Judgements</div>
+          <div class="ref-journal">University of Alberta Working Paper</div>
+          <div class="ref-role">Original formulation of Best-Worst Scaling as a choice-modeling method. The methodological foundation for our use of BWS to measure intensity through relative judgments.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Mohammad, S.M. &amp; Bravo-Marquez, F.</div>
+          <div class="ref-year">2017</div>
+          <div class="ref-title">WASSA-2017 Shared Task on Emotion Intensity</div>
+          <div class="ref-journal">Proceedings of the EMNLP Workshop on Computational Approaches to Subjectivity, Sentiment and Social Media Analysis</div>
+          <div class="ref-role">Established BWS as the gold standard for fine-grained intensity annotation in computational linguistics. Demonstrated that BWS reliably outperforms direct ordinal rating scales on inter-annotator consistency. The empirical foundation for our May 2026 retirement of 1/2/3 ordinal rating.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Saldana, J.</div>
+          <div class="ref-year">2021</div>
+          <div class="ref-title">The Coding Manual for Qualitative Researchers (4th ed.)</div>
+          <div class="ref-journal">SAGE Publications</div>
+          <div class="ref-role">Canonical source for the term "magnitude coding" and the conceptual frame of supplemental codes for direction and intensity. Saldana treats magnitude codes as analytic markers; we operationalize the intensity dimension via BWS for reliability reasons. Also the source for the "one data point per participant" convention in qualitative content analysis prevalence reporting.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Kahneman, D., Fredrickson, B.L., Schreiber, C.A. &amp; Redelmeier, D.A.</div>
+          <div class="ref-year">1993</div>
+          <div class="ref-title">When more pain is preferred to less: Adding a better end</div>
+          <div class="ref-journal">Psychological Science, 4(6), 401-405</div>
+          <div class="ref-role">The peak-end rule: people remember experiences by peak intensity and how they ended, not by averages. Foundational empirical support for max-of-peaks aggregation at the participant level. A participant's relationship with a brand attribute is encoded around their peak experience, which is what BWS-on-peaks captures.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Grice, H.P.</div>
+          <div class="ref-year">1975</div>
+          <div class="ref-title">Logic and conversation</div>
+          <div class="ref-journal">In P. Cole &amp; J.L. Morgan (Eds.), Syntax and semantics 3: Speech acts (pp. 41-58). Academic Press.</div>
+          <div class="ref-role">Conversational maxims, particularly the Maxim of Quantity. Speakers do not repeat fully intense expressions at the same intensity because it violates the cooperative principle. Supports the max-of-peaks framing: a participant's first or most intense mention is the analytically relevant signal; later mentions are conversationally backgrounded.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Haviland, S.E. &amp; Clark, H.H.</div>
+          <div class="ref-year">1974</div>
+          <div class="ref-title">What's new? Acquiring new information as a process in comprehension</div>
+          <div class="ref-journal">Journal of Verbal Learning and Verbal Behavior, 13(5), 512-521</div>
+          <div class="ref-role">Original formulation of the given-new contract. Once information is in the conversational common ground, the speaker treats it as "given" and produces it in compressed form. Repeated mentions of the same topic are typically less affective and less elaborated than the initial mention. Foundational psycholinguistic finding underlying the max-of-peaks convention.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Clark, H.H. &amp; Haviland, S.E.</div>
+          <div class="ref-year">1977</div>
+          <div class="ref-title">Comprehension and the given-new contract</div>
+          <div class="ref-journal">In R. Freedle (Ed.), Discourse production and comprehension (pp. 1-40). Ablex.</div>
+          <div class="ref-role">Extended treatment of the given-new contract. Establishes the cognitive and discourse-level mechanisms underlying compression of repeated mentions.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Miles, M.B., Huberman, A.M. &amp; Saldana, J.</div>
+          <div class="ref-year">2020</div>
+          <div class="ref-title">Qualitative Data Analysis: A Methods Sourcebook (4th ed.)</div>
+          <div class="ref-journal">SAGE Publications</div>
+          <div class="ref-role">The frequency &times; intensity argument: the same frequency at different intensities is a different strategic signal. The analytical basis for adding intensity as a magnitude dimension at all.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Krippendorff, K.</div>
+          <div class="ref-year">2018</div>
+          <div class="ref-title">Content Analysis: An Introduction to Its Methodology (4th ed.)</div>
+          <div class="ref-journal">SAGE Publications</div>
+          <div class="ref-role">Defines Krippendorff's alpha for nominal, ordinal, interval, and ratio data. Publishes the 0.80 (reliable) and 0.667 (tentative conclusions) thresholds we use for BWS ordinal alpha. Argues against unweighted Cohen's kappa for ordinal data.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Cohen, J.</div>
+          <div class="ref-year">1968</div>
+          <div class="ref-title">Weighted kappa: Nominal scale agreement with provision for scaled disagreement or partial credit</div>
+          <div class="ref-journal">Psychological Bulletin, 70(4), 213-220</div>
+          <div class="ref-role">Weighted kappa formulation for ordered categories. The correct statistic if you wanted to stick with rating-based intensity; complementary to Krippendorff's alpha.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Keller, K.L.</div>
+          <div class="ref-year">1993</div>
+          <div class="ref-title">Conceptualizing, Measuring, and Managing Customer-Based Brand Equity</div>
+          <div class="ref-journal">Journal of Marketing, 57(1), 1-22</div>
+          <div class="ref-role">Names favorability, strength, and uniqueness as the three predictive dimensions of brand associations. Direction operationalizes favorability; BWS intensity operationalizes strength. Theoretical home for our magnitude-coding design.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Krishnan, H.S.</div>
+          <div class="ref-year">1996</div>
+          <div class="ref-title">Characteristics of memory associations: A consumer-based brand equity perspective</div>
+          <div class="ref-journal">International Journal of Research in Marketing, 13(4), 389-405</div>
+          <div class="ref-role">Operationalizes brand-association strength via memory-network measures. Empirical support for treating association strength as a discriminating dimension between high-equity and low-equity brands.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Maison, D., Greenwald, A.G. &amp; Bruin, R.H.</div>
+          <div class="ref-year">2004</div>
+          <div class="ref-title">Predictive Validity of the Implicit Association Test in Studies of Brands, Consumer Attitudes, and Behavior</div>
+          <div class="ref-journal">Journal of Consumer Psychology, 14(4), 405-415</div>
+          <div class="ref-role">Three experiments showing that the strength of brand-attribute associations predicts brand preference, product usage, and behavior beyond explicit presence/absence. The strongest indirect empirical support for treating intensity as a behaviorally meaningful dimension.</div>
+        </div>
+        <div class="ref">
+          <div class="ref-authors">Tirunillai, S. &amp; Tellis, G.J.</div>
+          <div class="ref-year">2012</div>
+          <div class="ref-title">Does Chatter Really Matter? Dynamics of User-Generated Content and Stock Performance</div>
+          <div class="ref-journal">Marketing Science, 31(2), 198-215</div>
+          <div class="ref-role">In UGC-to-sales prediction, volume dominates, polarity matters asymmetrically, and intensity is a smaller marginal step beyond polarity. Honest context for how much incremental predictive validity intensity carries on top of frequency + direction.</div>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <style>
+    .bws-doc {
+      max-width: 820px;
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    .doc-header {
+      padding: 1rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .overline {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--signal);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: 2.25rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 65ch;
+      line-height: 1.55;
+    }
+
+    .doc-section {
+      margin-bottom: 3rem;
+    }
+
+    .doc-section h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doc-section h3 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      margin: 1.2rem 0 0.4rem;
+    }
+
+    .doc-section h4 {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .doc-section p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 0.9rem;
+      color: var(--rule);
+    }
+
+    .doc-section code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.85em;
+      background: rgba(11, 31, 58, 0.06);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+    }
+
+    .callout {
+      background: #fef6f5;
+      border: 1px solid rgba(184, 52, 27, 0.2);
+      border-left: 3px solid var(--signal);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      margin: 1.25rem 0;
+    }
+
+    .callout-amber {
+      background: #fef3e7;
+      border-color: rgba(212, 168, 67, 0.4);
+      border-left-color: #d4a843;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .problem-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .problem {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .problem-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .problem-body h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+
+    .numbered-list {
+      margin: 0.8rem 0 0.8rem 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin: 1.25rem 0;
+    }
+
+    .step-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 0.9rem 1rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .step-circle {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--signal);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .step-content h4 {
+      margin-bottom: 0.3rem;
+    }
+
+    .step-content p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--rule);
+      line-height: 1.55;
+    }
+
+    .example-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .example-card h4 {
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .example-card ul {
+      margin: 0 0 0.6rem 1.4rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .example-card p {
+      font-size: 0.88rem;
+      margin: 0.5rem 0 0;
+      color: var(--muted);
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    @media (max-width: 700px) {
+      .visual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .visual-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+    }
+
+    .visual-card h4 {
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .visual-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .visual-note {
+      font-size: 0.85rem !important;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.6rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    .tradeoff-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .tradeoff {
+      padding: 0.9rem 1.1rem;
+      background: rgba(11, 31, 58, 0.03);
+      border-left: 3px solid var(--ink);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .tradeoff h4 {
+      margin-bottom: 0.4rem;
+    }
+
+    .tradeoff p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .legacy-list {
+      margin: 0.8rem 0 0.8rem 1.5rem;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    .ref-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.8rem 0;
+    }
+
+    .ref-list li {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .ref-list code {
+      font-size: 0.82em;
+    }
+
+    .doc-section-refs h2 {
+      margin-top: 0;
+    }
+
+    .lit-list {
+      margin: 0.8rem 0 0.8rem 1.5rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .lit-list li {
+      margin: 0.5rem 0;
+    }
+
+    .agent-table-wrap {
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+
+    .agent-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .agent-table th {
+      background: rgba(11, 31, 58, 0.05);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agent-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .agent-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .small-note {
+      font-size: 0.85rem !important;
+      color: var(--muted) !important;
+      margin-top: 0.5rem !important;
+      font-style: italic;
+    }
+
+    .refs {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .ref {
+      padding: 0.9rem 1rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .ref-authors {
+      font-weight: 600;
+      color: var(--ink);
+      display: inline;
+    }
+
+    .ref-year {
+      display: inline;
+      color: var(--muted);
+      margin-left: 0.4rem;
+    }
+
+    .ref-title {
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+
+    .ref-journal {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 0.15rem;
+    }
+
+    .ref-role {
+      margin-top: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--rule);
+    }
+  </style>
+</InternalLayout>

@@ -1,0 +1,39 @@
+---
+// Internal page for the UK Neobank Switching Study report.
+// Mirrors the public version at src/pages/uk-neobanks-report/index.astro
+// (same ReportBody, different layout props). The two pages stay in sync
+// because both import from the same shared body component.
+//
+// Internal page conventions:
+//   - includeAnalytics={false} → no GA, no GTM (internal usage doesn't track)
+//   - noindex={true}            → page is excluded from search engines
+//   - URL: /internal/uk-neobanks-report/   (gated by Cloudflare Access)
+//
+// The public-visibility toggle on /internal/ flips a KV flag that the
+// worker (public/_worker.js) reads to decide whether to serve the public
+// page at /uk-neobanks-report/ or a 404. The public page file and the
+// GATED_REPORTS entry must both exist for the toggle to be enforceable.
+import ReportLayout from '../../../components/report/ReportLayout.astro';
+import ReportBody from '../../../components/uk-neobanks-report/ReportBody.astro';
+import reportStats from '../../../data/uk-neobanks/report-stats.json';
+
+const d: any = reportStats;
+---
+<ReportLayout
+  studyName="UK Neobank Switching Study"
+  client="Incumbent retail bank (illustrative)"
+  preparedOn="April 2026"
+  scope="Interviews with switchers and non-switchers at top five incumbent banks in the United Kingdom"
+  hideClientOnCover={true}
+  stats={{
+    interviews: d.study_meta.n_total,
+    avgLengthMin: 17,
+    wordsAnalyzedK: 442,
+    thematicCodes: 46,
+  }}
+  includeAnalytics={false}
+  noindex={true}
+  title="UK Neobank Switching Study, BuyerVoice (Internal)"
+>
+  <ReportBody />
+</ReportLayout>

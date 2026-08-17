@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) - Optimized for performance -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-11EK3S1BHB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Configure GA4 with performance optimizations
+      gtag('config', 'G-11EK3S1BHB', {
+        // Prevent CLS by not injecting any DOM elements
+        'custom_map': {},
+        // Optimize for Core Web Vitals
+        'send_page_view': false, // We'll handle this manually for SPA
+        // Reduce network calls
+        'transport_type': 'beacon',
+        // Anonymize for privacy and performance
+        'anonymize_ip': true
+      });
+    </script>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>KwantumLabs.ai - AI-Powered Brand & Product Insights</title>
+    <meta name="description" content="KwantumLabs blends AI, behavioral science, and proven decision science to help companies unlock growth and deliver clarity and confidence—in days, not months." />
+    
+    <!-- Search Console Verification -->
+    <meta name="google-site-verification" content="lsWRe5NUHNENvLLU_16I4bpQKBEspwNrFjBESYRoLuI" />
+    <meta name="msvalidate.01" content="A770D161D59CB290D5E50C22153F3149" />
+    
+    <!-- Resource hints for performance optimization -->
+    <link rel="dns-prefetch" href="//www.google.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <!-- Open Graph tags -->
+    <meta property="og:title" content="KwantumLabs.ai - AI-Powered Brand & Product Insights" />
+    <meta property="og:description" content="AI-powered insights that grow brands at startup speed for a fraction of the cost." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kwantumlabs.ai" />
+    <meta property="og:image" content="https://kwantumlabs.ai/og-image.jpg" />
+    <script type="module" crossorigin src="/assets/index-DVJAOd-I.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CzKQK3L6.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- reCAPTCHA Enterprise - Only load in production -->
+    <script>
+      // Only load reCAPTCHA Enterprise in production environments
+      if (window.location.hostname !== 'localhost' && 
+          !window.location.hostname.includes('replit') && 
+          !window.location.hostname.includes('127.0.0.1')) {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/enterprise.js?render=6LePCKgrAAAAAEMN98jzeWA6jT9jxrrfMG_MG8o9';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      } else {
+        console.log('Development environment detected - skipping reCAPTCHA Enterprise script loading');
+        // Set up a mock for development
+        window.grecaptcha = {
+          enterprise: {
+            ready: function(callback) { callback(); },
+            execute: function(siteKey, options) { 
+              console.log('Development environment - executing mock reCAPTCHA for action:', options.action);
+              return Promise.resolve('dev-bypass-token-' + Date.now()); 
+            }
+          }
+        };
+      }
+    </script>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>

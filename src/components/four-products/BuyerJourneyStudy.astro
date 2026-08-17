@@ -1,0 +1,740 @@
+---
+// BuyerJourneyStudy.astro
+// Research Output Example: Buyer Journey + Preferences Study
+// Left panel: Four Forces of Progress (Slide 8) — market-level push/pull/anxiety/habit breakdown
+// Right panel: MaxDiff Segment Comparison (Slide 17) — outcome priorities by buyer segment
+---
+
+<section class="section bjs-section">
+  <div class="container">
+
+    <p class="overline">Research Output Example: Buyer Journey + Preferences Study</p>
+    <h2 class="bjs-heading">Why &#8220;weekend cabin rental&#8221; category buyers completed a purchase</h2>
+    <p class="bjs-sub">Understanding why guests book — and what they want — requires more than a satisfaction survey. This study combined switch interviews, MaxDiff preference scaling, and Kano outcome classification to map the full decision landscape for a boutique outdoor hospitality brand. The result: four distinct buyer journeys, quantified outcome priorities, and a segment-specific growth roadmap.</p>
+
+    <div class="bjs-kpi-row">
+      <div class="bjs-kpi">
+        <span class="bjs-kpi-stat">71%</span>
+        <span class="bjs-kpi-label">cite burnout as the primary push force driving the decision</span>
+      </div>
+      <div class="bjs-kpi">
+        <span class="bjs-kpi-stat">4</span>
+        <span class="bjs-kpi-label">distinct switching stories, each requiring a different offer and message</span>
+      </div>
+      <div class="bjs-kpi">
+        <span class="bjs-kpi-stat">2.1×</span>
+        <span class="bjs-kpi-label">more likely to rebook when the first-night experience exceeds expectations</span>
+      </div>
+    </div>
+
+    <div class="bjs-panels">
+
+      <!-- ── LEFT PANEL: Four Forces of Progress (Slide 8) ── -->
+      <div class="bjs-panel">
+        <div class="bjs-panel-header">
+          <h3 class="bjs-panel-title">Four Forces of Progress</h3>
+          <p class="bjs-panel-meta">Market-level forces driving or resisting the switch &nbsp;·&nbsp; n = 200</p>
+        </div>
+
+        <div class="forces-grid">
+
+          <!-- F1: Push -->
+          <div class="force-block">
+            <div class="force-label-row">
+              <span class="force-badge" style="background: rgba(199,84,80,0.1); color: #C75450;">F1: Push</span>
+              <span class="force-desc">What was wrong</span>
+            </div>
+            <div class="force-bars">
+              <div class="bar-row">
+                <span class="bar-label">Burned out / overstimulated</span>
+                <div class="bar-track"><div class="bar-fill" style="width:71%; background:#C75450;"></div></div>
+                <span class="bar-pct" style="color:#C75450;">71%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Disconnected from family</span>
+                <div class="bar-track"><div class="bar-fill" style="width:39%; background:#C75450; opacity:0.7;"></div></div>
+                <span class="bar-pct" style="color:#C75450;">39%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Bored with local routine</span>
+                <div class="bar-track"><div class="bar-fill" style="width:35%; background:#C75450; opacity:0.55;"></div></div>
+                <span class="bar-pct" style="color:#C75450;">35%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Health scare or wake-up call</span>
+                <div class="bar-track"><div class="bar-fill" style="width:17%; background:#C75450; opacity:0.4;"></div></div>
+                <span class="bar-pct" style="color:#C75450;">17%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- F2: Pull -->
+          <div class="force-block">
+            <div class="force-label-row">
+              <span class="force-badge" style="background: rgba(58,166,85,0.1); color: #3AA655;">F2: Pull</span>
+              <span class="force-desc">What attracted them</span>
+            </div>
+            <div class="force-bars">
+              <div class="bar-row">
+                <span class="bar-label">Escape to nature without roughing it</span>
+                <div class="bar-track"><div class="bar-fill" style="width:64%; background:#3AA655;"></div></div>
+                <span class="bar-pct" style="color:#3AA655;">64%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Intentional disconnect from devices</span>
+                <div class="bar-track"><div class="bar-fill" style="width:51%; background:#3AA655; opacity:0.7;"></div></div>
+                <span class="bar-pct" style="color:#3AA655;">51%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Unique / non-resort experience</span>
+                <div class="bar-track"><div class="bar-fill" style="width:45%; background:#3AA655; opacity:0.55;"></div></div>
+                <span class="bar-pct" style="color:#3AA655;">45%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Proximity to trails and riding</span>
+                <div class="bar-track"><div class="bar-fill" style="width:37%; background:#3AA655; opacity:0.4;"></div></div>
+                <span class="bar-pct" style="color:#3AA655;">37%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- F3: Anxiety -->
+          <div class="force-block">
+            <div class="force-label-row">
+              <span class="force-badge" style="background: rgba(212,168,67,0.12); color: #B8892A;">F3: Anxiety</span>
+              <span class="force-desc">What worried them</span>
+            </div>
+            <div class="force-bars">
+              <div class="bar-row">
+                <span class="bar-label">Don't know what to expect</span>
+                <div class="bar-track"><div class="bar-fill" style="width:58%; background:#D4A843;"></div></div>
+                <span class="bar-pct" style="color:#B8892A;">58%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Bathroom / shower concerns</span>
+                <div class="bar-track"><div class="bar-fill" style="width:44%; background:#D4A843; opacity:0.7;"></div></div>
+                <span class="bar-pct" style="color:#B8892A;">44%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Too remote if emergency</span>
+                <div class="bar-track"><div class="bar-fill" style="width:31%; background:#D4A843; opacity:0.55;"></div></div>
+                <span class="bar-pct" style="color:#B8892A;">31%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Weather uncertainty at elevation</span>
+                <div class="bar-track"><div class="bar-fill" style="width:26%; background:#D4A843; opacity:0.4;"></div></div>
+                <span class="bar-pct" style="color:#B8892A;">26%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- F4: Habit -->
+          <div class="force-block">
+            <div class="force-label-row">
+              <span class="force-badge" style="background: rgba(91,111,212,0.1); color: #5B6FD4;">F4: Habit</span>
+              <span class="force-desc">What anchored them</span>
+            </div>
+            <div class="force-bars">
+              <div class="bar-row">
+                <span class="bar-label">Easier to stay home / Netflix</span>
+                <div class="bar-track"><div class="bar-fill" style="width:49%; background:#5B6FD4;"></div></div>
+                <span class="bar-pct" style="color:#5B6FD4;">49%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Hard to coordinate schedules</span>
+                <div class="bar-track"><div class="bar-fill" style="width:38%; background:#5B6FD4; opacity:0.7;"></div></div>
+                <span class="bar-pct" style="color:#5B6FD4;">38%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Already have a "usual" spot</span>
+                <div class="bar-track"><div class="bar-fill" style="width:29%; background:#5B6FD4; opacity:0.55;"></div></div>
+                <span class="bar-pct" style="color:#5B6FD4;">29%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">Kids resist change</span>
+                <div class="bar-track"><div class="bar-fill" style="width:22%; background:#5B6FD4; opacity:0.4;"></div></div>
+                <span class="bar-pct" style="color:#5B6FD4;">22%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── RIGHT PANEL: Outcomes Comparison Table (Slide 30) ── -->
+      <div class="bjs-panel">
+        <div class="bjs-panel-header">
+          <h3 class="bjs-panel-title">All 15 Outcomes: Tested vs. Emergent</h3>
+          <p class="bjs-panel-meta">8 pre-selected outcomes tested in MaxDiff + 7 emergent outcomes surfaced in qualitative interviews</p>
+        </div>
+        <div class="oc-wrap">
+          <table class="oc-table">
+            <thead>
+              <tr>
+                <th class="oc-th oc-th-outcome">Outcome</th>
+                <th class="oc-th oc-th-source">Source</th>
+                <th class="oc-th oc-th-maxdiff">MaxDiff</th>
+                <th class="oc-th oc-th-mentions">Mentions</th>
+                <th class="oc-th oc-th-segment">Top Segment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Pre-selected outcomes -->
+              <tr>
+                <td class="oc-td oc-outcome">Access trail info &amp; routes</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#1 &middot; 100</td>
+                <td class="oc-td oc-mentions">40%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-trail">Trail Seeker</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Feel genuinely disconnected</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#2 &middot; 89</td>
+                <td class="oc-td oc-mentions">36%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-burnout">Burnout Escape</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Know what to expect before arriving</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#3 &middot; 84</td>
+                <td class="oc-td oc-mentions">38%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-burnout">Burnout Escape</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Smooth, welcoming arrival</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#4 &middot; 72</td>
+                <td class="oc-td oc-mentions">16%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-burnout">Burnout Escape</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Kids safe &amp; entertained</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#5 &middot; 65</td>
+                <td class="oc-td oc-mentions">18%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-family">Family Reconnect</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Dark skies &amp; stargazing</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#6 &middot; 48</td>
+                <td class="oc-td oc-mentions">26%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-couples">Couples Reset</span></td>
+              </tr>
+              <tr>
+                <td class="oc-td oc-outcome">Campfire without effort</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#7 &middot; 39</td>
+                <td class="oc-td oc-mentions">26%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-family">Family Reconnect</span></td>
+              </tr>
+              <tr class="oc-row-last-tested">
+                <td class="oc-td oc-outcome">Share experience with friends</td>
+                <td class="oc-td"><span class="oc-src oc-src-tested">Pre-selected</span></td>
+                <td class="oc-td oc-maxdiff">#8 &middot; 24</td>
+                <td class="oc-td oc-mentions">20%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-trail">Trail Seeker</span></td>
+              </tr>
+              <!-- Emergent outcomes -->
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Maintain privacy from other guests</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">24%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-couples">Couples Reset</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Know the right gear / supplies to bring</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">21%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-family">Family Reconnect</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Find the property easily on first visit</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">19%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-family">Family Reconnect</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Clean, maintained bathroom facilities</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">18%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-burnout">Burnout Escape</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Reach nearest town quickly if needed</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">16%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-family">Family Reconnect</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Get reliable weather &amp; trail conditions</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">15%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-trail">Trail Seeker</span></td>
+              </tr>
+              <tr class="oc-row-emergent">
+                <td class="oc-td oc-outcome">Feel the nightly rate reflects the experience</td>
+                <td class="oc-td"><span class="oc-src oc-src-emergent">Emergent</span></td>
+                <td class="oc-td oc-dash">&mdash;</td>
+                <td class="oc-td oc-mentions">12%</td>
+                <td class="oc-td"><span class="oc-seg oc-seg-burnout">Burnout Escape</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="oc-footnote">Mention rates calculated from 50 qualitative switch interviews. Pre-selected outcome rates reflect participants who mentioned the theme as a pull or anxiety force. Emergent outcome rates reflect themes that surfaced organically, not prompted by the interview protocol.</p>
+      </div>
+
+    </div>
+
+    <p class="bjs-note">Example output from a KwantumLabs Buyer Journey + Preferences study. Real deliverables include the full four-forces breakdown by segment, complete MaxDiff preference rankings, Kano outcome classification, strategic roadmap, and segment-specific messaging.</p>
+
+  </div>
+</section>
+
+<style>
+  .bjs-section {
+    background-color: var(--color-light-gray);
+  }
+
+  .bjs-heading {
+    margin-bottom: var(--space-md);
+  }
+
+  .bjs-sub {
+    font-size: 16px;
+    color: var(--color-slate);
+    max-width: 720px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  /* KPI row */
+  .bjs-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .bjs-kpi {
+    background: var(--color-white);
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .bjs-kpi-stat {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 700;
+    color: var(--color-green);
+    line-height: 1.1;
+  }
+
+  .bjs-kpi-label {
+    font-size: 13px;
+    color: var(--color-slate);
+    line-height: 1.45;
+  }
+
+  /* Two-panel layout */
+  .bjs-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .bjs-panel {
+    background: var(--color-white);
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .bjs-panel-header {
+    padding: var(--space-xl) var(--space-xl) var(--space-md);
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .bjs-panel-title {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 4px;
+  }
+
+  .bjs-panel-meta {
+    font-size: 12px;
+    color: var(--color-slate);
+    opacity: 0.75;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ── Four Forces ── */
+  .forces-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .force-block {
+    padding: var(--space-lg);
+    border-right: 1px solid var(--color-medium-gray);
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .force-block:nth-child(even) {
+    border-right: none;
+  }
+
+  .force-block:nth-child(3),
+  .force-block:nth-child(4) {
+    border-bottom: none;
+  }
+
+  .force-label-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .force-badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .force-desc {
+    font-size: 11px;
+    color: var(--color-slate);
+    opacity: 0.7;
+  }
+
+  .force-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    color: var(--color-slate);
+    line-height: 1.3;
+    grid-column: 1 / -1;
+    margin-bottom: 2px;
+  }
+
+  .bar-track {
+    height: 6px;
+    background: var(--color-medium-gray);
+    border-radius: 3px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+
+  .bar-pct {
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 28px;
+    text-align: right;
+  }
+
+  /* Re-do bar-row to be 3 columns on a single line */
+  .force-bars .bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .force-bars .bar-row > .bar-label {
+    margin-bottom: 0;
+  }
+
+  .force-bars .bar-sub {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── MaxDiff ── */
+  .seg-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .seg-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .maxdiff-rows {
+    padding: var(--space-lg) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .md-outcome-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .md-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .md-bar-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 36px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .md-bar-row--highlight .md-track {
+    background: rgba(0,0,0,0.06);
+  }
+
+  .md-seg-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .md-track {
+    height: 8px;
+    background: var(--color-medium-gray);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .md-fill {
+    height: 100%;
+    border-radius: 4px;
+    opacity: 0.85;
+  }
+
+  .md-score {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-slate);
+    text-align: right;
+  }
+
+  .md-score--highlight {
+    font-size: 12px;
+  }
+
+  .md-score--low {
+    font-size: 11px;
+  }
+
+  .md-insight {
+    font-size: 11px;
+    color: var(--color-slate);
+    background: var(--color-light-gray);
+    border-left: 3px solid var(--color-medium-gray);
+    padding: 6px 10px;
+    border-radius: 0 3px 3px 0;
+    margin: 0;
+    max-width: none;
+    line-height: 1.45;
+  }
+
+  /* Footer note */
+  /* ── Outcomes Comparison Table ── */
+  .oc-wrap {
+    overflow-x: auto;
+  }
+
+  .oc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .oc-th {
+    background: var(--color-light-gray);
+    color: var(--color-slate);
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 2px solid var(--color-medium-gray);
+    white-space: nowrap;
+  }
+
+  .oc-th-outcome { min-width: 160px; }
+  .oc-th-source  { min-width: 88px; }
+  .oc-th-maxdiff { min-width: 72px; }
+  .oc-th-mentions{ min-width: 60px; }
+  .oc-th-segment { min-width: 100px; }
+
+  .oc-td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--color-medium-gray);
+    vertical-align: middle;
+    color: var(--color-slate);
+    line-height: 1.35;
+  }
+
+  .oc-outcome {
+    color: var(--color-black);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .oc-maxdiff {
+    font-weight: 700;
+    color: var(--color-green);
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  .oc-mentions {
+    font-weight: 600;
+    color: var(--color-slate);
+    font-size: 12px;
+  }
+
+  .oc-dash {
+    color: var(--color-medium-gray);
+    font-size: 13px;
+  }
+
+  .oc-row-last-tested td {
+    border-bottom: 2px solid var(--color-medium-gray);
+  }
+
+  .oc-row-emergent {
+    background: rgba(212, 168, 67, 0.04);
+  }
+
+  .oc-row-emergent:last-child td {
+    border-bottom: none;
+  }
+
+  /* Source badges */
+  .oc-src {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .oc-src-tested {
+    background: rgba(58, 166, 85, 0.1);
+    color: #2D7A3F;
+  }
+
+  .oc-src-emergent {
+    background: rgba(212, 168, 67, 0.15);
+    color: #9A6F10;
+  }
+
+  /* Segment tags */
+  .oc-seg {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .oc-seg-burnout  { background: rgba(199, 84, 80, 0.1);  color: #C75450; }
+  .oc-seg-family   { background: rgba(43, 140, 150, 0.1); color: #2B8C96; }
+  .oc-seg-trail    { background: rgba(58, 166, 85, 0.1);  color: #2D7A3F; }
+  .oc-seg-couples  { background: rgba(91, 111, 212, 0.1); color: #5B6FD4; }
+
+  .oc-footnote {
+    font-size: 11px;
+    color: var(--color-slate);
+    opacity: 0.7;
+    padding: var(--space-md) var(--space-xl);
+    border-top: 1px solid var(--color-medium-gray);
+    margin: 0;
+    max-width: none;
+    line-height: 1.5;
+  }
+
+  .bjs-note {
+    font-size: 13px;
+    color: var(--color-slate);
+    margin-top: var(--space-md);
+    opacity: 0.75;
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .bjs-panels {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bjs-kpi-row {
+      grid-template-columns: 1fr;
+    }
+    .forces-grid {
+      grid-template-columns: 1fr;
+    }
+    .force-block {
+      border-right: none;
+      border-bottom: 1px solid var(--color-medium-gray);
+    }
+    .force-block:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

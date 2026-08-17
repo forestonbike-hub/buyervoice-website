@@ -1,0 +1,38 @@
+---
+// Public page for the UK Neobank Switching Study report.
+// Imports the same body component as the internal version at
+// src/pages/internal/uk-neobanks-report/, keep both layout-prop blocks
+// in sync if either changes.
+//
+// Public page conventions:
+//   - includeAnalytics={true}  → ReportLayout injects GA + GTM
+//   - noindex omitted          → page is indexable by default
+//   - URL: https://buyervoice.ai/uk-neobanks-report/
+//
+// Toggle visibility via the dashboard at /internal/. The KV flag
+// + the GATED_REPORTS entry in public/_worker.js together control
+// whether the public URL serves the page or a 404.
+import ReportLayout from '../../components/report/ReportLayout.astro';
+import ReportBody from '../../components/uk-neobanks-report/ReportBody.astro';
+import reportStats from '../../data/uk-neobanks/report-stats.json';
+
+const d: any = reportStats;
+---
+<ReportLayout
+  studyName="UK Neobank Switching Study"
+  client="Incumbent retail bank (illustrative)"
+  preparedOn="April 2026"
+  scope="Interviews with switchers and non-switchers at top five incumbent banks in the United Kingdom"
+  hideClientOnCover={true}
+  stats={{
+    interviews: d.study_meta.n_total,
+    avgLengthMin: 17,
+    wordsAnalyzedK: 442,
+    thematicCodes: 46,
+  }}
+  includeAnalytics={true}
+  noindex={false}
+  title="UK Neobank Switching Study, BuyerVoice"
+>
+  <ReportBody />
+</ReportLayout>

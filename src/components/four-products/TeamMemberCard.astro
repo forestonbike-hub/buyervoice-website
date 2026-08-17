@@ -1,0 +1,77 @@
+---
+interface Props {
+  name: string;
+  role: string;
+  credential: string;
+  image: string;
+  compact?: boolean;
+  advisor?: boolean;
+}
+
+const { name, role, credential, image, compact = false, advisor = false } = Astro.props;
+---
+
+<div class:list={['team-card', { compact, advisor }]}>
+  <div class="team-photo">
+    <img src={image} alt={name} width="200" height="200" loading="lazy" />
+  </div>
+  <h4 class="team-name">{name}</h4>
+  <p class="team-role">{role}</p>
+</div>
+
+<style>
+  .team-card {
+    text-align: center;
+    padding-top: var(--space-lg);
+  }
+
+  .team-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto var(--space-md);
+    background: var(--color-light-gray);
+  }
+
+  .team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .team-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: var(--space-xs);
+  }
+
+  .team-role {
+    font-size: 14px;
+    color: var(--color-slate);
+    margin-bottom: var(--space-xs);
+  }
+
+  .team-credential {
+    font-size: 14px;
+    color: var(--color-slate);
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .advisor {
+    background: var(--color-light-gray);
+    border-radius: var(--radius);
+    padding: var(--space-lg) var(--space-md) var(--space-lg);
+  }
+
+  .compact .team-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  .compact .team-name {
+    font-size: 16px;
+  }
+</style>

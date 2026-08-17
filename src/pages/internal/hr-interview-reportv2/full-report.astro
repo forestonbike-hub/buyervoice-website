@@ -1,0 +1,2243 @@
+---
+import coded from '../../../data/hr-interview-reportv2/coded-data-v2.json';
+import transcriptsRaw from '../../../data/hr-interview-reportv2/transcripts-v2-all.json';
+
+const dataAvailable = true;
+const QUESTIONS: Record<string, string> = {};
+(transcriptsRaw as any).participants[0].transcript.forEach((t: any) => {
+  QUESTIONS[t.question_id] = t.question;
+});
+const VD = (coded as any[]).map((p: any) => {
+  const tp = (transcriptsRaw as any).participants.find((t: any) => t.participant_id === p.participant_id);
+  const verbatims: Record<string, string> = {};
+  if (tp) {
+    tp.transcript.forEach((t: any) => { verbatims[t.question_id] = t.response; });
+  }
+  return { ...p, verbatims };
+});
+const dataScript = '<script>window.__VD=' + JSON.stringify(VD).replace(/<\//g, '<\\/') + ';window.__QS=' + JSON.stringify(QUESTIONS).replace(/<\//g, '<\\/') + ';<' + '/script>';
+---
+<!-- HR Interview Report V2 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+<title>BambooHR Recruiting Software</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.6; background: var(--paper); }
+.pdf-btn { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; padding: 0; text-decoration: underline; }
+.pdf-btn:hover { color: var(--rule); }
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+.cover { text-align: center; padding: 32px 32px 40px; }
+.cover .logo { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 48px; }
+.cover h1 { font-family: var(--serif); font-size: 38px; font-weight: 700; color: var(--ink); margin-bottom: 16px; }
+.cover .subtitle { font-size: 18px; color: var(--rule); margin-bottom: 32px; }
+.cover .meta { font-size: 14px; color: var(--muted); margin-top: 32px; }
+h1 { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+h2 { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 8px; margin-top: 32px; }
+h3 { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; margin-top: 24px; }
+p { font-size: 14px; color: var(--rule); margin-bottom: 12px; }
+.overline { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); margin-bottom: 4px; }
+.subtitle { font-size: 16px; color: var(--rule); margin-bottom: 32px; }
+.section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.page-break { page-break-before: always; padding-top: 48px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+.stat-card { text-align: center; padding: 16px; background: var(--card-bg); border-radius: 2px; }
+.stat-num { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); }
+.stat-label { font-size: 11px; color: var(--rule); margin-top: 4px; }
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { width: 200px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 22px; background: #F0F0F0; border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 30px; }
+.bar-fill.green { background: var(--ink); }
+.bar-fill.blue { background: var(--ink); opacity: 0.75; }
+.bar-fill.amber { background: #C08533; }
+.bar-fill.gray { background: rgba(11, 31, 58, 0.35); }
+.bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+/* Stacked bar styles */
+.stacked-wrap { flex: 1; height: 22px; background: #F0F0F0; border-radius: 2px; overflow: hidden; position: relative; }
+.stacked-inner { height: 100%; display: flex; border-radius: 2px; overflow: hidden; }
+.stacked-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; min-width: 0; overflow: hidden; }
+.stacked-seg.size-sm { background: var(--ink); }
+.stacked-seg.size-md { background: #2563EB; }
+.stacked-seg.size-lg { background: #7C3AED; }
+.bar-total { font-size: 13px; font-weight: 700; color: #1A202C; min-width: 28px; text-align: left; flex-shrink: 0; margin-left: 8px; }
+.stacked-legend { display: flex; gap: 16px; margin: 4px 0 12px; font-size: 12px; }
+.stacked-legend span { display: flex; align-items: center; gap: 4px; }
+.stacked-legend .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.bar-pct { font-size: 12px; font-weight: 600; color: var(--rule); width: 45px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+th { text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--rule); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+td { padding: 10px 12px; border-bottom: 1px solid #F0F0F0; }
+tr:hover { background: #F9FAFB; }
+.insight { border-left: 4px solid var(--ink); background: transparent; padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+.insight p { font-size: 13px; margin-bottom: 0; }
+.insight strong { color: var(--ink); }
+.quote { border-left: 4px solid var(--ink); padding: 12px 20px; background: #F9FAFB; border-radius: 0 6px 6px 0; margin: 12px 0; }
+.quote p { font-style: italic; font-size: 13px; margin-bottom: 4px; }
+.quote .attr { font-size: 11px; font-style: normal; color: var(--muted); }
+.source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 16px 0; }
+.footer-print { text-align: center; padding: 32px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 48px; }
+
+.stacked-bar { display: flex; height: 22px; border-radius: 2px; overflow: hidden; width: 100%; }
+.stacked-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; min-width: 0; overflow: hidden; }
+.stacked-seg.low { background: #94A3B8; }
+.stacked-seg.moderate { background: #F59E0B; }
+.stacked-seg.high { background: #EF4444; }
+.bar-total { font-size: 12px; font-weight: 600; color: var(--rule); width: 35px; text-align: right; flex-shrink: 0; }
+.stacked-legend { display: flex; gap: 16px; margin: 8px 0 16px; font-size: 12px; color: var(--rule); }
+.stacked-legend span { display: flex; align-items: center; gap: 4px; }
+.stacked-legend .swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.crosstab { font-size: 11px; overflow-x: auto; }
+.crosstab table { min-width: 900px; }
+.crosstab th, .crosstab td { padding: 6px 8px; text-align: right; white-space: nowrap; }
+.crosstab th:first-child, .crosstab td:first-child { text-align: left; min-width: 200px; }
+.crosstab th { text-align: center; }
+.crosstab td:nth-child(2) { font-weight: 600; text-align: center; }
+.crosstab .highlight { background: transparent; font-weight: 700; }
+.crosstab .above-avg { background: rgba(184, 52, 27, 0.08); font-weight: 700; }
+.crosstab .total-row td { border-top: 2px solid var(--border); font-weight: 600; font-style: italic; }
+.crosstab .small-n td { color: #9CA3AF; }
+.sentiment-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.sentiment-label { width: 120px; font-size: 13px; font-weight: 600; text-align: right; flex-shrink: 0; }
+.sentiment-bar { display: flex; height: 28px; border-radius: 2px; overflow: hidden; flex: 1; }
+.sentiment-seg { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; min-width: 0; overflow: hidden; }
+.sentiment-seg.positive { background: var(--ink); }
+.sentiment-seg.neutral { background: #94A3B8; }
+.sentiment-seg.mixed { background: #F59E0B; }
+.sentiment-seg.negative { background: #EF4444; }
+.sentiment-legend { display: flex; gap: 16px; margin: 8px 0 16px; font-size: 12px; }
+.sentiment-legend span { display: flex; align-items: center; gap: 4px; }
+.sentiment-legend .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+/* Accordion styles */
+.accordion { border-bottom: 1px solid var(--border); }
+.accordion:last-of-type { border-bottom: none; }
+.accordion-header { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; list-style: none; }
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-header::marker { display: none; content: ""; }
+.accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); min-width: 40px; }
+.accordion-text { flex: 1; }
+.accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); display: block; }
+.accordion-subtitle { font-size: 14px; color: var(--rule); display: block; margin-top: 4px; }
+.accordion-icon { font-size: 28px; font-weight: 300; color: var(--ink); min-width: 30px; text-align: center; transition: transform 0.2s; }
+details[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-body { padding: 0 0 48px 0; }
+
+/* Verbatim drill-down: clickable cues */
+[data-drilldown] { cursor: pointer; transition: opacity 0.15s ease; }
+[data-drilldown]:hover { opacity: 0.8; }
+[data-drilldown] .bar-label,
+[data-drilldown] .sentiment-label { text-decoration: underline; text-decoration-color: var(--ink); text-underline-offset: 2px; }
+
+/* Verbatim modal */
+.vb-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; }
+.vb-dialog { background: var(--paper); width: 90%; max-width: 720px; max-height: 80vh; border-radius: 2px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.vb-header { padding: 20px 24px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.vb-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin: 0 0 4px; }
+.vb-context { font-size: 13px; color: var(--ink); font-weight: 600; margin: 0 0 4px; }
+.vb-question { font-size: 12px; color: var(--muted); margin: 0; font-style: italic; }
+.vb-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; line-height: 1; padding: 4px; }
+.vb-close:hover { color: var(--ink); }
+.vb-body { overflow-y: auto; padding: 16px 24px 24px; flex: 1; }
+.vb-card { background: var(--card-bg); border-radius: 2px; padding: 16px; margin-bottom: 12px; border-left: 3px solid var(--ink); }
+.vb-card:last-child { margin-bottom: 0; }
+.vb-quote { font-size: 14px; color: var(--rule); line-height: 1.6; margin: 0 0 10px; font-style: italic; }
+.vb-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.vb-tags span { font-size: 11px; background: var(--border); color: var(--rule); padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+.vb-group-banner { color: #fff; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 2px; margin: 24px 0 10px; }
+.vb-group-banner:first-child { margin-top: 0; }
+.vb-card + .vb-group-banner { margin-top: 24px; }
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  .pdf-btn { display: none !important; }
+
+  /* Force all accordions open and visible */
+  details.accordion { display: block !important; open: true; }
+  details.accordion > .accordion-body { display: block !important; visibility: visible !important; }
+  .accordion { border-bottom: 1px solid var(--border); }
+  .accordion-icon { display: none !important; }
+  .accordion-header { pointer-events: none; }
+  .accordion-body { padding: 16px 0 32px; }
+
+  body { font-size: 12px; }
+  .cover { padding: 60px 0 40px; page-break-after: always; }
+  .container { max-width: 100%; padding: 0 24px; }
+
+  /* Bar charts: preserve colors */
+  .bar-fill.green { background: var(--ink) !important; }
+  .bar-fill.blue { background: #3B82F6 !important; }
+  .bar-fill.amber { background: #F59E0B !important; }
+  .stacked-seg.size-sm { background: var(--ink) !important; }
+  .stacked-seg.size-md { background: #2563EB !important; }
+  .stacked-seg.size-lg { background: #7C3AED !important; }
+  .stacked-wrap { background: #F0F0F0 !important; }
+  .bar-fill.gray { background: #94A3B8 !important; }
+  .bar-track { background: #F0F0F0 !important; }
+  .bar-val { color: #fff !important; }
+
+  /* Stacked bars: preserve colors */
+  .stacked-seg.low { background: #94A3B8 !important; }
+  .stacked-seg.moderate { background: #F59E0B !important; }
+  .stacked-seg.high { background: #EF4444 !important; }
+
+  /* Stat cards */
+  .stat-card { background: var(--card-bg) !important; }
+  .stat-num { color: var(--ink) !important; }
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+
+  /* Insight boxes */
+  .insight { background: transparent !important; border-left: 4px solid var(--ink) !important; }
+  .insight strong { color: var(--ink) !important; }
+
+  /* Quotes */
+  .quote { background: #F9FAFB !important; border-left: 4px solid var(--ink) !important; }
+
+  /* Crosstab highlight */
+  .crosstab .highlight { background: transparent !important; }
+  .crosstab .above-avg { background: rgba(184, 52, 27, 0.08) !important; }
+
+  /* Page break control — keep visual blocks intact */
+  .insight, .quote, .stat-grid, .bar-chart,
+  .two-col, .sentiment-row, .bar-row, .stacked-wrap, .chart-group {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  table { page-break-inside: auto; break-inside: auto; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  thead { display: table-header-group; }
+  tr:first-child { page-break-before: avoid; break-before: avoid; }
+  h2, h3, h4, .overline, .subtitle,
+  .sentiment-legend, .stacked-legend,
+  h3 + p, h4 + p {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+
+  /* Each section starts on a new page */
+  details.accordion { page-break-before: always; break-before: page; }
+  details.accordion:first-of-type { page-break-before: auto; break-before: auto; }
+
+  /* Wide cross-tabs: rotate to landscape, shrink to fit */
+  .crosstab-section { page: landscape; }
+  .crosstab { overflow-x: visible; }
+  .crosstab table { min-width: 0; font-size: 9px; width: 100%; table-layout: fixed; }
+  .crosstab th, .crosstab td { padding: 4px 5px; white-space: normal; word-wrap: break-word; }
+  .crosstab th:first-child, .crosstab td:first-child { min-width: 0; width: 18%; text-align: left; }
+  .crosstab th { font-size: 8px; line-height: 1.2; vertical-align: bottom; }
+  @page landscape { size: landscape; margin: 16mm; }
+
+  /* Hide verbatim drill-down in print */
+  [data-drilldown] { cursor: default !important; }
+  [data-drilldown] .bar-label,
+  [data-drilldown] .sentiment-label { text-decoration: none !important; }
+  .vb-overlay { display: none !important; }
+
+  /* Default page margins */
+  @page { margin: 16mm; }
+
+  /* Two-column layout: keep side by side */
+  .two-col { grid-template-columns: 1fr 1fr; }
+
+  /* Stacked legend */
+  .stacked-legend .swatch { background-color: inherit !important; }
+}
+@media (max-width: 700px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .bar-label { width: 140px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div style="text-align:right; padding-top:12px;"><button class="pdf-btn" onclick="printReport()">Save as PDF</button></div>
+
+<!-- COVER -->
+<div class="cover">
+  <h1 style="margin-top:16px;">BambooHR Recruiting Software</h1>
+  <p class="subtitle">Category Entry Points, Win/Loss, Brand Perceptions, Spend/WTP, and Recommendations</p>
+  <p class="meta">Prepared for BambooHR &bull; April 2026<br>
+  BambooHR &bull; Workday &bull; Greenhouse &bull; and 8 other tools evaluated<br>
+  100 participants &bull; Qualitative interviews</p>
+</div>
+
+<details class="accordion" id="section-1">
+<summary class="accordion-header"><span class="accordion-num">1</span><div class="accordion-text"><span class="accordion-title">Executive Summary</span><span class="accordion-subtitle">Research purpose, key findings, and priority recommendations for Marketing, Product, and Sales.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+
+<h3>Research Objective</h3>
+<p>This research was conducted to understand how HR leaders evaluate, select, and perceive recruiting software tools, with a focus on BambooHR's competitive position. The goal: identify what BambooHR's Marketing, Product, and Sales teams should do differently to win more mid-market deals.</p>
+
+<h3>Methodology & Sample</h3>
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-num">100</div><div class="stat-label">HR leaders interviewed</div></div>
+  <div class="stat-card"><div class="stat-num">100-10K</div><div class="stat-label">Company sizes included</div></div>
+  <div class="stat-card"><div class="stat-num">13</div><div class="stat-label">BambooHR users</div></div>
+  <div class="stat-card"><div class="stat-num">87</div><div class="stat-label">Non-users (growth audience)</div></div>
+</div>
+<p>All respondents are US-based HR professionals spanning Manager to C-level across HR, People Operations, and Talent Acquisition functions. Companies range from 100 to 10,000 employees across Tech/Software, Healthcare, Retail, Professional Services, and other industries. All interviews conducted in Q1 2026.</p>
+
+<h3>Key Findings</h3>
+
+<div class="insight"><p><strong>Finding 1: BambooHR faces a consideration cliff above 500 employees.</strong> 42% of small-company non-users (100-500 employees) include BambooHR in their consideration set, but only 3% of mid-market (500-2,000) and 0% of enterprise (2,000-10,000) do the same. The brand essentially vanishes from consideration at the exact point where the growth opportunity begins.</p></div>
+
+<div class="insight"><p><strong>Finding 2: The "limited for larger orgs" perception is strongest in the target segment.</strong> 100% of respondents have heard of BambooHR, but 74% of mid-market non-users describe it as "limited for larger orgs," the highest of any segment. BambooHR users value its ease of use (58%), but that perception fades with company size (37% small, 26% mid-market, 20% enterprise). The brand is known but pigeonholed.</p></div>
+
+<div class="insight"><p><strong>Finding 3: The recruiting module is the weak link.</strong> 100% of BambooHR users report neutral or negative satisfaction with their recruiting process, the lowest of any tool in the study. When non-users evaluate BambooHR and reject it, the #1 reason is "missing critical feature" (46%), citing gaps in ATS depth, analytics, CRM, and structured interview capabilities. The product needs more recruiting features, not a better demo.</p></div>
+
+<div class="insight"><p><strong>Finding 4: Frustrations differ by segment, and the mid-market target cares about different problems than BambooHR's current base.</strong> Small-company non-users struggle with sourcing (32%) and candidate quality. Mid-market non-users, the growth target, prioritize scheduling (26%), analytics (23%), and sourcing (23%). Enterprise cares most about analytics (33%) and integration (23%). Building for the current base reinforces SMB positioning; building for mid-market creates the up-market trajectory.</p></div>
+
+<div class="insight"><p><strong>Finding 5: Contract renewal is the universal buying trigger, but most buyers don't switch.</strong> 99% of evaluations start at renewal time, and the average buyer considers 2.9 tools. But only 27% actually purchase a new tool (42% small, 28% mid-market, 20% enterprise). Ease of use (88%) and specific features (71%) drive purchase decisions, not price.</p></div>
+
+<div class="insight"><p><strong>Finding 6: BambooHR's conversion rate when considered is 6%.</strong> Of 17 respondents who included BambooHR in their consideration set, only 1 purchased it. Lever is the biggest competitive threat in the small segment, but Greenhouse dominates mid-market consideration (87%) and is the primary competitor BambooHR must displace to move up-market.</p></div>
+
+<h3>Segment Profile: The Mid-Market Target</h3>
+<p>The target growth segment is HR leaders at companies with 500-2,000 employees, representing 45% of non-users (39 of 87). They spend a median of $70K/year on recruiting tools (with $35K median WTP for a solution to their top frustration), primarily use Lever (46%), Greenhouse (26%), or iCIMS (18%), and face talent shortages (46%) and budget pressure (49%) as their top challenges. They have the highest frustration intensity of any segment (41% high), the worst satisfaction (63% neutral/mixed), and they frame recruiting as a revenue problem (54%), not a cost problem. They currently view BambooHR as limited for larger orgs (74%) and only 3% include it in their consideration set. Greenhouse dominates their consideration at 87%.</p>
+
+<h3>Strategic Implications</h3>
+
+<div class="insight"><p><strong>BambooHR's growth is blocked by a consideration problem, not an awareness problem.</strong> Everyone knows BambooHR, but only 3% of mid-market non-users consider it. The brand has been pre-filtered out by 74% who see it as "limited for larger orgs." Closing this perception gap in the 500-2,000 segment is the single highest-leverage move across all three teams.</p></div>
+
+<div class="insight"><p><strong>The product must solve mid-market problems, not small-company problems.</strong> BambooHR's current base struggles with sourcing (32%), but the mid-market target cares about scheduling (26%) and analytics (23%). Building features for the current base reinforces the SMB positioning. The product roadmap should be weighted toward mid-market frustrations to earn consideration in a segment where Greenhouse (87%) currently dominates.</p></div>
+
+<div class="insight"><p><strong>The pricing gap is an opportunity, not a liability.</strong> BambooHR users pay a median of $12K/year while mid-market non-users spend $70K and would pay $35K to solve their top frustration. If BambooHR can credibly address analytics or scheduling, there is substantial pricing headroom. Mid-market buyers frame recruiting as a revenue driver (54%), not a cost center, so value messaging should lead with revenue impact.</p></div>
+
+<h3>Priority Recommendations</h3>
+<table>
+<tr><th>Team</th><th>Top Priorities</th></tr>
+<tr><td style="font-weight:700; color:var(--ink);">Marketing</td><td>Position against Greenhouse (87% mid-market consideration), not just Lever. Lead with scheduling and analytics messaging (the mid-market's top frustrations, not sourcing). Frame around revenue impact (54% of mid-market). Counter "limited for larger orgs" (74% of mid-market) with 500-2,000 employee proof points.</td></tr>
+<tr><td style="font-weight:700; color:var(--ink);">Product</td><td>Prioritize scheduling tools (26% mid-market frustration) and analytics (23%), the mid-market's top needs. Deprioritize sourcing features (a small-company problem at 32%). Add missing recruiting features: ATS depth, CRM, analytics, and structured interview capabilities (46% of rejections cite missing critical features). Design packaging for the $70K spend / $35K WTP mid-market segment.</td></tr>
+<tr><td style="font-weight:700; color:var(--ink);">Sales</td><td>Focus on 500-2,000 employee companies (highest frustration at 41%, $70K spend, 28% purchase rate). The primary barrier is getting into the consideration set (currently 3%). Build competitor-specific battle cards: lead with pricing advantage vs. Greenhouse (45% price rejection), feature depth vs. Lever (28% missing features rejection), and speed/cost vs. Workday (64% price, 44% slow implementation) and iCIMS (58% price, 30% slow implementation).</td></tr>
+</table>
+<p class="source-note">See Section 2 for complete team-specific recommendations with strategic context and tactical detail.</p>
+
+<h3>Suggested Next Steps</h3>
+<p>1. <strong>Feature gap analysis:</strong> Product team should conduct a competitive teardown of Lever and Greenhouse recruiting capabilities to identify the specific feature gaps (ATS depth, CRM, analytics, structured interviews) driving the 46% "missing critical feature" rejection rate.</p>
+<p>2. <strong>Mid-market case study sprint:</strong> Marketing should identify and produce 3-5 customer stories from 500-2,000 employee companies for use across campaigns and sales enablement.</p>
+
+<p class="source-note">Source: Aggregated from all sections below.</p>
+</div></details>
+<details class="accordion" id="section-2">
+<summary class="accordion-header"><span class="accordion-num">2</span><div class="accordion-text"><span class="accordion-title">Team-Specific Recommendations</span><span class="accordion-subtitle">Strategy and tactics for Marketing, Product, and Sales based on findings.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+
+<!-- MARKETING TEAM -->
+<h3 style="color:var(--ink); border-bottom:2px solid var(--ink); padding-bottom:8px; margin-top:8px;">Marketing Team</h3>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Strategic Layer</h4>
+
+<div class="insight">
+<p><strong>Target Segment Definition:</strong> The 500-2,000 employee segment is the primary growth target: 45% of non-users (39 of 87), median spend of $70K/year. Within this segment, Tech/Software (33% of non-users) and Healthcare + Retail (30% combined) are the highest-concentration industries. BambooHR has 92% of its current users in the 100-500 segment and zero in the 2,000-10,000 range, so growth requires moving up-market. (This assumes the sample is representative of the broader non-user market.)</p>
+</div>
+
+<div class="insight">
+<p><strong>Positioning & Value Proposition:</strong> BambooHR owns "easy to use" among its users (58%), but that perception fades with company size (37% small, 26% mid-market, 20% enterprise). Meanwhile, ease of use is the #1 purchase driver (88% of buyers cite it). Non-users describe BambooHR as "for smaller companies" (98%) and "limited for larger orgs" (74% in the target mid-market). The core repositioning job is proving mid-market readiness. Mid-market buyers frame recruiting as a revenue driver (54%), so positioning should lead with revenue impact, not cost savings.</p>
+</div>
+
+<div class="insight">
+<p><strong>Competitive Differentiation:</strong> The competitive landscape shifts by company size. In the mid-market target, Greenhouse dominates at 87% consideration, followed by iCIMS (56%) and Lever (46%). BambooHR is at 3%. Lever is the primary threat in small-company deals (50% head-to-head win rate), but Greenhouse is the competitor to displace in the mid-market. BambooHR's biggest product gap is analytics: only 10% of analytics-motivated buyers consider it, vs. 86% for Greenhouse.</p>
+</div>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Tactical Layer</h4>
+
+<table>
+<tr><th style="width:30px">#</th><th style="width:100px">Category</th><th>Recommendation</th><th style="width:140px">Source</th></tr>
+<tr><td>1</td><td>Targeting Signals</td><td>Time campaigns to contract renewal windows. 99% of HR leaders cited contract expiration as a trigger for evaluation. Map target accounts' renewal cycles and launch campaigns 60-90 days before. Also target companies showing growth signals (82% cited company growth as a trigger).</td><td>Section 5</td></tr>
+<tr><td>2</td><td>Messaging</td><td>Tailor campaign creative by segment. Mid-market (500-2,000): lead with scheduling (26%), analytics (23%), and compliance (21%). Small companies (100-500): lead with sourcing (32%). Enterprise (2,000-10,000): lead with analytics (33%) and integration (23%). Generic "top 3 frustrations" messaging underperforms segment-specific creative.</td><td>Sections 4, 10</td></tr>
+<tr><td>3</td><td>Content</td><td>Publish head-to-head comparison content vs. Lever and Greenhouse. Address specific feature comparisons, not just brand messaging. Lever wins 50% of head-to-heads, so comparison pages need to demonstrate clear differentiation.</td><td>Section 6</td></tr>
+<tr><td>4</td><td>Content</td><td>Feature mid-market customer stories (500-2,000 employees) prominently across all channels. This directly counters the "for smaller companies" perception held by 98% of non-users.</td><td>Section 7</td></tr>
+<tr><td>5</td><td>Channel</td><td>Target Tech/Software and Healthcare + Retail with industry-specific messaging and landing pages. Generic messaging won't overcome the "not for our industry" objection (11% rejection reason).</td><td>Section 3</td></tr>
+<tr><td>6</td><td>KPIs</td><td>Track consideration set inclusion rate by segment: currently 42% small, 3% mid-market, 0% enterprise. Primary KPI: move mid-market consideration above 15%. Measure perception shift on "limited for larger orgs" (currently 74% of mid-market non-users). Monitor conversion from consideration to purchase (currently 6% overall).</td><td>Sections 6, 10</td></tr>
+</table>
+<p class="source-note">Source: Synthesized from Sections 3, 4, 5, 6, 7, 10</p>
+
+<!-- PRODUCT TEAM -->
+<h3 style="color:var(--ink); border-bottom:2px solid var(--ink); padding-bottom:8px; margin-top:32px;">Product Team</h3>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Strategic Layer</h4>
+
+<div class="insight">
+<p><strong>Jobs to Be Done / Unmet Needs:</strong> Frustration profiles differ sharply by company size. Small companies (100-500) need sourcing help (32%). Mid-market (500-2,000) needs scheduling (26%), analytics (23%), and compliance (21%). Enterprise (2,000-10,000) needs analytics (33%) and integration (23%). Building for "the average non-user" means building for no one. BambooHR users report the lowest satisfaction of any tool (100% neutral/mixed or worse), indicating the product underdelivers even for its current base.</p>
+</div>
+
+<div class="insight">
+<p><strong>Market Opportunity Sizing:</strong> Non-users would pay a median of $60K/year to solve their top frustration. BambooHR users currently pay a median of $12K. The 500-2,000 segment (39 non-users, $70K median spend) represents the largest addressable opportunity. If BambooHR can credibly solve analytics, sourcing, or scheduling pain, there is significant pricing headroom.</p>
+</div>
+
+<div class="insight">
+<p><strong>Competitive Product Gaps:</strong> "Missing critical feature" is BambooHR's #1 rejection reason (46% of rejections), with evaluators citing gaps in ATS depth, CRM, pipeline analytics, and structured interview capabilities. Competitors lose deals on different dimensions: Workday and iCIMS on price and complexity, Greenhouse on cost. BambooHR's unique vulnerability is that its recruiting module lacks the depth evaluators need, even though its core HR is well-regarded.</p>
+</div>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Tactical Layer</h4>
+
+<table>
+<tr><th style="width:30px">#</th><th style="width:100px">Category</th><th>Recommendation</th><th style="width:140px">Source</th></tr>
+<tr><td>1</td><td>Feature Priority</td><td>Interview scheduling tools. The #1 frustration in the mid-market target segment (26%). This is a high-frequency entry point where BambooHR currently has no presence, and mid-market buyers have $70K median spend.</td><td>Sections 4, 10</td></tr>
+<tr><td>2</td><td>Feature Priority</td><td>Recruiting analytics and reporting. The #1 frustration for enterprise (33%) and tied for #2 in mid-market (23%). Also the #1 evaluation motivation overall (42%) and the product area where BambooHR has the weakest consideration (10% vs. Greenhouse at 86%).</td><td>Sections 4, 5, 10</td></tr>
+<tr><td>3</td><td>Feature Priority</td><td>Sourcing and candidate response capabilities. The #1 frustration for small companies (32%) and tied for #2 in mid-market (23%). Critical for entering the small-company segment where BambooHR already has 42% consideration.</td><td>Sections 4, 10</td></tr>
+<tr><td>4</td><td>Features</td><td>Close the recruiting feature gaps that drive 46% of BambooHR rejections. Evaluators cite missing ATS depth, CRM, pipeline analytics, and structured interview capabilities. These are product gaps, not demo gaps. Prioritize the features mid-market evaluators expect when comparing against Lever and Greenhouse.</td><td>Section 6</td></tr>
+<tr><td>5</td><td>Packaging</td><td>Design for the 500-2,000 employee segment. Zero BambooHR users are in the 2,000-10,000 range. The 500-2,000 segment has $70K median spend. Consider a mid-market tier or SKU.</td><td>Sections 3, 8</td></tr>
+<tr><td>6</td><td>Retention</td><td>Address current user satisfaction. 100% of BambooHR users report neutral/mixed satisfaction or worse. Improving user satisfaction prevents churn and generates the advocacy needed to win referrals.</td><td>Section 4</td></tr>
+</table>
+<p class="source-note">Source: Synthesized from Sections 3, 4, 5, 6, 8, 10</p>
+
+<!-- SALES TEAM -->
+<h3 style="color:var(--ink); border-bottom:2px solid var(--ink); padding-bottom:8px; margin-top:32px;">Sales Team</h3>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Strategic Layer</h4>
+
+<div class="insight">
+<p><strong>Ideal Customer Profile:</strong> High-fit accounts: 500-2,000 employees, in Tech/Software, Healthcare, or Retail, currently using Greenhouse ($120K) or Lever ($55K). This segment has $70K median spend, 41% high frustration (the highest of any segment), and 28% purchase rate. The critical barrier: only 3% of mid-market non-users currently consider BambooHR. Sales must create awareness that BambooHR is a viable mid-market option before competitive selling can begin.</p>
+</div>
+
+<div class="insight">
+<p><strong>Buying Process & Decision Dynamics:</strong> 99% of evaluations are triggered by contract renewal, 82% by company growth. The average buyer considers 2.9 tools. Only 26 of 97 shoppers (27%) end up purchasing a new tool, meaning 73% stay with what they have. The bar for switching is high. Ease of use (88%) and specific features (71%) are the top purchase drivers, not price alone.</p>
+</div>
+
+<div class="insight">
+<p><strong>Win/Loss Themes:</strong> BambooHR's conversion rate when considered is 6% (1 win out of 17 considerations). The top rejection reasons: missing critical features (46%), too expensive (15%), not designed for our size (15%). Lever is the biggest head-to-head threat (50% win rate in 8 matchups). BambooHR loses on product depth, not price or UX. Evaluators consistently describe the recruiting module as "too basic" or "too lightweight." Notably, BambooHR's competitors are most vulnerable on price and implementation speed: Greenhouse (45% price rejection), Workday (64% price, 44% slow implementation), iCIMS (58% price, 30% slow implementation), and Lever (25% price, 28% missing features). These are dimensions where BambooHR can credibly compete.</p>
+</div>
+
+<h4 style="color:var(--rule); margin-bottom:12px;">Tactical Layer</h4>
+
+<table>
+<tr><th style="width:30px">#</th><th style="width:100px">Category</th><th>Recommendation</th><th style="width:140px">Source</th></tr>
+<tr><td>1</td><td>Prospecting</td><td>Focus on 500-2,000 employee companies. 45% of non-users (39 of 87) sit in this segment with $70K median spend. They're currently paying more for Lever, iCIMS, or Greenhouse. Lead with value positioning: "enterprise capability at mid-market pricing."</td><td>Sections 3, 8</td></tr>
+<tr><td>2</td><td>Prospecting</td><td>Time outreach to growth moments. 82% of HR leaders started evaluating during company growth. Use signals like job postings, funding rounds, and office expansion to identify accounts entering a buying window.</td><td>Section 5</td></tr>
+<tr><td>3</td><td>Discovery</td><td>Tailor discovery by company size. Mid-market: probe for scheduling (26%), analytics (23%), and compliance (21%). Small: probe for sourcing (32%) and scheduling (21%). Mid-market prospects also frame recruiting as a revenue problem (54%), so connect pain to revenue impact, not cost savings.</td><td>Sections 4, 10</td></tr>
+<tr><td>4</td><td>Objection Handling</td><td>Overcome "too small for us" proactively. 98% of non-users see BambooHR as SMB-focused. Arm reps with mid-market case studies, feature comparison sheets, and ROI calculators before the prospect raises it.</td><td>Section 7</td></tr>
+<tr><td>5</td><td>Competitive</td><td>Build competitor-specific battle cards using rejection data:<br><br><strong>vs. Greenhouse (mid-market):</strong> Lead with pricing advantage (45% of evaluators rejected Greenhouse on price). Emphasize industry-specific capabilities (18% rejection for lack of specialization). Position as "right-sized for mid-market" vs. Greenhouse's enterprise orientation.<br><br><strong>vs. Lever (small companies):</strong> Highlight feature depth (28% rejected Lever for missing features). Emphasize all-in-one HR+recruiting value vs. Lever's ATS-only positioning. Counter industry-fit gaps (18% rejection).<br><br><strong>vs. Workday (enterprise displacement):</strong> Lead with dramatically lower cost (64% price rejection), fast implementation (44% rejected Workday for slow deployment), and easy integrations (32% weak integration rejection). Position as "enterprise capability without enterprise pain."<br><br><strong>vs. iCIMS (enterprise):</strong> Lead with cost savings (58% price rejection) and faster deployment (30% slow implementation rejection). Emphasize industry specialization (18% rejection for lack of it).</td><td>Sections 6, 10</td></tr>
+<tr><td>6</td><td>Demo</td><td>Lead with recruiting workflows, not HR admin. 46% of rejections cite "missing critical features" in the recruiting module. Show pipeline views, CRM, analytics, and structured interview capabilities first to counter the "too basic" perception.</td><td>Section 6</td></tr>
+</table>
+<p class="source-note">Source: Synthesized from Sections 3, 4, 5, 6, 7, 8, 10</p>
+
+</div></details>
+<details class="accordion" id="section-3">
+<summary class="accordion-header"><span class="accordion-num">3</span><div class="accordion-text"><span class="accordion-title">Participants</span><span class="accordion-subtitle">Who we interviewed: 100 HR leaders in the US across industries, company sizes, and seniority levels.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+<div class="chart-group">
+<h3>Current Tool Landscape</h3><p>Distribution of primary recruiting tools used by all 100 respondents, by company size.</p>
+<div class="stacked-legend">
+<span><span class="dot" style="background:var(--ink);"></span> 100-500 employees</span>
+<span><span class="dot" style="background:#2563EB;"></span> 500-2,000 employees</span>
+<span><span class="dot" style="background:#7C3AED;"></span> 2,000-10,000 employees</span>
+</div>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Lever</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:100%"><div class="stacked-seg size-sm" style="width:40%" title="100-500: 12 (40%)">40%</div><div class="stacked-seg size-md" style="width:60%" title="500-2,000: 18 (60%)">60%</div></div></div>
+  <span class="bar-total">30</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">iCIMS</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:73%"><div class="stacked-seg size-md" style="width:32%" title="500-2,000: 7 (32%)">32%</div><div class="stacked-seg size-lg" style="width:68%" title="2,000-10,000: 15 (68%)">68%</div></div></div>
+  <span class="bar-total">22</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Greenhouse</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:60%"><div class="stacked-seg size-md" style="width:56%" title="500-2,000: 10 (56%)">56%</div><div class="stacked-seg size-lg" style="width:44%" title="2,000-10,000: 8 (44%)">44%</div></div></div>
+  <span class="bar-total">18</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">BambooHR</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:43%"><div class="stacked-seg size-sm" style="width:92%" title="100-500: 12 (92%)">92%</div><div class="stacked-seg size-md" style="width:8%" title="500-2,000: 1 (8%)"></div></div></div>
+  <span class="bar-total">13</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Workday</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:20%"><div class="stacked-seg size-lg" style="width:100%" title="2,000-10,000: 6 (100%)">100%</div></div></div>
+  <span class="bar-total">6</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Jobvite</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:10%"><div class="stacked-seg size-md" style="width:100%" title="500-2,000: 3 (100%)">100%</div></div></div>
+  <span class="bar-total">3</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">JazzHR</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:10%"><div class="stacked-seg size-sm" style="width:100%" title="100-500: 3 (100%)">100%</div></div></div>
+  <span class="bar-total">3</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Workable</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:10%"><div class="stacked-seg size-sm" style="width:100%" title="100-500: 3 (100%)">100%</div></div></div>
+  <span class="bar-total">3</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">PeopleAdmin</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:3.3%"><div class="stacked-seg size-md" style="width:100%" title="500-2,000: 1 (100%)"></div></div></div>
+  <span class="bar-total">1</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Ashby</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:3.3%"><div class="stacked-seg size-sm" style="width:100%" title="100-500: 1 (100%)"></div></div></div>
+  <span class="bar-total">1</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">SAP SuccessFactors</span>
+  <div class="stacked-wrap"><div class="stacked-inner" style="width:3.3%"><div class="stacked-seg size-lg" style="width:100%" title="2,000-10,000: 1 (100%)"></div></div></div>
+  <span class="bar-total">1</span>
+</div>
+</div><p class="source-note">Source: Q5.1 x Q1.2 (n=100)</p>
+</div>
+<h3>Sample Profile</h3>
+<h3>Seniority</h3>
+<div class="two-col"><div><h3>BambooHR Users (n=13)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Manager</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:50%"><span class="bar-val">23%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Director</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:67%"><span class="bar-val">31%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">VP</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">46%</span></div></div>
+</div></div></div><div><h3>Non-Users (n=87)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Manager</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:92%"><span class="bar-val">34%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Director</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">37%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">VP</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:78%"><span class="bar-val">29%</span></div></div>
+</div></div></div></div><p class="source-note">Source: Q1.1</p>
+<h3>Function</h3>
+<div class="two-col"><div><h3>BambooHR Users (n=13)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">HR</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">54%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Recruiting</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:70%"><span class="bar-val">38%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Talent Acquisition</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:15%"><span class="bar-val">8%</span></div></div>
+</div></div></div><div><h3>Non-Users (n=87)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Talent Acquisition</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">52%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">HR</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:46%"><span class="bar-val">24%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Recruiting</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:38%"><span class="bar-val">20%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">People Operations</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:6%"><span class="bar-val">3%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">People & Culture</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:2%"><span class="bar-val">1%</span></div></div>
+</div></div></div></div><p class="source-note">Source: Q1.1</p>
+<h3>Company Size</h3>
+<div class="two-col"><div><h3>BambooHR Users (n=13)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">100-500</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">92%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">500-2,000</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:9%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">2,000-10,000</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:0%"><span class="bar-val">0%</span></div></div>
+</div></div></div><div><h3>Non-Users (n=87)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">100-500</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:47%"><span class="bar-val">21%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">500-2,000</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">45%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">2,000-10,000</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:76%"><span class="bar-val">34%</span></div></div>
+</div></div></div></div><p class="source-note">Source: Q1.2</p>
+<h3>Industry</h3>
+<div class="two-col"><div><h3>BambooHR Users (n=13)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Tech/Software</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:0%"><span class="bar-val">0%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Healthcare</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:74%"><span class="bar-val">23%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Retail</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:74%"><span class="bar-val">23%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Other</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">31%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Professional Services/Finance</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:74%"><span class="bar-val">23%</span></div></div>
+</div></div></div><div><h3>Non-Users (n=87)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Tech/Software</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">33%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Healthcare</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:45%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Retail</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:45%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Other</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:45%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Professional Services/Finance</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:39%"><span class="bar-val">13%</span></div></div>
+</div></div></div></div><p class="source-note">Source: Q1.2</p>
+<div class="insight"><p><strong>BambooHR users skew heavily toward smaller companies:</strong> 92% of BambooHR users are at companies with 100-500 employees, compared to just 21% of non-users. Zero BambooHR users are in the 2,000-10,000 segment. The 500-2,000 employee segment represents the largest untapped audience (39 non-users).</p></div></div></details>
+<details class="accordion" id="section-4">
+<summary class="accordion-header"><span class="accordion-num">4</span><div class="accordion-text"><span class="accordion-title">Current Approach: Satisfaction, Frustrations & Goals</span><span class="accordion-subtitle">How satisfied HR leaders are with their current recruiting tools, what frustrates them, and what outcomes they want to achieve.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+
+<div class="chart-group">
+<h3>Satisfaction by Current Tool</h3>
+<div class="sentiment-legend">
+<span><span class="dot" style="background:var(--ink);"></span> Very Satisfied</span>
+<span><span class="dot" style="background:var(--ink);"></span> Somewhat Satisfied</span>
+<span><span class="dot" style="background:#94A3B8;"></span> Neutral/Mixed</span>
+<span><span class="dot" style="background:#EF4444;"></span> Dissatisfied</span>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Greenhouse (n=18)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg" style="width:11%; background:var(--ink);">11%</div>
+<div class="sentiment-seg" style="width:67%; background:var(--ink);">67%</div>
+<div class="sentiment-seg" style="width:17%; background:#94A3B8;">17%</div>
+<div class="sentiment-seg" style="width:6%; background:#EF4444;">6%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Workday (n=6)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg" style="width:50%; background:var(--ink);">50%</div>
+<div class="sentiment-seg" style="width:50%; background:#94A3B8;">50%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Lever (n=30)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg" style="width:40%; background:var(--ink);">40%</div>
+<div class="sentiment-seg" style="width:53%; background:#94A3B8;">53%</div>
+<div class="sentiment-seg" style="width:7%; background:#EF4444;">7%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">iCIMS (n=22)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg" style="width:5%; background:var(--ink);"></div>
+<div class="sentiment-seg" style="width:18%; background:var(--ink);">18%</div>
+<div class="sentiment-seg" style="width:77%; background:#94A3B8;">77%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">BambooHR (n=12)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg" style="width:92%; background:#94A3B8;">92%</div>
+<div class="sentiment-seg" style="width:8%; background:#EF4444;">8%</div>
+</div>
+</div>
+<p class="source-note">Source: Q2.4 &mdash; "How satisfied are you with your current recruiting tool?" mapped to Q5.1 (current tool)</p>
+</div>
+<div class="insight"><p><strong>BambooHR users report the lowest satisfaction:</strong> 100% of BambooHR users describe their satisfaction as "neutral/mixed" or worse, compared to 78% for Greenhouse and 60% for Lever users. This suggests BambooHR's recruiting functionality, while easy to use, leaves users wanting more.</p></div>
+
+<h3>Top Frustrations with Current Recruiting Process: Non-Users (n=87)</h3>
+<p>Frustration themes with intensity breakdown. Segment colors show the share of respondents at each intensity level. Total count shown to the right.</p>
+<div class="stacked-legend">
+<span><span class="swatch" style="background:#94A3B8"></span> Low</span>
+<span><span class="swatch" style="background:#F59E0B"></span> Moderate</span>
+<span><span class="swatch" style="background:#EF4444"></span> High</span>
+</div>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Lack of analytics / reporting</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:100%"><span class="stacked-seg low" style="width:14%">14%</span><span class="stacked-seg moderate" style="width:48%">48%</span><span class="stacked-seg high" style="width:38%">38%</span></div></div>
+  <span class="bar-total">21</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Poor sourcing / low response rates</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:100%"><span class="stacked-seg low" style="width:5%"></span><span class="stacked-seg moderate" style="width:67%">67%</span><span class="stacked-seg high" style="width:28%">28%</span></div></div>
+  <span class="bar-total">21</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Interview scheduling complexity</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:90%"><span class="stacked-seg moderate" style="width:42%">42%</span><span class="stacked-seg high" style="width:58%">58%</span></div></div>
+  <span class="bar-total">19</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Compliance / documentation burden</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:76%"><span class="stacked-seg moderate" style="width:56%">56%</span><span class="stacked-seg high" style="width:44%">44%</span></div></div>
+  <span class="bar-total">16</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Poor integration / duplicate data entry</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:62%"><span class="stacked-seg low" style="width:8%"></span><span class="stacked-seg moderate" style="width:77%">77%</span><span class="stacked-seg high" style="width:15%">15%</span></div></div>
+  <span class="bar-total">13</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Unqualified applicants</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:62%"><span class="stacked-seg moderate" style="width:46%">46%</span><span class="stacked-seg high" style="width:54%">54%</span></div></div>
+  <span class="bar-total">13</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Losing candidates to competitors</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:62%"><span class="stacked-seg moderate" style="width:54%">54%</span><span class="stacked-seg high" style="width:46%">46%</span></div></div>
+  <span class="bar-total">13</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Candidate ghosting / no-shows</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:57%"><span class="stacked-seg moderate" style="width:50%">50%</span><span class="stacked-seg high" style="width:50%">50%</span></div></div>
+  <span class="bar-total">12</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Hiring manager inconsistency</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:52%"><span class="stacked-seg low" style="width:18%">18%</span><span class="stacked-seg moderate" style="width:55%">55%</span><span class="stacked-seg high" style="width:27%">27%</span></div></div>
+  <span class="bar-total">11</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Long time-to-fill</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:52%"><span class="stacked-seg moderate" style="width:73%">73%</span><span class="stacked-seg high" style="width:27%">27%</span></div></div>
+  <span class="bar-total">11</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Volume overwhelm</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:52%"><span class="stacked-seg moderate" style="width:82%">82%</span><span class="stacked-seg high" style="width:18%">18%</span></div></div>
+  <span class="bar-total">11</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Tool limitations / inflexibility</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:48%"><span class="stacked-seg moderate" style="width:50%">50%</span><span class="stacked-seg high" style="width:50%">50%</span></div></div>
+  <span class="bar-total">10</span>
+</div>
+</div>
+<p class="source-note">Source: Q2.5 — "What causes the biggest frustration? Describe the level of frustration it causes."</p>
+<h3>Top Frustrations with Current Recruiting Process: BambooHR Users (n=13)</h3>
+<div class="stacked-legend">
+<span><span class="swatch" style="background:#94A3B8"></span> Low</span>
+<span><span class="swatch" style="background:#F59E0B"></span> Moderate</span>
+<span><span class="swatch" style="background:#EF4444"></span> High</span>
+</div>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Talent shortage / small talent pool</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:100%"><span class="stacked-seg low" style="width:25%">25%</span><span class="stacked-seg moderate" style="width:25%">25%</span><span class="stacked-seg high" style="width:50%">50%</span></div></div>
+  <span class="bar-total">4</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Volume overwhelm</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:75%"><span class="stacked-seg moderate" style="width:33%">33%</span><span class="stacked-seg high" style="width:67%">67%</span></div></div>
+  <span class="bar-total">3</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Compensation competitiveness</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:50%"><span class="stacked-seg moderate" style="width:50%">50%</span><span class="stacked-seg high" style="width:50%">50%</span></div></div>
+  <span class="bar-total">2</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Unqualified applicants</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:50%"><span class="stacked-seg moderate" style="width:50%">50%</span><span class="stacked-seg high" style="width:50%">50%</span></div></div>
+  <span class="bar-total">2</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Employee turnover / retention</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:50%"><span class="stacked-seg high" style="width:100%">100%</span></div></div>
+  <span class="bar-total">2</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Tool limitations / inflexibility</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:25%"><span class="stacked-seg moderate" style="width:100%">100%</span></div></div>
+  <span class="bar-total">1</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Interview scheduling complexity</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:25%"><span class="stacked-seg high" style="width:100%">100%</span></div></div>
+  <span class="bar-total">1</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Hiring manager inconsistency</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:25%"><span class="stacked-seg moderate" style="width:100%">100%</span></div></div>
+  <span class="bar-total">1</span>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Losing candidates to competitors</span>
+  <div class="bar-track"><div class="stacked-bar" style="width:25%"><span class="stacked-seg high" style="width:100%">100%</span></div></div>
+  <span class="bar-total">1</span>
+</div>
+</div>
+<p class="source-note">Source: Q2.5</p>
+<div class="insight"><p><strong>Non-users face tool-related frustrations that BambooHR could solve:</strong> Lack of analytics (24% of non-users), poor sourcing response rates (24%), and interview scheduling complexity (22%) are the top three. These frustrations are nearly absent among BambooHR users, suggesting BambooHR either solves or sidesteps these issues for its customer base.</p></div>
+<div class="crosstab-section">
+<h3>What Good Outcomes Look Like and Why They Matter</h3>
+<p>What HR leaders are trying to achieve when recruiting, and why each outcome matters to them. Row percentages: each cell shows the percentage of participants who cited that good outcome who also said that reason is why it matters. Green-shaded cells are the top 2 values in each row (scanning across columns).</p>
+
+<div class="crosstab">
+<table>
+<tr>
+<th style="text-align:left; min-width:140px;">Good Outcome</th>
+<th>n</th>
+<th>Revenue Impact (n=48)</th>
+<th>Team Productivity (n=34)</th>
+<th>Cost of Bad Hires (n=29)</th>
+<th>Competitive Pressure (n=14)</th>
+<th>Business Growth (n=10)</th>
+<th>Employer Brand (n=7)</th>
+</tr>
+<tr class="total-row">
+<td style="text-align:left;">Total (all respondents)</td>
+<td>100</td>
+<td>48%</td>
+<td>34%</td>
+<td>29%</td>
+<td>14%</td>
+<td>10%</td>
+<td>7%</td>
+</tr>
+<tr>
+<td style="text-align:left; font-weight:600;">Candidate quality</td>
+<td>53</td>
+<td class="above-avg">51%</td>
+<td class="above-avg">32%</td>
+<td>30%</td>
+<td>17%</td>
+<td>11%</td>
+<td>8%</td>
+</tr>
+<tr>
+<td style="text-align:left; font-weight:600;">Retention</td>
+<td>52</td>
+<td class="above-avg">56%</td>
+<td>27%</td>
+<td class="above-avg">33%</td>
+<td>8%</td>
+<td>12%</td>
+<td>4%</td>
+</tr>
+<tr>
+<td style="text-align:left; font-weight:600;">Hiring speed</td>
+<td>43</td>
+<td class="above-avg">44%</td>
+<td class="above-avg">42%</td>
+<td>16%</td>
+<td>19%</td>
+<td>12%</td>
+<td>9%</td>
+</tr>
+<tr>
+<td style="text-align:left; font-weight:600;">Cultural fit</td>
+<td>10</td>
+<td>20%</td>
+<td class="above-avg">50%</td>
+<td class="above-avg">50%</td>
+<td>0%</td>
+<td>20%</td>
+<td>0%</td>
+</tr>
+<tr class="small-n">
+<td style="text-align:left; font-weight:600;">Hiring mgr satisfaction</td>
+<td>5</td>
+<td>20%</td>
+<td class="above-avg">40%</td>
+<td>0%</td>
+<td class="above-avg">40%</td>
+<td>20%</td>
+<td>20%</td>
+</tr>
+<tr class="small-n">
+<td style="text-align:left; font-weight:600;">Pipeline strength</td>
+<td>4</td>
+<td class="above-avg">75%</td>
+<td>25%</td>
+<td>0%</td>
+<td class="above-avg">50%</td>
+<td>25%</td>
+<td>25%</td>
+</tr>
+<tr class="small-n">
+<td style="text-align:left; font-weight:600;">Diversity</td>
+<td>4</td>
+<td class="above-avg">75%</td>
+<td>0%</td>
+<td>0%</td>
+<td class="above-avg">50%</td>
+<td>0%</td>
+<td>25%</td>
+</tr>
+<tr class="small-n">
+<td style="text-align:left; font-weight:600;">Candidate experience</td>
+<td>3</td>
+<td>33%</td>
+<td class="above-avg">67%</td>
+<td>0%</td>
+<td class="above-avg">67%</td>
+<td>0%</td>
+<td class="above-avg">67%</td>
+</tr>
+<tr class="small-n">
+<td style="text-align:left; font-weight:600;">Cost efficiency</td>
+<td>3</td>
+<td>33%</td>
+<td>33%</td>
+<td>0%</td>
+<td>0%</td>
+<td>33%</td>
+<td>33%</td>
+</tr>
+</table>
+</div>
+<p class="source-note">Source: Q2.2, "What does a really good outcome look like? Why is this important?" Row percentages: each cell = % of that outcome's respondents who cited that reason. Multiple responses allowed. Rows with n&lt;10 shown in gray.</p>
+</div>
+
+<div class="quote"><p>"A good outcome is filling a position within 45 days with someone who stays at least two years. In healthcare that&#39;s, you know, really hard. Turnover is expensive and affects patient care, so getting quality hires who stick around is the whole game for us."</p><span class="attr">Director, Healthcare</span></div>
+<div class="quote"><p>"A really good outcome is finding someone who&#39;s a strong culture add, not just culture fit, who can ramp quickly and contribute within their first quarter. Time-to-fill matters but I care more about quality of hire."</p><span class="attr">VP, Tech/Software</span></div>
+</div></details>
+<details class="accordion" id="section-5">
+<summary class="accordion-header"><span class="accordion-num">5</span><div class="accordion-text"><span class="accordion-title">Category Entry Points</span><span class="accordion-subtitle">The situations, triggers, and needs that put HR leaders "in the market" for recruiting tools.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+<h3>Motivations for Considering New Tools (n=100)</h3>
+<p>What triggered HR leaders to evaluate or reconsider their recruiting tool. Multiple motivations per respondent.</p>
+<div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Contract expiration / renewal timing</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">99%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Company growth / scaling needs</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:83%"><span class="bar-val">82%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Frustration with existing tool</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:73%"><span class="bar-val">72%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Need for better analytics</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:42%"><span class="bar-val">42%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Merger / acquisition</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:21%"><span class="bar-val">21%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Process improvement / modernization</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:20%"><span class="bar-val">20%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Budget reallocation / price increase</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:13%"><span class="bar-val">13%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Compliance / regulatory</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:12%"><span class="bar-val">12%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Hiring model change</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:6%"><span class="bar-val">6%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Shift to remote / hybrid hiring</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:3%"><span class="bar-val">3%</span></div></div>
+</div></div>
+<p class="source-note">Source: Q3.3 — "Was a contract for your existing tool expiring? And were you happy or frustrated with your existing tool?" + Q3.4 — "Were there any changes in your business that motivated your team to consider buying a new recruiting tool? Did your recruiting needs change?" (n=100)</p>
+<div class="insight"><p><strong>BambooHR should target renewal windows and growth moments:</strong> Nearly every HR leader (99%) cited contract renewal as a trigger for evaluating new tools, and 82% pointed to company growth. These are the two moments when buyers are most receptive. BambooHR marketing should time outreach to renewal seasons and target companies in active growth phases, especially in the 500-2,000 employee segment where the brand is underrepresented.</p></div>
+<div class="crosstab-section">
+<h3>Which Brands Get Considered by Motivation</h3>
+<p>Row percentages: for each motivation, the percentage of respondents with that motivation who included each brand in their consideration set. Brands sorted by overall consideration frequency (highest left). Green-shaded cells are the top 2 values in each row (scanning across columns).</p>
+<div class="crosstab">
+<table>
+<tr><th>Motivation</th><th>n</th><th>Greenhouse (n=63)</th><th>iCIMS (n=36)</th><th>Lever (n=34)</th><th>Workday (n=27)</th><th>Ashby (n=24)</th><th class="highlight">BambooHR (n=20)</th><th>Jobvite (n=17)</th><th>JazzHR (n=16)</th><th>Workable (n=16)</th><th>SAP SF (n=10)</th></tr>
+<tr class="total-row"><td>Total (n=100)</td><td>100</td><td>63%</td><td>36%</td><td>34%</td><td>27%</td><td>24%</td><td class="highlight">20%</td><td>17%</td><td>16%</td><td>16%</td><td>10%</td></tr>
+<tr><td>Contract expiration / renewal</td><td>99</td><td class="above-avg">64%</td><td class="above-avg">36%</td><td>34%</td><td>27%</td><td>24%</td><td class="highlight">19%</td><td>17%</td><td>15%</td><td>16%</td><td>10%</td></tr>
+<tr><td>Company growth / scaling</td><td>82</td><td class="above-avg">66%</td><td class="above-avg">37%</td><td>33%</td><td>22%</td><td>26%</td><td class="highlight">23%</td><td>17%</td><td>17%</td><td>18%</td><td>7%</td></tr>
+<tr><td>Frustration with existing tool</td><td>72</td><td class="above-avg">61%</td><td class="above-avg">44%</td><td>33%</td><td>26%</td><td>18%</td><td class="highlight">24%</td><td>22%</td><td>17%</td><td>18%</td><td>11%</td></tr>
+<tr><td>Need for better analytics</td><td>42</td><td class="above-avg">86%</td><td>33%</td><td class="above-avg">40%</td><td>36%</td><td>38%</td><td class="highlight">10%</td><td>17%</td><td>0%</td><td>2%</td><td>10%</td></tr>
+<tr><td>Merger / acquisition</td><td>21</td><td class="above-avg">76%</td><td class="above-avg">52%</td><td>43%</td><td>48%</td><td>5%</td><td class="highlight">10%</td><td>24%</td><td>5%</td><td>0%</td><td>24%</td></tr>
+<tr><td>Process improvement</td><td>20</td><td class="above-avg">65%</td><td>35%</td><td class="above-avg">45%</td><td>25%</td><td>35%</td><td class="highlight">15%</td><td>25%</td><td>15%</td><td>10%</td><td>5%</td></tr>
+<tr><td>Budget reallocation / price</td><td>13</td><td class="above-avg">62%</td><td class="above-avg">46%</td><td>31%</td><td class="above-avg">46%</td><td>23%</td><td class="highlight">15%</td><td>23%</td><td>8%</td><td>8%</td><td>15%</td></tr>
+<tr><td>Compliance / regulatory</td><td>12</td><td class="above-avg">83%</td><td class="above-avg">58%</td><td>50%</td><td>42%</td><td>17%</td><td class="highlight">17%</td><td>17%</td><td>0%</td><td>8%</td><td>8%</td></tr>
+<tr class="small-n"><td>Hiring model change</td><td>6</td><td class="above-avg">67%</td><td>33%</td><td>17%</td><td class="above-avg">50%</td><td>17%</td><td class="highlight">17%</td><td>17%</td><td>17%</td><td>17%</td><td>0%</td></tr>
+<tr class="small-n"><td>Remote / hybrid hiring</td><td>3</td><td class="above-avg">100%</td><td>33%</td><td>33%</td><td>33%</td><td class="above-avg">67%</td><td class="highlight">0%</td><td>33%</td><td>0%</td><td>0%</td><td>0%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q3.3 + Q3.4 (motivations), Q3.2 + Q3.5 (tools considered). Row percentages: each cell = % of that motivation's respondents who considered that brand. Rows with n&lt;10 shown in gray.</p>
+</div>
+<div class="insight"><p><strong>BambooHR is underrepresented in analytics-driven evaluations:</strong> Only 10% of buyers motivated by "need for better analytics" consider BambooHR, compared to 86% for Greenhouse and 38% for Ashby. This is the highest-volume motivation where BambooHR has the weakest presence. If BambooHR can credibly claim analytics capabilities, this is the single biggest consideration gap to close.</p></div>
+</div></details>
+<details class="accordion" id="section-6">
+<summary class="accordion-header"><span class="accordion-num">6</span><div class="accordion-text"><span class="accordion-title">Win/Loss and Why</span><span class="accordion-subtitle">Who switched tools, who stayed, which brands won or lost head-to-head, and the factors that drove each outcome.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">97%</div><div class="stat-label">Considered a new tool (n=100)</div></div>
+<div class="stat-card"><div class="stat-num">27%</div><div class="stat-label">Purchased a new tool (n=97)</div></div>
+<div class="stat-card"><div class="stat-num">73%</div><div class="stat-label">Stayed with current tool (n=97)</div></div>
+<div class="stat-card"><div class="stat-num">2.9</div><div class="stat-label">Avg tools considered (n=97)</div></div>
+</div>
+<p class="source-note">Source: Q3.1 (recency), Q3.5 (tools considered), Q3.6 (purchase outcome). 3 respondents reported never considering or could not recall, and are excluded from purchase and tools-considered calculations.</p>
+
+<h3>Timeline: When Did They Last Consider?</h3>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Within the last 6 months</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:33%"><span class="bar-val">17%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">6-12 months ago</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">52%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">1-2 years ago</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:50%"><span class="bar-val">26%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">2-3 years ago</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:4%"><span class="bar-val">2%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Never considered / can't recall</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:6%"><span class="bar-val">3%</span></div></div>
+</div>
+</div>
+<p class="source-note">Source: Q3.1, "When did your team last consider buying a new recruiting tool?" (n=100)</p>
+
+<h3>Number of Tools Considered (n=97)</h3>
+<p>How many distinct recruiting tools each respondent evaluated during their most recent consideration.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">1 tool</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:2%"><span class="bar-val">1%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">2 tools</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:53%"><span class="bar-val">27%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">3 tools</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">51%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">4 tools</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:35%"><span class="bar-val">18%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">5 tools</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:4%"><span class="bar-val">2%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">6+ tools</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:2%"><span class="bar-val">1%</span></div></div>
+</div>
+</div>
+<p class="source-note">Source: Q3.2, "Which recruiting tools did you evaluate?" + Q3.5, "Were there any other tools you considered?" (deduplicated per respondent, n=97). Excludes 3 respondents who never considered or could not recall.</p>
+
+<h3>BambooHR Head-to-Head Win/Loss (n=20)</h3>
+<p>Of the 20 respondents who included BambooHR in their consideration set, how often BambooHR won or lost against each competitor also in the set.</p>
+<table>
+<tr><th>Competitor</th><th>Head-to-Head Evaluations</th><th>BambooHR Won</th><th>Competitor Won</th><th>No Purchase</th><th>BambooHR Win Rate</th></tr>
+<tr><td>JazzHR</td><td>13</td><td>1</td><td>0</td><td>12</td><td>8%</td></tr>
+<tr><td>Workable</td><td>12</td><td>0</td><td>1</td><td>11</td><td>0%</td></tr>
+<tr><td>Lever</td><td>8</td><td>0</td><td>4</td><td>4</td><td>0%</td></tr>
+<tr><td>Greenhouse</td><td>4</td><td>0</td><td>0</td><td>4</td><td>0%</td></tr>
+<tr><td>Jobvite</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0%</td></tr>
+<tr><td>iCIMS</td><td>0</td><td colspan="4" style="text-align:center; color:var(--muted); font-style:italic;">Never evaluated together</td></tr>
+<tr><td>Workday</td><td>0</td><td colspan="4" style="text-align:center; color:var(--muted); font-style:italic;">Never evaluated together</td></tr>
+<tr><td>Ashby</td><td>0</td><td colspan="4" style="text-align:center; color:var(--muted); font-style:italic;">Never evaluated together</td></tr>
+<tr><td>SAP SuccessFactors</td><td>0</td><td colspan="4" style="text-align:center; color:var(--muted); font-style:italic;">Never evaluated together</td></tr>
+</table>
+<p class="source-note">Source: Q3.2 + Q3.5 (tools considered) x Q3.6 (purchase outcome). "No Purchase" means neither brand was chosen (buyer stayed with current tool or chose a third brand).</p>
+<div class="insight"><p><strong>BambooHR has a conversion problem, not an awareness problem:</strong> 20 of 100 respondents considered BambooHR, but only 1 purchased it (5% conversion). Lever is the biggest competitive threat, winning 4 of 8 head-to-head evaluations. BambooHR is most often co-evaluated with JazzHR (13 times) and Workable (12 times), suggesting buyers see it in the same tier as smaller, simpler tools. It is never evaluated alongside enterprise players like iCIMS, Workday, or Ashby.</p></div>
+
+<h3>Incumbent Retention: Who Stays and Who Switches (n=97)</h3>
+<p>For each tool that was the respondent's primary solution at the time they evaluated alternatives, how many stayed with that tool versus switched to something new. Excludes 3 respondents who never considered switching.</p>
+<table>
+<tr><th>Current Solution</th><th>Evaluators</th><th>Stayed</th><th>Switched</th><th>Retention</th><th>Top Alternatives Considered</th></tr>
+<tr><td>Lever</td><td>52</td><td>45</td><td>7</td><td>87%</td><td>Greenhouse (35), Ashby (20), iCIMS (13)</td></tr>
+<tr><td>iCIMS</td><td>17</td><td>14</td><td>3</td><td>82%</td><td>Workday (15), Greenhouse (7), SAP SuccessFactors (6)</td></tr>
+<tr><td>JazzHR</td><td>11</td><td>8</td><td>3</td><td>73%</td><td>Workable (9), BambooHR (4), Breezy HR (3)</td></tr>
+<tr><td>SAP SuccessFactors</td><td>3</td><td>3</td><td>0</td><td>100%</td><td>Greenhouse (3), Workday (2)</td></tr>
+<tr><td>BambooHR</td><td>3</td><td>3</td><td>0</td><td>100%</td><td>Workable (2), Breezy HR (2)</td></tr>
+<tr><td>Ashby</td><td>3</td><td>3</td><td>0</td><td>100%</td><td>Lever (1), hireEZ (1), Gem (1)</td></tr>
+<tr><td>Jobvite</td><td>3</td><td>2</td><td>1</td><td>67%</td><td>Greenhouse (2), iCIMS (2), Breezy HR (1)</td></tr>
+<tr><td>Workday</td><td>1</td><td>1</td><td>0</td><td>100%</td><td style="color:var(--muted); font-style:italic;">n=1, insufficient sample</td></tr>
+<tr><td>SmartRecruiters</td><td>1</td><td>1</td><td>0</td><td>100%</td><td style="color:var(--muted); font-style:italic;">n=1, insufficient sample</td></tr>
+<tr><td>GoodTime</td><td>1</td><td>1</td><td>0</td><td>100%</td><td style="color:var(--muted); font-style:italic;">n=1, insufficient sample</td></tr>
+<tr><td>Paradox</td><td>1</td><td>0</td><td>1</td><td>0%</td><td style="color:var(--muted); font-style:italic;">n=1, insufficient sample</td></tr>
+<tr><td>Eightfold</td><td>1</td><td>0</td><td>1</td><td>0%</td><td style="color:var(--muted); font-style:italic;">n=1, insufficient sample</td></tr>
+</table>
+<p class="source-note">Source: Q3.2 (tool at time of evaluation) x Q3.5 (tools considered) x Q3.6 (purchase outcome). "Current Solution" is the tool the respondent used when they last evaluated alternatives.</p>
+<div class="insight"><p><strong>Lever dominates the incumbent base but is the largest source of switching in absolute terms.</strong> 52 of 97 evaluators (54%) had Lever as their incumbent, with an 87% retention rate. Still, 7 Lever users switched, more than any other tool. Greenhouse was the top alternative Lever users explored (35 of 52). JazzHR had the lowest retention rate among tools with meaningful sample size (73%), with users gravitating toward Workable and BambooHR. BambooHR retained all 3 of its evaluating users, though the small sample limits conclusions.</p></div>
+
+<h3>What Attracted Buyers to Their New Tool (n=26)</h3>
+<p>Among respondents who purchased a new recruiting tool, the factors that drew them to the tool they chose. Multiple factors per respondent.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Ease of use / intuitive interface</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">88%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Specific feature capability</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:87%"><span class="bar-val">77%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Price / value for money</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:57%"><span class="bar-val">50%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Reporting / analytics</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:43%"><span class="bar-val">38%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Integration with existing HR stack</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:35%"><span class="bar-val">31%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Implementation speed</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:26%"><span class="bar-val">23%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Customer support quality</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:22%"><span class="bar-val">19%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Scalability</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:13%"><span class="bar-val">12%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Strong demo / sales experience</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:9%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">All-in-one platform</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:4%"><span class="bar-val">4%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Brand trust / market presence</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:4%"><span class="bar-val">4%</span></div></div>
+</div>
+</div>
+<p class="source-note">Source: Q3.7 &mdash; "What attracted you to the tool you purchased? What were the most important factors in your decision?"</p>
+
+<div class="crosstab-section">
+<h3>Which Brand Did Buyers Choose, by Attraction Factor</h3>
+<p>Row percentages: for each attraction factor, the percentage of buyers citing that factor who purchased each brand. Brands sorted by purchase frequency (highest left). Green-shaded cells are the top 2 values in each row (scanning across columns).</p>
+<div class="crosstab">
+<table>
+<tr><th>Attraction Factor</th><th>n</th><th>Lever (n=7)</th><th>Greenhouse (n=5)</th><th>Jobvite (n=3)</th><th>Workday (n=2)</th><th>Ashby (n=2)</th><th>JazzHR (n=2)</th><th class="highlight">BambooHR (n=1)</th><th>Workable (n=1)</th><th>iCIMS (n=1)</th></tr>
+<tr class="total-row"><td>Total (n=26)</td><td>26</td><td>27%</td><td>19%</td><td>12%</td><td>8%</td><td>8%</td><td>8%</td><td class="highlight">4%</td><td>4%</td><td>4%</td></tr>
+<tr><td>Ease of use / intuitive</td><td>23</td><td class="above-avg">30%</td><td class="above-avg">13%</td><td class="above-avg">13%</td><td>9%</td><td>9%</td><td>9%</td><td class="highlight">4%</td><td>4%</td><td>4%</td></tr>
+<tr><td>Specific feature capability</td><td>20</td><td class="above-avg">30%</td><td class="above-avg">25%</td><td>15%</td><td>0%</td><td>10%</td><td>5%</td><td class="highlight">0%</td><td>0%</td><td>5%</td></tr>
+<tr><td>Price / value for money</td><td>13</td><td class="above-avg">39%</td><td>0%</td><td class="above-avg">23%</td><td>0%</td><td>8%</td><td>15%</td><td class="highlight">8%</td><td>8%</td><td>0%</td></tr>
+<tr><td>Reporting / analytics</td><td>10</td><td class="above-avg">20%</td><td class="above-avg">30%</td><td>0%</td><td class="above-avg">20%</td><td class="above-avg">20%</td><td>10%</td><td class="highlight">0%</td><td>0%</td><td>0%</td></tr>
+<tr class="small-n"><td>Integration with HR stack</td><td>8</td><td>0%</td><td class="above-avg">25%</td><td class="above-avg">25%</td><td class="above-avg">25%</td><td>0%</td><td>0%</td><td class="highlight">0%</td><td>0%</td><td>0%</td></tr>
+<tr class="small-n"><td>Implementation speed</td><td>6</td><td>0%</td><td>17%</td><td class="above-avg">50%</td><td>0%</td><td class="above-avg">17%</td><td>0%</td><td class="highlight">0%</td><td>0%</td><td>17%</td></tr>
+<tr class="small-n"><td>Customer support quality</td><td>5</td><td>0%</td><td class="above-avg">40%</td><td>20%</td><td>0%</td><td class="above-avg">20%</td><td>0%</td><td class="highlight">20%</td><td>0%</td><td>0%</td></tr>
+<tr class="small-n"><td>Scalability</td><td>3</td><td>0%</td><td class="above-avg">33%</td><td>0%</td><td>0%</td><td class="above-avg">33%</td><td>0%</td><td class="highlight">0%</td><td>0%</td><td class="above-avg">33%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q3.7 (attraction factors) x Q3.6 (tool purchased). Row percentages: each cell = % of that factor's buyers who chose that brand. Rows with n&lt;3 omitted. Some rows do not sum to 100% because 2 purchasers chose Paradox (not shown). Rows with n&lt;10 shown in gray.</p>
+</div>
+<div class="insight"><p><strong>BambooHR wins on support, not on features or price:</strong> The only attraction factor where BambooHR shows meaningful share is customer support quality (20%). It appears at 0% for analytics, features, and integration, the three factors most important to mid-market buyers. Lever dominates ease-of-use and price-driven purchases. BambooHR needs to make its product story about more than just being friendly and supportive.</p></div>
+
+<h3>Why Brands Get Rejected</h3>
+<p>For each tool that was considered but not purchased, the reasons it was passed over.</p>
+
+<h3>BambooHR Rejection Reasons (n=13)</h3>
+<p>13 respondents considered BambooHR but chose another tool or stayed with their current one.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Missing critical feature</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:100%"><span class="bar-val">46%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Too expensive</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:33%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not designed for our size</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:33%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not industry-specific</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:17%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not enough differentiation</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:17%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not designed for our needs</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:17%"><span class="bar-val">8%</span></div></div>
+</div>
+</div>
+
+<h3>Workday Rejection Reasons (n=25)</h3>
+<p>25 respondents considered Workday but chose another tool or stayed with their current one.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Too expensive</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:100%"><span class="bar-val">64%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Slow implementation</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:69%"><span class="bar-val">44%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Weak integration options</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:50%"><span class="bar-val">32%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Poor user experience</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:31%"><span class="bar-val">20%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Missing critical feature</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:19%"><span class="bar-val">12%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Too complex / overkill</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:13%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not designed for our size</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:13%"><span class="bar-val">8%</span></div></div>
+</div>
+</div>
+
+<h3>Greenhouse Rejection Reasons (n=55)</h3>
+<p>55 respondents considered Greenhouse but chose another tool or stayed with their current one.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Too expensive</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:100%"><span class="bar-val">45%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Missing critical feature</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:60%"><span class="bar-val">27%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not industry-specific</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:40%"><span class="bar-val">18%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Weak integration options</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:36%"><span class="bar-val">16%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not designed for our size</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:33%"><span class="bar-val">15%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Poor user experience</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:20%"><span class="bar-val">9%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Too complex / overkill</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:20%"><span class="bar-val">9%</span></div></div>
+</div>
+</div>
+
+<h3>Lever Rejection Reasons (n=40)</h3>
+<p>40 respondents considered Lever but chose another tool or stayed with their current one.</p>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Missing critical feature</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:100%"><span class="bar-val">28%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Too expensive</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:89%"><span class="bar-val">25%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not industry-specific</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:64%"><span class="bar-val">18%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Slow implementation</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:46%"><span class="bar-val">13%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not enough differentiation</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:46%"><span class="bar-val">13%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not designed for our size</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:29%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Poor user experience</span>
+  <div class="bar-track"><div class="bar-fill gray" style="width:18%"><span class="bar-val">5%</span></div></div>
+</div>
+</div>
+<p class="source-note">Source: Q3.8 &mdash; "For each tool you considered but did not purchase, why was it not chosen?"</p>
+<div class="insight"><p><strong>Every tool gets rejected for different reasons, and UX is rarely the real issue:</strong> BambooHR loses on missing features (46%), not UX. Greenhouse and Workday lose primarily on price (45% and 64%). Lever loses on missing features (28%) and price (25%). Across all tools, "too expensive" is the #1 rejection reason overall, followed by "missing critical feature." Genuine UX complaints are concentrated in SAP SuccessFactors (56%) and Jobvite (27%). BambooHR's path to winning: add recruiting depth (ATS, CRM, analytics, structured interviews), not fix the interface.</p></div>
+<div class="insight"><p><strong>Ease of use is the top purchase driver:</strong> Among the 26 respondents who bought a new tool, 88% cited ease of use as a key factor. This is BambooHR's strongest brand association, yet only 1 of 26 buyers chose BambooHR. The challenge is proving that "easy" can also mean "powerful enough."</p></div>
+
+<h3>Competitive Vulnerability Summary</h3>
+<p>Each competitor's top rejection reasons reveal specific positioning angles for BambooHR's sales team.</p>
+<table>
+<tr><th>Competitor</th><th>#1 Rejection Reason</th><th>#2 Rejection Reason</th><th>#3 Rejection Reason</th><th>BambooHR Positioning Angle</th></tr>
+<tr><td><strong>Greenhouse</strong> (n=55)</td><td>Too expensive (45%)</td><td>Missing features (27%)</td><td>Not industry-specific (18%)</td><td>Lead with pricing advantage and industry-specific capabilities. Position as the mid-market alternative to Greenhouse's enterprise pricing.</td></tr>
+<tr><td><strong>Lever</strong> (n=40)</td><td>Missing features (28%)</td><td>Too expensive (25%)</td><td>Not industry-specific (18%)</td><td>Emphasize all-in-one HR+recruiting depth vs. Lever's ATS-only positioning. Highlight industry specialization and feature breadth.</td></tr>
+<tr><td><strong>Workday</strong> (n=25)</td><td>Too expensive (64%)</td><td>Slow implementation (44%)</td><td>Weak integrations (32%)</td><td>Lead with dramatically lower cost, fast deployment, and easy integrations. "Enterprise capability without enterprise pain."</td></tr>
+<tr><td><strong>iCIMS</strong> (n=33)</td><td>Too expensive (58%)</td><td>Slow implementation (30%)</td><td>Not industry-specific (18%)</td><td>Lead with cost savings and faster deployment. Emphasize industry specialization where iCIMS is generic.</td></tr>
+</table>
+<p class="source-note">Source: Q3.8 &mdash; "For each tool you considered but did not purchase, why was it not chosen?" Recoded from raw transcripts.</p>
+<div class="insight"><p><strong>Price and implementation speed are BambooHR's best competitive weapons:</strong> Across all four major competitors, "too expensive" is the #1 or #2 rejection reason. For the enterprise tools (Workday and iCIMS), slow implementation compounds the price problem, with 44% and 30% rejection rates respectively. BambooHR can credibly compete on both dimensions. The sales team should lead with total cost of ownership and time-to-value in every competitive deal.</p></div>
+
+</div></details>
+<details class="accordion" id="section-7">
+<summary class="accordion-header"><span class="accordion-num">7</span><div class="accordion-text"><span class="accordion-title">Prompted Brand Perceptions</span><span class="accordion-subtitle">How HR leaders describe BambooHR, Workday, and Greenhouse when asked directly, and whether they hold positive, neutral, mixed, or negative views of each brand.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+
+<h3>Brand Awareness</h3>
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Aware of BambooHR</div></div>
+<div class="stat-card"><div class="stat-num">99%</div><div class="stat-label">Aware of Workday</div></div>
+<div class="stat-card"><div class="stat-num">79%</div><div class="stat-label">Aware of Greenhouse</div></div>
+</div>
+<p class="source-note">Source: Q4.1, Q4.2, Q4.3 &mdash; "Have you heard of [brand]? How would you describe [brand] to a colleague who hasn't used it?"</p>
+
+<div class="chart-group">
+<h3>Sentiment by Brand</h3>
+<p>Overall sentiment expressed when describing each brand, split by whether the respondent currently uses that tool.</p>
+<div class="sentiment-legend">
+<span><span class="dot" style="background:var(--ink);"></span> Positive</span>
+<span><span class="dot" style="background:#94A3B8;"></span> Neutral</span>
+<span><span class="dot" style="background:#F59E0B;"></span> Mixed</span>
+<span><span class="dot" style="background:#EF4444;"></span> Negative</span>
+</div>
+</div>
+
+<div class="chart-group">
+<h4 style="margin-top:16px; margin-bottom:4px;">BambooHR</h4>
+<div class="sentiment-row">
+<span class="sentiment-label">Users (n=13)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:92%">92%</div>
+<div class="sentiment-seg mixed" style="width:8%">8%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Non-users (n=87)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:78%">78%</div>
+<div class="sentiment-seg neutral" style="width:20%">20%</div>
+<div class="sentiment-seg mixed" style="width:1%"></div>
+</div>
+</div>
+</div>
+
+<div class="chart-group">
+<h4 style="margin-top:16px; margin-bottom:4px;">Workday</h4>
+<div class="sentiment-row">
+<span class="sentiment-label">Users (n=6)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:100%">100%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Non-users (n=93)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:77%">77%</div>
+<div class="sentiment-seg neutral" style="width:10%">10%</div>
+<div class="sentiment-seg mixed" style="width:11%">11%</div>
+<div class="sentiment-seg negative" style="width:2%"></div>
+</div>
+</div>
+</div>
+
+<div class="chart-group">
+<h4 style="margin-top:16px; margin-bottom:4px;">Greenhouse</h4>
+<div class="sentiment-row">
+<span class="sentiment-label">Users (n=17)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:100%">100%</div>
+</div>
+</div>
+<div class="sentiment-row">
+<span class="sentiment-label">Non-users (n=62)</span>
+<div class="sentiment-bar">
+<div class="sentiment-seg positive" style="width:94%">94%</div>
+<div class="sentiment-seg neutral" style="width:6%">6%</div>
+</div>
+</div>
+<p class="source-note">Source: Q4.1, Q4.2, Q4.3 &mdash; sentiment coded from open-ended descriptions. Greenhouse non-users: n=62 (21 were not aware of the brand).</p>
+</div>
+
+<h3>BambooHR Perceptions Among Users and Non-Users</h3>
+<div class="two-col"><div>
+<h4>Users (n=13)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">SMB-focused / smaller companies</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">All-in-one HR platform</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Limited for larger orgs</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:83%"><span class="bar-val">83%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Friendly / approachable brand</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:67%"><span class="bar-val">67%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Easy to use / simple</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:58%"><span class="bar-val">58%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not a recruiting specialist</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:58%"><span class="bar-val">58%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Good for basics</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:50%"><span class="bar-val">50%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Affordable / good value</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:17%"><span class="bar-val">17%</span></div></div>
+</div>
+</div></div><div>
+<h4>Non-Users (n=87)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">SMB-focused / smaller companies</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">98%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">All-in-one HR platform</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:90%"><span class="bar-val">88%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Friendly / approachable brand</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:79%"><span class="bar-val">77%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Limited for larger orgs</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:69%"><span class="bar-val">67%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Good for basics</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:28%"><span class="bar-val">27%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Easy to use / simple</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:27%"><span class="bar-val">26%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Not a recruiting specialist</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:21%"><span class="bar-val">20%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Affordable / good value</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:12%"><span class="bar-val">11%</span></div></div>
+</div>
+</div></div></div>
+<p class="source-note">Source: Q4.1 &mdash; "How would you describe BambooHR to a colleague who hasn't used it?"</p>
+
+<h3>Workday Perceptions Among Users and Non-Users</h3>
+<div class="two-col"><div>
+<h4>Users (n=6)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Enterprise-grade / large companies</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Complex / steep learning curve</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Comprehensive suite</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Powerful analytics / reporting</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:83%"><span class="bar-val">83%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Recruiting module not strongest</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:33%"><span class="bar-val">33%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Expensive</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:17%"><span class="bar-val">17%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Industry standard for enterprise</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:17%"><span class="bar-val">17%</span></div></div>
+</div>
+</div></div><div>
+<h4>Non-Users (n=93)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Enterprise-grade / large companies</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">99%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Comprehensive suite</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:75%"><span class="bar-val">74%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Powerful analytics / reporting</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:39%"><span class="bar-val">39%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Complex / steep learning curve</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:38%"><span class="bar-val">38%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Expensive</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:28%"><span class="bar-val">28%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Industry standard for enterprise</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:14%"><span class="bar-val">14%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Recruiting module not strongest</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:13%"><span class="bar-val">13%</span></div></div>
+</div>
+</div></div></div>
+<p class="source-note">Source: Q4.2 &mdash; "How would you describe Workday to a colleague who hasn't used it?" Non-users: n=93 (1 not aware).</p>
+
+<h3>Greenhouse Perceptions Among Users and Non-Users</h3>
+<div class="two-col"><div>
+<h4>Users (n=17)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Recruiting-focused / ATS specialist</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Structured hiring process</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:100%"><span class="bar-val">100%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Data-driven / analytics</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:88%"><span class="bar-val">88%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Modern / innovative</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:35%"><span class="bar-val">35%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Popular in tech</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:29%"><span class="bar-val">29%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Mid-market / growth-stage</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:24%"><span class="bar-val">24%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Good candidate experience</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:18%"><span class="bar-val">18%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Strong integrations ecosystem</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:18%"><span class="bar-val">18%</span></div></div>
+</div>
+</div></div><div>
+<h4>Non-Users (n=62)</h4>
+<div class="bar-chart">
+<div class="bar-row">
+  <span class="bar-label">Recruiting-focused / ATS specialist</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:100%"><span class="bar-val">98%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Structured hiring process</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:87%"><span class="bar-val">85%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Popular in tech</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:49%"><span class="bar-val">48%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Data-driven / analytics</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:36%"><span class="bar-val">35%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Modern / innovative</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:26%"><span class="bar-val">26%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Good candidate experience</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:24%"><span class="bar-val">24%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Strong integrations ecosystem</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:16%"><span class="bar-val">16%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Mid-market / growth-stage</span>
+  <div class="bar-track"><div class="bar-fill amber" style="width:5%"><span class="bar-val">5%</span></div></div>
+</div>
+</div></div></div>
+<p class="source-note">Source: Q4.3 &mdash; "How would you describe Greenhouse to a colleague who hasn't used it?" Non-users: n=62 (21 not aware of Greenhouse).</p>
+
+<div class="insight"><p><strong>BambooHR users see its limitations more clearly than non-users do:</strong> 83% of BambooHR users say it is "limited for larger orgs" vs. 67% of non-users, and 58% of users call it "not a recruiting specialist" vs. just 20% of non-users. Users also recognize its ease of use at a much higher rate (58% vs. 26%). The brand perception matches reality for users but is vaguer for non-users, which means BambooHR has a chance to shape the narrative before prospects form firm opinions.</p></div>
+
+</div></details>
+<details class="accordion" id="section-8">
+<summary class="accordion-header"><span class="accordion-num">8</span><div class="accordion-text"><span class="accordion-title">Pricing</span><span class="accordion-subtitle">What HR leaders pay for recruiting tools, whether they think it is fair, and what they would pay to solve their biggest pain point.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body"><div class="stat-grid"><div class="stat-card"><div class="stat-num">$156K</div><div class="stat-label">Average annual spend</div></div><div class="stat-card"><div class="stat-num">$70K</div><div class="stat-label">Median annual spend</div></div><div class="stat-card"><div class="stat-num">$55K</div><div class="stat-label">Average WTP for frustration fix</div></div><div class="stat-card"><div class="stat-num">91%</div><div class="stat-label">Say cost is reasonable (n=100)</div></div></div><p class="source-note">Source: Q5.2, "How much does your company spend on that tool annually?" Q5.3, "Do you think the cost is reasonable relative to the value your company gets?" Q5.4, "How much would a feature that solves your biggest frustration be worth to your company annually?"</p><div class="two-col"><div><h3>Spend Distribution (n=100)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Under $25K</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:70%"><span class="bar-val">23%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$25K-$50K</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:24%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$50K-$100K</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">33%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$100K-$200K</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:55%"><span class="bar-val">18%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$200K+</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:55%"><span class="bar-val">18%</span></div></div>
+</div></div><p class="source-note">Source: Q5.2, "How much does your company spend on that tool annually?"</p></div><div><h3>WTP Distribution (n=100)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Under $10K</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:24%"><span class="bar-val">8%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$10K-$25K</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:58%"><span class="bar-val">19%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$25K-$50K</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:100%"><span class="bar-val">33%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$50K-$100K</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:82%"><span class="bar-val">27%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">$100K+</span>
+  <div class="bar-track"><div class="bar-fill blue" style="width:39%"><span class="bar-val">13%</span></div></div>
+</div></div><p class="source-note">Source: Q5.4, "How much would a feature that solves your biggest frustration be worth to your company annually?"</p></div></div><h3>Spend by Current Tool</h3><table><tr><th>Tool</th><th>n</th><th>Average Spend</th><th>Median Spend</th></tr><tr><td>Workday</td><td>6</td><td>$658K</td><td>$400K</td></tr><tr><td>iCIMS</td><td>22</td><td>$326K</td><td>$180K</td></tr><tr><td>Greenhouse</td><td>18</td><td>$126K</td><td>$120K</td></tr><tr><td>Lever</td><td>30</td><td>$51K</td><td>$55K</td></tr><tr><td>Jobvite</td><td>3</td><td>$52K</td><td>$55K</td></tr><tr><td>BambooHR</td><td>13</td><td>$14K</td><td>$12K</td></tr><tr><td>JazzHR</td><td>3</td><td>$20K</td><td>$5K</td></tr><tr><td>Workable</td><td>3</td><td>$14K</td><td>$15K</td></tr></table><p class="source-note">Source: Q5.2, mapped to Q5.1</p><h3>Spend by Company Size</h3><table><tr><th>Company Size</th><th>n</th><th>Average Spend</th><th>Median Spend</th></tr><tr><td>100-500 employees</td><td>30</td><td>$19K</td><td>$18K</td></tr><tr><td>500-2,000 employees</td><td>40</td><td>$72K</td><td>$70K</td></tr><tr><td>2,000-10,000 employees</td><td>30</td><td>$406K</td><td>$200K</td></tr></table><p class="source-note">Source: Q5.2, segmented by Q1.2 (company size)</p><h3>BambooHR Users vs. Non-Users: Pricing</h3><table><tr><th>Metric</th><th>BambooHR Users (n=13)</th><th>Non-Users (n=87)</th></tr><tr><td>Average annual spend</td><td>$14K</td><td>$176K</td></tr><tr><td>Median annual spend</td><td>$12K</td><td>$80K</td></tr><tr><td>Average WTP for frustration fix</td><td>$13K</td><td>$60K</td></tr></table><div class="insight"><p><strong>BambooHR occupies the low end of pricing:</strong> BambooHR users spend a median of $12K/year, compared to $80K for non-users. Non-users have a median WTP of $60K to solve their biggest frustration, representing significant budget headroom. BambooHR can position itself as the value play for the 500-2,000 segment, where median spend is $70K.</p></div></div></details>
+<details class="accordion" id="section-9">
+<summary class="accordion-header"><span class="accordion-num">9</span><div class="accordion-text"><span class="accordion-title">Current Challenges</span><span class="accordion-subtitle">Broader business pressures that create the recruiting pain points identified in Section 4.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body"><h3>Business Challenges (n=100)</h3><div class="bar-chart"><div class="bar-row">
+  <span class="bar-label">Budget cuts / cost pressure</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:100%"><span class="bar-val">49%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Talent shortage / competitive hiring market</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:86%"><span class="bar-val">42%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Rapid growth / scaling pains</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:53%"><span class="bar-val">26%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Economic uncertainty</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:53%"><span class="bar-val">26%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Technology modernization / AI disruption</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:51%"><span class="bar-val">25%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Workforce shortages (industry-specific)</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:51%"><span class="bar-val">25%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Employee retention / turnover</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:39%"><span class="bar-val">19%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Regulatory / compliance changes</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:39%"><span class="bar-val">19%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Employer brand / attracting talent</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:35%"><span class="bar-val">17%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Remote / hybrid work challenges</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:29%"><span class="bar-val">14%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Other</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:10%"><span class="bar-val">5%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">DEI</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:6%"><span class="bar-val">3%</span></div></div>
+</div>
+<div class="bar-row">
+  <span class="bar-label">Organizational restructuring</span>
+  <div class="bar-track"><div class="bar-fill green" style="width:4%"><span class="bar-val">2%</span></div></div>
+</div></div><p class="source-note">Source: Q5.5, "What would you say are the biggest challenges affecting your business that are also directly affecting your team?"</p><h3>Users vs. Non-Users</h3><table><tr><th>Challenge</th><th>Non-Users (n=87)</th><th>Users (n=13)</th></tr><tr><td>Budget cuts / cost pressure</td><td>48%</td><td>54%</td></tr><tr><td>Talent shortage / competitive hiring market</td><td>40%</td><td>54%</td></tr><tr><td>Technology modernization / AI disruption</td><td>28%</td><td>8%</td></tr><tr><td>Rapid growth / scaling pains</td><td>26%</td><td>23%</td></tr><tr><td>Economic uncertainty</td><td>26%</td><td>23%</td></tr><tr><td>Workforce shortages (industry-specific)</td><td>23%</td><td>38%</td></tr><tr><td>Employee retention / turnover</td><td>17%</td><td>31%</td></tr><tr><td>Regulatory / compliance changes</td><td>18%</td><td>23%</td></tr><tr><td>Employer brand / attracting talent</td><td>15%</td><td>31%</td></tr><tr><td>Remote / hybrid work challenges</td><td>16%</td><td>0%</td></tr></table><p class="source-note">Source: Q5.5, segmented by Q5.1</p><div class="crosstab-section">
+<h3>How Challenges Create Buying Moments</h3>
+<p>Row percentages: each cell shows the percentage of respondents who mentioned that business challenge who also mentioned that recruiting frustration. Frustration columns sorted by overall frequency (highest left). Green-shaded cells are the top 2 values in each row (scanning across columns).</p>
+<div class="crosstab"><table>
+<tr><th>Business Challenge</th><th>n</th><th>Lack of Analytics (n=21)</th><th>Poor Sourcing (n=21)</th><th>Scheduling (n=20)</th><th>Compliance (n=16)</th><th>Unqualified Applicants (n=15)</th><th>Losing Candidates (n=14)</th><th>Volume Overwhelm (n=14)</th><th>Poor Integration (n=13)</th><th>Mgr Inconsistency (n=12)</th><th>Ghosting (n=12)</th><th>Tool Limitations (n=11)</th><th>Time-to-Fill (n=11)</th></tr>
+<tr class="total-row"><td>Total (all respondents)</td><td>100</td><td>21%</td><td>21%</td><td>20%</td><td>16%</td><td>15%</td><td>14%</td><td>14%</td><td>13%</td><td>12%</td><td>12%</td><td>11%</td><td>11%</td></tr>
+<tr><td>Budget cuts / cost pressure</td><td>49</td><td>18%</td><td>14%</td><td class="above-avg">27%</td><td class="above-avg">22%</td><td>16%</td><td>12%</td><td>20%</td><td>14%</td><td>6%</td><td>14%</td><td>8%</td><td>18%</td></tr>
+<tr><td>Talent shortage / competitive market</td><td>42</td><td class="above-avg">36%</td><td>17%</td><td>21%</td><td class="above-avg">24%</td><td>17%</td><td>17%</td><td>14%</td><td>21%</td><td>10%</td><td>12%</td><td>10%</td><td>7%</td></tr>
+<tr><td>Rapid growth / scaling pains</td><td>26</td><td class="above-avg">31%</td><td class="above-avg">35%</td><td>27%</td><td>12%</td><td>15%</td><td>8%</td><td>27%</td><td class="above-avg">31%</td><td>12%</td><td>8%</td><td>4%</td><td>19%</td></tr>
+<tr><td>Economic uncertainty</td><td>26</td><td class="above-avg">27%</td><td>23%</td><td>19%</td><td>15%</td><td>15%</td><td>8%</td><td class="above-avg">35%</td><td>15%</td><td>12%</td><td>8%</td><td>12%</td><td>19%</td></tr>
+<tr><td>Technology modernization / AI</td><td>25</td><td>20%</td><td class="above-avg">36%</td><td class="above-avg">24%</td><td>4%</td><td>4%</td><td>16%</td><td>8%</td><td>12%</td><td>16%</td><td>12%</td><td>24%</td><td>8%</td></tr>
+<tr><td>Workforce shortages</td><td>25</td><td>24%</td><td>8%</td><td>20%</td><td class="above-avg">32%</td><td>20%</td><td>8%</td><td>12%</td><td>20%</td><td>4%</td><td>12%</td><td>8%</td><td>8%</td></tr>
+<tr><td>Employee retention / turnover</td><td>19</td><td class="above-avg">26%</td><td>16%</td><td>21%</td><td class="above-avg">26%</td><td>21%</td><td>16%</td><td>16%</td><td>16%</td><td>16%</td><td>0%</td><td>16%</td><td>16%</td></tr>
+<tr><td>Regulatory / compliance changes</td><td>19</td><td class="above-avg">26%</td><td>16%</td><td class="above-avg">26%</td><td class="above-avg">26%</td><td>11%</td><td>21%</td><td>0%</td><td>11%</td><td class="above-avg">26%</td><td>21%</td><td>5%</td><td>5%</td></tr>
+<tr><td>Employer brand / attracting talent</td><td>17</td><td class="above-avg">29%</td><td>18%</td><td class="above-avg">29%</td><td>6%</td><td>12%</td><td>12%</td><td>12%</td><td>6%</td><td>18%</td><td>24%</td><td>0%</td><td>12%</td></tr>
+<tr><td>Remote / hybrid work</td><td>14</td><td>29%</td><td class="above-avg">36%</td><td class="above-avg">36%</td><td>0%</td><td>0%</td><td>14%</td><td>7%</td><td>14%</td><td>21%</td><td>7%</td><td>14%</td><td>21%</td></tr>
+</table></div>
+<p class="source-note">Source: Q5.5, "What are the biggest challenges affecting your business?" x Q2.5, "What causes the biggest frustration with your current recruiting process?" (n=100). Row percentages: each cell = % of that challenge's respondents who also mentioned that frustration. Frustration columns sorted by overall frequency. Rows with n&lt;10 shown in gray.</p>
+</div>
+<div class="insight"><p><strong>Business challenges amplify specific frustrations that create evaluation triggers.</strong> Talent shortage spikes on lack of analytics (36%), suggesting under-equipped leaders look for data-driven tools. Rapid growth co-occurs with poor integration (31%) and sourcing pain (35%), pointing to infrastructure strain. Economic uncertainty uniquely spikes on volume overwhelm (35%). Budget pressure, the most common challenge (49 respondents), has a relatively flat frustration profile, meaning it intensifies all pain points rather than any single one.</p></div></div></details>
+
+<details class="accordion" id="section-10">
+<summary class="accordion-header"><span class="accordion-num">10</span><div class="accordion-text"><span class="accordion-title">Segmentation by Company Size</span><span class="accordion-subtitle">How non-user frustrations, competitive landscapes, and perceptions of BambooHR differ across the 100-500, 500-2,000, and 2,000-10,000 employee segments.</span></div><span class="accordion-icon">+</span></summary>
+<div class="accordion-body">
+
+<div class="crosstab-section">
+<h3>Segment Overview</h3>
+<p>Non-users (n=87) split into three segments by company size. Each segment has a distinct profile in terms of spend, frustration, purchase behavior, and openness to BambooHR.</p>
+
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left;">Metric</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">Median annual spend</td><td>$20K</td><td class="above-avg">$70K</td><td>$200K</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Median WTP to solve top frustration</td><td>$12.5K</td><td class="above-avg">$35K</td><td>$87.5K</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Frustration intensity: High</td><td>37%</td><td class="above-avg">41%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Satisfaction: Neutral/mixed</td><td>63%</td><td class="above-avg">63%</td><td>50%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Purchased a new tool</td><td class="above-avg">42%</td><td>28%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Considered BambooHR</td><td class="above-avg">42%</td><td>3%</td><td>0%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q1.2 (company size) x Q5.1 (current tool, non-users only) x Q5.2 (spend) x Q5.4 (WTP) x Q2.5 (frustration) x Q2.4 (satisfaction) x Q3.6 (purchased) x Q3.2/Q3.5 (considered)</p>
+</div>
+
+<div class="insight"><p><strong>BambooHR faces a consideration cliff above 500 employees.</strong> 42% of small-company non-users include BambooHR in their consideration set, but only 3% of mid-market and 0% of enterprise non-users do the same. The brand essentially vanishes from consideration at the exact point where the growth opportunity begins. Meanwhile, mid-market non-users have the highest frustration intensity (41% high) and the worst satisfaction (63% neutral/mixed), making them the most receptive to switching, yet BambooHR isn't even in the conversation.</p></div>
+
+<div class="crosstab-section">
+<h3>Frustrations by Company Size</h3>
+<p>Column percentages: for each size segment, the percentage of non-users who mentioned each frustration. Green-shaded cells are the top 2 values in each column.</p>
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left; min-width:200px;">Frustration</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">Poor sourcing / low response rates</td><td class="above-avg">32%</td><td>23%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Interview scheduling complexity</td><td>21%</td><td class="above-avg">26%</td><td>13%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Lack of analytics / reporting</td><td>11%</td><td class="above-avg">23%</td><td class="above-avg">33%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Compliance / documentation burden</td><td>11%</td><td>21%</td><td class="above-avg">23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Poor integration / duplicate data entry</td><td>5%</td><td>13%</td><td class="above-avg">23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Unqualified applicants</td><td class="above-avg">16%</td><td>15%</td><td>13%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Candidate ghosting / no-shows</td><td class="above-avg">16%</td><td>10%</td><td>10%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Candidate drop-off / poor apply experience</td><td>5%</td><td>10%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Hiring manager inconsistency</td><td>5%</td><td>18%</td><td>10%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Volume overwhelm</td><td>5%</td><td>15%</td><td>17%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Tool limitations</td><td>0%</td><td>13%</td><td>17%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Losing candidates to competitors</td><td>11%</td><td>15%</td><td>13%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q2.5 x Q1.2 (non-users only). Column percentages: each cell = % of that size segment's non-users who mentioned that frustration.</p>
+</div>
+
+<div class="insight"><p><strong>Frustration profiles shift dramatically with company size.</strong> Small companies struggle most with sourcing (32%) and candidate quality issues (ghosting 16%, unqualified applicants 16%). Mid-market frustrations center on workflow problems: scheduling (26%), analytics (23%), and sourcing (23%). Enterprise companies face infrastructure pain: analytics (33%), integration (23%), and compliance (23%). BambooHR's product roadmap should prioritize analytics and scheduling for the mid-market target, not the sourcing problems that dominate its current small-company base.</p></div>
+
+<div class="crosstab-section">
+<h3>Competitive Landscape by Company Size</h3>
+<p>Column percentages: for each size segment, the percentage of non-users who included each brand in their consideration set. Green-shaded cells are the top 2 values in each column.</p>
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left; min-width:160px;">Brand Considered</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">Greenhouse</td><td class="above-avg">47%</td><td class="above-avg">87%</td><td class="above-avg">63%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Workday</td><td>0%</td><td>5%</td><td class="above-avg">83%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">iCIMS</td><td>0%</td><td class="above-avg">56%</td><td>47%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Lever</td><td>26%</td><td>46%</td><td>23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Workable</td><td class="above-avg">47%</td><td>0%</td><td>0%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Ashby</td><td class="above-avg">47%</td><td>33%</td><td>7%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Jobvite</td><td>0%</td><td>44%</td><td>0%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">BambooHR</td><td class="highlight">42%</td><td class="highlight">3%</td><td class="highlight">0%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">JazzHR</td><td>37%</td><td>0%</td><td>0%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">SAP SuccessFactors</td><td>0%</td><td>0%</td><td>33%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q3.2 + Q3.5 (deduplicated per participant) x Q1.2 (non-users only). Column percentages: each cell = % of that size segment's non-users who considered that brand.</p>
+</div>
+
+<div class="insight"><p><strong>BambooHR competes in completely different arenas at each company size.</strong> In the small segment, BambooHR (42%) competes against Workable, Greenhouse, and Ashby (all ~47%) in a fragmented market. In the mid-market target segment, Greenhouse dominates at 87%, with iCIMS (56%), Lever (46%), and Jobvite (44%) as the consideration set, and BambooHR is almost invisible (3%). In enterprise, Workday (83%) and Greenhouse (63%) own the space. Marketing and Sales need segment-specific competitive positioning, not a one-size-fits-all approach.</p></div>
+
+<div class="crosstab-section">
+<h3>BambooHR Perception by Company Size</h3>
+<p>Column percentages: for each size segment, the percentage of non-users who used each description when asked about BambooHR.</p>
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left; min-width:200px;">Perception Theme</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">SMB-focused / for smaller companies</td><td>95%</td><td>97%</td><td class="above-avg">100%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">All-in-one HR platform</td><td class="above-avg">89%</td><td class="above-avg">97%</td><td>73%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Friendly / approachable brand</td><td>79%</td><td>79%</td><td>73%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Limited for larger orgs</td><td>53%</td><td class="above-avg">74%</td><td>67%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Easy to use / simple</td><td class="above-avg">37%</td><td>26%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Good for basics</td><td>26%</td><td>26%</td><td class="above-avg">30%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Not a recruiting specialist</td><td>37%</td><td>21%</td><td>17%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q4.1 description themes x Q1.2 (non-users only). Column percentages.</p>
+</div>
+
+<div class="insight"><p><strong>The "limited for larger orgs" perception peaks in the target segment.</strong> 74% of mid-market non-users describe BambooHR as limited for larger organizations, the highest of any segment. This is the primary barrier to consideration: nearly all mid-market buyers have already categorized BambooHR as "not for us" before seeing the product. The "easy to use" attribute that BambooHR relies on fades with company size (37% small, 26% mid-market, 20% enterprise), suggesting the brand's strongest selling point doesn't travel up-market.</p></div>
+
+<div class="crosstab-section">
+<h3>Business Challenges by Company Size</h3>
+<p>Column percentages: for each size segment, the percentage of non-users who mentioned each business challenge.</p>
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left; min-width:200px;">Business Challenge</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">Budget cuts / cost pressure</td><td class="above-avg">67%</td><td class="above-avg">49%</td><td>37%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Talent shortage / competitive market</td><td>28%</td><td class="above-avg">46%</td><td class="above-avg">40%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Technology modernization / AI</td><td>33%</td><td>21%</td><td>33%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Rapid growth / scaling pains</td><td class="above-avg">44%</td><td>21%</td><td>23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Economic uncertainty</td><td>28%</td><td>28%</td><td>23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Workforce shortages</td><td>17%</td><td>26%</td><td>23%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Employee retention / turnover</td><td>0%</td><td>23%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Regulatory / compliance changes</td><td>17%</td><td>21%</td><td>17%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Employer brand / attracting talent</td><td>22%</td><td>10%</td><td>17%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Remote / hybrid work</td><td>17%</td><td>13%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">DEI</td><td>0%</td><td>5%</td><td>0%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Organizational restructuring</td><td>0%</td><td>0%</td><td>3%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q5.5 x Q1.2 (non-users only). Column percentages.</p>
+</div>
+
+<div class="crosstab-section">
+<h3>Why Recruiting Outcomes Matter, by Company Size</h3>
+<p>Column percentages: for each size segment, the percentage of non-users who cited each reason why good recruiting outcomes matter to their business.</p>
+<div class="crosstab">
+<table>
+<tr><th style="text-align:left; min-width:180px;">Why It Matters</th><th>Small (100-500)<br>n=18</th><th>Mid-Market (500-2,000)<br>n=39</th><th>Enterprise (2,000-10,000)<br>n=30</th></tr>
+<tr><td style="text-align:left; font-weight:600;">Revenue impact</td><td>32%</td><td class="above-avg">54%</td><td class="above-avg">57%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Cost of bad hires</td><td class="above-avg">53%</td><td>23%</td><td>10%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Team productivity</td><td>26%</td><td>36%</td><td class="above-avg">40%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Competitive pressure</td><td>16%</td><td>13%</td><td>17%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Business growth</td><td class="above-avg">16%</td><td>3%</td><td>20%</td></tr>
+<tr><td style="text-align:left; font-weight:600;">Employer brand</td><td>0%</td><td class="above-avg">10%</td><td>7%</td></tr>
+</table>
+</div>
+<p class="source-note">Source: Q2.2 (why matters) x Q1.2 (non-users only). Column percentages.</p>
+</div>
+
+<div class="insight"><p><strong>Small companies frame recruiting as a cost problem; mid-market and enterprise frame it as a revenue problem.</strong> 53% of small-company non-users say good recruiting matters because of the cost of bad hires, a loss-avoidance frame. Mid-market (54%) and enterprise (57%) cite revenue impact, a growth frame. This means BambooHR's messaging to the target segment needs to speak the language of revenue acceleration, not cost savings. "Save money on recruiting" resonates with BambooHR's current base, not its growth audience.</p></div>
+
+<h3>Implications for BambooHR's Teams</h3>
+
+<div class="insight"><p><strong>Marketing:</strong> Mid-market messaging must lead with analytics and scheduling capabilities, not sourcing (the small-company pain). Greenhouse is the primary competitor to position against (87% consideration in mid-market). The "limited for larger orgs" perception is strongest in the target segment (74%), so mid-market proof points and case studies are the highest-priority content assets. Frame the value proposition around revenue impact, not cost reduction.</p></div>
+
+<div class="insight"><p><strong>Product:</strong> Feature priorities should differ by target segment. The mid-market growth target needs scheduling tools (26%) and analytics (23%), which are different from the sourcing problems (32%) that dominate BambooHR's current small-company base. Enterprise needs integration and compliance capabilities. Building for the current base reinforces the SMB positioning; building for the mid-market creates the up-market trajectory.</p></div>
+
+<div class="insight"><p><strong>Sales:</strong> The mid-market segment has the best conversion potential: highest frustration intensity (41% high), significant spend ($70K median), and a 28% purchase rate. But BambooHR must first get into the consideration set (currently 3%). Enterprise deals require displacing Workday (83% consideration) and iCIMS (47%), a fundamentally different competitive motion. Focus prospecting on mid-market companies currently on Lever ($55K median) or Greenhouse ($120K median), where BambooHR can compete on value.</p></div>
+
+</div></details>
+
+<div class="footer-print">
+  <p>BambooHR Recruiting Software &bull; April 2026</p>
+  <p>100 HR leader interviews &bull; Qualitative interviews</p>
+</div>
+
+</div><!-- /container -->
+
+<div id="vb-modal" class="vb-overlay">
+  <div class="vb-dialog">
+    <button class="vb-close">&times;</button>
+    <div class="vb-header">
+      <h3 class="vb-title"></h3>
+      <p class="vb-context"></p>
+      <p class="vb-question"></p>
+    </div>
+    <div class="vb-body"></div>
+  </div>
+</div>
+
+<Fragment set:html={dataScript} />
+
+<script is:inline>
+// Toggle + / x icon text based on open state
+document.querySelectorAll('.accordion').forEach(d => {
+  d.addEventListener('toggle', () => {
+    const icon = d.querySelector('.accordion-icon');
+    if (icon) icon.textContent = d.open ? '\u00d7' : '+';
+  });
+});
+
+// Print function: open all accordions, print, then restore
+function printReport() {
+  const accordions = document.querySelectorAll('details.accordion');
+  const previousStates = [];
+  accordions.forEach(d => {
+    previousStates.push(d.open);
+    d.open = true;
+  });
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      accordions.forEach((d, i) => {
+        d.open = previousStates[i];
+        const icon = d.querySelector('.accordion-icon');
+        if (icon) icon.textContent = d.open ? '\u00d7' : '+';
+      });
+    }, 500);
+  }, 100);
+}
+
+// ── Verbatim drill-down ──────────────────────────────────────────
+var VD = window.__VD || [];
+var QUESTIONS = window.__QS || {};
+
+function escHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s || '';
+  return d.innerHTML;
+}
+
+function filterParticipants(filters) {
+  return VD.filter(function(p) {
+    return filters.every(function(f) {
+      if (f.type === 'rejection') {
+        return (p['Q3.8_rejections'] || []).some(function(r) {
+          return r.tool === f.tool && r.rejection_themes.includes(f.theme);
+        });
+      }
+      var v = p[f.field];
+      if (f.negate) {
+        if (Array.isArray(v)) return !v.includes(f.value);
+        return v !== f.value;
+      }
+      if (v === undefined || v === null) return false;
+      if (Array.isArray(v)) return v.includes(f.value);
+      return v === f.value;
+    });
+  });
+}
+
+// Chart filter configurations
+var CHARTS = {
+  'satisfaction': {
+    q: 'Q2.4',
+    filters: function(l) { return [{ field: 'Q5.1_main_tool', value: l.replace(/ \(n=\d+\)/, '') }]; },
+    groupBy: 'Q2.4_satisfaction_level',
+    groups: [
+      { value: 'Very satisfied', label: 'Very Satisfied', color: 'var(--ink)' },
+      { value: 'Somewhat satisfied', label: 'Somewhat Satisfied', color: 'var(--ink)' },
+      { value: 'Neutral / mixed', label: 'Neutral / Mixed', color: '#94A3B8' },
+      { value: 'Somewhat dissatisfied', label: 'Somewhat Dissatisfied', color: '#F59E0B' },
+      { value: 'Very dissatisfied', label: 'Very Dissatisfied', color: '#EF4444' }
+    ]
+  },
+  'frustrations-nonuser': {
+    q: 'Q2.5',
+    filters: function(l) { return [{ field: 'Q2.5_frustration_themes', value: l }, { field: 'is_bamboohr_user', value: false }]; },
+    groupBy: 'Q2.5_frustration_intensity',
+    groups: [
+      { value: 'High', label: 'High Intensity', color: '#EF4444' },
+      { value: 'Moderate', label: 'Moderate Intensity', color: '#F59E0B' },
+      { value: 'Low', label: 'Low Intensity', color: '#94A3B8' }
+    ]
+  },
+  'frustrations-user': {
+    q: 'Q2.5',
+    filters: function(l) { return [{ field: 'Q2.5_frustration_themes', value: l }, { field: 'is_bamboohr_user', value: true }]; },
+    groupBy: 'Q2.5_frustration_intensity',
+    groups: [
+      { value: 'High', label: 'High Intensity', color: '#EF4444' },
+      { value: 'Moderate', label: 'Moderate Intensity', color: '#F59E0B' },
+      { value: 'Low', label: 'Low Intensity', color: '#94A3B8' }
+    ]
+  },
+  'motivations': {
+    q: 'Q3.3',
+    filters: function(l) { return [{ field: 'Q3.3_Q3.4_motivation_themes', value: l }]; }
+  },
+  'attraction': {
+    q: 'Q3.7',
+    filters: function(l) { return [{ field: 'Q3.7_purchase_drivers', value: l }]; }
+  },
+  'rejection-BambooHR': {
+    q: 'Q3.8',
+    filters: function(l) { return [{ type: 'rejection', tool: 'BambooHR', theme: l }]; }
+  },
+  'rejection-Workday': {
+    q: 'Q3.8',
+    filters: function(l) { return [{ type: 'rejection', tool: 'Workday', theme: l }]; }
+  },
+  'rejection-Greenhouse': {
+    q: 'Q3.8',
+    filters: function(l) { return [{ type: 'rejection', tool: 'Greenhouse', theme: l }]; }
+  },
+  'rejection-Lever': {
+    q: 'Q3.8',
+    filters: function(l) { return [{ type: 'rejection', tool: 'Lever', theme: l }]; }
+  },
+  'sentiment-bamboohr': {
+    q: 'Q4.1',
+    filters: function(l) {
+      return l.startsWith('Users') ? [{ field: 'is_bamboohr_user', value: true }] : [{ field: 'is_bamboohr_user', value: false }];
+    },
+    groupBy: 'Q4.1_sentiment',
+    groups: [
+      { value: 'Positive', label: 'Positive', color: 'var(--ink)' },
+      { value: 'Neutral', label: 'Neutral', color: '#94A3B8' },
+      { value: 'Mixed', label: 'Mixed', color: '#F59E0B' },
+      { value: 'Negative', label: 'Negative', color: '#EF4444' }
+    ]
+  },
+  'sentiment-workday': {
+    q: 'Q4.2',
+    filters: function(l) {
+      return l.startsWith('Users') ? [{ field: 'Q5.1_main_tool', value: 'Workday' }] : [{ field: 'Q5.1_main_tool', value: 'Workday', negate: true }];
+    },
+    groupBy: 'Q4.2_sentiment',
+    groups: [
+      { value: 'Positive', label: 'Positive', color: 'var(--ink)' },
+      { value: 'Neutral', label: 'Neutral', color: '#94A3B8' },
+      { value: 'Mixed', label: 'Mixed', color: '#F59E0B' },
+      { value: 'Negative', label: 'Negative', color: '#EF4444' }
+    ]
+  },
+  'sentiment-greenhouse': {
+    q: 'Q4.3',
+    filters: function(l) {
+      return l.startsWith('Users') ? [{ field: 'Q5.1_main_tool', value: 'Greenhouse' }] : [{ field: 'Q5.1_main_tool', value: 'Greenhouse', negate: true }];
+    },
+    groupBy: 'Q4.3_sentiment',
+    groups: [
+      { value: 'Positive', label: 'Positive', color: 'var(--ink)' },
+      { value: 'Neutral', label: 'Neutral', color: '#94A3B8' },
+      { value: 'Mixed', label: 'Mixed', color: '#F59E0B' },
+      { value: 'Negative', label: 'Negative', color: '#EF4444' }
+    ]
+  },
+  'perception-bamboohr-users': {
+    q: 'Q4.1',
+    filters: function(l) { return [{ field: 'Q4.1_description_themes', value: l }, { field: 'is_bamboohr_user', value: true }]; }
+  },
+  'perception-bamboohr-nonusers': {
+    q: 'Q4.1',
+    filters: function(l) { return [{ field: 'Q4.1_description_themes', value: l }, { field: 'is_bamboohr_user', value: false }]; }
+  },
+  'perception-workday-users': {
+    q: 'Q4.2',
+    filters: function(l) { return [{ field: 'Q4.2_description_themes', value: l }, { field: 'Q5.1_main_tool', value: 'Workday' }]; }
+  },
+  'perception-workday-nonusers': {
+    q: 'Q4.2',
+    filters: function(l) { return [{ field: 'Q4.2_description_themes', value: l }, { field: 'Q5.1_main_tool', value: 'Workday', negate: true }]; }
+  },
+  'perception-greenhouse-users': {
+    q: 'Q4.3',
+    filters: function(l) { return [{ field: 'Q4.3_description_themes', value: l }, { field: 'Q5.1_main_tool', value: 'Greenhouse' }]; }
+  },
+  'perception-greenhouse-nonusers': {
+    q: 'Q4.3',
+    filters: function(l) { return [{ field: 'Q4.3_description_themes', value: l }, { field: 'Q5.1_main_tool', value: 'Greenhouse', negate: true }]; }
+  },
+  'challenges': {
+    q: 'Q5.5',
+    filters: function(l) { return [{ field: 'Q5.5_challenge_themes', value: l }]; }
+  }
+};
+
+// Annotate rows within a container as clickable
+function annotateRows(container, rowSel, lblSel, chartId) {
+  if (!container) return;
+  container.querySelectorAll(rowSel).forEach(function(row) {
+    var labelEl = row.querySelector(lblSel);
+    if (!labelEl) return;
+    row.dataset.drilldown = 'true';
+    row.dataset.chartId = chartId;
+    row.dataset.label = labelEl.textContent.trim();
+  });
+}
+
+function getSection(id) {
+  var el = document.getElementById(id);
+  return el ? el.querySelector('.accordion-body') : null;
+}
+
+// Section 4: Satisfaction + Frustrations
+var s4 = getSection('section-4');
+if (s4) {
+  annotateRows(s4.querySelector('.chart-group'), '.sentiment-row', '.sentiment-label', 'satisfaction');
+  var s4bars = s4.querySelectorAll(':scope > .bar-chart');
+  annotateRows(s4bars[0], '.bar-row', '.bar-label', 'frustrations-nonuser');
+  annotateRows(s4bars[1], '.bar-row', '.bar-label', 'frustrations-user');
+}
+
+// Section 5: Motivations
+var s5 = getSection('section-5');
+if (s5) {
+  annotateRows(s5.querySelector(':scope > .bar-chart'), '.bar-row', '.bar-label', 'motivations');
+}
+
+// Section 6: Attraction + Rejections
+var s6 = getSection('section-6');
+if (s6) {
+  var s6bars = s6.querySelectorAll(':scope > .bar-chart');
+  // [0]=timeline, [1]=tools count, [2]=attraction, [3-6]=rejections
+  annotateRows(s6bars[2], '.bar-row', '.bar-label', 'attraction');
+  annotateRows(s6bars[3], '.bar-row', '.bar-label', 'rejection-BambooHR');
+  annotateRows(s6bars[4], '.bar-row', '.bar-label', 'rejection-Workday');
+  annotateRows(s6bars[5], '.bar-row', '.bar-label', 'rejection-Greenhouse');
+  annotateRows(s6bars[6], '.bar-row', '.bar-label', 'rejection-Lever');
+}
+
+// Section 7: Sentiment + Perceptions
+var s7 = getSection('section-7');
+if (s7) {
+  var s7cg = s7.querySelectorAll(':scope > .chart-group');
+  // [0]=legend/header, [1]=BambooHR, [2]=Workday, [3]=Greenhouse
+  annotateRows(s7cg[1], '.sentiment-row', '.sentiment-label', 'sentiment-bamboohr');
+  annotateRows(s7cg[2], '.sentiment-row', '.sentiment-label', 'sentiment-workday');
+  annotateRows(s7cg[3], '.sentiment-row', '.sentiment-label', 'sentiment-greenhouse');
+
+  var brands = ['bamboohr', 'workday', 'greenhouse'];
+  var s7twocol = s7.querySelectorAll(':scope > .two-col');
+  s7twocol.forEach(function(tc, i) {
+    var divs = tc.querySelectorAll(':scope > div');
+    if (divs[0]) annotateRows(divs[0].querySelector('.bar-chart'), '.bar-row', '.bar-label', 'perception-' + brands[i] + '-users');
+    if (divs[1]) annotateRows(divs[1].querySelector('.bar-chart'), '.bar-row', '.bar-label', 'perception-' + brands[i] + '-nonusers');
+  });
+}
+
+// Section 9: Challenges
+var s9 = getSection('section-9');
+if (s9) {
+  annotateRows(s9.querySelector(':scope > .bar-chart'), '.bar-row', '.bar-label', 'challenges');
+}
+
+// Click handler (event delegation)
+document.addEventListener('click', function(e) {
+  var row = e.target.closest('[data-drilldown]');
+  if (!row) return;
+
+  var chartId = row.dataset.chartId;
+  var label = row.dataset.label;
+  var cfg = CHARTS[chartId];
+  if (!cfg) return;
+
+  var filters = cfg.filters(label);
+  var matches = filterParticipants(filters);
+  var qIds = cfg.q === 'Q3.3' ? ['Q3.3', 'Q3.4'] : [cfg.q];
+
+  showVerbatimModal(label, qIds, matches, cfg);
+});
+
+function renderCard(p, qIds) {
+  var responses = qIds.map(function(q) { return p.verbatims[q]; }).filter(Boolean);
+  var response = responses.join(' ');
+  if (!response) return '';
+  var tagStyle = 'display:inline-block;font-size:11px;background:var(--border);color:var(--rule);padding:2px 8px;border-radius:10px;font-weight:500;margin:0 4px 4px 0;';
+  return '<div class="vb-card">' +
+    '<p class="vb-quote">' + escHtml(response) + '</p>' +
+    '<div class="vb-tags" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">' +
+      '<span style="' + tagStyle + '">' + escHtml(p['Q1.1_seniority']) + '</span>' +
+      '<span style="' + tagStyle + '">' + escHtml(p['Q1.2_company_size']) + '</span>' +
+      '<span style="' + tagStyle + '">' + escHtml(p['Q1.2_industry']) + '</span>' +
+      '<span style="' + tagStyle + '">' + escHtml(p['Q5.1_main_tool']) + '</span>' +
+    '</div></div>';
+}
+
+function showVerbatimModal(label, qIds, participants, cfg) {
+  var modal = document.getElementById('vb-modal');
+  var qText = qIds.map(function(q) { return QUESTIONS[q]; }).filter(Boolean).join(' | ');
+
+  modal.querySelector('.vb-title').textContent = label;
+  modal.querySelector('.vb-context').textContent =
+    participants.length + ' participant' + (participants.length !== 1 ? 's' : '') + ' matched';
+  modal.querySelector('.vb-question').textContent = qText;
+
+  var body = modal.querySelector('.vb-body');
+  if (participants.length === 0) {
+    body.innerHTML = '<p style="color:var(--muted);text-align:center;padding:32px;">No matching verbatim responses found.</p>';
+  } else if (cfg && cfg.groupBy && cfg.groups) {
+    // Group participants by sub-coding with colored banners
+    var grouped = {};
+    cfg.groups.forEach(function(g) { grouped[g.value] = []; });
+    participants.forEach(function(p) {
+      var val = p[cfg.groupBy];
+      if (grouped[val]) grouped[val].push(p);
+    });
+    var html = '';
+    cfg.groups.forEach(function(g) {
+      var people = grouped[g.value];
+      if (!people || people.length === 0) return;
+      html += '<div class="vb-group-banner" style="background:' + g.color + ';">' +
+        escHtml(g.label) + ' (' + people.length + ')</div>';
+      people.forEach(function(p) { html += renderCard(p, qIds); });
+    });
+    body.innerHTML = html;
+  } else {
+    body.innerHTML = participants.map(function(p) { return renderCard(p, qIds); }).filter(Boolean).join('');
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// Close modal on overlay click, close button, or ESC
+document.getElementById('vb-modal').addEventListener('click', function(e) {
+  if (e.target.classList.contains('vb-overlay') || e.target.classList.contains('vb-close')) {
+    e.target.closest('.vb-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var m = document.getElementById('vb-modal');
+    if (m.style.display === 'flex') { m.style.display = 'none'; document.body.style.overflow = ''; }
+  }
+});
+</script>
+
+</body>
+</html>

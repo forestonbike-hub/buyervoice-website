@@ -1,0 +1,1038 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+let dataAvailable = true;
+let data: any = null;
+try {
+  const dataPath = path.resolve(process.cwd(), '../../research-projects/Interview Projects/Retail Banking CIBC/A6 Data Files - Simulated/report-stats.json');
+  data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+} catch {
+  dataAvailable = false;
+}
+
+const meta = data?.meta;
+const sample = data?.sample;
+const ma = data?.mental_availability;
+const cr = data?.competitive_rejection;
+const pf = data?.push_forces;
+const likes = data?.current_bank_likes_by_bank;
+const frus = data?.current_bank_frustrations_by_bank;
+const prevPos = data?.previous_bank_positives_by_bank;
+const sel = data?.selection_criteria_by_bank;
+const cw = data?.consideration_to_win;
+const walletPrimary = data?.wallet_primary;
+const walletElsewhere = data?.wallet_elsewhere;
+const propensity = data?.propensity_by_bank;
+const propReasoning = data?.propensity_reasoning;
+const macro = data?.macro_sentiment;
+const segPrimary = data?.segments_primary;
+const segBig5 = data?.segments_secondary_big5;
+const languageBank = data?.language_bank;
+
+const BANKS = ['CIBC', 'Simplii Financial', 'RBC', 'TD', 'BMO', 'Scotiabank'];
+const BANK_COLORS: Record<string, string> = {
+  'CIBC': '#C41E3A',
+  'Simplii Financial': '#E87722',
+  'RBC': '#0051A5',
+  'TD': '#4CAF50',
+  'BMO': '#0079C1',
+  'Scotiabank': '#E7211A',
+};
+
+function fmtPct(n: number | undefined): string {
+  if (n === undefined || n === null) return '—';
+  return `${n.toFixed(1)}%`;
+}
+
+function barWidth(pct: number, max = 100): number {
+  return Math.max(2, Math.min(100, (pct / max) * 100));
+}
+---
+{!dataAvailable && (
+<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex, nofollow" /><title>Data Not Available</title></head>
+<body style="font-family:system-ui;padding:4rem;text-align:center;color:#333">
+<h1 style="margin-bottom:1rem">Report data not available</h1>
+<p>This page requires research data files that are not present in this deployment.</p>
+<p style="margin-top:1rem"><a href="/internal/">Back to Dashboard</a></p>
+</body></html>
+)}
+{dataAvailable && (
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<title>Consumer Perceptions of Retail Banking Brands | BuyerVoice.AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style is:inline>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); color: var(--rule); line-height: 1.65; background: var(--paper); }
+.pdf-btn { position: fixed; top: 16px; right: 24px; background: var(--signal); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 6px; z-index: 100; text-decoration: none; font-family: var(--sans); }
+.pdf-btn:hover { background: #922B16; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+.cover { text-align: center; padding: 96px 32px 64px; }
+.bv-logo { font-family: var(--serif); margin: 0 auto 48px; line-height: 1; display: inline-block; }
+.bv-logo-name { font-size: 28px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.bv-logo-tld { font-size: 28px; font-weight: 600; color: var(--signal); letter-spacing: -0.02em; }
+.cover h1 { font-family: var(--serif); font-size: 44px; font-weight: 600; color: var(--ink); margin-bottom: 18px; line-height: 1.15; letter-spacing: -0.02em; }
+.cover h1.report-title { color: var(--signal); }
+.cover .subtitle { font-size: 18px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; max-width: 680px; margin-left: auto; margin-right: auto; }
+.cover .prepared-for { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink); margin-top: 4px; margin-bottom: 0; text-transform: uppercase; letter-spacing: 0.12em; }
+h1 { font-family: var(--serif); font-size: 36px; font-weight: 600; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.02em; }
+h2 { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 32px; letter-spacing: -0.01em; }
+h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 28px; letter-spacing: -0.01em; }
+h4 { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; margin-top: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+p { font-size: 15px; color: var(--rule); margin-bottom: 14px; }
+.overline { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--signal); margin-bottom: 6px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+.stat-card { text-align: center; padding: 20px 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 2px; }
+.stat-num { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { width: 260px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; color: var(--rule); }
+.bar-track { flex: 1; height: 22px; background: rgba(11, 31, 58, 0.06); border-radius: 2px; overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+.bar-fill.green { background: var(--ink); }
+.bar-fill.blue { background: var(--ink); opacity: 0.75; }
+.bar-fill.amber { background: #C08533; }
+.bar-fill.red { background: var(--signal); }
+.bar-fill.gray { background: rgba(11, 31, 58, 0.35); }
+.bar-fill.teal { background: var(--ink); opacity: 0.65; }
+.bar-fill.purple { background: var(--ink); opacity: 0.85; }
+.bar-val { font-size: 11px; font-weight: 600; color: var(--paper); letter-spacing: 0.02em; }
+.bar-count { font-size: 11px; color: var(--muted); margin-left: 8px; min-width: 40px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+th { text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); padding: 12px 12px; border-bottom: 2px solid var(--ink); background: transparent; }
+td { padding: 11px 12px; border-bottom: 1px solid var(--border); }
+tr:hover { background: var(--card-bg); }
+.insight { border-left: 3px solid var(--signal); background: transparent; padding: 4px 20px; margin: 20px 0; }
+.insight p { font-size: 15px; margin-bottom: 8px; line-height: 1.6; }
+.insight p:last-child { margin-bottom: 0; }
+.insight strong { color: var(--ink); font-weight: 600; }
+.caveat { border-left: 3px solid var(--muted); background: transparent; padding: 4px 20px; margin: 16px 0; font-size: 14px; color: var(--muted); font-style: italic; }
+.caveat strong { color: var(--ink); font-style: normal; }
+.quote { border-left: 3px solid var(--ink); padding: 4px 20px; margin: 14px 0; font-size: 15px; color: var(--ink); line-height: 1.6; }
+.quote-attr { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: none; letter-spacing: 0; font-style: normal; }
+.quote-attr .direction-pos { color: var(--ink); font-weight: 600; }
+.quote-attr .direction-neg { color: var(--signal); font-weight: 600; }
+.quote-attr .direction-neu { color: var(--muted); font-weight: 600; }
+.source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; font-style: italic; }
+.crosstab { font-size: 13px; overflow-x: auto; margin: 16px 0; }
+.crosstab table { min-width: 700px; }
+.crosstab th, .crosstab td { padding: 10px 12px; text-align: right; white-space: nowrap; }
+.crosstab th:first-child, .crosstab td:first-child { text-align: left; min-width: 220px; }
+.crosstab th { text-align: center; }
+.crosstab .highlight { background: rgba(184, 52, 27, 0.08); font-weight: 600; }
+.crosstab .above-avg { background: rgba(184, 52, 27, 0.06); font-weight: 600; color: var(--ink); }
+.accordion { border-bottom: 1px solid var(--border); }
+.accordion-header { display: flex; align-items: center; gap: 16px; padding: 24px 0; cursor: pointer; list-style: none; }
+.accordion-header::-webkit-details-marker { display: none; }
+.accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+.accordion-text { flex: 1; }
+.accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); display: block; letter-spacing: -0.02em; }
+.accordion-subtitle { font-size: 14px; color: var(--muted); display: block; margin-top: 4px; }
+.accordion-icon { font-size: 28px; font-weight: 300; color: var(--signal); min-width: 30px; text-align: center; transition: transform 0.2s; }
+details[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-body { padding: 0 0 56px 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 16px 0; }
+.seg-card { border: 1px solid var(--border); border-radius: 2px; padding: 20px; background: var(--card-bg); }
+.seg-title { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 4px; letter-spacing: -0.01em; }
+.seg-meta { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 2px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
+.pill.green { background: rgba(11, 31, 58, 0.10); color: var(--ink); }
+.pill.red { background: rgba(184, 52, 27, 0.10); color: var(--signal); }
+.pill.amber { background: rgba(192, 133, 51, 0.10); color: #8B5A1F; }
+.pill.gray { background: rgba(107, 107, 107, 0.10); color: var(--muted); }
+.methodology-note { background: var(--card-bg); border-left: 3px solid var(--ink); padding: 14px 20px; margin: 18px 0; font-size: 13px; color: var(--rule); }
+.methodology-note strong { color: var(--ink); font-weight: 600; }
+hr.section-sep { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+@media print {
+  @page { margin: 16mm; }
+  body { font-size: 11pt; }
+  .pdf-btn { display: none; }
+  details.accordion { page-break-inside: avoid; }
+  details.accordion > summary.accordion-header { cursor: default; }
+  details.accordion { page-break-before: always; }
+  details.accordion:first-of-type { page-break-before: avoid; }
+  details[open] { display: block !important; }
+}
+</style>
+</head>
+<body>
+<button type="button" class="pdf-btn" onclick="window.print()">Save as PDF</button>
+
+<!-- ═══════════════════════ COVER ═══════════════════════ -->
+<div class="container">
+<section class="cover">
+<div class="bv-logo" aria-label="BuyerVoice.AI"><span class="bv-logo-name">BuyerVoice</span><span class="bv-logo-tld">.AI</span></div>
+<h1 class="report-title">Consumer Perceptions of Retail Banking Brands</h1>
+<p class="subtitle">Consumer Banking Insights Based on Buyer Interviews in British Columbia and Alberta</p>
+<p class="prepared-for">Prepared for Simplii Financial &bull; April 2026</p>
+<div class="stat-grid" style="max-width:720px;margin:40px auto 0;">
+<div class="stat-card"><div class="stat-num">300</div><div class="stat-label">Interviews</div></div>
+<div class="stat-card"><div class="stat-num">~20min</div><div class="stat-label">Length</div></div>
+<div class="stat-card"><div class="stat-num">417K</div><div class="stat-label">Words Analyzed</div></div>
+<div class="stat-card"><div class="stat-num">83</div><div class="stat-label">Thematic Codes</div></div>
+</div>
+</section>
+</div>
+
+<!-- ═══════════════════════ 1. EXECUTIVE SUMMARY ═══════════════════════ -->
+<div class="container">
+<details class="accordion" open>
+<summary class="accordion-header">
+<div class="accordion-num">01</div>
+<div class="accordion-text">
+<span class="accordion-title">Executive Summary</span>
+<span class="accordion-subtitle">Key findings distilled from 300 switcher interviews</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>This study interviewed 300 Canadian adults in British Columbia and Alberta, all of whom had switched their primary personal checking bank within the past 2 years. The sample was quota-balanced across six current primary banks (CIBC, Simplii Financial, RBC, TD, BMO, Scotiabank). Each participant answered 15 questions covering brand mental availability, previous-bank push forces, the switching decision process, current-bank experience, wallet composition, and forward-looking propensity. Responses were coded against an 83-theme codebook (Cohen's Kappa 0.929) with direction and intensity tags.</p>
+
+<h3>Headline findings</h3>
+
+<div class="insight">
+<p><strong>1. The decisive axis in Canadian retail banking is digital-challenger orientation vs. traditional-bank orientation.</strong> Ward clustering on 21 MCA dimensions produced a k=2 segmentation where Simplii Financial customers (20% of the sample) separated almost perfectly from Big 5 customers (80%). Silhouette 0.179, Jaccard stability 0.614 — a real but singular axis.</p>
+</div>
+
+<div class="insight">
+<p><strong>2. Inside the Big 5 cohort, a secondary split emerges between advisor-anchored wealth/business customers and branch-anchored transactional customers</strong> — but the bootstrap stability is 0.409 (below Hennig's 0.60 threshold for publication), so treat this as directional, not definitive. Small business owners (15% of the study sample) drive most of the advisor-anchored segment.</p>
+</div>
+
+<div class="insight">
+<p><strong>3. Rejection of considered alternatives is driven more by structural concerns than by specific bad experiences.</strong> When participants considered an alternative bank and chose not to pick it, the most common reasons were "no physical branch access" (for digital challengers), "same fee structure as current bank / lateral move" (for Big 5 alternatives), and "dismissive service interaction" (across the board). Secondhand negative stories were rare.</p>
+</div>
+
+<div class="insight">
+<p><strong>4. Push forces cluster around three distinct tracks:</strong> (a) advisor/mortgage failures ("my advisor left," "mortgage pre-approval felt impersonal"), (b) accumulating fee-value mismatch ("I looked at what I paid over a year"), and (c) digital experience inadequacy ("the app felt like it was trying to catch up"). These tracks map cleanly onto the three most common switching destinations (traditional-with-advisor, no-fee-digital, modern-big-bank).</p>
+</div>
+
+<div class="insight">
+<p><strong>5. Wallet fragmentation is deliberate, not accidental.</strong> 70% of participants hold products at institutions other than their primary bank — Wealthsimple and Questrade for investing, EQ Bank for savings rates, mortgage brokers for mortgage rates, kept former-bank credit cards for rewards. Each product fragmentation is a rational single-issue decision.</p>
+</div>
+
+<div class="insight">
+<p><strong>6. Post-switch satisfaction is high but conditional.</strong> In Q14, "probably staying" dominates "definitely staying" across every bank. Switchers explicitly frame their retention as contingent: contingent on fees not rising, on the advisor staying, on mortgage rates being competitive at renewal. This is not loyalty — it's low-friction stability.</p>
+</div>
+
+<h3>Strategic implications by stakeholder</h3>
+
+<table>
+<thead><tr><th>Stakeholder</th><th>Primary implication</th></tr></thead>
+<tbody>
+<tr><td><strong>Brand &amp; Marketing</strong></td><td>Concentrate CEP-building investment on "everyday spending" and "digital banking" where Simplii-adjacent brands are out-linking the Big 5 among non-customers. For CIBC specifically, the Aeroplan-Costco positioning is a genuine selection-criterion winner but does not survive against "no monthly fee" when a switcher is fee-primed.</td></tr>
+<tr><td><strong>Product &amp; Digital</strong></td><td>The two highest-intensity frustration patterns are (a) fee opacity combined with monthly burden, and (b) app technical reliability. Both cross-reference heavily with Q5 switching stories — these are genuine switching triggers, not background noise.</td></tr>
+<tr><td><strong>Retail &amp; Growth</strong></td><td>Small business owners (15% of sample) are disproportionately in the advisor-anchored sub-segment and represent a distinct acquisition playbook. The mass-market transactional sub-segment converts on promotional offers + branch convenience — different tactical approach entirely.</td></tr>
+</tbody>
+</table>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 2. METHODOLOGY ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">02</div>
+<div class="accordion-text">
+<span class="accordion-title">Study Design &amp; Methodology</span>
+<span class="accordion-subtitle">Sample, recruiting, coding approach, known limitations</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>2a. Sample composition</h3>
+
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">{sample?.n}</div><div class="stat-label">Total participants</div></div>
+<div class="stat-card"><div class="stat-num">{sample?.primary_bank?.CIBC?.n + sample?.primary_bank?.['Simplii Financial']?.n}</div><div class="stat-label">CIBC family (CIBC + Simplii)</div></div>
+<div class="stat-card"><div class="stat-num">{(sample?.small_business_owner?.Yes?.pct || 0).toFixed(0)}%</div><div class="stat-label">Small business owners</div></div>
+<div class="stat-card"><div class="stat-num">{sample?.cep_battery_set?.A?.n}/{sample?.cep_battery_set?.B?.n}</div><div class="stat-label">CEP Set A / Set B</div></div>
+</div>
+
+<div class="two-col">
+<div>
+<h4>By primary bank</h4>
+<div class="bar-chart">
+{BANKS.map((bank: string) => {
+  const d = sample?.primary_bank?.[bank];
+  if (!d) return null;
+  return (
+    <div class="bar-row">
+      <div class="bar-label">{bank}</div>
+      <div class="bar-track"><div class="bar-fill green" style={`width:${barWidth(d.pct, 25)}%`}><span class="bar-val">{d.pct.toFixed(0)}%</span></div></div>
+      <div class="bar-count">n={d.n}</div>
+    </div>
+  );
+})}
+</div>
+</div>
+<div>
+<h4>By age band</h4>
+<div class="bar-chart">
+{Object.entries(sample?.age_band || {}).map(([k, v]: any) => (
+  <div class="bar-row">
+    <div class="bar-label">{k}</div>
+    <div class="bar-track"><div class="bar-fill blue" style={`width:${barWidth(v.pct, 50)}%`}><span class="bar-val">{v.pct.toFixed(0)}%</span></div></div>
+    <div class="bar-count">n={v.n}</div>
+  </div>
+))}
+</div>
+<h4>By province</h4>
+<div class="bar-chart">
+{Object.entries(sample?.province || {}).map(([k, v]: any) => (
+  <div class="bar-row">
+    <div class="bar-label">{k}</div>
+    <div class="bar-track"><div class="bar-fill teal" style={`width:${barWidth(v.pct, 75)}%`}><span class="bar-val">{v.pct.toFixed(0)}%</span></div></div>
+    <div class="bar-count">n={v.n}</div>
+  </div>
+))}
+</div>
+</div>
+</div>
+<p class="source-note">Source: Screener roster + Q1 demographic confirmation. All participants required to have switched primary personal checking within past 2 years.</p>
+
+<h3>2b. Coding &amp; reliability</h3>
+
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">0.929</div><div class="stat-label">Thematic Kappa<br/>(Almost Perfect)</div></div>
+<div class="stat-card"><div class="stat-num">0.970</div><div class="stat-label">Direction Kappa<br/>(+/-/~)</div></div>
+<div class="stat-card"><div class="stat-num">0.472</div><div class="stat-label">Intensity Kappa<br/>(collapsed to binary)</div></div>
+<div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Codes below<br/>threshold</div></div>
+</div>
+
+<p>The coding pipeline used two independent Sonnet 4 coders with an Opus 4 arbiter on disagreements. Every meaning unit received a thematic code plus a direction tag (positive, negative, or neutral). Every participant × code pair also received an intensity score (1 brief, 2 elaborated, 3 narrative). Intensity kappa fell below threshold due to the heavily skewed marginal distribution (most scores at level 2), so per Framework §5.7, intensity analyses in this report collapse to binary (high [2+3] vs. low [1]).</p>
+
+<h3>2c. Known study-design gaps</h3>
+
+<div class="caveat">
+<p><strong>Sections where data is thin or absent by design:</strong></p>
+<ul style="margin:8px 0 0 20px;font-size:13px;color:#78350F;">
+<li><strong>No unprompted CEP discovery.</strong> The original B2C framework's Q3 (open-ended "when does banking come to mind?") was removed from this study. Section 3 uses prompted CEP-institution battery (Q2) only — we measured mental availability for 6 pre-set CEPs, not the full consumer-generated CEP inventory.</li>
+<li><strong>No spontaneous brand awareness.</strong> The framework's Q2 absolute recall question was removed. We cannot compute Keller's three-tier awareness classification (mentally available / aware-not-linked / unaware).</li>
+<li><strong>No absolute brand rejection.</strong> The framework's Q5 "banks you'd never consider" was removed. Section 4 instead uses <strong>evaluation rejection from Q7</strong> — reasons participants who considered an alternative bank in their switching evaluation chose not to pick it. This is arguably richer behavioral data than absolute rejection would have been, but the interpretation is different.</li>
+<li><strong>No origin-pathway distribution.</strong> The framework's "how did you first end up at your previous bank" was removed from Q3. Origin stories are missing; only push forces are coded.</li>
+</ul>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 3. BRAND MENTAL AVAILABILITY ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">03</div>
+<div class="accordion-text">
+<span class="accordion-title">Brand Mental Availability</span>
+<span class="accordion-subtitle">Prompted CEP-institution associations across 6 banking situations</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<div class="methodology-note">
+<strong>Methodology.</strong> Split-sample design. Each participant saw 3 of 6 CEPs: Set A (n=150) got everyday spending, retirement/long-term wealth, small business banking; Set B (n=150) got digital banking, mortgage/home purchase, financial advice. For each CEP presented, the participant named the financial institutions that came to mind (no "why" probing, per study design). Counts below are per-CEP, using the subgroup that was asked about that CEP.
+</div>
+
+<h3>3a. Mental availability by CEP (institution mention share)</h3>
+
+{Object.entries(ma?.cep_institution_map || {}).map(([cepId, cep]: any) => {
+  const splitData = ma?.cep_buyer_nonbuyer_split?.[cepId]?.banks || {};
+  return (
+  <div style="margin-bottom:36px;">
+    <h4>CEP {cepId}: {cep.cep_label} <span style="color:#6B7280;font-weight:400;font-size:12px;">— n={cep.n_participants_saw_this_cep} participants</span></h4>
+
+    <p style="font-size:13px;color:#4A5568;margin-bottom:8px;"><strong>Overall mention rate</strong> across all institutions:</p>
+    <div class="bar-chart">
+    {cep.institutions.slice(0, 10).map((inst: any) => (
+      <div class="bar-row">
+        <div class="bar-label">{inst.institution}</div>
+        <div class="bar-track">
+          <div class="bar-fill green" style={`width:${barWidth(inst.any_pct, 100)}%`}>
+            <span class="bar-val">{inst.any_pct.toFixed(0)}%</span>
+          </div>
+        </div>
+        <div class="bar-count">first: {inst.first_pct.toFixed(0)}%</div>
+      </div>
+    ))}
+    </div>
+
+    <p style="font-size:13px;color:#4A5568;margin:18px 0 6px;"><strong>Study banks: buyer vs. non-buyer mention rate</strong> (the strategic diagnostic — non-buyer rate is the growth signal)</p>
+    <div class="crosstab">
+    <table>
+    <thead><tr><th>Bank</th><th>Buyer % (n)</th><th>Non-buyer % (n)</th><th>Lift (pp)</th></tr></thead>
+    <tbody>
+    {BANKS.map((bank: string) => {
+      const d = splitData[bank];
+      if (!d) return null;
+      const lift = d.buyer_lift_pp;
+      // Hide rows where both buyer and non-buyer rates are 0 (bank doesn't serve this CEP)
+      if (d.buyer_any_pct === 0 && d.non_buyer_any_pct === 0) return (
+        <tr style="color:#9CA3AF;">
+          <td><strong>{bank}</strong></td>
+          <td colspan="3" style="text-align:left;font-style:italic;font-size:12px;">Not applicable — bank does not serve this CEP</td>
+        </tr>
+      );
+      return (
+        <tr>
+          <td><strong>{bank}</strong></td>
+          <td>{d.buyer_any_pct.toFixed(0)}% <span style="color:#6B7280;font-size:11px;">({d.buyers_mentioned_any}/{d.buyers_saw_cep})</span></td>
+          <td>{d.non_buyer_any_pct.toFixed(0)}% <span style="color:#6B7280;font-size:11px;">({d.non_buyers_mentioned_any}/{d.non_buyers_saw_cep})</span></td>
+          <td class={Math.abs(lift) >= 25 ? 'above-avg' : ''} style={lift >= 25 ? 'color:#2D7A3F;font-weight:700;' : lift < -5 ? 'color:#DC2626;' : ''}>
+            {lift >= 0 ? '+' : ''}{lift.toFixed(0)}pp
+          </td>
+        </tr>
+      );
+    })}
+    </tbody>
+    </table>
+    </div>
+  </div>
+  );
+})}
+<p class="source-note">Source: Q2 (CEP-institution battery). Overall mention rate = % of participants who saw this CEP who mentioned the institution. Buyer = participant whose current primary bank is this institution. Non-buyer = everyone else. <strong>Buyer lift &ge; +25pp highlighted green</strong> indicates a large mental-availability gap — the brand is well-known to its own customers but not yet linked to this CEP by non-customers, which is the growth signal per BBH Ch. 6 ("MPen is most useful among non-buyers").</p>
+
+<h3>3b. Average CEPs linked per bank — buyer vs. non-buyer comparison</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th><th>Buyer avg CEPs linked</th><th>Non-buyer avg CEPs linked</th><th>Buyer lift</th></tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = ma?.avg_ceps_linked_by_bank?.[bank];
+  if (!d) return null;
+  const lift = (d.buyer_avg_ceps - d.non_buyer_avg_ceps).toFixed(2);
+  const isPos = d.buyer_avg_ceps > d.non_buyer_avg_ceps;
+  return (
+    <tr>
+      <td><strong>{bank}</strong></td>
+      <td>{d.buyer_avg_ceps.toFixed(2)} <span style="color:#6B7280">(n={d.n_buyers})</span></td>
+      <td>{d.non_buyer_avg_ceps.toFixed(2)} <span style="color:#6B7280">(n={d.n_non_buyers})</span></td>
+      <td class={isPos ? 'above-avg' : ''}>{isPos ? '+' : ''}{lift}</td>
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+
+<div class="insight">
+<p><strong>Buyer lift is a diagnostic for brand-customer fit.</strong> Banks with a large buyer-lift mean current customers think of them across many situations, while non-customers rarely do — this pattern suggests the brand has high customer retention but weak acquisition mental availability. The strategic read is "invest in non-customer CEP-building."</p>
+</div>
+
+<p class="source-note">Source: Q2 institution mentions across the 3 CEPs each participant was asked about.</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 4. COMPETITIVE REJECTION ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">04</div>
+<div class="accordion-text">
+<span class="accordion-title">Competitive Rejection Analysis</span>
+<span class="accordion-subtitle">Why each bank lost in switchers' evaluations (Q7)</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<div class="methodology-note">
+<strong>Methodology.</strong> Q6 captured each participant's consideration set — the banks they evaluated as potential switching destinations. Q7 captured the reasons they rejected each alternative they considered but did not choose. Rejection reasons below are aggregated per bank across all participants who considered that bank but picked someone else. This is <strong>evaluation-loss data</strong> — real behavioral rejection, not hypothetical refusal.
+</div>
+
+{BANKS.map((bank: string) => {
+  const d = cr?.rejection_drivers_by_bank?.[bank];
+  if (!d || !d.n_considered_but_rejected) return null;
+  return (
+    <div style="margin-bottom:28px;">
+      <h3>{bank}: rejected by {d.n_considered_but_rejected} participants who considered switching to them</h3>
+      <div class="bar-chart">
+      {d.top_reasons.slice(0, 7).map((r: any) => (
+        <div class="bar-row">
+          <div class="bar-label">{r.code}</div>
+          <div class="bar-track">
+            <div class="bar-fill red" style={`width:${barWidth(r.pct_of_rejectors, 80)}%`}>
+              <span class="bar-val">{r.pct_of_rejectors.toFixed(0)}%</span>
+            </div>
+          </div>
+          <div class="bar-count">n={r.n}</div>
+        </div>
+      ))}
+      </div>
+    </div>
+  );
+})}
+<p class="source-note">Source: Q7 (rejection drivers per considered alternative). Red bars indicate inherently negative direction.</p>
+
+<div class="insight">
+<p><strong>The pattern across banks:</strong> No-physical-branch concerns dominate rejection of digital challengers (Simplii). Lateral-move concerns — "same fee structure, I'd just be moving problems" — dominate rejection of Big 5 alternatives. Dismissive service interactions are cited for all banks at roughly similar rates (~15-25%), suggesting service-quality anxiety is category-wide rather than brand-specific.</p>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 5. PUSH FORCES ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">05</div>
+<div class="accordion-text">
+<span class="accordion-title">Why People Left Their Previous Bank</span>
+<span class="accordion-subtitle">Push forces + life triggers + decisive incidents (Q5)</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>All 300 participants are recent switchers. Q5 captured the full push-force narrative in three parts: (a) the life context (what was going on in their lives that triggered reassessment), (b) the frustrations with their previous bank, and (c) the decisive incident or moment that pushed them to act.</p>
+
+<h3>5a. Top push-force themes (ranked by prevalence)</h3>
+<div class="bar-chart">
+{pf?.top_themes?.slice(0, 15).map((t: any) => {
+  const ints = t.intensity_distribution || {};
+  const total = Object.values(ints).reduce((a: any, b: any) => a + b, 0) as number;
+  const n1 = ints['1'] || 0;
+  const n2 = ints['2'] || 0;
+  const n3 = ints['3'] || 0;
+  return (
+    <div class="bar-row">
+      <div class="bar-label">{t.code}</div>
+      <div class="bar-track" style="display:flex;">
+        {total > 0 && <>
+          <div style={`background:#94A3B8;height:100%;width:${(n1/t.n)*barWidth(t.pct, 80)}%;`}></div>
+          <div style={`background:#F59E0B;height:100%;width:${(n2/t.n)*barWidth(t.pct, 80)}%;`}></div>
+          <div style={`background:#DC2626;height:100%;width:${(n3/t.n)*barWidth(t.pct, 80)}%;`}></div>
+        </>}
+        {total === 0 && <div class="bar-fill red" style={`width:${barWidth(t.pct, 80)}%`}><span class="bar-val">{t.pct.toFixed(0)}%</span></div>}
+      </div>
+      <div class="bar-count">n={t.n} <span style="color:#6B7280">({t.pct.toFixed(0)}%)</span></div>
+    </div>
+  );
+})}
+</div>
+<p class="source-note">Source: Q5. Stacked bars: <span style="color:#94A3B8">gray = intensity 1 (brief mention)</span>, <span style="color:#F59E0B">amber = intensity 2 (elaborated)</span>, <span style="color:#DC2626">red = intensity 3 (narrative / specific incident)</span>. Intensity-3 mentions are the most likely to genuinely trigger behavior per Singh (1988).</p>
+
+<div class="insight">
+<p><strong>The push-force landscape clusters into three tracks:</strong> (1) Fee-value mismatch and accumulated fee burden, often surfaced by life events (retirement, job change) that force financial review; (2) advisor relationship breakdown — specifically advisor departures or replacements with less experienced staff, heavily concentrated in the 51-60 age band and small-business-owner subgroup; (3) app/digital experience inadequacy — both "clunky" complaints and specific technical failures that left participants uncertain about transactions.</p>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 6. NEEDS, FRUSTRATIONS, FRICTION ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">06</div>
+<div class="accordion-text">
+<span class="accordion-title">Needs, Frustrations, and Friction</span>
+<span class="accordion-subtitle">Current-bank retention value (Q10) and frustrations (Q11) by bank</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>6a. What your current bank does well — top themes per bank</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th>{[1,2,3,4,5].map(i => (<th>#{i}</th>))}</tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = likes?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={d.n_buyers})</span></td>
+      {[0,1,2,3,4].map(i => {
+        const t = d.top_codes[i];
+        return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? (<><div>{t.code}</div><div style="color:#6B7280;font-size:11px;">{t.pct_of_buyers.toFixed(0)}% · n={t.n}</div></>) : '—'}</td>;
+      })}
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q10 (current bank likes). Direction: inherently positive (+).</p>
+
+<h3>6b. What frustrates current customers — top frustration themes per bank</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th>{[1,2,3,4,5].map(i => (<th>#{i}</th>))}</tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = frus?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={d.n_buyers})</span></td>
+      {[0,1,2,3,4].map(i => {
+        const t = d.top_codes[i];
+        return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? (<><div>{t.code}</div><div style="color:#6B7280;font-size:11px;">{t.pct_of_buyers.toFixed(0)}% · n={t.n}</div></>) : '—'}</td>;
+      })}
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q11 (current bank frustrations). Direction: inherently negative (-). Cross-reference with Q14 propensity (Section 10) to identify retention risk.</p>
+
+<h3>6c. Previous-bank retained value (what former customers appreciated)</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Previous bank</th><th>Former customers in sample</th>{[1,2,3,4].map(i => (<th>#{i}</th>))}</tr></thead>
+<tbody>
+{Object.entries(prevPos || {}).sort((a: any, b: any) => b[1].n_former_customers - a[1].n_former_customers).map(([bank, d]: any) => (
+  <tr>
+    <td><strong>{bank}</strong></td>
+    <td>{d.n_former_customers}</td>
+    {[0,1,2,3].map(i => {
+      const t = d.top_retained_values[i];
+      return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? (<><div>{t.code}</div><div style="color:#6B7280;font-size:11px;">{t.pct.toFixed(0)}%</div></>) : '—'}</td>;
+    })}
+  </tr>
+))}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q4 (previous bank positives). Participants are asked what they appreciated about their previous bank despite leaving — useful for understanding competitive strengths from defectors.</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 7. DECISION PROCESS ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">07</div>
+<div class="accordion-text">
+<span class="accordion-title">The Decision Process</span>
+<span class="accordion-subtitle">Consideration, selection criteria, and competitive win rates</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>7a. Consideration-to-win conversion rate</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th><th>Considered by</th><th>Chosen by</th><th>Win rate when considered</th></tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = cw?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong></td>
+      <td>{d.n_considered}</td>
+      <td>{d.n_won}</td>
+      <td class={d.win_rate_pct > 40 ? 'above-avg' : ''}>{d.win_rate_pct.toFixed(0)}%</td>
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q6 (consideration set) + current bank. "Considered by" counts participants who named this bank in their consideration set OR chose it. "Win rate" is chosen / considered. Higher win rate = this bank closes better once in the evaluation.</p>
+
+<h3>7b. Selection criteria — why each bank won</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th>{[1,2,3,4,5].map(i => (<th>#{i}</th>))}</tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = sel?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={d.n_buyers})</span></td>
+      {[0,1,2,3,4].map(i => {
+        const t = d.top_codes[i];
+        return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? (<><div>{t.code}</div><div style="color:#6B7280;font-size:11px;">{t.pct_of_buyers.toFixed(0)}% · n={t.n}</div></>) : '—'}</td>;
+      })}
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q8 (selection criteria). Direction: inherently positive (+).</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 8. WALLET COMPOSITION ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">08</div>
+<div class="accordion-text">
+<span class="accordion-title">Wallet Composition</span>
+<span class="accordion-subtitle">What products held at primary vs. elsewhere (Q12, Q13)</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>8a. Products held at primary bank — by bank</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th>{[1,2,3,4].map(i => (<th>Top #{i}</th>))}</tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = walletPrimary?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={d.n_buyers})</span></td>
+      {[0,1,2,3].map(i => {
+        const t = d.top_products_held[i];
+        return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? <div>{t.code} <span style="color:#6B7280;font-size:11px;">({t.n})</span></div> : '—'}</td>;
+      })}
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+
+<h3>8b. Why customers hold products elsewhere — by bank</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th>{[1,2,3,4].map(i => (<th>Reason #{i}</th>))}</tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = walletElsewhere?.[bank];
+  if (!d) return null;
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={d.n_buyers})</span></td>
+      {[0,1,2,3].map(i => {
+        const t = d.top_reasons_products_elsewhere[i];
+        return <td style="text-align:left;white-space:normal;max-width:180px;">{t ? <div>{t.code} <span style="color:#6B7280;font-size:11px;">({t.n})</span></div> : '—'}</td>;
+      })}
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q12 (primary bank products) + Q13 (other-institution products + reasons).</p>
+
+<div class="insight">
+<p><strong>Wallet fragmentation is the norm.</strong> 70% of participants hold at least one banking product at an institution other than their primary bank — most commonly investments at Wealthsimple/Questrade, savings at EQ Bank, mortgage through a broker, or a kept former-bank credit card. The reasons cluster around single-product optimization: better rates, lower fees, specialized platform.</p>
+</div>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 9. CONSUMER SEGMENTS ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">09</div>
+<div class="accordion-text">
+<span class="accordion-title">Consumer Segments</span>
+<span class="accordion-subtitle">Two segmentation passes with stability assessment</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>9a. Primary segmentation (full sample)</h3>
+
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">{segPrimary?.n_segments}</div><div class="stat-label">Segments</div></div>
+<div class="stat-card"><div class="stat-num">{segPrimary?.silhouette?.toFixed(3)}</div><div class="stat-label">Silhouette</div></div>
+<div class="stat-card"><div class="stat-num">{segPrimary?.stability_jaccard?.toFixed(3)}</div><div class="stat-label">Jaccard stability<br/>(&ge; 0.60 = trustworthy)</div></div>
+<div class="stat-card"><div class="stat-num">{meta?.n_participants}</div><div class="stat-label">Participants</div></div>
+</div>
+
+<p><strong>{segPrimary?.interpretation}</strong></p>
+
+<div class="two-col">
+{Object.entries(segPrimary?.segments || {}).map(([name, s]: any) => (
+  <div class="seg-card">
+    <div class="seg-title">{name}</div>
+    <div class="seg-meta">n = {s.n} · {((s.n / (meta?.n_participants || 300)) * 100).toFixed(0)}% of sample</div>
+    <h4>Primary bank mix</h4>
+    <div style="font-size:12px;">
+    {Object.entries(s.primary_bank || {}).map(([bank, v]: any) => (
+      <div>· {bank}: {v.n} ({v.pct.toFixed(0)}%)</div>
+    ))}
+    </div>
+    <h4 style="margin-top:12px;">Small business owners</h4>
+    <div style="font-size:12px;">
+    {Object.entries(s.small_business_owner || {}).map(([k, v]: any) => (
+      <div>· {k}: {v.n} ({v.pct.toFixed(0)}%)</div>
+    ))}
+    </div>
+  </div>
+))}
+</div>
+
+<h3>9b. Secondary segmentation within Big 5 cohort</h3>
+
+<div class="stat-grid">
+<div class="stat-card"><div class="stat-num">{segBig5?.n_segments}</div><div class="stat-label">Segments</div></div>
+<div class="stat-card"><div class="stat-num">{segBig5?.silhouette?.toFixed(3)}</div><div class="stat-label">Silhouette</div></div>
+<div class="stat-card"><div class="stat-num">{segBig5?.stability_jaccard?.toFixed(3)}</div><div class="stat-label">Jaccard stability<br/>(below threshold)</div></div>
+<div class="stat-card"><div class="stat-num">240</div><div class="stat-label">Big 5 participants<br/>(Simplii excluded)</div></div>
+</div>
+
+<div class="caveat">
+<p><strong>{segBig5?.stability_caveat}</strong> Directional pattern rather than definitive segmentation. Include in analysis with explicit stability disclosure; do not treat as a robust multi-segment structure.</p>
+</div>
+
+<p><strong>{segBig5?.interpretation}</strong></p>
+
+<div class="two-col">
+{Object.entries(segBig5?.segments || {}).map(([name, s]: any) => (
+  <div class="seg-card">
+    <div class="seg-title">{name}</div>
+    <div class="seg-meta">n = {s.n} within Big 5 subgroup</div>
+    <h4>Primary bank mix</h4>
+    <div style="font-size:12px;">
+    {Object.entries(s.primary_bank || {}).map(([bank, v]: any) => (
+      <div>· {bank}: {v.n}</div>
+    ))}
+    </div>
+    <h4 style="margin-top:12px;">Small business owners</h4>
+    <div style="font-size:12px;">
+    {Object.entries(s.small_business_owner || {}).map(([k, v]: any) => (
+      <div>· {k}: {v.n} ({v.pct.toFixed(0)}%)</div>
+    ))}
+    </div>
+    <h4 style="margin-top:12px;">Age skew</h4>
+    <div style="font-size:12px;">
+    {Object.entries(s.age_band || {}).map(([k, v]: any) => (
+      <div>· {k}: {v.pct.toFixed(0)}%</div>
+    ))}
+    </div>
+  </div>
+))}
+</div>
+
+<h3>Top differentiating themes (Big 5 sub-segmentation)</h3>
+{Object.entries(segBig5?.enrichment || {}).map(([segName, e]: any) => (
+  <div style="margin-bottom:16px;">
+    <h4>{segName} — themes enriched vs. other segment</h4>
+    <div class="bar-chart">
+    {e.top_enriched.slice(0, 8).map((row: any) => (
+      <div class="bar-row">
+        <div class="bar-label">{row.code}</div>
+        <div class="bar-track">
+          <div class={`bar-fill ${row.diff_pp > 0 ? 'green' : 'red'}`} style={`width:${barWidth(Math.abs(row.diff_pp), 70)}%`}>
+            <span class="bar-val">{row.diff_pp > 0 ? '+' : ''}{row.diff_pp.toFixed(0)}pp</span>
+          </div>
+        </div>
+        <div class="bar-count">{row.seg_pct.toFixed(0)}% vs {row.other_pct.toFixed(0)}%</div>
+      </div>
+    ))}
+    </div>
+  </div>
+))}
+
+<p class="source-note">Source: MCA + Ward clustering on 21 (primary) / 23 (Big 5) analyst-approved dimensions. Bootstrap stability computed over 200 resamples per Hennig (2007). Full segmentation reports in the A6 data folder.</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 10. FORWARD-LOOKING ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">10</div>
+<div class="accordion-text">
+<span class="accordion-title">Forward-Looking: Propensity &amp; Market Outlook</span>
+<span class="accordion-subtitle">1-year retention intent and macro market sentiment</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>10a. 1-year propensity to stay — by bank</h3>
+
+<div class="crosstab">
+<table>
+<thead><tr><th>Bank</th><th>Definitely staying</th><th>Probably staying</th><th>Unsure</th><th>Probably leaving</th><th>Definitely leaving</th></tr></thead>
+<tbody>
+{BANKS.map((bank: string) => {
+  const d = propensity?.[bank] || {};
+  const total = (Object.values(d) as number[]).reduce((a: number, b: number) => a + b, 0);
+  return (
+    <tr>
+      <td><strong>{bank}</strong> <span style="color:#6B7280;font-weight:400;">(n={total})</span></td>
+      <td>{d['definitely staying'] || 0}</td>
+      <td>{d['probably staying'] || 0}</td>
+      <td>{d['unsure'] || 0}</td>
+      <td>{d['probably leaving'] || 0}</td>
+      <td>{d['definitely leaving'] || 0}</td>
+    </tr>
+  );
+})}
+</tbody>
+</table>
+</div>
+<p class="source-note">Source: Q14 (1-year propensity ordinal). For recent switchers, this is a post-purchase satisfaction signal. "Probably leaving" within 12 months of switching = failed acquisition.</p>
+
+<h3>10b. Top propensity-reasoning themes (full sample)</h3>
+<div class="bar-chart">
+{propReasoning?.slice(0, 10).map((t: any) => (
+  <div class="bar-row">
+    <div class="bar-label">{t.code}</div>
+    <div class="bar-track"><div class="bar-fill blue" style={`width:${barWidth(t.pct, 40)}%`}><span class="bar-val">{t.pct.toFixed(0)}%</span></div></div>
+    <div class="bar-count">n={t.n}</div>
+  </div>
+))}
+</div>
+
+<h3>10c. Macro market sentiment — what's wrong with Canadian banking today</h3>
+<div class="bar-chart">
+{macro?.slice(0, 12).map((t: any) => {
+  const ints = t.intensity_distribution || {};
+  const n3 = ints['3'] || 0;
+  return (
+    <div class="bar-row">
+      <div class="bar-label">{t.code}</div>
+      <div class="bar-track"><div class="bar-fill purple" style={`width:${barWidth(t.pct, 60)}%`}><span class="bar-val">{t.pct.toFixed(0)}%</span></div></div>
+      <div class="bar-count">n={t.n} <span style="color:#DC2626">· {n3} at narrative intensity</span></div>
+    </div>
+  );
+})}
+</div>
+<p class="source-note">Source: Q15 (macro market sentiment). Red number = count at intensity 3 (specific incident / narrative).</p>
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 11. CONSUMER LANGUAGE BANK ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">11</div>
+<div class="accordion-text">
+<span class="accordion-title">Consumer Language Bank</span>
+<span class="accordion-subtitle">Curated verbatim exemplars by theme category</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<p>Selected quotes from Step 2.5 exemplar curation — 5 presentation-ready quotes per code, chosen on direction balance, narrative-intensity preference, articulateness, and participant diversity. Use directly in marketing, product, or content work.</p>
+
+{Object.entries(languageBank || {}).map(([category, quotes]: any) => (
+  <div style="margin-bottom:24px;">
+    <h3>{category}</h3>
+    {quotes.slice(0, 6).map((q: any) => (
+      <div class="quote">
+        &ldquo;{q.quote}&rdquo;
+        <div class="quote-attr">
+          <strong>{q.code}</strong> ·
+          P{q.participant_id} · {q.primary_bank || 'Unknown bank'}
+          {q.age_band ? ` · ${q.age_band}` : ''}
+          {q.province ? ` · ${q.province}` : ''}
+          {q.is_small_business_owner ? ' · small business' : ''}
+          · <span class={q.direction === '+' ? 'direction-pos' : q.direction === '-' ? 'direction-neg' : 'direction-neu'}>direction {q.direction}</span>
+          {q.intensity ? ` · intensity ${q.intensity}` : ''}
+          {q.question_id ? ` · ${q.question_id}` : ''}
+        </div>
+      </div>
+    ))}
+    {quotes.length > 6 && <p style="font-size:12px;color:#6B7280;margin-top:8px;">+ {quotes.length - 6} more exemplars for this category available in code-exemplars.json.</p>}
+  </div>
+))}
+
+</div>
+</details>
+</div>
+
+<!-- ═══════════════════════ 12. RECOMMENDATIONS ═══════════════════════ -->
+<div class="container">
+<details class="accordion">
+<summary class="accordion-header">
+<div class="accordion-num">12</div>
+<div class="accordion-text">
+<span class="accordion-title">Stakeholder Recommendations</span>
+<span class="accordion-subtitle">Strategic and tactical implications by team</span>
+</div>
+<div class="accordion-icon">+</div>
+</summary>
+<div class="accordion-body">
+
+<h3>Brand &amp; Marketing</h3>
+<div class="insight">
+<p><strong>Strategic:</strong> The primary segmentation axis is digital-challenger orientation, not traditional competitive differentiation. CIBC's strategic asset within this frame is Simplii — it's already winning the ~20% of the market that wants fee-free digital banking backed by Big 5 infrastructure. Brand-marketing investment should treat CIBC and Simplii as a single portfolio, with CIBC messaging aimed at advisor-anchored wealth/business customers and Simplii messaging aimed at the transactional digital-first cohort.</p>
+<p><strong>Tactical:</strong> The macro sentiment data shows three dominant industry critiques — fee/value mismatch, service tiering by wealth, and fees being regressive on lower income. All three are messaging opportunities: CIBC can position Simplii as its "no-two-tier" answer to the service-tiering complaint. The Aeroplan-Costco tie-in surfaces as a selection criterion only for higher-income travel-oriented customers — don't overweight it in mass-market campaigns.</p>
+</div>
+
+<h3>Product &amp; Digital</h3>
+<div class="insight">
+<p><strong>Strategic:</strong> App technical reliability shows up as both a push force (why they left their previous bank) and a current-bank frustration (why they might leave their new bank). This is the single most cross-cutting product signal in the study — the app is the dominant customer interface and its reliability directly drives satisfaction. Treat app technical excellence as table-stakes, not a differentiator.</p>
+<p><strong>Tactical:</strong> Q11 frustration patterns suggest the highest-leverage product fixes are (1) fee-management transparency (show customers clearly what they're paying and why, surface waiver eligibility proactively), and (2) business banking tooling for the small-business subgroup (15% of sample but 55%+ of the advisor-anchored segment). The Q13 wallet-elsewhere reasons map directly onto product gap analysis: investment platform, savings rates, and mortgage broker convenience are the three main product leaks.</p>
+</div>
+
+<h3>Retail &amp; Growth</h3>
+<div class="insight">
+<p><strong>Strategic:</strong> Growth comes from acquiring Big 5 customers who are fee-primed and pre-shopping. Section 4's competitive rejection data shows lateral-move concerns ("same fees, different logo") are the #1 reason alternatives get rejected — so acquisition messaging must explicitly differentiate on fee structure, not just tout general "better banking." The one big acquisition path for CIBC proper is the advisor-anchored wealth/business cohort, where CIBC's Wood Gundy and commercial services create a meaningful differentiator against RBC and TD.</p>
+<p><strong>Tactical:</strong> Promotional switching incentives appear in Q8 as a selection criterion more often than expected — consistent with the cross-switching-friction literature. Make the switching process itself a product: direct-deposit migration assistance, auto-pay transfer tooling, 12-month fee waiver with clearly-disclosed post-period economics. For small business owners specifically, the #1 acquisition lever is an experienced business banking advisor with authority — <em>not</em> promotional offers.</p>
+</div>
+
+<h3>Cross-cutting: retention risk dashboard</h3>
+<p>From Q14, participants citing "probably leaving" within a year of switching are the at-risk cohort. Cross-reference with their Q11 frustrations to identify which specific fixes would retain them. The highest-risk combination is: intensity-3 Q11 frustration + &ldquo;probably leaving&rdquo; + holding products elsewhere (Q13) = customers already mentally halfway out the door.</p>
+
+</div>
+</details>
+</div>
+
+<!-- Footer -->
+<div class="container" style="padding: 64px 32px 48px; text-align: center; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 48px;">
+<p style="text-transform:uppercase;letter-spacing:0.08em;">BuyerVoice.AI · Retail Banking CIBC · April 23, 2026</p>
+<p style="margin-top:10px;"><a href="/internal/" style="color:var(--ink);">Back to internal dashboard</a></p>
+</div>
+
+</body>
+</html>
+)}

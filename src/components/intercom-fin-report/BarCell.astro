@@ -1,0 +1,21 @@
+---
+interface Props {
+  pct: number;
+  color: 'zd' | 'sf' | 'ink' | 'signal' | 'teal' | 'warm' | 'slate';
+  variant?: 'gbc' | 'bar';
+}
+const { pct, color, variant = 'gbc' } = Astro.props;
+const fillBase = variant === 'gbc' ? 'gbc-fill' : 'bar-fill';
+const insideThreshold = 8;
+const showInside = pct >= insideThreshold;
+const showOutside = pct < insideThreshold;
+const drawFill = pct > 0;
+---
+{drawFill && (
+  <div class={`${fillBase} ${color}`} style={`width: ${pct}%`}>
+    {showInside && <span class="bar-val">{pct}%</span>}
+  </div>
+)}
+{showOutside && (
+  <span class="bar-val-out" style={`left: calc(${pct}% + 4px)`}>{pct}%</span>
+)}

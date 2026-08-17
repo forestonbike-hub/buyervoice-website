@@ -1,0 +1,372 @@
+---
+import BaseLayout from '../../../layouts/FourProductsBaseLayout.astro';
+import CredentialBar from '../../../components/four-products/CredentialBar.astro';
+import CTABand from '../../../components/four-products/CTABand.astro';
+
+const breadcrumbs = [{ label: 'About' }];
+
+const credentials = [
+  { number: '100+', label: 'Peer-reviewed publications' },
+  { number: '8,000+', label: 'Research citations' },
+];
+
+const team = [
+  {
+    name: 'Rogier Verhulst, MBA',
+    title: 'CEO and Co-Founder',
+    image: '/images/team/rogier.jpg',
+    education: 'Master\'s in Economics, Tilburg University | MBA, UC Berkeley Haas School of Business',
+    highlights: [
+      'Built LinkedIn\'s 30+ person market research organization from scratch over 17 years',
+      'Sr. Director of Central Market Research, Operations, and Marketing at LinkedIn',
+      'Overhauled LinkedIn\'s NPS program and drove AI-modernized research methods',
+      'Senior research roles at Microsoft and Research International',
+      'Co-authored "The Business of Marketing Research" (Cognella)',
+      'Published in the International Journal of Market Research and Quirk\'s Marketing Research Review',
+      'Presented at ESOMAR and ARF on AI-powered brand strategy',
+      'Startup advisor at SignalFire on product-market fit',
+    ],
+    linkedin: 'https://www.linkedin.com/in/rogierverhulst/',
+  },
+  {
+    name: 'Marco Vriens, PhD',
+    title: 'Chief Methodologist',
+    image: '/images/team/marco.jpg',
+    education: 'PhD in Marketing Analytics, University of Groningen | Master\'s in Psychology, Leiden University',
+    highlights: [
+      'Academia',
+      'University of Groningen, Professor of Marketing Research',
+      '50+ peer-reviewed papers in Journal of Marketing Research, Marketing Science, and Marketing Letters',
+      'Authored four books, including "Handbook of Marketing Research" (2006 Outstanding Title Award)',
+      'David K. Hardin Memorial Award from the American Marketing Association',
+      '2,150+ research citations',
+      'Industry',
+      'Global Chief Research Officer at Ipsos',
+      'Led analytics teams at Microsoft',
+      'Chief Research Officer at Millward Brown IntelliQuest',
+    ],
+    linkedin: 'https://www.linkedin.com/in/marcovriens/',
+  },
+  {
+    name: 'Forest Baker, PhD, MBA',
+    title: 'Head of Growth',
+    image: '/images/team/forest.jpg',
+    education: 'PhD in Experimental Psychology, SUNY Stony Brook | MBA, Duke Fuqua School of Business | NIDA Postdoctoral Fellow, University of Vermont',
+    highlights: [
+      'Academia',
+      'PhD in Experimental Psychology (judgment and decision making)',
+      'Univ of Vermont, NIDA Postdoctoral Fellow in decision making and behavioral economics',
+      'Illinois Wesleyan University, Visiting Assistant Professor of Psychology',
+      'Health Economic Resource Center, Dept of Veterans Affairs, Research Scientist',
+      '2,200+ research citations',
+      'Industry',
+      'MBA, Duke University',
+      'LinkedIn: Led a global insights team and launched ad measurement program',
+      'Abbott Vascular Devices: Market research and product management; received Abbott\'s "New Methods and Significant Insights" award',
+    ],
+    linkedin: 'https://www.linkedin.com/in/forestb/',
+  },
+  {
+    name: 'Felix Eggers, PhD',
+    title: 'Scientific Advisor',
+    image: '/images/team/felix.jpg',
+    education: 'PhD, University of Hamburg | Visiting positions at MIT Sloan, UNSW, and Stellenbosch University',
+    highlights: [
+      'Full Professor of Marketing at Copenhagen Business School',
+      'Research Affiliate, National Bureau of Economic Research (NBER)',
+      '47 papers published, 3,900+ research citations',
+      'Published in PNAS, American Economic Journal, Marketing Science, and Journal of the Academy of Marketing Science',
+      'GDP-B research with Erik Brynjolfsson featured by Brookings Institution and MIT Sloan',
+      'Founded Preference Lab, an AI-powered conjoint analysis platform',
+      'Visiting positions at MIT Sloan, UNSW, and Stellenbosch University',
+      'Early-career consulting at IBM Global Services',
+    ],
+    linkedin: 'https://www.linkedin.com/in/felixeggers/',
+  },
+];
+
+const personSchemas = team.map(member => ({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": member.name,
+  "jobTitle": member.title,
+  "worksFor": { "@type": "Organization", "name": "KwantumLabs" },
+  "sameAs": [member.linkedin],
+}));
+---
+
+<BaseLayout
+  title="About"
+  description="Meet the KwantumLabs team: 3 PhDs, 2 MBAs, 100+ peer-reviewed publications, and decades of experience at LinkedIn, Microsoft, and Ipsos."
+  breadcrumbs={breadcrumbs}
+  schema={JSON.stringify(personSchemas)}
+>
+
+  <!-- Company story -->
+  <section class="section">
+    <div class="container story-content">
+      <h1>The team behind KwantumLabs</h1>
+      <p class="story-highlight">Our team includes renowned market research professors.</p>
+      <p>Collectively, we have 100+ peer-reviewed publications and over 8,000 combined academic citations. Marco Vriens (Chief Methodologist) and Felix Eggers (Scientific Advisor) are among the world's leading experts on conjoint analysis and preference measurement, with foundational publications in the Journal of Marketing Research, Marketing Science, PNAS, and the American Economic Journal. Our team has published three market research textbooks and invented marketing methodologies that have been published in Harvard Business Review.</p>
+      <p>Furthermore, our team has publications on AI applications including synthetic data generation, LLMs for brand valuation, and generative AI for brand association mapping. Our AI workflows are built by people who understand the marketing science underneath.</p>
+      <p class="story-highlight">And we have decades of industry experience conducting market research.</p>
+      <p>Rogier Verhulst (CEO) built LinkedIn's market research organization over nearly 17 years, and Forest Baker (Head of Growth) designed and launched LinkedIn's ad effectiveness measurement program during his own decade-long tenure at the company. Marco's industry experience spans senior leadership at Microsoft (six years leading analytics teams), Ipsos (Global Chief Research Officer), GE Healthcare, Millward Brown IntelliQuest (Chief Research Officer), and Research International.</p>
+      <p>Working with KwantumLabs means getting research designed by scientists who publish in the same journals that set the standards for the field, executed with AI efficiency that compresses timelines and costs, and delivered by founders who have run research programs inside companies like LinkedIn, Microsoft, and Ipsos. Clients get the rigor of an academic research team and the speed and practicality of a technology-enabled consultancy.</p>
+    </div>
+  </section>
+
+  <!-- Team profiles -->
+  <section class="section section-gray">
+    <div class="container">
+      {team.map(member => (
+        <div class="profile">
+          <div class="profile-sidebar">
+            <div class="profile-photo">
+              <img src={member.image} alt={member.name} width="200" height="200" loading="lazy" />
+            </div>
+            <div class="sidebar-meta">
+              <h4>Education</h4>
+              <p class="education-text">{member.education}</p>
+              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" class="text-link">
+                LinkedIn profile
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="profile-info">
+            <h2>{member.name}</h2>
+            <p class="profile-title">{member.title}</p>
+
+            <h4>Career highlights</h4>
+            <ul>
+              {member.highlights.map(h =>
+                h === 'Academia' || h === 'Industry'
+                  ? <li class="highlight-section">{h}</li>
+                  : <li>{h}</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Positioning -->
+  <section class="section">
+    <div class="container positioning">
+      <p class="overline">Marketing Science + AI for product and marketing teams</p>
+      <h2>Insights that drive growth</h2>
+    </div>
+  </section>
+
+  <!-- Credential bar -->
+  <CredentialBar items={credentials} />
+
+  <CTABand />
+
+</BaseLayout>
+
+<style>
+  .story-content {
+    max-width: var(--max-text-width);
+  }
+
+  .story-content h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .story-content p {
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: none;
+  }
+
+  .story-highlight {
+    color: var(--color-green);
+    font-weight: 600;
+  }
+
+  .profile {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-2xl);
+    padding: var(--space-3xl) 0;
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .profile:last-child {
+    border-bottom: none;
+  }
+
+  .profile-sidebar {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+  }
+
+  .profile-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-white);
+    margin-bottom: var(--space-lg);
+  }
+
+  .profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sidebar-meta h4 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-black);
+    margin-bottom: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .sidebar-meta h4:first-child {
+    margin-top: 0;
+  }
+
+  .education-text {
+    font-size: 14px;
+    color: var(--color-slate);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
+
+  .profile-info h2 {
+    font-size: 28px;
+    margin-bottom: var(--space-xs);
+  }
+
+  .profile-title {
+    font-size: 17px;
+    color: var(--color-green);
+    font-weight: 500;
+    margin-bottom: var(--space-lg);
+  }
+
+  .profile-bio {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-slate);
+    max-width: none;
+  }
+
+  .profile-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    margin-top: var(--space-xl);
+  }
+
+  .profile-info ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .profile-info li {
+    position: relative;
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-lg);
+    font-size: 15px;
+    color: var(--color-slate);
+    line-height: 1.5;
+  }
+
+  .profile-info li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-green);
+  }
+
+  .profile-info li.highlight-section {
+    font-weight: 600;
+    color: var(--color-black);
+    padding-left: 0;
+    margin-top: var(--space-sm);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .profile-info li.highlight-section:first-child {
+    margin-top: 0;
+  }
+
+  .profile-info li.highlight-section::before {
+    display: none;
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--color-white);
+    border: 1px solid var(--color-medium-gray);
+    border-radius: var(--radius);
+    color: var(--color-slate);
+  }
+
+  .positioning {
+    max-width: var(--max-text-width);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .positioning h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.2;
+    max-width: none;
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 768px) {
+    .profile {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 150px;
+      height: 150px;
+    }
+
+    .sidebar-meta {
+      width: 100%;
+      text-align: center;
+    }
+
+    .expertise-tags {
+      justify-content: center;
+    }
+  }
+</style>

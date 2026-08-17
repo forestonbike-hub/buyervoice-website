@@ -1,0 +1,60 @@
+---
+import Header from '../components/four-products/Header.astro';
+import Footer from '../components/four-products/Footer.astro';
+import Breadcrumbs from '../components/four-products/Breadcrumbs.astro';
+import '../styles/four-products-global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  breadcrumbs?: { label: string; href?: string }[];
+  schema?: string;
+}
+
+const { title, description, breadcrumbs, schema } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://buyervoice.ai');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <title>{title} | KwantumLabs</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL.href} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={`${title} | KwantumLabs`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL.href} />
+
+  <!-- Organization Schema (site-wide) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KwantumLabs",
+    "url": "https://kwantumlabs.ai",
+    "logo": "https://kwantumlabs.ai/images/kwantumlabs-logo.png",
+    "description": "PhD-level market research at AI speed. Helping product and brand teams quantify what customers think, want, and will pay for.",
+    "foundingDate": "2024",
+    "sameAs": [
+      "https://www.linkedin.com/company/kwantumlabs"
+    ]
+  })} />
+
+  {schema && <script type="application/ld+json" set:html={schema} />}
+</head>
+<body>
+  <Header />
+  {breadcrumbs && breadcrumbs.length > 0 && (
+    <Breadcrumbs items={breadcrumbs} />
+  )}
+  <main>
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>

@@ -1,0 +1,225 @@
+---
+import BaseLayout from './FourProductsBaseLayout.astro';
+import FAQAccordion from '../components/four-products/FAQAccordion.astro';
+import CTABand from '../components/four-products/CTABand.astro';
+
+interface Props {
+  serviceName: string;
+  headline: string;
+  subhead: string;
+  description: string;
+  buyingTriggers: string[];
+  deliverables: { name: string; description: string }[];
+  approach: string[];
+  timeline: string;
+  investment: string;
+  scopeNote: string;
+  faqs: { question: string; answer: string }[];
+  ctaHeading?: string;
+}
+
+const {
+  serviceName,
+  headline,
+  subhead,
+  description,
+  buyingTriggers,
+  deliverables,
+  approach,
+  timeline,
+  investment,
+  scopeNote,
+  faqs,
+  ctaHeading,
+} = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Services', href: '/services/conjoint-analysis' },
+  { label: serviceName },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": f.answer
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title={`${serviceName} | KwantumLabs`}
+  description={subhead}
+  breadcrumbs={breadcrumbs}
+  schema={JSON.stringify(faqSchema)}
+>
+
+  <!-- Hero -->
+  <section class="hero section">
+    <div class="container">
+      <p class="overline">{serviceName}</p>
+      <h1>{headline}</h1>
+      <p class="hero-sub">{subhead}</p>
+      <a href="/contact" class="btn btn-primary">Contact us</a>
+    </div>
+  </section>
+
+  <!-- When to use -->
+  <section class="section section-gray">
+    <div class="container">
+      <h2>When clients come to us for {serviceName}</h2>
+      <ul class="trigger-list">
+        {buyingTriggers.map(trigger => (
+          <li>{trigger}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- What we deliver -->
+  <section class="section">
+    <div class="container">
+      <h2>What you get</h2>
+      <div class="deliverables-list">
+        {deliverables.map(d => (
+          <div class="deliverable">
+            <h4>{d.name}</h4>
+            <p>{d.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Our approach -->
+  <section class="section section-gray">
+    <div class="container approach-content">
+      <h2>How we do it</h2>
+      {approach.map(para => (
+        <p>{para}</p>
+      ))}
+    </div>
+  </section>
+
+  <!-- Timeline and investment -->
+  <section class="section">
+    <div class="container">
+      <h2>Timeline and investment</h2>
+      <div class="timeline-content">
+        <p><strong>Timeline:</strong> {timeline}</p>
+        <p><strong>Investment:</strong> {investment}</p>
+        <p>{scopeNote}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-gray">
+    <div class="container">
+      <h2>Common questions about {serviceName}</h2>
+      <FAQAccordion items={faqs} />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABand heading={ctaHeading || `Have a ${serviceName.toLowerCase()} question? Let's talk about it.`} />
+
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .hero h1 {
+    max-width: 700px;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--color-slate);
+    max-width: 600px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .trigger-list {
+    list-style: none;
+    padding: 0;
+    max-width: var(--max-text-width);
+  }
+
+  .trigger-list li {
+    position: relative;
+    padding: var(--space-sm) 0 var(--space-sm) var(--space-lg);
+    font-size: 16px;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--color-medium-gray);
+  }
+
+  .trigger-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-green);
+  }
+
+  .deliverables-list {
+    max-width: var(--max-text-width);
+  }
+
+  .deliverable {
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-light-gray);
+  }
+
+  .deliverable h4 {
+    font-size: 17px;
+    margin-bottom: var(--space-xs);
+  }
+
+  .deliverable p {
+    font-size: 15px;
+    color: var(--color-slate);
+    margin: 0;
+    max-width: none;
+  }
+
+  .approach-content {
+    max-width: var(--max-text-width);
+  }
+
+  .approach-content h2 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .approach-content p {
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: none;
+  }
+
+  .timeline-content {
+    max-width: var(--max-text-width);
+  }
+
+  .timeline-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  h2 {
+    margin-bottom: var(--space-xl);
+  }
+</style>

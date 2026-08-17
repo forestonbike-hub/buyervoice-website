@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../../layouts/FourProductsBaseLayout.astro';
+
+const breadcrumbs = [{ label: 'Privacy Policy' }];
+---
+
+<BaseLayout
+  title="Privacy policy"
+  description="KwantumLabs privacy policy. How we collect, use, and protect your information."
+  breadcrumbs={breadcrumbs}
+>
+
+  <section class="section">
+    <div class="container privacy-content">
+      <h1>Privacy policy</h1>
+      <p class="updated">Last updated: March 6, 2026</p>
+
+      <h2>Information we collect</h2>
+      <p>When you submit a form on our website, we collect the information you provide: your name, email address, company name, role, and any additional details you share about your research needs. We use this information solely to respond to your inquiry and, if appropriate, to discuss potential research engagements.</p>
+
+      <h2>How we use your information</h2>
+      <p>We use the information you provide to:</p>
+      <ul>
+        <li>Respond to your inquiry</li>
+        <li>Communicate with you about potential research engagements</li>
+        <li>Improve our website and services</li>
+      </ul>
+      <p>We do not sell, rent, or share your personal information with third parties for their marketing purposes.</p>
+
+      <h2>Analytics</h2>
+      <p>We use Google Analytics to understand how visitors interact with our website. This service collects anonymized data about page views, referral sources, and general usage patterns. You can opt out of Google Analytics by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>.</p>
+
+      <h2>Cookies</h2>
+      <p>Our website uses essential cookies to ensure basic functionality. Analytics cookies are used by Google Analytics as described above. We do not use advertising cookies or third-party tracking cookies.</p>
+
+      <h2>Data security</h2>
+      <p>We implement reasonable security measures to protect your personal information from unauthorized access, alteration, or destruction. Form submissions are transmitted over encrypted connections (HTTPS).</p>
+
+      <h2>Your rights</h2>
+      <p>You may request access to, correction of, or deletion of your personal information at any time by contacting us at <a href="mailto:contact@kwantumlabs.ai">contact@kwantumlabs.ai</a>.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>We may update this privacy policy from time to time. Changes will be posted on this page with an updated revision date.</p>
+
+      <h2>Contact</h2>
+      <p>If you have questions about this privacy policy, contact us at <a href="mailto:contact@kwantumlabs.ai">contact@kwantumlabs.ai</a>.</p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .privacy-content {
+    max-width: var(--max-text-width);
+  }
+
+  h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .updated {
+    font-size: 14px;
+    color: var(--color-slate);
+    margin-bottom: var(--space-2xl);
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  ul {
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  li {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+  }
+</style>

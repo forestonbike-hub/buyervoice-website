@@ -1,0 +1,1246 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Segmentation Workflow | BuyerVoice.AI</title>
+  <meta name="description" content="How BuyerVoice.AI moves from interview transcripts to defensible market segments and audience-specific recommendations." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-green: var(--ink);
+      --color-deep-green: var(--ink);
+      --color-black: #1A1A1A;
+      --color-white: #FFFFFF;
+      --color-slate: var(--rule);
+      --color-light-gray: var(--card-bg);
+      --color-medium-gray: var(--border);
+      --color-amber: #D97706;
+      --color-amber-light: #FEF3C7;
+      --color-red: #DC2626;
+      --color-red-light: #FEE2E2;
+      --color-blue: #2563EB;
+      --color-blue-light: #EFF6FF;
+      --color-green-light: transparent;
+      --font-heading: var(--serif), Georgia, serif;
+      --font-body: var(--sans);
+      --max-width: 1200px;
+      --max-text-width: 760px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-black);
+      background: var(--color-white);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-medium-gray);
+      z-index: 100;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-black);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-slate);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 2px;
+      transition: color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--color-green);
+      background: var(--color-green-light);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--color-green);
+      color: var(--color-white);
+      padding: 72px 24px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* SECTIONS */
+    section { padding: 72px 24px; }
+    section.gray { background: var(--color-light-gray); }
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-number {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-green);
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--color-slate);
+      max-width: 640px;
+    }
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      margin-top: 32px;
+    }
+    h3:first-child { margin-top: 0; }
+    p { color: var(--color-slate); margin-bottom: 16px; line-height: 1.65; }
+    p:last-child { margin-bottom: 0; }
+
+    /* FLOWCHART */
+    .flow-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: stretch;
+      margin-top: 40px;
+    }
+    .flow-step {
+      display: flex;
+      align-items: stretch;
+      position: relative;
+    }
+    .flow-box {
+      background: var(--color-white);
+      border: 2px solid var(--color-medium-gray);
+      border-radius: 2px;
+      padding: 20px 16px;
+      text-align: center;
+      width: 128px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+    .flow-box.new {
+      border-color: var(--color-green);
+      background: var(--color-green-light);
+    }
+    .flow-num {
+      width: 28px;
+      height: 28px;
+      background: var(--color-green);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .flow-box.new .flow-num { background: var(--color-deep-green); }
+    .flow-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-black);
+      line-height: 1.3;
+    }
+    .flow-new-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-green);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      color: var(--color-medium-gray);
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    /* THREE COLUMN CARDS */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    @media (max-width: 768px) {
+      .cards-3 { grid-template-columns: 1fr; }
+      .flow-wrap { justify-content: flex-start; }
+    }
+    .card {
+      background: var(--color-white);
+      border: 1px solid var(--color-medium-gray);
+      border-radius: 2px;
+      padding: 24px;
+    }
+    .card.green { border-top: 3px solid var(--color-green); }
+    .card.amber { border-top: 3px solid var(--color-amber); }
+    .card.blue { border-top: 3px solid var(--color-blue); }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-black);
+    }
+    .card-title.green { color: var(--color-deep-green); }
+    .card-title.amber { color: var(--color-amber); }
+    .card-title.blue { color: var(--color-blue); }
+    .card ul { padding-left: 18px; color: var(--color-slate); }
+    .card li { margin-bottom: 6px; font-size: 14px; line-height: 1.5; }
+
+    /* CALLOUT BOXES */
+    .callout {
+      border-left: 4px solid var(--color-green);
+      background: var(--color-green-light);
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0;
+      margin: 24px 0;
+    }
+    .callout.warning {
+      border-left-color: var(--color-amber);
+      background: var(--color-amber-light);
+    }
+    .callout.danger {
+      border-left-color: var(--color-red);
+      background: var(--color-red-light);
+    }
+    .callout p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--color-black);
+      line-height: 1.5;
+    }
+    .callout strong { color: var(--color-black); }
+
+    /* TABLES */
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      background: var(--color-green);
+      color: white;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-medium-gray);
+      color: var(--color-slate);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: var(--color-light-gray); }
+    tr:last-child td { border-bottom: none; }
+    td strong { color: var(--color-black); }
+
+    /* CHECKLIST */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-medium-gray);
+      font-size: 14px;
+      color: var(--color-slate);
+      line-height: 1.5;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--color-medium-gray);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* STEP HEADER */
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-green);
+      color: white;
+      padding: 4px 12px 4px 4px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .step-badge-num {
+      width: 24px;
+      height: 24px;
+      background: white;
+      color: var(--color-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .step-badge-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* TWO COLUMN */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* SEGMENT PROFILE TABLE */
+    .profile-table th:first-child { width: 18%; }
+
+    /* FOOTER */
+    footer {
+      background: var(--color-black);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+    footer span { color: rgba(255,255,255,0.8); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">BuyerVoice.AI</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#criterion-variable">Criterion Variable</a></li>
+      <li><a href="#study-design">Study Design</a></li>
+      <li><a href="#coding">Coding</a></li>
+      <li><a href="#dimensions">Dimensions</a></li>
+      <li><a href="#variables">Variables</a></li>
+      <li><a href="#checks">Checks</a></li>
+      <li><a href="#analysis">Analysis</a></li>
+      <li><a href="#evaluation">Evaluation</a></li>
+      <li><a href="#reporting">Reporting</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Internal Methodology Reference</p>
+  <h1>Segmentation Workflow</h1>
+  <p>How BuyerVoice.AI moves from interview transcripts to defensible market segments and audience-specific recommendations for marketing, sales, and product teams.</p>
+</div>
+
+<!-- SECTION: OVERVIEW -->
+<section class="gray" id="overview">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">The Complete Workflow</div>
+      <h2>Eight Steps from Transcripts to Recommendations</h2>
+      <p class="section-subtitle">Steps 3 and 4 are newly added to the existing pipeline. Everything else builds on the coding infrastructure already in place.</p>
+    </div>
+    <div class="flow-wrap">
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">1</div>
+          <div class="flow-label">Study Design</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">2</div>
+          <div class="flow-label">Transcript Coding</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box new">
+          <div class="flow-new-badge">New</div>
+          <div class="flow-num">3</div>
+          <div class="flow-label">Dimension Reduction</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box new">
+          <div class="flow-new-badge">New</div>
+          <div class="flow-num">4</div>
+          <div class="flow-label">Variable Classification</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">5</div>
+          <div class="flow-label">Pre-Analysis Checks</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">6</div>
+          <div class="flow-label">Cluster Analysis</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">7</div>
+          <div class="flow-label">Segment Validation</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-box">
+          <div class="flow-num">8</div>
+          <div class="flow-label">Recommendations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 40px;">
+      <p><strong>The foundational principle:</strong> Segmentation purpose must drive variable selection — not the other way around. Before any data is collected or analyzed, identify which decisions this segmentation needs to inform and which audiences will act on the findings. The method follows the purpose (Yankelovich &amp; Meer, 2006).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: OUTCOME VARIABLE -->
+<section id="criterion-variable">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Pre-Study Decision</div>
+      <h2>Choosing Your Criterion Variable</h2>
+      <p class="section-subtitle">The criterion variable is the single most important design decision in a segmentation study. It must be agreed before fieldwork begins and captured in the screener — never inferred from the interview.</p>
+    </div>
+
+    <h3>The Default: Current Tool Selection</h3>
+    <p>For most BuyerVoice.AI studies, <strong>current tool selection</strong> (which product the participant is actively using today) is the right criterion variable. It is objective (verifiable from the screener), binary or categorical (clean to work with statistically), and directly relevant to the client — they want to know who uses them versus competitors.</p>
+    <p style="margin-top: 12px;">Capture it as a screener field (for example, Q4: "What is the main tool your team uses for recruiting today?"). This becomes the ground truth for cluster validation. It must never come from the interview itself — if you infer adoption from what someone says in the interview, the criterion variable is contaminated.</p>
+
+    <div class="callout warning" style="margin-top: 20px; margin-bottom: 28px;">
+      <p><strong>Why current adoption has limits.</strong> Current adoption is backwards-looking — it tells you who already bought. At low market penetration (under 25% of your sample), the criterion variable has poor variance. Most of the comparison is built on a small group of users, confidence intervals on cluster-level adoption rates become wide, and validation statistics lose power. In those cases, consider evaluation status (is this person actively evaluating alternatives right now?) as the primary criterion.</p>
+    </div>
+
+    <h3>Criterion Variable Selection Framework</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client's primary question</th>
+            <th>Criterion variable</th>
+            <th>When to use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Who buys us and why?</td>
+            <td>Current product adoption (binary)</td>
+            <td>Best when client has 25%+ penetration in sample</td>
+          </tr>
+          <tr>
+            <td>Who is in-market right now?</td>
+            <td>Active evaluation status (binary)</td>
+            <td>Best at any penetration level; forward-looking</td>
+          </tr>
+          <tr>
+            <td>Who would pay our price?</td>
+            <td>Willingness to pay tier (ordinal)</td>
+            <td>Best for pricing strategy studies</td>
+          </tr>
+          <tr>
+            <td>Who would switch from a competitor?</td>
+            <td>Switching likelihood (binary or ordinal)</td>
+            <td>Best for competitive displacement studies</td>
+          </tr>
+          <tr>
+            <td>Who is at risk of churning?</td>
+            <td>Retention risk signal</td>
+            <td>Best for post-sale / customer success studies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top: 20px;">
+      <p><strong>One primary criterion, secondary cross-tabs.</strong> Choose one criterion variable that anchors the segmentation. After clustering, you can cross-tab each segment against secondary criterion variables (WTP, switching intent) as descriptor dimensions. This adds texture without distorting the cluster structure. The primary criterion is not debated after data collection — it is agreed before fieldwork begins.</p>
+    </div>
+
+    <h3>The Temporal Contamination Risk</h3>
+    <p>Interview questions fall into two temporal layers. This distinction determines whether a variable can be a clustering input.</p>
+
+    <div class="cards-3" style="grid-template-columns: 1fr 1fr; max-width: 760px;">
+      <div class="card green">
+        <div class="card-title green">Module A: Historical Evaluation</div>
+        <p style="font-size:13px;margin-bottom:8px;">Questions about the <strong>past evaluation process</strong> — what triggered it, what criteria drove the decision, who was involved, why alternatives were rejected.</p>
+        <p style="font-size:13px;font-weight:600;color:#1a7a5e;">Upstream of the tool choice. Basis variable candidates.</p>
+        <ul style="font-size:13px;margin-top:8px;">
+          <li>What triggered the evaluation?</li>
+          <li>What criteria mattered most?</li>
+          <li>Why was the previous tool rejected?</li>
+          <li>Who else was involved in the decision?</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title amber">Module B: Current State</div>
+        <p style="font-size:13px;margin-bottom:8px;">Questions about <strong>current satisfaction, gaps, and needs</strong> — describing what the participant experiences with the tool they chose.</p>
+        <p style="font-size:13px;font-weight:600;color:#b45309;">Downstream of the tool choice. Descriptor variables by default.</p>
+        <ul style="font-size:13px;margin-top:8px;">
+          <li>How satisfied are you with your current tool?</li>
+          <li>What features do you wish it had?</li>
+          <li>What frustrates you about it?</li>
+          <li>What does your current workflow look like?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warning" style="margin-top: 20px;">
+      <p><strong>Module B data must not be used as basis variables.</strong> A participant who chose Ease-of-Use Tool A may now report ease of use as highly important — because the tool shaped their expectations, not because ease of use predicted the choice. Using Module B data as basis variables introduces reverse causality: the outcome (tool choice) partly causes the variables you are using to predict it. The resulting clusters group people by downstream effects rather than upstream drivers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 1 -->
+<section id="study-design">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">1</div><div class="step-badge-label">Step 1</div></div>
+    <div class="section-header">
+      <h2>Study Design</h2>
+      <p class="section-subtitle">Decisions made here determine what recommendations are possible. Problems at this stage cannot be fixed in analysis.</p>
+    </div>
+
+    <h3>The Three-Audience Test</h3>
+    <p>Before writing a single interview question, identify which downstream audiences will use the segmentation findings. Each audience needs a different type of variable from the data.</p>
+
+    <div class="cards-3">
+      <div class="card green">
+        <div class="card-title green">Marketing</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs to know what different buyers respond to and what language they use.</p>
+        <ul>
+          <li>Pain points in the participant's own words</li>
+          <li>Evaluation criteria and decision filters</li>
+          <li>What messaging resonates or triggers rejection</li>
+          <li>What "winning" looks like in their mind</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title amber">Sales</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs to identify which type of buyer they are speaking with and what to say differently.</p>
+        <ul>
+          <li>Observable signals: current tool situation</li>
+          <li>Buying timeline and who else is involved</li>
+          <li>What triggered the evaluation</li>
+          <li>Switching motivation: capability gap vs. status quo</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">Product</div>
+        <p style="font-size:13px;margin-bottom:12px;">Needs to know which capabilities matter to different buyers and what blocks adoption.</p>
+        <ul>
+          <li>Feature value hierarchy (what must the tool do?)</li>
+          <li>Table-stakes requirements and disqualifiers</li>
+          <li>Current workarounds and friction points</li>
+          <li>What would accelerate purchase or adoption</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout warning" style="margin-top: 24px;">
+      <p><strong>If your interview guide only covers one audience, you can only make recommendations to one audience.</strong> The gap will be visible in the deliverable and the client will notice.</p>
+    </div>
+
+    <h3>Sample Size Requirements</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Intended Segments (k)</th>
+            <th>Minimum N</th>
+            <th>Preferred N</th>
+            <th>Max Basis Variables</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>2 segments</strong></td><td>40</td><td>60</td><td>4-6</td></tr>
+          <tr><td><strong>3 segments</strong></td><td>60</td><td>90</td><td>6-9</td></tr>
+          <tr><td><strong>4 segments</strong></td><td>80</td><td>120</td><td>8-12</td></tr>
+          <tr><td><strong>5 segments</strong></td><td>100</td><td>150</td><td>10-15</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Pre-specify k before data collection.</strong> Record the expected number of segments and your rationale. If statistical criteria during analysis point to a different k, that is fine — but document why you deviated. Choosing k after seeing the data to fit a narrative is circular and reduces validity.</p>
+    </div>
+
+    <h3>Required Screener Fields</h3>
+    <p>Capture firmographic variables in the screener, not the interview. Screener data is cleaner, consistently formatted, and does not depend on interview recall or coding.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Why it belongs in the screener</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Company size</strong></td><td>Primary firmographic clustering variable; must be verified, not self-reported in conversation</td></tr>
+          <tr><td><strong>Seniority level</strong></td><td>Predicts budget authority and decision-making role</td></tr>
+          <tr><td><strong>Budget authority</strong></td><td>Defines who can actually make the purchase decision</td></tr>
+          <tr><td><strong>Current tool brand(s)</strong></td><td>Competitive context; becomes a descriptor variable</td></tr>
+          <tr><td><strong>Product adoption flag</strong></td><td><strong>The criterion variable.</strong> Must come from the screener — not inferred from the interview — to avoid circularity in cluster validation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 2 -->
+<section class="gray" id="coding">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">2</div><div class="step-badge-label">Step 2</div></div>
+    <div class="section-header">
+      <h2>Coding the Transcripts</h2>
+      <p class="section-subtitle">The existing BuyerVoice.AI pipeline. This step is not new — it is documented separately in the How to Code Transcripts reference.</p>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Discovery Phase (4 agents)</h3>
+        <p>Two extractors independently pull meaning units from each response. A synthesizer merges both extractions and groups meaning units into themes. A validator stress-tests the codebook for coherence and coverage.</p>
+        <p><strong>Output:</strong> <code>codebook.json</code> — human-reviewed before proceeding to application.</p>
+      </div>
+      <div>
+        <h3>Application Phase (3 agents)</h3>
+        <p>An inclusive coder and a conservative coder independently code each participant against the codebook. An arbiter resolves disagreements. Cohen's Kappa is computed per code and overall.</p>
+        <p><strong>Output:</strong> <code>coded/final_codes.json</code> — one object per participant with firmographic fields and theme arrays.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>What comes out of this step:</strong> A JSON file with one object per participant. Fields include screener firmographics (company size, seniority, current tool), theme presence arrays from interview questions, and any ordinal responses captured in structured questions. This data is rich but not yet structured for cluster analysis — that is what Steps 3 and 4 do.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 3 -->
+<section id="dimensions">
+  <div class="section-inner">
+    <div class="step-badge" style="background: var(--color-deep-green);"><div class="step-badge-num" style="color: var(--color-deep-green);">3</div><div class="step-badge-label">Step 3 — New</div></div>
+    <div class="section-header">
+      <h2>Dimension Reduction</h2>
+      <p class="section-subtitle">Going from 20-30+ coded theme variables to 5-8 composite dimensions suitable for cluster analysis. This step is required — it is not optional cleanup.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="callout" style="margin:0;">
+        <p><strong>Why raw themes can't go into clustering:</strong> With many variables relative to participants, distance measures become unreliable. Variables that happen to correlate inflate the weight of whatever they share. The resulting clusters are unstable and hard to reproduce. You need at least 10 participants per clustering variable.</p>
+      </div>
+      <div class="callout warning" style="margin:0;">
+        <p><strong>The loquacity bias problem:</strong> Theme codes are binary (mentioned or not). Participants who talk more will have more codes as "present" — not because they have more needs, but because they generated more text. Without aggregation, you risk clusters that separate "people who talked a lot" from "people who gave brief answers."</p>
+      </div>
+    </div>
+
+    <h3>The Four-Step Reduction Process</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>What you do</th><th>Rule</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Variance filter</strong></td>
+            <td>For each binary theme code, calculate the proportion of participants coded positive</td>
+            <td>Exclude any theme below 20% or above 80% — move to descriptor</td>
+          </tr>
+          <tr>
+            <td><strong>2. Group redundant themes</strong></td>
+            <td>Identify themes that tend to co-occur in the same participants — they measure the same underlying construct</td>
+            <td>Give each group a dimension name representing the underlying construct, not the individual themes</td>
+          </tr>
+          <tr>
+            <td><strong>3. Create composite scores</strong></td>
+            <td>For binary theme groups: dimension = 1 if any component theme is present, 0 if none. For ordinal groups: standardize then average</td>
+            <td>OR logic for binary; standardize + average for ordinal or mixed</td>
+          </tr>
+          <tr>
+            <td><strong>4. Check the ratio</strong></td>
+            <td>Count total basis variables and divide N by that count</td>
+            <td>Must be ≥ 10 participants per variable. At N=70: maximum 7 variables</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Example: Maze Study Dimension Groupings</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension Name</th><th>Source</th><th>Component Themes / Fields</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Organizational Complexity</strong></td>
+            <td>Screener (ordinal)</td>
+            <td>Company size tier, UX maturity, stakeholder breadth</td>
+          </tr>
+          <tr>
+            <td><strong>Decision Authority</strong></td>
+            <td>Screener (ordinal)</td>
+            <td>Seniority level, budget authority, procurement involvement</td>
+          </tr>
+          <tr>
+            <td><strong>Quality Orientation</strong></td>
+            <td>Interview (composite binary)</td>
+            <td>Accuracy concern, research rigor requirement, output quality frustration, AI trust concern</td>
+          </tr>
+          <tr>
+            <td><strong>Budget Constraint</strong></td>
+            <td>Interview (composite binary)</td>
+            <td>Price sensitivity, small-team discount need, budget authority limitation</td>
+          </tr>
+          <tr>
+            <td><strong>Openness to Change</strong></td>
+            <td>Interview + screener (composite binary)</td>
+            <td>Switching motivation: capability gap, competitive context: augmenting, evaluation mode: active</td>
+          </tr>
+          <tr>
+            <td><strong>Workflow Integration Need</strong></td>
+            <td>Interview (composite binary)</td>
+            <td>Integration requirement, tool consolidation motivation, stakeholder sharing need</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--color-slate);margin-top:8px;">Result: 6 dimensions for N=70 = 11.7 participants per variable. Above the 10:1 minimum. The original 30 attributes reduced without losing meaningful signal.</p>
+  </div>
+</section>
+
+<!-- SECTION: STEP 4 -->
+<section class="gray" id="variables">
+  <div class="section-inner">
+    <div class="step-badge" style="background: var(--color-deep-green);"><div class="step-badge-num" style="color: var(--color-deep-green);">4</div><div class="step-badge-label">Step 4 — New</div></div>
+    <div class="section-header">
+      <h2>Variable Classification</h2>
+      <p class="section-subtitle">Every coded variable must be assigned to one of three buckets before any analysis begins. This classification is a deliberate decision, not a default.</p>
+    </div>
+
+    <div class="cards-3">
+      <div class="card green">
+        <div class="card-title green">Basis Variables</div>
+        <p style="font-size:13px;">Go into the cluster analysis. Determine which cluster each participant falls into. Must pass all three decision tests.</p>
+        <p style="font-size:13px;"><strong>Typical examples:</strong> Company size, seniority, switching motivation, openness to change, budget constraint composite, quality orientation composite</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--color-red);">
+        <div class="card-title" style="color: var(--color-red);">Criterion Variables</div>
+        <p style="font-size:13px;">Do NOT go into clustering. Used after clustering to validate that segments predict something useful. These are what you are trying to explain.</p>
+        <p style="font-size:13px;"><strong>Typical examples:</strong> Product adoption, likelihood to switch, NPS, willingness to pay, current satisfaction rating</p>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">Descriptor Variables</div>
+        <p style="font-size:13px;">Do NOT go into clustering. Used after clustering to describe and communicate each segment to the client. Make segments communicable.</p>
+        <p style="font-size:13px;"><strong>Typical examples:</strong> Job title, industry, current tool brand, verbatim quotes, decision rules, feature priorities</p>
+      </div>
+    </div>
+
+    <div class="callout danger" style="margin-top: 32px;">
+      <p><strong>Critical rule: Criterion variables must never enter clustering.</strong> Product adoption, likelihood to buy, current tool brand — if you put these into clustering, the algorithm groups people by the thing you are trying to predict. The resulting segments will tell you nothing about why buyers behave the way they do.</p>
+    </div>
+
+    <h3>The Three Decision Tests</h3>
+    <p>A variable must pass all three tests to be a basis variable. Fail any one and it goes to descriptor.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Test</th><th>Question to ask</th><th>Rule if it fails</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Variance</strong></td>
+            <td>Does this variable vary across participants? (Binary: is it between 9-91% positive?)</td>
+            <td>Move to descriptor — it describes the sample but doesn't differentiate it</td>
+          </tr>
+          <tr>
+            <td><strong>2. Purpose</strong></td>
+            <td>If two participants differ on this variable, would marketing, sales, or product do anything differently for each?</td>
+            <td>Move to descriptor — it is descriptive color, not a strategic differentiator</td>
+          </tr>
+          <tr>
+            <td><strong>3. Redundancy</strong></td>
+            <td>Is this variable already captured by another variable in the basis set (they tend to co-occur)?</td>
+            <td>Consolidate into a composite — both measuring the same dimension inflates that dimension's weight</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Variable Type Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variable Type</th><th>Typical Bucket</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td>Company size (screener)</td><td>Basis</td><td>Strongly predicts needs and purchase behavior in B2B markets</td></tr>
+          <tr><td>Seniority level (screener)</td><td>Basis</td><td>Predicts budget authority, decision role, evaluation criteria</td></tr>
+          <tr><td>Product adoption flag (screener)</td><td>Criterion</td><td>This is what you are trying to predict — never a basis variable</td></tr>
+          <tr><td>Current tool brand (screener)</td><td>Descriptor</td><td>Describes current state; is an outcome of past purchase, not a driver of future needs</td></tr>
+          <tr><td>Binary theme presence (interview)</td><td>Descriptor (default) or Basis if passes all 3 tests</td><td>Too granular alone; aggregate into composite dimensions first</td></tr>
+          <tr><td>Switching motivation (interview)</td><td>Basis</td><td>Strongly predicts evaluation mode and openness to new tools</td></tr>
+          <tr><td>Satisfaction rating (interview)</td><td>Criterion</td><td>Measures current state, not an underlying buyer need</td></tr>
+          <tr><td>Feature value rating (interview)</td><td>Descriptor or Basis</td><td>Basis for the 1-2 most differentiating features; descriptor for the rest</td></tr>
+          <tr><td>Verbatim quotes</td><td>Descriptor only</td><td>Illustrative; never quantitative</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 5 -->
+<section id="checks">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">5</div><div class="step-badge-label">Step 5</div></div>
+    <div class="section-header">
+      <h2>Pre-Analysis Checks</h2>
+      <p class="section-subtitle">Answer all six questions before running any cluster analysis. If you cannot answer yes to all of them, stop and resolve the issue first.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Question</th><th>If yes</th><th>If no</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Is N sufficient for the pre-specified k?</strong></td>
+            <td>Proceed</td>
+            <td>Do not proceed. Report the sample size constraint to the client. Consider consolidating to a lower k that the sample can support.</td>
+          </tr>
+          <tr>
+            <td><strong>Has the variance filter been applied to all binary theme codes?</strong></td>
+            <td>Proceed</td>
+            <td>Apply the filter now. Any theme below 9% or above 91% prevalence must be moved to descriptor before continuing.</td>
+          </tr>
+          <tr>
+            <td><strong>Are criterion variables explicitly excluded from the basis variable set?</strong></td>
+            <td>Proceed</td>
+            <td>Remove them now. List them in the descriptor dataset for post-clustering validation.</td>
+          </tr>
+          <tr>
+            <td><strong>Is the total basis variable count within the N/10 ratio?</strong></td>
+            <td>Proceed</td>
+            <td>Remove the weakest differentiators until the ratio is met. Weakest = lowest variance or weakest theoretical connection to purchase behavior.</td>
+          </tr>
+          <tr>
+            <td><strong>Do the basis variables include at least one firmographic variable?</strong></td>
+            <td>Proceed</td>
+            <td>Add company size or seniority as a basis variable. Pure needs-based segmentation produces segments sales cannot identify without a full interview.</td>
+          </tr>
+          <tr>
+            <td><strong>Has a human researcher reviewed the dimension groupings?</strong></td>
+            <td>Proceed</td>
+            <td>Get a second researcher to review the groupings before running. Dimension groupings are a theoretical claim — they should not be made by one person without review.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 6 -->
+<section class="gray" id="analysis">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">6</div><div class="step-badge-label">Step 6</div></div>
+    <div class="section-header">
+      <h2>Running the Cluster Analysis</h2>
+      <p class="section-subtitle">Choosing the right distance metric, selecting k, and understanding the simultaneous approach.</p>
+    </div>
+
+    <h3>Default Pipeline: Block-wise Specific MCA + Ward</h3>
+    <p>When the basis set is dominated by binary code variables — which is the usual case for interview studies — the default pipeline is block-wise specific Multiple Correspondence Analysis followed by Ward's hierarchical clustering. Each conceptual block of codes (pain points, evaluation criteria, rejection reasons, etc.) is run through its own specific MCA to drop shared-absence artifacts, the Benzécri (1979) eigenvalue correction is applied so variance explained reflects genuine structure, and the retained dimensions are z-standardized and fed into Ward's minimum-variance linkage. Ward is deterministic and produces an interpretable dendrogram; it is the natural partner for Euclidean distance on MCA scores.</p>
+    <p><strong>Why not Gower + PAM:</strong> Gower + PAM handles mixed types but leaves the basis set at its raw width. With 60-140 binary codes and N ≈ 180, that is fragile and the dimensions cannot be described to a client. Block-wise MCA compresses the code set into 9-12 interpretable axes, and a 200-iteration bootstrap on the <em>full</em> pipeline (MCA refit + standardize + Ward) tests whether the compression and the clustering are jointly stable. Gower + PAM remains the right choice when the basis set is genuinely mixed-type and mostly non-binary; see <code>research/segmentation-framework-notes.md</code> § 6.9 for that branch.</p>
+    <p><strong>Company size is run both ways.</strong> Run A uses only psychographic blocks; Run B adds <code>log(company_size)</code> as a standalone basis variable. We compare with the Adjusted Rand Index and ship whichever the data supports — if Run A's segments already track size tiers (ARI &gt; 0.60), size is redundant; if Run A and Run B produce essentially the same solution (ARI &gt; 0.80), we ship Run A for parsimony; otherwise Run B is telling us something Run A cannot, and it wins.</p>
+
+    <h3>Selecting k: Three Criteria</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criterion type</th><th>Method</th><th>Guidance</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Statistical</strong></td>
+            <td>Silhouette score, BIC (if using model-based clustering), gap statistic</td>
+            <td>Run k=2 through k=6. The k with the highest silhouette score (or lowest BIC) is the statistical optimum. This is the starting point, not the final answer.</td>
+          </tr>
+          <tr>
+            <td><strong>Practical</strong></td>
+            <td>Substantiality check: minimum segment size</td>
+            <td>No segment should represent fewer than 8-10% of the sample. At N=70, that means no segment with fewer than 6-7 participants. If a k produces a segment below this threshold, consolidate to a lower k.</td>
+          </tr>
+          <tr>
+            <td><strong>Interpretive</strong></td>
+            <td>Researcher review of segment profiles</td>
+            <td>Do the segments make strategic sense? Are they meaningfully different from each other in ways that would lead to different marketing, sales, or product decisions? If two segments look almost identical, merge them.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <p><strong>The 3-4 B2B expectation:</strong> Practitioners (B2B International) observe that B2B markets, after applying the substantiality filter, typically yield 3-4 actionable segments. This is an empirical observation, not a rule. But if your analysis is pointing to k=7 or k=8 at N=70, that is a signal to investigate whether you have too many basis variables or whether the distance matrix is being distorted by high dimensionality.</p>
+    </div>
+
+    <h3>Why Simultaneous (Not Sequential) at Our Scale</h3>
+    <p>Sequential segmentation (split by firmographics first, then find needs-based sub-segments within each group) leaves you with roughly 20-33 participants per firmographic tier at N=70-100. Finding stable sub-segments within 20 people is not reliable.</p>
+    <p>The simultaneous approach feeds all basis variables — firmographic and needs-based together — into a single clustering run using all N observations for every grouping decision. Firmographic variables are clustering inputs, not pre-filters. The resulting segments are naturally hybrid, defined by both who a buyer is and what they need.</p>
+  </div>
+</section>
+
+<!-- SECTION: STEP 7 -->
+<section id="evaluation">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">7</div><div class="step-badge-label">Step 7</div></div>
+    <div class="section-header">
+      <h2>Evaluating Segment Quality</h2>
+      <p class="section-subtitle">Before presenting segments to a client, every segment solution must pass Kotler's five criteria and a bootstrap stability test.</p>
+    </div>
+
+    <h3>Kotler's Five Criteria</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criterion</th><th>Definition</th><th>Common failure mode</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Measurable</strong></td>
+            <td>Size and characteristics can be quantified</td>
+            <td>Segment defined by latent attitudes with no way to measure prevalence in the broader market</td>
+          </tr>
+          <tr>
+            <td><strong>Substantial</strong></td>
+            <td>Large enough to warrant a distinct strategy</td>
+            <td>Segments with n&lt;5 in a 70-person study; any segment below 8-10% of sample</td>
+          </tr>
+          <tr>
+            <td><strong>Accessible</strong></td>
+            <td>Can be reached through distinct marketing and sales actions</td>
+            <td>No channel or media profile; no observable identifier that sales can use without a full interview</td>
+          </tr>
+          <tr>
+            <td><strong>Differentiable</strong></td>
+            <td>Responds differently to the marketing mix</td>
+            <td>Two segments that share the same core pain points and the same evaluation criteria</td>
+          </tr>
+          <tr>
+            <td><strong>Actionable</strong></td>
+            <td>Effective programs can be designed for each segment</td>
+            <td>No clear recommendation attached to a segment for any of the three audiences</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Bootstrap Stability Testing</h3>
+    <p>Dolnicar, Grun &amp; Leisch (2018) argue that bootstrap stability analysis is non-negotiable before reporting segment solutions. Without it, you cannot know whether the segments are a feature of the population or an artifact of this particular sample.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Draw B = 200 bootstrap resamples of the data (sampling with replacement). B controls the precision of the mean Jaccard estimate via SE = &sigma; / &radic;B and does not depend on N; 200 is Dolnicar et al.'s recommended floor for published results, and Efron &amp; Tibshirani (1993) place B = 50-200 as the defensible range for standard-error estimation.</td></tr>
+          <tr><td>2</td><td>Re-run the cluster analysis on each resample using the same k and distance metric</td></tr>
+          <tr><td>3</td><td>Measure how consistently the same participants cluster together across resamples (Jaccard or Rand index)</td></tr>
+          <tr><td>4</td><td>Report the stability index in the methodology section of the deliverable</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warning" style="margin-top: 16px;">
+      <p><strong>Stability threshold:</strong> A stability index above 0.75 is adequate. Below 0.6 means the cluster solution is unreliable — different samples would produce different segments. If stability is below threshold, consolidate to a simpler k.</p>
+    </div>
+
+    <h3>The Identifiability Requirement</h3>
+    <p>Each segment must have at least two observable identifiers — signals a sales rep can assess from LinkedIn, a company website, or the first five minutes of a discovery call — without needing to conduct a full research interview. If you cannot name two observable identifiers for a segment, it fails the Accessible criterion and cannot be used for sales targeting.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Observable signal type</th><th>Where to find it</th></tr></thead>
+        <tbody>
+          <tr><td>Company size</td><td>LinkedIn, public data, company website</td></tr>
+          <tr><td>Seniority and job title</td><td>LinkedIn</td></tr>
+          <tr><td>Industry and company type</td><td>LinkedIn, company website</td></tr>
+          <tr><td>Current tech stack</td><td>G2, Capterra, job postings</td></tr>
+          <tr><td>Buying signals</td><td>Recent job postings, funding announcements, company growth signals</td></tr>
+          <tr><td>Discovery call signals</td><td>Current tool pain point, whether evaluating to replace or augment</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: STEP 8 -->
+<section class="gray" id="reporting">
+  <div class="section-inner">
+    <div class="step-badge"><div class="step-badge-num">8</div><div class="step-badge-label">Step 8</div></div>
+    <div class="section-header">
+      <h2>Reporting to Three Audiences</h2>
+      <p class="section-subtitle">One segmentation. Three translations. The same cluster solution gets described differently for marketing, sales, and product — each in the language and format that audience can act on.</p>
+    </div>
+
+    <div class="cards-3">
+      <div class="card green">
+        <div class="card-title green">For Marketing</div>
+        <ul>
+          <li>The pain point in the segment's own words (use actual quotes)</li>
+          <li>What they are trying to accomplish (job-to-be-done framing)</li>
+          <li>What messaging resonates vs. triggers rejection</li>
+          <li>Which channels and content formats reach this segment</li>
+          <li>The one or two proof points that matter most to them</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title amber">For Sales</div>
+        <ul>
+          <li>The 2-3 observable identifiers (firmographics + one behavioral signal)</li>
+          <li>What they say on a discovery call that reveals their segment</li>
+          <li>What to lead with in the pitch</li>
+          <li>Which objections to expect and how to handle them</li>
+          <li>When to pursue vs. deprioritize based on segment fit</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title blue">For Product</div>
+        <ul>
+          <li>Top 2-3 capability requirements (what the tool must do)</li>
+          <li>Table-stakes blockers (what disqualifies a tool immediately)</li>
+          <li>What would move this segment from consideration to purchase</li>
+          <li>What roadmap investment would increase adoption for this segment</li>
+          <li>What they currently work around — friction the product can remove</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Presenting Segment Criterion Data</h3>
+    <p>After clustering, each segment is cross-tabbed against the criterion variable. <strong>Lead with relative risk ratios as the primary metric</strong> in all client deliverables. Express each segment's likelihood relative to the overall sample mean — not relative to another segment.</p>
+
+    <div class="callout insight" style="margin: 16px 0;">
+      <p><strong>Why ratios, not weighted percentages:</strong> Post-stratification weights require a credible market adoption estimate to reweight against. If that estimate is wrong, the weighted numbers are wrong in a different direction. Ratios don't require an external figure, are robust to oversampling, and translate directly into sales prioritization. "This segment is 4x more likely to buy" is more useful to a marketing VP than "38% adoption" — the ratio is immediately actionable, the percentage invites methodological questions.</p>
+    </div>
+
+    <p>Recommended criterion table format for each deliverable:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Segment</th><th>n</th><th>Criterion rate (raw)</th><th>Relative risk vs. mean</th></tr></thead>
+        <tbody>
+          <tr><td>Segment A: [Name]</td><td>28</td><td>46%</td><td>2.9x</td></tr>
+          <tr><td>Segment B: [Name]</td><td>32</td><td>22%</td><td>1.4x</td></tr>
+          <tr><td>Segment C: [Name]</td><td>40</td><td>8%</td><td>0.5x</td></tr>
+          <tr style="font-weight:600;border-top:2px solid #e2e8f0;"><td>Total sample</td><td>100</td><td>16%</td><td>1.0x</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--color-slate);margin-top:8px;">Always include raw percentages alongside ratios for transparency. Add a source note flagging that segments with n &lt; 15 should be interpreted directionally. Offer post-stratification weighted estimates only when the client has a reliable external adoption benchmark and explicitly wants them — framed as conditional on that assumption, not as ground truth.</p>
+
+    <h3>Segment Profile Template</h3>
+    <p>Every segment delivered to a client should include a one-page profile structured to serve all three audiences.</p>
+    <div class="table-wrap">
+      <table class="profile-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Content</th>
+            <th>Audience</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Segment name</strong></td>
+            <td>Short, memorable name capturing the core motivation (e.g., "The Insight Purist")</td>
+            <td>All</td>
+          </tr>
+          <tr>
+            <td><strong>Size</strong></td>
+            <td>N in study sample, estimated % of addressable market</td>
+            <td>All</td>
+          </tr>
+          <tr>
+            <td><strong>Firmographic fingerprint</strong></td>
+            <td>Typical company size, seniority, industry, buying role</td>
+            <td>Sales</td>
+          </tr>
+          <tr>
+            <td><strong>Observable identifiers</strong></td>
+            <td>2-3 signals visible before or in the first 5 minutes of a conversation</td>
+            <td>Sales</td>
+          </tr>
+          <tr>
+            <td><strong>Core pain point</strong></td>
+            <td>In their own words — use a representative verbatim quote</td>
+            <td>Marketing</td>
+          </tr>
+          <tr>
+            <td><strong>Evaluation criteria</strong></td>
+            <td>What a tool must do for them to consider it; what triggers elimination</td>
+            <td>Marketing + Sales</td>
+          </tr>
+          <tr>
+            <td><strong>Top feature priority</strong></td>
+            <td>The capability that matters most and most differentiates this segment</td>
+            <td>Product</td>
+          </tr>
+          <tr>
+            <td><strong>Relative risk ratio</strong></td>
+            <td>How much more (or less) likely this segment is to meet the criterion vs. the overall sample mean (e.g., "2.9x"). Primary metric for all deliverables. Pair with raw unweighted percentage and segment n.</td>
+            <td>All</td>
+          </tr>
+          <tr>
+            <td><strong>Strategic priority</strong></td>
+            <td>High / Medium / Low — based on relative risk ratio, segment size, and fit with client's strategy</td>
+            <td>All</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: QUICK REFERENCE -->
+<section id="quick-reference">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">Quick Reference</div>
+      <h2>Pre-Analysis Checklist and Decision Tables</h2>
+    </div>
+
+    <h3>Before You Run a Segmentation — 10-Point Checklist</h3>
+    <ul class="checklist">
+      <li><div class="check-box"></div>Segmentation purpose is documented and agreed with the client</li>
+      <li><div class="check-box"></div>All three audiences (marketing, sales, product) are covered in the interview guide, or the scope has been explicitly limited and noted</li>
+      <li><div class="check-box"></div>k is pre-specified with rationale</li>
+      <li><div class="check-box"></div>All firmographic variables are captured in the screener (not inferred from interview)</li>
+      <li><div class="check-box"></div>Criterion variable is captured in the screener and explicitly excluded from the basis variable set</li>
+      <li><div class="check-box"></div>Variance filter applied — no binary theme with &lt;20% or &gt;80% prevalence in the basis set</li>
+      <li><div class="check-box"></div>Theme codes aggregated into composite dimensions</li>
+      <li><div class="check-box"></div>Final basis variable count does not exceed N/10</li>
+      <li><div class="check-box"></div>Dimension groupings reviewed by a second researcher</li>
+      <li><div class="check-box"></div>Bootstrap stability analysis is planned and will be reported in the deliverable</li>
+    </ul>
+
+    <h3>Statistical Test Reference</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Comparison type</th><th>Test</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td>Two proportions (segment A vs. B on a binary outcome)</td><td>Fisher's exact test</td><td>Any 2x2 comparison; preferred when cell sizes are small</td></tr>
+          <tr><td>Multiple groups on a binary outcome</td><td>Chi-square test</td><td>3+ group comparison; use with caution if any expected cell count is below 5</td></tr>
+          <tr><td>One proportion vs. a known benchmark</td><td>Binomial test</td><td>Comparing interview finding to a known external rate (e.g., Gong data)</td></tr>
+          <tr><td>Cluster solution predictive validity</td><td>AUC-ROC with permutation test</td><td>Does segment membership predict the criterion variable better than chance?</td></tr>
+          <tr><td>Cluster stability</td><td>Bootstrap Jaccard or Rand index</td><td>Does the same cluster solution emerge consistently across resamples?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Variable Classification at a Glance</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Variable</th><th>Bucket</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Company size</td><td>Basis</td><td>Predicts needs and purchase behavior</td></tr>
+          <tr><td>Seniority</td><td>Basis</td><td>Predicts budget authority and decision role</td></tr>
+          <tr><td>Switching motivation (capability gap)</td><td>Basis</td><td>Predicts evaluation mode and openness to change</td></tr>
+          <tr><td>Product adoption</td><td>Criterion</td><td>What you are trying to predict — never a clustering input</td></tr>
+          <tr><td>Current tool brand</td><td>Descriptor</td><td>Describes past purchase; not a driver of future needs</td></tr>
+          <tr><td>NPS / satisfaction</td><td>Criterion</td><td>Post-adoption metric; measures outcome, not underlying need</td></tr>
+          <tr><td>Individual theme codes (raw)</td><td>Descriptor (default)</td><td>Too granular; aggregate into composite dimensions first</td></tr>
+          <tr><td>Composite needs dimension</td><td>Basis (if passes 3 tests)</td><td>Aggregated signal with sufficient variance and purpose link</td></tr>
+          <tr><td>Verbatim quotes</td><td>Descriptor only</td><td>Illustrative; never quantitative</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>BuyerVoice.AI</span> &nbsp;&bull;&nbsp; Internal methodology reference &nbsp;&bull;&nbsp; Updated April 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+---
+import codingDetail from '../../../data/hr-interview-report/coding-detail.json';
+
+const { total_segments, total_themes, total_respondents_with_segments, brands, theme_codebook } = codingDetail;
+
+const promptedBrands = Object.entries(brands).filter(([_, b]) => b.type === 'prompted');
+const unpromptedBrands = Object.entries(brands)
+  .filter(([_, b]) => b.type === 'unprompted' && b.themes.length > 0)
+  .sort((a, b) => b[1].total_segments - a[1].total_segments);
+
+// Build cross-brand theme summary: total coded responses + sample quotes per theme
+const themeSummary = new Map();
+for (const tc of theme_codebook) {
+  themeSummary.set(tc.id, { id: tc.id, name: tc.name, keywords: tc.keywords_summary, totalResponses: 0, quotes: [] });
+}
+for (const [brandName, brandData] of Object.entries(brands)) {
+  for (const t of brandData.themes) {
+    const entry = themeSummary.get(t.id);
+    if (!entry) continue;
+    entry.totalResponses += t.non_user_count + (t.current_user_count || 0);
+    for (const q of [...(t.non_user_quotes || []), ...(t.current_user_quotes || [])]) {
+      if (entry.quotes.length < 5 && q.segment && q.segment.trim()) {
+        // Avoid duplicate respondent IDs in the sample
+        if (!entry.quotes.some(eq => eq.respondent_id === q.respondent_id)) {
+          entry.quotes.push({ ...q, brand: brandName });
+        }
+      }
+    }
+  }
+}
+// Remove themes with zero responses, sort by total descending
+const themeList = [...themeSummary.values()]
+  .filter(t => t.totalResponses > 0)
+  .sort((a, b) => b.totalResponses - a.totalResponses);
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <meta name="robots" content="noindex, nofollow" />
+<title>Themes &amp; Evidence | BambooHR Recruiting Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0B1F3A;
+  --paper: #F7F5EF;
+  --signal: #B8341B;
+  --rule: #1A1A1A;
+  --muted: #6B6B6B;
+  --border: rgba(11, 31, 58, 0.10);
+  --card-bg: rgba(11, 31, 58, 0.03);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--border); padding: 0 24px; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-logo { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 16px; list-style: none; flex-wrap: nowrap; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--rule); text-decoration: none; padding: 20px 0; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .nav-pdf { background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
+  .nav-pdf:hover { background: var(--ink); }
+  .hamburger { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-pdf { font-size: 12px; padding: 6px 12px; }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 64px 0; }
+  .section-gray { background: var(--card-bg); }
+  .page-header { padding: 48px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+  .page-title { font-family: var(--serif); font-size: 36px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .page-subtitle { font-size: 16px; color: var(--rule); max-width: 720px; }
+
+  /* SECTION HEADERS */
+  .section-title { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .section-desc { font-size: 15px; color: var(--rule); margin-bottom: 32px; max-width: 720px; }
+  .overline { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink); margin-bottom: 8px; }
+
+  /* HERO STATS */
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+  .hero-stat-card { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 32px; text-align: center; }
+  .hero-stat-number { font-family: var(--serif); font-size: 56px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .hero-stat-label { font-size: 14px; color: var(--rule); }
+
+  /* CALLOUT BOX */
+  .callout-box { background: transparent; border: 1px solid #BBF7D0; border-radius: 2px; padding: 28px 32px; margin-bottom: 48px; }
+  .callout-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+  .callout-list { list-style: none; padding: 0; }
+  .callout-list li { font-size: 14px; color: var(--rule); line-height: 1.8; padding-left: 20px; position: relative; }
+  .callout-list li::before { content: ''; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
+
+  /* BRAND SECTION */
+  .brand-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+  .brand-name { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--ink); }
+  .brand-meta { font-size: 14px; color: var(--rule); }
+
+  /* THEME CARD */
+  .theme-card { background: var(--paper); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 16px; }
+  .theme-name { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+  .theme-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  .theme-bar-label { font-size: 12px; font-weight: 600; color: var(--rule); width: 90px; }
+  .theme-bar-track { flex: 1; height: 22px; background: #F0F0F0; border-radius: 2px; overflow: hidden; max-width: 400px; }
+  .theme-bar-fill { height: 100%; background: var(--ink); border-radius: 2px; display: flex; align-items: center; padding-left: 8px; min-width: 2px; }
+  .theme-bar-fill.cu { background: var(--ink); }
+  .theme-bar-value { font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .theme-count { font-size: 13px; color: var(--rule); margin-bottom: 4px; }
+
+  /* DETAILS / QUOTES */
+  .theme-details { margin-top: 12px; }
+  .theme-details summary { font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; padding: 6px 0; user-select: none; }
+  .theme-details summary:hover { color: var(--ink); }
+  .theme-details[open] summary { margin-bottom: 12px; }
+  .quote-block { border-left: 4px solid var(--ink); background: var(--card-bg); padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 12px; }
+  .quote-text { font-size: 14px; font-style: italic; color: var(--ink); line-height: 1.7; margin-bottom: 6px; }
+  .quote-meta { font-size: 12px; color: #94A3B8; }
+
+  /* THEME CODEBOOK LIST */
+  .codebook-list { display: flex; flex-direction: column; gap: 0; }
+  .codebook-item { border: 1px solid var(--border); border-radius: 10px; padding: 0; margin-bottom: 12px; overflow: hidden; background: var(--paper); }
+  .codebook-summary { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; cursor: pointer; user-select: none; list-style: none; }
+  .codebook-summary::-webkit-details-marker { display: none; }
+  .codebook-summary::marker { display: none; content: ''; }
+  .codebook-left { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
+  .codebook-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .codebook-count { font-size: 13px; color: var(--rule); white-space: nowrap; }
+  .codebook-chevron { font-size: 18px; color: #94A3B8; transition: transform 0.2s; flex-shrink: 0; }
+  details[open] .codebook-chevron { transform: rotate(90deg); }
+  .codebook-body { padding: 0 24px 20px; border-top: 1px solid #F0F0F0; }
+  .codebook-keywords { font-size: 12px; color: #94A3B8; margin-top: 12px; margin-bottom: 16px; }
+
+  /* INSIGHT BOX */
+  .insight-box { border-left: 4px solid var(--ink); background: transparent; padding: 20px 24px; border-radius: 0 8px 8px 0; margin: 32px 0; }
+  .insight-box p { font-size: 15px; color: var(--ink); line-height: 1.7; }
+  .insight-box strong { color: var(--ink); }
+
+  /* METHOD NOTE */
+  .method-note { background: var(--card-bg); border: 1px solid var(--border); border-radius: 2px; padding: 20px 24px; margin-top: 32px; font-size: 13px; color: var(--rule); line-height: 1.6; }
+
+  /* FOOTER */
+  .footer { background: var(--ink); color: #94A3B8; padding: 40px 24px; text-align: center; font-size: 13px; line-height: 1.8; }
+  .footer strong { color: #fff; }
+
+  @media (max-width: 768px) {
+    .hero-stats { grid-template-columns: 1fr; }
+    .page-title { font-size: 28px; }
+    .brand-header { flex-direction: column; gap: 4px; }
+    .theme-bar-track { max-width: 200px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/internal/hr-interview-report/" class="nav-logo">BuyerVoice.AI</a>
+    <ul class="nav-links">
+      <li><a href="/internal/hr-interview-report/">Executive Summary</a></li>
+      <li><a href="/internal/hr-interview-report/sample">Sample</a></li>
+      <li><a href="/internal/hr-interview-report/mental-availability">Mental Availability</a></li>
+      <li><a href="/internal/hr-interview-report/category-entry-points">Category Entry Points</a></li>
+      <li><a href="/internal/hr-interview-report/supporting-context">Supporting Data</a></li>
+      <li><a href="/internal/hr-interview-report/themes-evidence" class="active">Themes &amp; Evidence</a></li>
+    </ul>
+    <a href="/internal/hr-interview-report/full-report" class="nav-pdf">Download PDF</a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <p class="overline">Qualitative Evidence</p>
+    <h1 class="page-title">Themes &amp; Evidence</h1>
+    <p class="page-subtitle">How interview responses were coded into standardized themes, with verbatim quotes as supporting evidence. Each theme represents a distinct perception held by HR leaders about a brand.</p>
+  </div>
+</div>
+
+<!-- HERO STATS -->
+<div class="section">
+  <div class="container">
+    <div class="hero-stats">
+      <div class="hero-stat-card">
+        <div class="hero-stat-number">{total_segments}</div>
+        <div class="hero-stat-label">Total coded responses</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-number">{themeList.length}</div>
+        <div class="hero-stat-label">Unique themes identified</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hero-stat-number">{total_respondents_with_segments}</div>
+        <div class="hero-stat-label">Respondents contributing quotes</div>
+      </div>
+    </div>
+
+    <!-- HOW TO READ -->
+    <div class="callout-box">
+      <h2 class="callout-title">How to read this section</h2>
+      <ul class="callout-list">
+        <li>Each respondent answered questions about brands they know. Those {total_segments} responses were analyzed against a codebook of {themeList.length} themes.</li>
+        <li>One response can match multiple themes. For example, "easy to use and affordable" codes to both Ease of Use and Affordable.</li>
+        <li>Themes are counted by unique respondents, not total mentions. If a respondent mentioned "easy to use" three times, it counts once.</li>
+        <li>Percentages show what share of the relevant group (non-users or current users) mentioned each theme.</li>
+        <li>Click "Show quotes" on any theme to see verbatim interview excerpts that support the coding.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- THEME CODEBOOK -->
+<div class="section section-gray">
+  <div class="container">
+    <p class="overline">Codebook</p>
+    <h2 class="section-title">All {themeList.length} Themes</h2>
+    <p class="section-desc">Every interview response was coded against these themes. Click any theme to see sample quotes from across all brands.</p>
+
+    <div class="codebook-list">
+      {themeList.map((theme) => (
+        <details class="codebook-item">
+          <summary class="codebook-summary">
+            <div class="codebook-left">
+              <span class="codebook-name">{theme.name}</span>
+              <span class="codebook-count">{theme.totalResponses} coded responses</span>
+            </div>
+            <span class="codebook-chevron">&#9654;</span>
+          </summary>
+          <div class="codebook-body">
+            <div class="codebook-keywords">Keyword triggers: {theme.keywords}</div>
+            {theme.quotes.map((q) => (
+              <div class="quote-block">
+                <div class="quote-text">"{q.segment}"</div>
+                <div class="quote-meta">Respondent {q.respondent_id} | {q.brand} | {q.source === 'aided' ? 'Prompted' : 'Unprompted'} ({q.question})</div>
+              </div>
+            ))}
+            {theme.quotes.length === 0 && (
+              <p style="font-size:13px;color:#94A3B8;margin-top:8px;">No verbatim quotes available for this theme.</p>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</div>
+
+<!-- PROMPTED BRANDS -->
+<div class="section section-gray">
+  <div class="container">
+    <p class="overline">Prompted Brands</p>
+    <h2 class="section-title">Aided Brand Perceptions</h2>
+    <p class="section-desc">Respondents were asked directly about these three brands. Themes reflect both non-user perceptions and current user experiences.</p>
+
+    {promptedBrands.map(([brandName, brandData]) => (
+      <div style="margin-bottom: 48px;">
+        <div class="brand-header">
+          <h3 class="brand-name">{brandName}</h3>
+          <span class="brand-meta">{brandData.total_segments} coded responses &middot; {brandData.non_user_count} non-users &middot; {brandData.current_user_count} current users</span>
+        </div>
+
+        {brandData.themes.map((theme) => (
+          <div class="theme-card">
+            <div class="theme-name">{theme.name}</div>
+
+            <div class="theme-bar-row">
+              <span class="theme-bar-label">Non-users</span>
+              <div class="theme-bar-track">
+                <div class="theme-bar-fill" style={`width: ${Math.max(theme.non_user_pct, 1)}%`}>
+                  {theme.non_user_pct >= 8 && <span class="theme-bar-value">{theme.non_user_pct}%</span>}
+                </div>
+              </div>
+              <span class="theme-count">{theme.non_user_count} of {brandData.non_user_count} ({theme.non_user_pct}%)</span>
+            </div>
+
+            {theme.current_user_count > 0 && (
+              <div class="theme-bar-row">
+                <span class="theme-bar-label">Current users</span>
+                <div class="theme-bar-track">
+                  <div class="theme-bar-fill cu" style={`width: ${Math.max(theme.current_user_pct, 1)}%`}>
+                    {theme.current_user_pct >= 8 && <span class="theme-bar-value">{theme.current_user_pct}%</span>}
+                  </div>
+                </div>
+                <span class="theme-count">{theme.current_user_count} of {brandData.current_user_count} ({theme.current_user_pct}%)</span>
+              </div>
+            )}
+
+            {(theme.non_user_quotes?.length > 0 || theme.current_user_quotes?.length > 0) && (
+              <details class="theme-details">
+                <summary>Show quotes ({(theme.non_user_quotes?.length || 0) + (theme.current_user_quotes?.length || 0)})</summary>
+                {theme.non_user_quotes?.slice(0, 3).map((q) => (
+                  <div class="quote-block">
+                    <p class="quote-text">"{q.segment}"</p>
+                    <p class="quote-meta">Respondent {q.respondent_id} &middot; Non-user &middot; {q.source === 'aided' ? 'Aided' : 'Unaided'} ({q.question})</p>
+                  </div>
+                ))}
+                {theme.current_user_quotes?.slice(0, 2).map((q) => (
+                  <div class="quote-block">
+                    <p class="quote-text">"{q.segment}"</p>
+                    <p class="quote-meta">Respondent {q.respondent_id} &middot; Current user &middot; {q.source === 'aided' ? 'Aided' : 'Unaided'} ({q.question})</p>
+                  </div>
+                ))}
+              </details>
+            )}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- UNPROMPTED BRANDS -->
+<div class="section">
+  <div class="container">
+    <p class="overline">Unprompted Brands</p>
+    <h2 class="section-title">Unaided Brand Perceptions</h2>
+    <p class="section-desc">These brands were mentioned spontaneously by respondents. All respondents shown here are non-users describing their perceptions from the outside.</p>
+
+    {unpromptedBrands.map(([brandName, brandData]) => (
+      <div style="margin-bottom: 48px;">
+        <div class="brand-header">
+          <h3 class="brand-name">{brandName}</h3>
+          <span class="brand-meta">{brandData.total_segments} coded responses &middot; {brandData.non_user_count} non-users</span>
+        </div>
+
+        {brandData.themes.map((theme) => (
+          <div class="theme-card">
+            <div class="theme-name">{theme.name}</div>
+
+            <div class="theme-bar-row">
+              <span class="theme-bar-label">Non-users</span>
+              <div class="theme-bar-track">
+                <div class="theme-bar-fill" style={`width: ${Math.max(theme.non_user_pct, 1)}%`}>
+                  {theme.non_user_pct >= 8 && <span class="theme-bar-value">{theme.non_user_pct}%</span>}
+                </div>
+              </div>
+              <span class="theme-count">{theme.non_user_count} of {brandData.non_user_count} ({theme.non_user_pct}%)</span>
+            </div>
+
+            {theme.non_user_quotes?.length > 0 && (
+              <details class="theme-details">
+                <summary>Show quotes ({theme.non_user_quotes.length})</summary>
+                {theme.non_user_quotes.slice(0, 5).map((q) => (
+                  <div class="quote-block">
+                    <p class="quote-text">"{q.segment}"</p>
+                    <p class="quote-meta">Respondent {q.respondent_id} &middot; Non-user &middot; {q.source === 'aided' ? 'Aided' : 'Unaided'} ({q.question})</p>
+                  </div>
+                ))}
+              </details>
+            )}
+          </div>
+        ))}
+      </div>
+    ))}
+
+    <div class="method-note">
+      <strong>Note:</strong> Brands with no coded theme data are excluded from this page. The full list of mentioned brands (including those without theme-level data) appears on the Mental Availability page. Theme coding follows a two-pass methodology: first pass applies the standardized codebook, second pass validates consistency across coders.
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <strong>BuyerVoice.AI</strong><br>
+  &copy; 2026
+</footer>
+
+</body>
+</html>

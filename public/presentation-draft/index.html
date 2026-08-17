@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Presentation Draft — BuyerVoice.AI</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#F7F5EF" />
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N7JWFV8H');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8MZNTQVSZ5');
+</script>
+<style>
+  :root {
+    --ink: #0B1F3A; --paper: #F7F5EF; --signal: #B8341B;
+    --teal: #1E7A6A; --warm: #C97B3A; --slate: #4A5E78;
+    --border: rgba(11, 31, 58, 0.10); --muted: #6B6B6B;
+    --card-bg: rgba(11, 31, 58, 0.03);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); }
+  body { font-family: -apple-system, "DM Sans", Segoe UI, sans-serif; color: var(--ink); }
+
+  .step { min-height: 100vh; padding: 50px 60px; display: flex; flex-direction: column; border-bottom: 1px solid var(--border); }
+  .context-slide { min-height: 100vh; padding: 80px 60px; display: flex; align-items: center; justify-content: center; background: var(--paper); border-bottom: 1px solid var(--border); }
+  .context-slide h1.context-title { font-family: Georgia, serif; font-weight: 600; font-size: 78px; line-height: 1.15; color: var(--ink); margin: 0; text-align: center; letter-spacing: -0.02em; max-width: 1400px; }
+  .context-slide h1.context-title .accent { color: var(--signal); }
+
+  /* Three-recommendation slide */
+  .rec-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; flex: 1; }
+  .rec-card { background: white; border: 1px solid var(--border); border-top: 6px solid var(--signal); border-radius: 6px; padding: 28px 28px 32px; display: flex; flex-direction: column; }
+  .rec-label { font-family: "DM Sans", sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--signal); margin: 0 0 14px; }
+  .rec-headline { font-family: Georgia, serif; font-weight: 600; font-size: 28px; line-height: 1.2; color: var(--ink); margin: 0 0 18px; letter-spacing: -0.015em; }
+  .rec-context { font-size: 18px; line-height: 1.55; color: var(--ink); margin: 0; }
+  .rec-context strong { color: var(--ink); font-weight: 700; }
+  /* Title can stretch the full slide width — no max-width constraint */
+  h2.step-title { font-family: Georgia, serif; font-weight: 600; font-size: 52px; line-height: 1.15; color: var(--ink); margin: 0 0 32px; letter-spacing: -0.015em; }
+
+  .chart-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 28px 32px; flex: 1; display: flex; flex-direction: column; }
+
+  .legend-stacked { display: flex; flex-direction: column; gap: 12px; margin: 0 0 24px; font-size: 22px; color: var(--ink); font-weight: 600; }
+  .legend-stacked .legend-row { display: flex; align-items: center; gap: 14px; }
+  .legend-stacked .swatch { display: inline-block; width: 30px; height: 22px; border-radius: 3px; }
+
+  .source { font-size: 13px; color: var(--muted); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+  /* Slide 4 verbatim layout (presentation-sized) */
+  .verb-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; flex: 1; }
+  .verb-col-header { font-family: Georgia, serif; font-weight: 600; font-size: 32px; color: var(--ink); margin: 0 0 22px; padding-bottom: 10px; border-bottom: 3px solid var(--signal); }
+  .verb-card { background: var(--card-bg); border-left: 5px solid var(--signal); padding: 18px 22px; border-radius: 4px; margin-bottom: 22px; }
+  .verb-text { font-size: 28px; line-height: 1.4; color: var(--ink); margin: 0; font-style: italic; }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- ─────────── CONTEXT SLIDE — OPEN ─────────── -->
+<section class="context-slide">
+  <h1 class="context-title">Unique insights from interviews.<br><span class="accent">Retail banking example.</span></h1>
+</section>
+
+<!-- ─────────── SLIDE 1 ─────────── -->
+<section class="step">
+  <h2 class="step-title">"Do you have any frustrations with your current bank?"</h2>
+  <div class="chart-card">
+    <div id="chart-all" style="flex: 1;"></div>
+    <p class="source">n = 200 UK retail banking customers</p>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 2 ─────────── -->
+<section class="step">
+  <h2 class="step-title">"In the next 12 months, how likely do you think you'll open an account with a digital-only bank?"</h2>
+  <div class="chart-card">
+    <div class="legend-stacked">
+      <div class="legend-row"><span class="swatch" style="background: var(--signal)"></span>Likely to switch</div>
+      <div class="legend-row"><span class="swatch" style="background: var(--ink)"></span>Unlikely to switch</div>
+    </div>
+    <div id="chart-freq-split" style="flex: 1;"></div>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 3 ─────────── -->
+<section class="step">
+  <h2 class="step-title">Intensity of frustration story provides a better signal</h2>
+  <div class="chart-card">
+    <div class="legend-stacked">
+      <div class="legend-row"><span class="swatch" style="background: var(--signal)"></span>Likely to switch</div>
+      <div class="legend-row"><span class="swatch" style="background: var(--ink)"></span>Unlikely to switch</div>
+    </div>
+    <div id="chart-int-split" style="flex: 1;"></div>
+  </div>
+</section>
+
+<!-- ─────────── SLIDE 4 ─────────── -->
+<section class="step">
+  <h2 class="step-title">Interview transcripts reveal deeper insights about frustrations</h2>
+  <div class="chart-card">
+    <div class="verb-cols">
+
+      <div>
+        <h3 class="verb-col-header">App Design Quality</h3>
+        <div class="verb-card">
+          <p class="verb-text">"The app, while improved, still feels a bit behind in certain areas. Searching for a specific transaction by merchant name doesn't work very well &mdash; you can scroll through the list but there's no reliable search."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"The app is functional but it feels like it was designed five years ago and has had minimal investment since then."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"I find the overall UX a bit cluttered &mdash; there are so many products and sub-menus and it doesn't feel like the experience was designed with someone like me in mind."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"Compared to what I can see in the Revolut app, it feels quite unsophisticated for managing variable income."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"The app feels dated compared to what I'm used to from Wise or even Nationwide. Transaction labelling is poor &mdash; a payment from a client often just shows as some opaque reference code and I have to go hunting to figure out what it was."</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="verb-col-header">Spending Visibility Through Categorization</h3>
+        <div class="verb-card">
+          <p class="verb-text">"The app just shows you a flat view of transactions with no nuance. There's no way to see your cash flow over a rolling period &mdash; it's just a list of money in and money out."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"The app spending insights are quite weak. There's no way for me to see at a glance how my income this month compares to last month."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"I keep reading about banks where you can split your money into different pots, or get a real-time breakdown of what you've spent on food versus entertainment versus subscriptions, and none of that exists in my bank's app."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"There's no useful spending categorisation, so I have to do that work elsewhere."</p>
+        </div>
+        <div class="verb-card">
+          <p class="verb-text">"The app categorisation is really basic. It'll show me a total for the month but not any useful breakdown of where it's going. Friends who use newer apps seem to get much more useful insights from their banking app."</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── CONTEXT SLIDE — CLOSE / TRANSITION ─────────── -->
+<section class="context-slide">
+  <h1 class="context-title">From interviews to strategic recommendations:<br><span class="accent">HR software example.</span></h1>
+</section>
+
+<!-- ─────────── SLIDE: THREE RECOMMENDATIONS ─────────── -->
+<section class="step">
+  <h2 class="step-title">Three recommendations from the data</h2>
+  <div class="rec-grid">
+
+    <div class="rec-card">
+      <p class="rec-label">Marketing</p>
+      <h3 class="rec-headline">Lead with "intuitive HR for growing companies."</h3>
+      <p class="rec-context"><strong>BambooHR owns the "intuitive UI" lane at 70% concentration</strong> &mdash; the highest category-specific position in the dataset. No competitor comes close. Don't compete on platform breadth or feature parity. BambooHR wins by being the tool HR leaders actually enjoy using.</p>
+    </div>
+
+    <div class="rec-card">
+      <p class="rec-label">Product</p>
+      <h3 class="rec-headline">Reporting is the universal unmet need.</h3>
+      <p class="rec-context"><strong>85% of BambooHR customers cite reporting as a frustration. 62% say the platform falls short on reporting today.</strong> It surfaces as the top complaint in every analysis cut &mdash; current frustrations, biggest pain points, broader challenges. The single highest-impact product investment BambooHR can make.</p>
+    </div>
+
+    <div class="rec-card">
+      <p class="rec-label">Sales</p>
+      <h3 class="rec-headline">Build a Gusto displacement playbook.</h3>
+      <p class="rec-context"><strong>43% of Gusto users cite switching costs as the reason they stayed</strong> &mdash; retention by inertia, not satisfaction. A targeted migration program (dedicated specialist, data-transfer guarantee, 90-day parallel-run) could unlock BambooHR's single largest near-term revenue opportunity from competitive displacement.</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const PAYLOAD = {"w2_all": [{"attr": "Uncompetitive Savings Rates", "n": 159}, {"attr": "App Design Quality", "n": 135}, {"attr": "Phone Customer Service Friction", "n": 116}, {"attr": "Spending Visibility Through Categorization", "n": 105}, {"attr": "Excessive Incumbent Fees", "n": 64}, {"attr": "Excessive Security Friction", "n": 22}, {"attr": "In-App Chat Customer Service", "n": 18}, {"attr": "App Reliability Concerns", "n": 14}], "w2_total": 200, "focus": [{"attr": "Uncompetitive Savings Rates", "h_freq": 0.75, "l_freq": 0.83, "h_int": 0.11, "l_int": 0.08}, {"attr": "App Design Quality", "h_freq": 0.75, "l_freq": 0.7, "h_int": 0.14, "l_int": 0.02}, {"attr": "Phone Customer Service Friction", "h_freq": 0.39, "l_freq": 0.61, "h_int": 0.04, "l_int": 0.04}, {"attr": "Spending Visibility Through Categorization", "h_freq": 0.71, "l_freq": 0.49, "h_int": 0.14, "l_int": 0.04}]};
+const svgNS = "http://www.w3.org/2000/svg";
+function el(tag, attrs={}, text=null) {
+  const n = document.createElementNS(svgNS, tag);
+  for (const [k,v] of Object.entries(attrs)) n.setAttribute(k, v);
+  if (text !== null) n.textContent = text;
+  return n;
+}
+function pct0(n) { return Math.round(n*100) + "%"; }
+
+(function renderAll() {
+  const container = document.getElementById('chart-all');
+  const W = 1200, H = 540;
+  const padTop = 16, padBottom = 80, padLeft = 500, padRight = 100;
+  const innerW = W - padLeft - padRight;
+  const innerH = H - padTop - padBottom;
+  const rowH = innerH / PAYLOAD.w2_all.length;
+  const barH = 28;
+  const xMax = 1.0;
+  const scaleX = (v) => padLeft + (v / xMax) * innerW;
+  const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, width: "100%", preserveAspectRatio: "xMidYMid meet"});
+  const axisY = padTop + innerH;
+  svg.appendChild(el('line', {x1: padLeft, y1: axisY, x2: padLeft + innerW, y2: axisY, stroke: 'var(--muted)'}));
+  for (let v = 0; v <= 1.0 + 1e-9; v += 0.2) {
+    const x = scaleX(v);
+    svg.appendChild(el('line', {x1: x, y1: axisY, x2: x, y2: axisY+4, stroke: 'var(--muted)'}));
+    svg.appendChild(el('text', {x: x, y: axisY+24, 'text-anchor': 'middle', 'font-size': 16, fill: 'var(--muted)'}, pct0(v)));
+  }
+  svg.appendChild(el('text', {x: padLeft + innerW/2, y: axisY + 60, 'text-anchor': 'middle',
+    'font-size': 22, fill: 'var(--ink)', 'font-weight': 600},
+    '% of customers who mention frustration'));
+  PAYLOAD.w2_all.forEach((r, i) => {
+    const y = padTop + i * rowH + (rowH - barH)/2;
+    const prev = r.n / PAYLOAD.w2_total;
+    const barW = scaleX(prev) - padLeft;
+    svg.appendChild(el('text', {x: padLeft - 14, y: y + barH/2 + 6, 'text-anchor': 'end',
+      'font-size': 20, 'font-weight': 600, fill: 'var(--ink)'}, r.attr));
+    svg.appendChild(el('rect', {x: padLeft, y: y, width: barW, height: barH, fill: 'var(--signal)'}));
+    svg.appendChild(el('text', {x: padLeft + barW + 10, y: y + barH - 6,
+      'font-size': 16, 'font-weight': 600, fill: 'var(--ink)'}, pct0(prev)));
+  });
+  container.appendChild(svg);
+})();
+
+function renderPaired(containerId, hKey, lKey, xMax, xStep, xLabel) {
+  const container = document.getElementById(containerId);
+  const W = 1200, H = 460;
+  const padTop = 16, padBottom = 80, padLeft = 500, padRight = 100;
+  const innerW = W - padLeft - padRight;
+  const innerH = H - padTop - padBottom;
+  const groupH = innerH / PAYLOAD.focus.length;
+  const barH = 26;
+  const intraGap = 8;
+  const scaleX = (v) => padLeft + (v / xMax) * innerW;
+  const svg = el('svg', {viewBox: `0 0 ${W} ${H}`, width: "100%", preserveAspectRatio: "xMidYMid meet"});
+  const axisY = padTop + innerH;
+  svg.appendChild(el('line', {x1: padLeft, y1: axisY, x2: padLeft + innerW, y2: axisY, stroke: 'var(--muted)'}));
+  for (let v = 0; v <= xMax + 1e-9; v += xStep) {
+    const x = scaleX(v);
+    svg.appendChild(el('line', {x1: x, y1: axisY, x2: x, y2: axisY+4, stroke: 'var(--muted)'}));
+    svg.appendChild(el('text', {x: x, y: axisY+24, 'text-anchor': 'middle', 'font-size': 16, fill: 'var(--muted)'}, pct0(v)));
+  }
+  svg.appendChild(el('text', {x: padLeft + innerW/2, y: axisY + 60, 'text-anchor': 'middle',
+    'font-size': 22, fill: 'var(--ink)', 'font-weight': 600}, xLabel));
+  PAYLOAD.focus.forEach((r, i) => {
+    const yG = padTop + i * groupH;
+    const labelY = yG + groupH/2 + 6;
+    svg.appendChild(el('text', {x: padLeft - 14, y: labelY, 'text-anchor': 'end',
+      'font-size': 20, 'font-weight': 600, fill: 'var(--ink)'}, r.attr));
+    const y1 = yG + groupH/2 - barH - intraGap/2;
+    const hVal = r[hKey];
+    svg.appendChild(el('rect', {x: padLeft, y: y1, width: scaleX(hVal) - padLeft,
+      height: barH, fill: 'var(--signal)'}));
+    svg.appendChild(el('text', {x: scaleX(hVal) + 10, y: y1 + barH - 6,
+      'font-size': 16, 'font-weight': 600, fill: 'var(--ink)'}, pct0(hVal)));
+    const y2 = yG + groupH/2 + intraGap/2;
+    const lVal = r[lKey];
+    svg.appendChild(el('rect', {x: padLeft, y: y2, width: scaleX(lVal) - padLeft,
+      height: barH, fill: 'var(--ink)'}));
+    svg.appendChild(el('text', {x: scaleX(lVal) + 10, y: y2 + barH - 6,
+      'font-size': 16, 'font-weight': 600, fill: 'var(--ink)'}, pct0(lVal)));
+  });
+  container.appendChild(svg);
+}
+renderPaired('chart-freq-split', 'h_freq', 'l_freq', 1.0, 0.2,
+             '% of customers who mention frustration');
+renderPaired('chart-int-split', 'h_int', 'l_int', 0.2, 0.05,
+             '% of customers with a high-intensity story');
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{
+  "_n_wave1": 120,
+  "life_stage": {
+    "theme": "Life-Stage Transition as Trigger",
+    "n_with_code": 53,
+    "n_classified": 32,
+    "n_unclassified": 21,
+    "patterns": [
+      {
+        "label": "New job or starting a new role",
+        "n": 11,
+        "pct_of_theme": 21,
+        "pct_of_w1": 9
+      },
+      {
+        "label": "Salary change or pay rise",
+        "n": 11,
+        "pct_of_theme": 21,
+        "pct_of_w1": 9
+      },
+      {
+        "label": "Moving house or city",
+        "n": 5,
+        "pct_of_theme": 9,
+        "pct_of_w1": 4
+      },
+      {
+        "label": "Divorce, separation, or partner change",
+        "n": 5,
+        "pct_of_theme": 9,
+        "pct_of_w1": 4
+      },
+      {
+        "label": "Retirement",
+        "n": 4,
+        "pct_of_theme": 8,
+        "pct_of_w1": 3
+      },
+      {
+        "label": "Going freelance or self-employed",
+        "n": 2,
+        "pct_of_theme": 4,
+        "pct_of_w1": 2
+      }
+    ]
+  },
+  "crystallizing_incident": {
+    "theme": "Crystallizing Incident at Incumbent",
+    "n_with_code": 70,
+    "n_classified": 21,
+    "n_unclassified": 49,
+    "patterns": [
+      {
+        "label": "Phone wait time or unresponsive customer service",
+        "n": 11,
+        "pct_of_theme": 16,
+        "pct_of_w1": 9
+      },
+      {
+        "label": "Disputed transaction or fraud handling",
+        "n": 6,
+        "pct_of_theme": 9,
+        "pct_of_w1": 5
+      },
+      {
+        "label": "App outage or app failure at a critical moment",
+        "n": 3,
+        "pct_of_theme": 4,
+        "pct_of_w1": 2
+      },
+      {
+        "label": "Branch closure or in-person service issue",
+        "n": 1,
+        "pct_of_theme": 1,
+        "pct_of_w1": 1
+      }
+    ]
+  }
+}

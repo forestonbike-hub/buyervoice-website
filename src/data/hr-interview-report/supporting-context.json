@@ -1,0 +1,146 @@
+{
+  "evaluation_criteria": [
+    {
+      "name": "Analytics and reporting",
+      "total_mentions": 59,
+      "pct_of_sample": 59.0,
+      "must_have_count": 59,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Integrations",
+      "total_mentions": 55,
+      "pct_of_sample": 55.0,
+      "must_have_count": 55,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Candidate tracking/pipeline",
+      "total_mentions": 45,
+      "pct_of_sample": 45.0,
+      "must_have_count": 45,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Speed / time-to-fill",
+      "total_mentions": 42,
+      "pct_of_sample": 42.0,
+      "must_have_count": 42,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Automation",
+      "total_mentions": 40,
+      "pct_of_sample": 40.0,
+      "must_have_count": 40,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Candidate experience",
+      "total_mentions": 33,
+      "pct_of_sample": 33.0,
+      "must_have_count": 33,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Interview scheduling",
+      "total_mentions": 33,
+      "pct_of_sample": 33.0,
+      "must_have_count": 33,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Mobile experience",
+      "total_mentions": 32,
+      "pct_of_sample": 32.0,
+      "must_have_count": 32,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Sourcing capabilities",
+      "total_mentions": 22,
+      "pct_of_sample": 22.0,
+      "must_have_count": 22,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Ease of use",
+      "total_mentions": 14,
+      "pct_of_sample": 14.0,
+      "must_have_count": 14,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Compliance / EEOC / OFCCP",
+      "total_mentions": 14,
+      "pct_of_sample": 14.0,
+      "must_have_count": 14,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Cost / value for money",
+      "total_mentions": 11,
+      "pct_of_sample": 11.0,
+      "must_have_count": 11,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Collaboration features",
+      "total_mentions": 9,
+      "pct_of_sample": 9.0,
+      "must_have_count": 9,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Customer support",
+      "total_mentions": 8,
+      "pct_of_sample": 8.0,
+      "must_have_count": 8,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Scalability",
+      "total_mentions": 5,
+      "pct_of_sample": 5.0,
+      "must_have_count": 5,
+      "nice_to_have_count": 0
+    },
+    {
+      "name": "Customization",
+      "total_mentions": 1,
+      "pct_of_sample": 1.0,
+      "must_have_count": 1,
+      "nice_to_have_count": 0
+    }
+  ],
+  "satisfaction": {
+    "distribution": {
+      "satisfied": 91,
+      "neutral": 8,
+      "dissatisfied": 1
+    },
+    "average_score": 7.6,
+    "non_user_distribution": {
+      "satisfied": 76,
+      "neutral": 5,
+      "dissatisfied": 1
+    },
+    "non_user_dissatisfied_aware_of_bamboohr": 1,
+    "non_user_dissatisfied_total": 1
+  },
+  "market_structure": {
+    "average_annual_spend": 93530,
+    "median_annual_spend": 50000,
+    "spend_range": {
+      "min": 5000,
+      "max": 800000
+    },
+    "value_perception": {
+      "good_value": 82,
+      "neutral": 13,
+      "poor_value": 5
+    },
+    "average_wtp_for_fix": 54620,
+    "median_wtp_for_fix": 30000
+  }
+}

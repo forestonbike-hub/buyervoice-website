@@ -1,0 +1,214 @@
+---
+// MazeReportLayout.astro — Maze co-branded variant of ReportLayout for
+// reports built with the new ReportLayout + ReportBody composition pattern.
+// Procedure source: research-projects/6 Analyzing and building a report/shared/partner-cobrand-maze-reskin.md
+//
+// Chrome only re-skin (Option A). Chart fills, callout borders, and pill
+// classes keep their BuyerVoice red (--signal) and the dark anchor color
+// (--ink, swapped from BuyerVoice navy to Maze black so contrast is
+// preserved without redefining data meaning). Cover swaps in Maze
+// wordmark + Powered by BuyerVoice.AI; favicon, theme-color, fonts, and
+// page title are Maze-flavored. Save-as-PDF button is omitted.
+//
+// Usage mirrors ReportLayout but the page should NOT pass includeAnalytics
+// (the layout always wires GA + GTM since Maze editions are public-by-default
+// and engagement signals on partner-forwarded traffic still land in our
+// analytics — that is the point of the "Powered by" attribution).
+interface StatCard { label: string; value: string; }
+interface Props {
+  studyName: string;
+  client: string;
+  preparedOn: string;
+  geography?: string;
+  scope?: string;
+  stats?: {
+    interviews: number;
+    avgLengthMin: number;
+    wordsAnalyzedK: number;
+    thematicCodes: number;
+  };
+  title?: string;
+  hideClientOnCover?: boolean;
+}
+const {
+  studyName,
+  client,
+  preparedOn,
+  geography,
+  scope,
+  stats,
+  title,
+  hideClientOnCover = false,
+} = Astro.props;
+const pageTitle = (title ?? studyName) + " | Maze";
+const statCards: StatCard[] = stats
+  ? [
+      { label: "Interviews", value: `${stats.interviews}` },
+      { label: "Avg Length", value: `~${stats.avgLengthMin}min` },
+      { label: "Words Analyzed", value: `${stats.wordsAnalyzedK}K` },
+      { label: "Thematic Codes", value: `${stats.thematicCodes}` },
+    ]
+  : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F5F4F0" />
+    <link rel="icon" type="image/svg+xml" href="/maze/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8MZNTQVSZ5"></script>
+    <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8MZNTQVSZ5');`}></script>
+    <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N7JWFV8H');`}></script>
+  </head>
+  <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7JWFV8H" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <main class="report-container">
+      <section class="cover">
+        <div class="maze-cover-brand">
+          <img src="/maze/wordmark-black.svg" alt="Maze" class="maze-logo" />
+          <div class="powered-by">
+            <span class="pb-label">Powered by</span>
+            <a href="/" class="bv-logo-small" aria-label="BuyerVoice.AI home">BuyerVoice<span class="bv-logo-tld">.AI</span></a>
+          </div>
+        </div>
+
+        <h1 class="report-title">{studyName}</h1>
+        <p class="report-subtitle">
+          <slot name="cover-tagline">
+            {scope ?? "Interview-Based Research Report"}
+            {geography ? ` Based on Buyer Interviews in ${geography}` : ""}
+          </slot>
+        </p>
+        <p class="prepared-for">
+          {hideClientOnCover ? preparedOn : (<>Prepared for {client} &bull; {preparedOn}</>)}
+        </p>
+
+        <slot name="stat-cards">
+          {statCards.length > 0 && (
+            <div class="stat-grid">
+              {statCards.map((c) => (
+                <div class="stat-card">
+                  <div class="stat-value">{c.value}</div>
+                  <div class="stat-label">{c.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </slot>
+      </section>
+
+      <div class="accordions">
+        <slot />
+      </div>
+    </main>
+
+    <script is:inline>
+      (function () {
+        const accordions = document.querySelectorAll('details.accordion');
+        accordions.forEach((el, i) => {
+          const num = String(i + 1).padStart(2, '0');
+          let numEl = el.querySelector('.accordion-num');
+          if (!numEl) {
+            const summary = el.querySelector('summary');
+            if (summary) {
+              numEl = document.createElement('span');
+              numEl.className = 'accordion-num';
+              summary.prepend(numEl);
+            }
+          }
+          if (numEl) numEl.textContent = num;
+        });
+        // Print-time expand: Ctrl/Cmd+P should expand all accordions before printing.
+        window.addEventListener('beforeprint', () => {
+          accordions.forEach((el) => { el.open = true; });
+        });
+      })();
+    </script>
+
+    <style is:global>
+      :root {
+        /* Maze palette: --ink swapped from BuyerVoice navy to Maze near-black;
+           --paper swapped from BuyerVoice cream to Maze paper; --signal kept
+           BuyerVoice red because it carries data meaning across charts and
+           callouts; --serif and --sans both Inter so the entire chrome reads
+           as the Maze brand voice. */
+        --ink: #0E0E0E;
+        --paper: #F5F4F0;
+        --signal: #B8341B;
+        --rule: #1A1A1A;
+        --muted: #6B6B6B;
+        --border: rgba(14, 14, 14, 0.10);
+        --card-bg: rgba(14, 14, 14, 0.04);
+        --maze-green: #CCE552;
+        --serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+      * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { margin: 0; padding: 0; background: var(--paper); color: var(--rule); font-family: var(--sans); font-size: 16px; line-height: 1.55; }
+      .report-container { max-width: 960px; margin: 0 auto; padding: 48px 32px 96px; }
+
+      .cover { text-align: center; padding: 64px 0 64px; margin-bottom: 0; }
+      .maze-cover-brand { display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 56px; }
+      .maze-logo { width: 270px; height: auto; display: block; }
+      .powered-by { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+      .powered-by .pb-label { opacity: 0.85; }
+      .bv-logo-small { font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none; transition: opacity 0.15s; }
+      .bv-logo-small:hover { opacity: 0.65; }
+      .bv-logo-small .bv-logo-tld { color: var(--signal); }
+
+      /* Cover headline reads in Maze ink rather than BuyerVoice red.
+         This is the ONLY element where the canonical signal-red is
+         swapped to ink for the Maze edition. Every other red element
+         in the body (accordion section number, +/- icon, etc.) keeps
+         its signal-red coloring. Pattern locked April 2026 with
+         /maze/uk-neobanks-report/. */
+      .report-title { font-family: var(--serif); font-size: 56px; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); margin: 0 0 16px; line-height: 1.1; }
+      .report-subtitle { font-family: var(--sans); font-size: 17px; color: var(--muted); margin: 0 auto 24px; max-width: 680px; }
+      .prepared-for { font-family: var(--sans); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 48px; }
+
+      .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 8px 0 0; width: 100%; }
+      .stat-card { padding: 24px 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; text-align: center; }
+      .stat-value { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; }
+      .stat-label { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+      /* Accordion chrome. Section number and +/- icon stay signal-red
+         (BuyerVoice's house style for accordion accents). The accordion
+         title stays ink. Sizes and weights match the canonical
+         ReportLayout exactly so a Maze edition reads with the same
+         visual rhythm as the canonical page. */
+      .accordion { border-bottom: 1px solid var(--border); }
+      .accordion-header { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 16px; padding: 24px 0; }
+      .accordion-header::-webkit-details-marker { display: none; }
+      .accordion-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--signal); min-width: 40px; }
+      .report-container .accordion-title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin: 0; flex: 1; line-height: 1.2; }
+      .report-container .accordion-subtitle { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 4px 0 0; line-height: 1.35; }
+      .accordion-icon { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--signal); transition: transform 0.2s; }
+      details[open] .accordion-icon { transform: rotate(45deg); }
+      .accordion-body { padding: 8px 0 40px 56px; font-family: var(--sans); font-size: 16px; color: var(--rule); line-height: 1.65; }
+      .accordion-body h3 { font-family: var(--serif); font-size: 18px; font-weight: 600; color: var(--ink); margin: 32px 0 12px; }
+      .accordion-body h4 { font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--ink); margin: 24px 0 8px; }
+      .accordion-body p { margin: 0 0 16px; }
+
+      @media print {
+        @page { margin: 16mm; }
+        .accordion { page-break-inside: auto; }
+        .accordion-header { page-break-after: avoid; }
+        details.accordion { page-break-before: always; }
+        details.accordion:first-of-type { page-break-before: auto; }
+        h2, h3, h4 { page-break-after: avoid; break-after: avoid; }
+        table { page-break-inside: auto; }
+        tr { page-break-inside: avoid; }
+      }
+    </style>
+  </body>
+</html>

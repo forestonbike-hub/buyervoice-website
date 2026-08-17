@@ -1,0 +1,376 @@
+---
+import InternalLayout from '../../layouts/InternalLayout.astro';
+---
+
+<InternalLayout title="Calendar Sync" description="Bidirectional Google Calendar sync between bike (personal) and buyer (work) accounts.">
+  <div class="cs">
+    <header class="cs-header">
+      <h1>Calendar Sync</h1>
+      <p class="lede">Bidirectional sync between <strong>forest.on.bike@gmail.com</strong> and <strong>forest.baker@buyervoice.ai</strong>. Originals on the bike calendar mirror to buyer with <code>PER&nbsp;</code> prefix; originals on buyer mirror to bike with <code>WRK&nbsp;</code> prefix. Cron runs every 3 minutes.</p>
+    </header>
+
+    <section class="card master-toggle">
+      <div class="row">
+        <div>
+          <h2>Sync engine</h2>
+          <p class="muted" id="sync-state-summary">Loading…</p>
+        </div>
+        <button id="toggle-btn" class="btn primary" disabled>—</button>
+      </div>
+      <div class="row sub-row">
+        <button id="run-now-btn" class="btn ghost" disabled>Sync now</button>
+        <span id="run-now-result" class="muted small"></span>
+      </div>
+    </section>
+
+    <section class="accounts">
+      <article class="card account" data-account="bike">
+        <header class="account-header">
+          <h2>bike <span class="account-tag">personal</span></h2>
+          <p class="muted">forest.on.bike@gmail.com</p>
+        </header>
+        <div class="account-body">
+          <p class="status" data-role="status">Loading…</p>
+          <p class="last-sync muted small" data-role="last-sync"></p>
+          <p class="last-error error small" data-role="last-error"></p>
+        </div>
+        <footer class="account-footer">
+          <a class="btn primary" href="/internal/api/calendar-sync/oauth/start?account=bike" data-role="connect">Connect</a>
+          <button class="btn ghost danger" data-role="disconnect" data-account="bike" hidden>Disconnect</button>
+        </footer>
+      </article>
+
+      <article class="card account" data-account="buyer">
+        <header class="account-header">
+          <h2>buyer <span class="account-tag">work</span></h2>
+          <p class="muted">forest.baker@buyervoice.ai</p>
+        </header>
+        <div class="account-body">
+          <p class="status" data-role="status">Loading…</p>
+          <p class="last-sync muted small" data-role="last-sync"></p>
+          <p class="last-error error small" data-role="last-error"></p>
+        </div>
+        <footer class="account-footer">
+          <a class="btn primary" href="/internal/api/calendar-sync/oauth/start?account=buyer" data-role="connect">Connect</a>
+          <button class="btn ghost danger" data-role="disconnect" data-account="buyer" hidden>Disconnect</button>
+        </footer>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>How it works</h2>
+      <ul class="how-list">
+        <li>Backfills events 7 days back and 360 days forward on first connect.</li>
+        <li>Mirror copies all event details (title, time, description, location). Attendees are listed in the mirror's description but not invited again.</li>
+        <li>Loop prevention via <code>extendedProperties.private.bv_managed</code> — the engine never re-mirrors its own creations.</li>
+        <li>Declined events are skipped.</li>
+        <li>Deletion is sticky and bidirectional: deleting either the original or the mirror removes the mate on the next run.</li>
+        <li>RSVPs and replies stay on the original event only.</li>
+      </ul>
+    </section>
+
+    <section class="card callout">
+      <h2>Seeing each event twice in your calendar?</h2>
+      <p class="callout-body">
+        If you previously added the other account as an overlay subscription in Google Calendar (left sidebar &rarr; <strong>Other calendars</strong>), every event will appear twice: once as the lighter, translucent overlay (the original showing through) and once as the darker, opaque mirror with the <code>PER&nbsp;</code> or <code>WRK&nbsp;</code> prefix.
+      </p>
+      <p class="callout-body">
+        The mirror is what blocks your time. The overlay is now redundant. Open Google Calendar in each account, find the other account's name under <strong>Other calendars</strong>, and uncheck it. The duplicates will disappear and only the prefixed mirrors will remain.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="row" style="margin-bottom:1rem">
+        <h2>Activity log <span class="muted small" id="log-count"></span></h2>
+        <button class="btn ghost small" id="refresh-btn">Refresh</button>
+      </div>
+      <div id="log" class="log-box">Loading…</div>
+    </section>
+  </div>
+</InternalLayout>
+
+<script is:inline>
+  const fmtTs = (t) => {
+    if (!t) return '—';
+    const d = new Date(t * 1000);
+    return d.toLocaleString();
+  };
+  const fmtRel = (t) => {
+    if (!t) return '—';
+    const diff = Math.floor(Date.now() / 1000) - t;
+    if (diff < 60) return `${diff}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return `${Math.floor(diff / 86400)}d ago`;
+  };
+
+  async function loadStatus() {
+    const res = await fetch('/internal/api/calendar-sync/status', { credentials: 'same-origin' });
+    if (!res.ok) {
+      document.getElementById('sync-state-summary').textContent = 'Error loading status: ' + res.status;
+      return;
+    }
+    const data = await res.json();
+
+    // Master toggle
+    const enabled = data.sync_enabled;
+    const toggleBtn = document.getElementById('toggle-btn');
+    toggleBtn.textContent = enabled ? 'Disable sync' : 'Enable sync';
+    toggleBtn.disabled = false;
+    toggleBtn.classList.toggle('danger', enabled);
+    toggleBtn.classList.toggle('primary', !enabled);
+    toggleBtn.dataset.next = enabled ? 'false' : 'true';
+
+    const bothConnected = data.accounts.bike && data.accounts.buyer;
+    const summary = document.getElementById('sync-state-summary');
+    if (!data.accounts.bike && !data.accounts.buyer) {
+      summary.textContent = 'Connect both accounts before enabling sync.';
+    } else if (!bothConnected) {
+      summary.textContent = 'Sync needs both accounts connected. Connect the missing one.';
+    } else if (enabled) {
+      summary.innerHTML = '<span class="dot ok"></span> Running every 3 minutes.';
+    } else {
+      summary.innerHTML = '<span class="dot off"></span> Connected, but sync is disabled.';
+    }
+
+    document.getElementById('run-now-btn').disabled = !(enabled && bothConnected);
+
+    // Per-account cards
+    for (const id of ['bike', 'buyer']) {
+      const card = document.querySelector(`[data-account="${id}"]`);
+      const acct = data.accounts[id];
+      const statusEl = card.querySelector('[data-role="status"]');
+      const lastSyncEl = card.querySelector('[data-role="last-sync"]');
+      const lastErrorEl = card.querySelector('[data-role="last-error"]');
+      const connectEl = card.querySelector('[data-role="connect"]');
+      const disconnectEl = card.querySelector('[data-role="disconnect"]');
+      if (acct) {
+        statusEl.innerHTML = '<span class="dot ok"></span> Connected as ' + acct.email;
+        lastSyncEl.textContent = acct.last_synced_at
+          ? `Last sync: ${fmtTs(acct.last_synced_at)} (${fmtRel(acct.last_synced_at)})`
+          : 'No sync yet';
+        if (acct.last_error) {
+          lastErrorEl.textContent = 'Last error: ' + acct.last_error;
+          lastErrorEl.hidden = false;
+        } else {
+          lastErrorEl.hidden = true;
+        }
+        connectEl.textContent = 'Reconnect';
+        disconnectEl.hidden = false;
+      } else {
+        statusEl.innerHTML = '<span class="dot off"></span> Not connected';
+        lastSyncEl.textContent = '';
+        lastErrorEl.hidden = true;
+        connectEl.textContent = 'Connect';
+        disconnectEl.hidden = true;
+      }
+    }
+
+    // Activity log
+    const logBox = document.getElementById('log');
+    const logCount = document.getElementById('log-count');
+    if (!data.log.length) {
+      logBox.textContent = 'No activity yet.';
+      logCount.textContent = '';
+    } else {
+      logCount.textContent = `(${data.log.length} most recent)`;
+      logBox.innerHTML = data.log
+        .map((row) => {
+          const lvlClass = row.level === 'error' ? 'lvl-error' : row.level === 'warn' ? 'lvl-warn' : 'lvl-info';
+          const acct = row.account ? `<span class="acct">${row.account}</span>` : '';
+          let details = '';
+          if (row.details) {
+            try {
+              const parsed = JSON.parse(row.details);
+              details = '<pre>' + JSON.stringify(parsed, null, 2) + '</pre>';
+            } catch {
+              details = '<pre>' + row.details + '</pre>';
+            }
+          }
+          return `<div class="log-row ${lvlClass}">
+            <span class="ts">${fmtTs(row.ts)}</span>
+            <span class="lvl">${row.level}</span>
+            ${acct}
+            <span class="msg">${escapeHtml(row.message)}</span>
+            ${details}
+          </div>`;
+        })
+        .join('');
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  document.getElementById('toggle-btn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const next = btn.dataset.next === 'true';
+    btn.disabled = true;
+    const res = await fetch('/internal/api/calendar-sync/toggle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled: next }),
+    });
+    if (!res.ok) alert('Toggle failed: ' + res.status);
+    await loadStatus();
+  });
+
+  document.getElementById('run-now-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('run-now-btn');
+    const out = document.getElementById('run-now-result');
+    btn.disabled = true;
+    out.textContent = 'Running…';
+    const res = await fetch('/internal/api/calendar-sync/run-now', { method: 'POST' });
+    const text = await res.text();
+    out.textContent = res.ok ? 'Done. ' + text.slice(0, 200) : 'Error: ' + text.slice(0, 200);
+    btn.disabled = false;
+    await loadStatus();
+  });
+
+  document.querySelectorAll('[data-role="disconnect"]').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const account = e.currentTarget.dataset.account;
+      if (!confirm(`Disconnect ${account}? This deletes stored tokens and the event link map. Existing mirrored events on either calendar will NOT be deleted automatically — you can keep, delete manually, or reconnect later.`)) return;
+      const res = await fetch('/internal/api/calendar-sync/disconnect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ account }),
+      });
+      if (!res.ok) alert('Disconnect failed: ' + res.status);
+      await loadStatus();
+    });
+  });
+
+  document.getElementById('refresh-btn').addEventListener('click', loadStatus);
+
+  loadStatus();
+  // Auto-refresh every 30s
+  setInterval(loadStatus, 30000);
+</script>
+
+<style>
+  .cs { max-width: 900px; }
+  .cs-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .cs-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  .lede { color: var(--muted); font-size: 0.95rem; }
+  .lede code { background: var(--card-bg, rgba(11,31,58,0.06)); padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.85em; }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .card.callout {
+    background: #fff8e6;
+    border-color: #e5c875;
+    border-left: 3px solid #b8861b;
+  }
+  .card.callout h2 { color: #6d4f10; }
+  .callout-body { font-size: 0.9rem; line-height: 1.6; margin-top: 0.6rem; color: var(--rule); }
+  .callout-body code { background: rgba(0,0,0,0.06); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.85em; }
+
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .sub-row { margin-top: 1rem; }
+
+  .accounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 720px) {
+    .accounts { grid-template-columns: 1fr; }
+  }
+  .account-header { margin-bottom: 1rem; }
+  .account-header h2 { display: flex; align-items: center; gap: 0.5rem; }
+  .account-tag {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(11, 31, 58, 0.08);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+  }
+  .account-body { min-height: 80px; margin-bottom: 1rem; }
+  .account-body .status { font-size: 0.92rem; margin-bottom: 0.5rem; }
+  .account-footer { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn.primary { background: var(--signal); color: #fff; }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--ink); }
+  .btn.ghost.danger { color: var(--signal); border-color: rgba(184,52,27,0.3); }
+  .btn.danger { background: var(--ink); color: #fff; }
+  .btn.small { padding: 0.3rem 0.7rem; font-size: 0.78rem; }
+
+  .muted { color: var(--muted); }
+  .small { font-size: 0.82rem; }
+  .error { color: var(--signal); }
+
+  .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+  .dot.ok { background: #2e7d32; }
+  .dot.off { background: var(--muted); }
+
+  .how-list { padding-left: 1.2rem; color: var(--rule); font-size: 0.9rem; line-height: 1.7; }
+  .how-list li { margin-bottom: 0.25rem; }
+  .how-list code { background: rgba(11,31,58,0.06); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.85em; }
+
+  .log-box {
+    background: #0B1F3A;
+    color: #d4dae4;
+    border-radius: 4px;
+    padding: 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .log-row {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.5;
+  }
+  .log-row:last-child { border-bottom: none; }
+  .log-row .ts { color: #6b7892; margin-right: 0.5rem; }
+  .log-row .lvl {
+    display: inline-block; padding: 0 0.4rem; margin-right: 0.4rem;
+    border-radius: 3px; font-weight: 600; font-size: 0.7rem; text-transform: uppercase;
+  }
+  .log-row.lvl-info .lvl { background: rgba(46,125,50,0.25); color: #80d287; }
+  .log-row.lvl-warn .lvl { background: rgba(184,134,27,0.25); color: #e2b85c; }
+  .log-row.lvl-error .lvl { background: rgba(184,52,27,0.3); color: #ff8a72; }
+  .log-row .acct {
+    display: inline-block; padding: 0 0.4rem; margin-right: 0.4rem;
+    border-radius: 3px; font-size: 0.7rem; background: rgba(255,255,255,0.08); color: #c9d1de;
+  }
+  .log-row pre { margin-top: 0.4rem; padding: 0.5rem; background: rgba(0,0,0,0.25); border-radius: 3px; overflow-x: auto; font-size: 0.7rem; }
+</style>

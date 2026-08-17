@@ -1,0 +1,30 @@
+name = "buyervoice-ai"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-04-10"
+
+# Note: account_id is NOT supported in Pages wrangler.toml. The right account
+# is selected via the CLOUDFLARE_ACCOUNT_ID env var (set in .env at repo root).
+
+# D1 binding for calendar-sync (shared with the cron worker).
+[[d1_databases]]
+binding = "DB"
+database_name = "buyervoice-calendar-sync"
+database_id = "9fbc87ef-53b1-4d84-bbb8-8f7891f1752e"
+
+# KV binding for the existing report visibility toggle (already in production).
+# DO NOT change the id — losing this binding would 404 every gated report URL.
+[[kv_namespaces]]
+binding = "REPORT_VISIBILITY"
+id = "163fd9c783f24303b9ad1d069aa73493"
+
+# Plaintext env var consumed by the calendar-sync OAuth flow.
+[vars]
+OAUTH_REDIRECT_URI = "https://buyervoice.ai/internal/api/calendar-sync/oauth/callback"
+
+# Secrets are NOT in this file. They are stored in Cloudflare's secret store
+# and accessed at runtime via env.GOOGLE_CLIENT_SECRET, env.RUN_NOW_SECRET, etc.
+# Set with:
+#   npx wrangler pages secret put GOOGLE_CLIENT_ID --project-name buyervoice-ai
+#   npx wrangler pages secret put GOOGLE_CLIENT_SECRET --project-name buyervoice-ai
+#   npx wrangler pages secret put RUN_NOW_SECRET --project-name buyervoice-ai
+#   npx wrangler pages secret put CRON_WORKER_URL --project-name buyervoice-ai

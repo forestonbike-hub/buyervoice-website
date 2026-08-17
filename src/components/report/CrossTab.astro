@@ -1,0 +1,127 @@
+---
+// CrossTab.astro — canonical cross-tab component.
+//
+// Enforces the BuyerVoice cross-tab highlighting rule:
+//   - If percentages are ROW-wise: highlight top N per ROW
+//   - If percentages are COLUMN-wise: highlight top N per COLUMN
+// Declared via the `percentDirection` prop so a reader (and future
+// Claude sessions) can audit highlighting without reading the data.
+//
+// Every crosstab must also render the source question text at the top
+// (per framework rule: question text near every chart, not just Q#).
+//
+// Usage:
+//   <CrossTab
+//     title="Rejection reasons, by competitor"
+//     questionText="Q7. Which alternatives did you consider and reject, and why?"
+//     percentDirection="row"   // percentages read across each row
+//     highlightTopN={2}
+//     columnHeaders={['No physical branch', 'Lateral move', 'Fee concerns', 'UX concerns']}
+//     rows={[
+//       { label: 'RBC',    values: [12.0, 44.0, 20.0, 24.0], n: 50 },
+//       { label: 'Simplii',values: [68.0, 10.0, 10.0, 12.0], n: 40 },
+//     ]}
+//     footnote="Each row sums to 100% of that competitor's rejection reasons. Top 2 per row shaded."
+//   />
+export interface CrossTabRow {
+  label: string;
+  values: number[];
+  n?: number;
+}
+interface Props {
+  title: string;
+  questionText: string;
+  percentDirection: 'row' | 'column';
+  highlightTopN?: number;
+  columnHeaders: string[];
+  rows: CrossTabRow[];
+  footnote?: string;
+  valueSuffix?: string;
+}
+const {
+  title,
+  questionText,
+  percentDirection,
+  highlightTopN = 2,
+  columnHeaders,
+  rows,
+  footnote,
+  valueSuffix = "%",
+} = Astro.props;
+// BuyerVoice reporting rule: every percentage shown to a reader is rounded UP
+// to the nearest whole number. No decimals, anywhere. See the framework docs.
+function fmtPct(val: number) { return String(Math.ceil(val)); }
+
+// Compute highlight mask: mask[r][c] = true means highlight this cell.
+const nRows = rows.length;
+const nCols = columnHeaders.length;
+const mask: boolean[][] = Array.from({ length: nRows }, () => Array(nCols).fill(false));
+
+if (percentDirection === 'row') {
+  rows.forEach((row, r) => {
+    const indexed = row.values.map((v, i) => ({ v, i }));
+    indexed.sort((a, b) => b.v - a.v);
+    indexed.slice(0, highlightTopN).forEach(({ i }) => {
+      mask[r][i] = true;
+    });
+  });
+} else {
+  for (let c = 0; c < nCols; c++) {
+    const col = rows.map((row, r) => ({ v: row.values[c] ?? 0, r }));
+    col.sort((a, b) => b.v - a.v);
+    col.slice(0, highlightTopN).forEach(({ r }) => {
+      mask[r][c] = true;
+    });
+  }
+}
+---
+
+<figure class="crosstab-section">
+  <figcaption class="crosstab-title">{title}</figcaption>
+  <p class="crosstab-question">{questionText}</p>
+  <div class="crosstab-scroll">
+    <table class="crosstab">
+      <thead>
+        <tr>
+          <th class="corner-cell"></th>
+          {columnHeaders.map((h) => <th>{h}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, r) => (
+          <tr>
+            <th class="row-label" scope="row">
+              {row.label}{row.n !== undefined && <span class="row-n"> (n={row.n})</span>}
+            </th>
+            {row.values.map((v, c) => (
+              <td class:list={[{ highlighted: mask[r][c] }]}>
+                {valueSuffix === "%" ? fmtPct(v) : v.toFixed(1)}{valueSuffix}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {footnote && <p class="crosstab-footnote">{footnote}</p>}
+  <p class="crosstab-method">
+    Percentages read {percentDirection === 'row' ? 'across each row' : 'down each column'}; top {highlightTopN} shaded per {percentDirection}.
+  </p>
+</figure>
+
+<style>
+  .crosstab-section { margin: 32px 0; font-family: var(--sans); }
+  .crosstab-title { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+  .crosstab-question { font-family: var(--sans); font-size: 13px; color: var(--muted); margin: 0 0 12px; font-style: italic; }
+  .crosstab-scroll { overflow-x: auto; }
+  table.crosstab { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  table.crosstab th, table.crosstab td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--border); }
+  table.crosstab thead th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); text-align: right; font-weight: 600; white-space: normal; vertical-align: bottom; }
+  table.crosstab th.row-label { text-align: left; font-weight: 600; color: var(--ink); font-size: 13px; width: 18%; }
+  table.crosstab .row-n { color: var(--muted); font-weight: 400; }
+  table.crosstab td.highlighted { background: rgba(184, 52, 27, 0.10); color: var(--signal); font-weight: 600; }
+  table.crosstab .corner-cell { width: 18%; }
+  .crosstab-footnote { font-size: 11px; color: var(--muted); margin: 8px 0 4px; font-style: italic; line-height: 1.5; }
+  .crosstab-method { font-size: 11px; color: var(--muted); margin: 4px 0 0; }
+  @media print { .crosstab-section { page-break-inside: avoid; page: landscape; } }
+</style>

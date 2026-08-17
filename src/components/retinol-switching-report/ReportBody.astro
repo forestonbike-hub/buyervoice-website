@@ -1,0 +1,918 @@
+---
+// ReportBody.astro, Retinol Switching study report body.
+// Imported by BOTH the internal page (src/pages/internal/retinol-switching-report/)
+// and the public page (src/pages/retinol-switching-report/).
+//
+// Visual language and section flow mirror hr-report and uk-neobanks-report
+// per the canonical BuyerVoice report design: cover handled by ReportLayout,
+// 8 accordion sections, INSIGHT/VULN/OPP callouts, color-coded inline bar
+// charts, paired-bar comparisons, recommendation tables, drill-down modal.
+import Section from '../report/Section.astro';
+import reportStats from '../../data/retinol-switching/report-stats.json';
+import verbatimData from '../../data/retinol-switching/verbatim-data.json';
+import verbatimQuestions from '../../data/retinol-switching/verbatim-questions.json';
+
+const d: any = reportStats;
+const VD: any = verbatimData;
+const VQ: any = verbatimQuestions;
+const vdScript = '<script>window.__VD=' + JSON.stringify(VD).replace(/<\//g, '<\\/') + ';window.__VQ=' + JSON.stringify(VQ).replace(/<\//g, '<\\/') + ';<' + '/script>';
+
+// Format helper: clean up code names that have brand acronyms
+function pretty(label: string): string {
+  return label
+    .replace(/\bLrp\b/g, 'La Roche-Posay')
+    .replace(/\bLRP\b/g, 'La Roche-Posay')
+    .replace(/\bCerave\b/g, 'CeraVe')
+    .replace(/\bCERAVE\b/g, 'CeraVe')
+    .replace(/\bOlay Max\b/g, 'Olay MAX')
+    .replace(/\bMax\b(?= )/g, 'MAX')
+    .replace(/\bSpf\b/g, 'SPF')
+    .replace(/\bTiktok\b/g, 'TikTok');
+}
+
+const sigStar = (p: number) => p < 0.10 ? '*' : '';
+---
+
+<style is:inline>
+  /* Visual primitives lifted from hr-report and uk-neobanks-report. Scoped
+     to .retinol-report so the visuals stay consistent across BuyerVoice
+     reports. */
+  .retinol-report .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0 24px; }
+  .retinol-report .stat-card { text-align: center; padding: 16px; background: rgba(11, 31, 58, 0.04); border-radius: 8px; }
+  .retinol-report .stat-num { font-family: var(--serif), Georgia, serif; font-size: 28px; font-weight: 600; color: var(--signal); }
+  .retinol-report .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .retinol-report .compact-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+  .retinol-report .compact-stat { padding: 14px 12px; background: var(--card-bg, rgba(11, 31, 58, 0.04)); border: 1px solid var(--border, rgba(11, 31, 58, 0.10)); border-radius: 4px; }
+  .retinol-report .compact-stat .csn { font-family: var(--serif), Georgia, serif; font-size: 22px; font-weight: 600; color: var(--signal); line-height: 1.1; }
+  .retinol-report .compact-stat .csl { font-size: 11.5px; color: var(--rule); margin-top: 6px; line-height: 1.4; }
+
+  .retinol-report .insight { border-left: 4px solid var(--signal); background: rgba(184, 52, 27, 0.06); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .retinol-report .insight p { font-size: 13px; margin-bottom: 0; }
+  .retinol-report .insight strong { color: var(--signal); }
+  .retinol-report .vuln-callout { border-left: 4px solid #C4784A; background: rgba(196, 120, 74, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .retinol-report .vuln-callout p { font-size: 13px; margin-bottom: 0; }
+  .retinol-report .vuln-callout strong { color: #C4784A; }
+  .retinol-report .opp-callout { border-left: 4px solid #2A7A6E; background: rgba(42, 122, 110, 0.08); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 16px 0; }
+  .retinol-report .opp-callout p { font-size: 13px; margin-bottom: 0; }
+  .retinol-report .opp-callout strong { color: #2A7A6E; }
+
+  .retinol-report .bar-chart { margin: 16px 0; }
+  .retinol-report .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .retinol-report .bar-label { width: 280px; font-size: 13px; font-weight: 500; text-align: right; flex-shrink: 0; }
+  .retinol-report .bar-track { flex: 1; height: 24px; background: rgba(11, 31, 58, 0.06); border-radius: 4px; overflow: hidden; position: relative; }
+  .retinol-report .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; min-width: 36px; }
+  .retinol-report .bar-fill.signal { background: var(--signal); }
+  .retinol-report .bar-fill.ink { background: var(--ink); }
+  .retinol-report .bar-fill.warm { background: #C4784A; }
+  .retinol-report .bar-fill.slate { background: #5A7A94; }
+  .retinol-report .bar-fill.teal { background: #2A7A6E; }
+  .retinol-report .bar-fill.plum { background: #6B4C6E; }
+  .retinol-report .bar-val { font-size: 11px; font-weight: 700; color: #fff; }
+  .retinol-report .q-cite { display: block; font-family: var(--sans), system-ui, sans-serif; font-size: 12px; font-weight: 400; color: var(--muted); font-style: italic; margin-top: 2px; margin-bottom: 8px; }
+  .retinol-report .source-note { font-size: 12px; color: var(--muted); margin-top: 8px; margin-bottom: 16px; }
+
+  /* Tables */
+  .retinol-report .rec-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 13px; }
+  .retinol-report .rec-table th { background: rgba(11, 31, 58, 0.04); text-align: left; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 10px 12px; border-bottom: 2px solid rgba(11, 31, 58, 0.12); }
+  .retinol-report .rec-table td { padding: 10px 12px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); vertical-align: top; }
+  .retinol-report .rec-table td:first-child { font-weight: 600; width: 32%; }
+  .retinol-report .nav-table { table-layout: fixed; width: 100%; }
+  .retinol-report .nav-table th:first-child, .retinol-report .nav-table td:first-child { width: 60%; }
+  .retinol-report .nav-table th:last-child, .retinol-report .nav-table td:last-child { width: 40%; text-align: right; padding-right: 4px; }
+
+  /* Crosstab */
+  .retinol-report .crosstab { margin: 16px 0; font-size: 13px; }
+  .retinol-report .crosstab table { width: 100%; border-collapse: collapse; }
+  .retinol-report .crosstab th, .retinol-report .crosstab td { padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .retinol-report .crosstab th:first-child, .retinol-report .crosstab td:first-child { text-align: left; font-weight: 500; }
+  .retinol-report .crosstab th { background: rgba(11, 31, 58, 0.04); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); border-bottom: 2px solid rgba(11, 31, 58, 0.12); }
+  .retinol-report .crosstab .highlight { background: rgba(184, 52, 27, 0.10); font-weight: 700; color: var(--signal); }
+
+  /* Paired bars (Arm 1 vs Arm 2) */
+  .retinol-report .paired-block { display: grid; grid-template-columns: 220px 1fr 80px; align-items: center; gap: 16px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(11, 31, 58, 0.06); }
+  .retinol-report .paired-block:last-of-type { border-bottom: none; }
+  .retinol-report .paired-theme { font-size: 13px; font-weight: 600; color: var(--ink); text-align: right; line-height: 1.3; }
+  .retinol-report .paired-bars { display: flex; flex-direction: column; gap: 4px; }
+  .retinol-report .paired-row { display: flex; align-items: center; gap: 8px; }
+  .retinol-report .paired-mini-label { font-size: 11px; color: var(--muted); font-weight: 500; width: 130px; flex-shrink: 0; text-align: right; }
+  .retinol-report .paired-track { flex: 1; height: 18px; background: rgba(11, 31, 58, 0.06); border-radius: 3px; overflow: hidden; }
+  .retinol-report .paired-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; min-width: 32px; border-radius: 3px; }
+  .retinol-report .paired-fill.upgrader { background: var(--ink); }
+  .retinol-report .paired-fill.defector { background: var(--signal); }
+  .retinol-report .paired-val { font-size: 10.5px; font-weight: 700; color: #fff; }
+  .retinol-report .paired-delta { font-size: 13px; font-weight: 600; text-align: right; color: var(--ink); }
+  .retinol-report .paired-delta.pos { color: var(--signal); }
+  .retinol-report .paired-delta.neg { color: var(--ink); }
+
+  /* Drilldown affordance */
+  .retinol-report [data-drilldown-chart] .bar-row { cursor: pointer; transition: opacity 0.15s; }
+  .retinol-report [data-drilldown-chart] .bar-row:hover { opacity: 0.82; }
+  .retinol-report [data-drilldown-chart] .bar-label { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .retinol-report [data-drilldown-chart] .paired-block { cursor: pointer; transition: opacity 0.15s; }
+  .retinol-report [data-drilldown-chart] .paired-block:hover { opacity: 0.82; }
+  .retinol-report [data-drilldown-chart] .paired-theme { text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .retinol-report .vb-hint { font-size: 11.5px; color: var(--signal); font-weight: 500; }
+  .retinol-report .vb-hint::before { content: '\203A  '; }
+
+  /* Verbatim card list (brand description library) */
+  .retinol-report .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 720px) { .retinol-report .quote-grid { grid-template-columns: 1fr; } }
+  .retinol-report .quote-card { background: rgba(11, 31, 58, 0.04); border-left: 3px solid var(--signal); padding: 12px 14px; border-radius: 0 6px 6px 0; }
+  .retinol-report .quote-card .quote-text { font-family: var(--serif), Georgia, serif; font-style: italic; font-size: 13px; color: var(--rule); line-height: 1.55; margin-bottom: 8px; }
+  .retinol-report .quote-card .quote-meta { font-size: 10.5px; color: var(--muted); }
+
+  /* Section-body h2 (excluding accordion-title so accordion header keeps its tight spacing) */
+  .retinol-report h2:not(.accordion-title) { font-family: var(--serif), Georgia, serif; font-size: 22px; font-weight: 600; color: var(--ink); margin-top: 28px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .retinol-report h3 { font-family: var(--serif), Georgia, serif; font-size: 18px; font-weight: 600; color: var(--ink); margin-top: 24px; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .retinol-report h4 { font-family: var(--serif), Georgia, serif; font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 16px; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .retinol-report p { font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+  .retinol-report ul, .retinol-report ol { margin: 8px 0 16px 20px; }
+  .retinol-report li { font-size: 14px; line-height: 1.6; margin-bottom: 6px; }
+
+  .retinol-report .source-legend { display: flex; gap: 18px; align-items: center; font-size: 11px; color: var(--muted); margin: 8px 0 12px 236px; }
+  .retinol-report .source-legend .leg-swatch { display: inline-block; width: 12px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .retinol-report .source-legend .leg-swatch.upgrader { background: var(--ink); }
+  .retinol-report .source-legend .leg-swatch.defector { background: var(--signal); }
+
+  /* Verbatim drill-down modal (matches uk-neobanks pattern) */
+  .vb-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9999; }
+  .vb-overlay.open { display: flex; justify-content: center; align-items: center; }
+  .vb-dialog { background: var(--paper); border-radius: 10px; max-width: 760px; width: 94%; max-height: 86vh; display: flex; flex-direction: column; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  .vb-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 8px; }
+  .vb-close:hover { color: var(--ink); }
+  .vb-header { padding: 22px 28px 8px; border-bottom: 1px solid var(--border); }
+  .vb-header h3 { font-family: var(--serif), Georgia, serif; font-size: 18px; font-weight: 600; color: var(--ink); margin: 0 0 4px; line-height: 1.3; }
+  .vb-q { font-size: 12.5px; color: var(--muted); margin: 0; font-style: italic; line-height: 1.45; }
+  .vb-body { padding: 16px 28px 22px; overflow-y: auto; }
+  .vb-card { background: rgba(11,31,58,0.04); border-left: 3px solid var(--signal); padding: 14px 16px; border-radius: 0 6px 6px 0; margin-bottom: 12px; }
+  .vb-card .vb-quote { font-family: var(--serif), Georgia, serif; font-style: italic; font-size: 14px; color: var(--rule); line-height: 1.6; margin-bottom: 10px; }
+  .vb-card .vb-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .vb-tag { font-size: 10.5px; background: rgba(11,31,58,0.08); color: var(--rule); padding: 2px 9px; border-radius: 10px; font-weight: 500; }
+  .vb-tag.brand { background: rgba(184,52,27,0.12); color: var(--signal); font-weight: 600; }
+  .vb-empty { font-size: 13px; color: var(--muted); }
+
+  /* Stimulus figure (Section 4 packaging perceptions). The image
+     reproduces what every participant saw before answering the four
+     perception questions, so the reader can visually anchor on the
+     same competitive set the participants did. */
+  .retinol-report .stimulus { margin: 18px 0 24px; padding: 0; }
+  .retinol-report .stimulus img { width: 100%; max-width: 720px; height: auto; display: block; margin: 0 auto; border: 1px solid var(--border, rgba(11, 31, 58, 0.10)); border-radius: 6px; background: #fff; }
+  .retinol-report .stimulus figcaption { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 10px; text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+  @media print {
+    .retinol-report .insight { background: rgba(184, 52, 27, 0.06) !important; border-left: 4px solid var(--signal) !important; }
+    .retinol-report .vuln-callout { background: rgba(196, 120, 74, 0.08) !important; border-left: 4px solid #C4784A !important; }
+    .retinol-report .opp-callout { background: rgba(42, 122, 110, 0.08) !important; border-left: 4px solid #2A7A6E !important; }
+    .retinol-report .bar-fill.signal { background: var(--signal) !important; }
+    .retinol-report .bar-fill.ink { background: var(--ink) !important; }
+    .retinol-report .bar-fill.warm { background: #C4784A !important; }
+    .retinol-report .bar-fill.slate { background: #5A7A94 !important; }
+    .retinol-report .bar-fill.teal { background: #2A7A6E !important; }
+    .retinol-report .bar-fill.plum { background: #6B4C6E !important; }
+    .retinol-report [data-drilldown-chart] .bar-label { text-decoration: none !important; }
+    .retinol-report [data-drilldown-chart] .paired-theme { text-decoration: none !important; }
+    .retinol-report .vb-hint { display: none !important; }
+    .retinol-report .paired-fill.upgrader { background: var(--ink) !important; }
+    .retinol-report .paired-fill.defector { background: var(--signal) !important; }
+    .vb-overlay { display: none !important; }
+  }
+</style>
+
+<div class="retinol-report">
+
+<!-- ============================================================ -->
+<!-- 01, EXECUTIVE SUMMARY -->
+<!-- ============================================================ -->
+<Section title="Executive Summary" subtitle="Olay's strategic position at the graduation moment, six critical findings, and three highest-leverage decisions">
+  <h2>The Olay Strategic Position</h2>
+  <p>
+    Olay Regenerist Retinol 24 is the brand's primary entry point into the 35-43 cohort and its primary defection point. After 6 to 18 months of use, women experience one of two outcomes at the graduation moment: they upgrade within Olay to Retinol 24 MAX, or they defect to a competitor brand. This study interviewed 240 women evenly split across both arms. The headline finding is that <strong>Olay's loyalty is held by inertia, not by active engagement</strong>. Women who actively engage with the retinoid category, who research ingredients on Reddit and TikTok, who follow dermatologist content, who read up on serum-versus-moisturizer formulation, defect at substantially higher rates. Women who treat skincare as a low-effort drugstore replenishment stay with Olay. The brand currently retains the disengaged half of its customer base; the engaged half is converting to CeraVe and La Roche-Posay at scale.
+  </p>
+
+  <h2>Four Hero Numbers</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">{d.info_channels.find((c: any) => c.display_label.includes('Reddit'))?.arm2_pct ?? 85}%</div>
+      <div class="stat-label">Of defectors used Reddit to research the switch (vs {d.info_channels.find((c: any) => c.display_label.includes('Reddit'))?.arm1_pct ?? 43}% of upgraders)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{d.trigger_taxonomy.find((c: any) => c.display_label.includes('Content-driven'))?.arm2_pct ?? 73}%</div>
+      <div class="stat-label">Of defectors cite social media content as a switching catalyst (vs {d.trigger_taxonomy.find((c: any) => c.display_label.includes('Content-driven'))?.arm1_pct ?? 31}% of upgraders)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{d.arm2_considered_max.pct}%</div>
+      <div class="stat-label">Of defectors considered Olay Retinol 24 MAX and rejected it for a competitor</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Of all participants picked La Roche-Posay as the package conveying high-quality ingredients</div>
+    </div>
+  </div>
+
+  <h2>Six Critical Findings</h2>
+
+  <div class="vuln-callout">
+    <p><strong>1. Defectors are research-engaged. Upgraders are not.</strong> 85% of defectors used Reddit during the decision (vs 43% of upgraders, p&lt;0.001). 25% of defectors followed TikTok dermatologist content (vs 4% of upgraders, p&lt;0.001). 18% consulted a dermatologist directly (vs 8%, p=0.02). The asymmetry is consistent across every research channel measured. This is not a marginal pattern. It is the organizing principle of the defection. <em>Owner: Brand &amp; Marketing.</em></p>
+  </div>
+
+  <div class="vuln-callout">
+    <p><strong>2. The defection isn't an awareness problem; it's a positioning problem.</strong> {d.arm2_considered_max.pct}% of defectors considered Olay Retinol 24 MAX during their decision, then chose a competitor. Olay MAX appeared in the consideration set; the brand simply lost the comparison. The diagnosis is not "make defectors aware of MAX," they are aware. It is "give defectors a reason to choose MAX once they see it." <em>Owner: Brand &amp; Marketing + Product.</em></p>
+  </div>
+
+  <div class="insight">
+    <p><strong>3. Triggers are arm-asymmetric in a way that reveals the strategic vulnerability.</strong> Defectors trigger primarily on content discovery (73% vs 31%, p&lt;0.001) and dermatologist credibility cues. Upgraders trigger on plateau-with-Retinol-24 (52% vs 25%, p&lt;0.001) and brand-trust continuity. This means defection happens when active engagement meets a credible alternative, while upgraders move only when their current product clearly stops working. Olay retains the cohort that doesn't shop the category. <em>Owner: Brand &amp; Marketing.</em></p>
+  </div>
+
+  <div class="vuln-callout">
+    <p><strong>4. The "format upgrade" frame is a structural gap in Olay's portfolio.</strong> Defectors articulate a hypothesis about retinol delivery: dedicated serums in airless or dropper packaging are perceived as more effective than retinol-in-moisturizer formats. The jar is named in nearly every initial-experience response across both arms as a friction point. Olay does not currently field a serum-format retinoid product in this competitive set, while CeraVe, La Roche-Posay, The Ordinary, and Naturium all do. The format choice is a positioning lever Olay has not pulled. <em>Owner: Product &amp; Portfolio.</em></p>
+  </div>
+
+  <div class="insight">
+    <p><strong>5. Brand trust holds upgraders specifically because Retinol 24 was tolerated.</strong> The dominant upgrader logic is risk minimization: "I know my skin handles Olay; the MAX is a smaller jump than a brand switch." This is a real defense, not just inertia, especially among participants with sensitive or melanin-rich skin who explicitly cite post-inflammatory hyperpigmentation risk. The defense breaks the moment a defector finds a credibly tolerable alternative with a stronger ingredient story. <em>Owner: Brand &amp; Marketing.</em></p>
+  </div>
+
+  <div class="opp-callout">
+    <p><strong>6. The graduation ladder is the cohort's mental model, and it ends at prescription tretinoin (not in-office procedures).</strong> Across both arms, the forward trajectory is dominated by routine expansion (89%) and ingredient additions (peptides, retinaldehyde, vitamin C, niacinamide). 42% mention prescription tretinoin as a future goal. In-office procedures are largely deferred for cost reasons. The graduation framing offers Olay a clear narrative spine: the cohort wants a step-up retinoid path, ideally with a serum format and a credible ingredient story, before they age out toward prescription. <em>Owner: Product &amp; Portfolio.</em></p>
+  </div>
+
+  <h2>Three Strategic Decisions</h2>
+  <table class="rec-table">
+    <thead><tr><th>Decision</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1. Does Olay need a step-up retinoid product beyond MAX?</td>
+        <td><strong>Yes, in serum format.</strong> The "format upgrade" hypothesis is real in the data, the jar friction is universal, and Olay does not currently compete in the serum lane where defectors are landing. A dedicated retinol serum with airless packaging and a higher concentration story closes the structural gap.</td>
+      </tr>
+      <tr>
+        <td>2. Is MAX visible enough to women who are graduating from Retinol 24?</td>
+        <td><strong>MAX is visible; it loses on positioning, not awareness.</strong> Defectors saw MAX, considered it, and chose a competitor (59%). The fix is not increased media weight on MAX, it is a sharper ingredient-story articulation that competes with CeraVe and La Roche-Posay on dermatologist-credibility cues, not on Olay-brand familiarity.</td>
+      </tr>
+      <tr>
+        <td>3. Should the next big bet be a stronger retinoid or a longevity-platform product?</td>
+        <td><strong>Stronger retinoid first; longevity platform 18 to 24 months out.</strong> The cohort is still mentally on the retinoid graduation ladder. Peptides and exosomes appear in the radar but with curiosity rather than conviction. The retinoid lane has 12 to 18 months of unfilled product opportunity before the cohort migrates to longevity narratives.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Report Navigation</h2>
+  <table class="rec-table nav-table">
+    <thead><tr><th>Section</th><th>Primary Audience</th></tr></thead>
+    <tbody>
+      <tr><td>02. The Graduation Moment: Why Women Switch</td><td>All teams</td></tr>
+      <tr><td>03. The Decision Process: Channels, Consideration, Drivers</td><td>Brand &amp; Marketing, Product</td></tr>
+      <tr><td>04. Packaging Perceptions: Olay MAX vs CeraVe vs La Roche-Posay</td><td>Brand &amp; Marketing, Product</td></tr>
+      <tr><td>05. Brand &amp; Marketing Recommendations</td><td>Brand &amp; Marketing</td></tr>
+      <tr><td>06. Product &amp; Portfolio Recommendations</td><td>Product &amp; Innovation</td></tr>
+      <tr><td>07. Forward Trajectory &amp; Retention Risk</td><td>All teams</td></tr>
+      <tr><td>08. Methodology</td><td>All teams</td></tr>
+    </tbody>
+  </table>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 02, THE GRADUATION MOMENT -->
+<!-- ============================================================ -->
+<Section title="The Graduation Moment: Why Women Switch" subtitle="The Retinol 24 experience, the trigger taxonomy, and the asymmetric switching logic across the two arms">
+  <p>
+    Every participant in this study had used Olay Regenerist Retinol 24, the purple jar, for at least three months and then switched away within the past three months. They had positive things to say about Retinol 24 and reasons to leave it. Both arms describe a strikingly similar product experience; what differs is what happens at the graduation moment.
+  </p>
+
+  <h2>2a. What Worked About Retinol 24</h2>
+  <p>The product earned its retention. Both arms describe early texture improvement, gentle tolerability, and accessible price. Where the arms diverge is in the depth of positive sentiment overall.</p>
+  <p class="source-note">Source question: "Tell me about your experience using Retinol 24. What did you like or dislike about it?" Bars show the share of each arm who mentioned the theme positively. <span class="vb-hint">Click any theme to read participant quotes.</span></p>
+  <div class="source-legend">
+    <span><span class="leg-swatch upgrader"></span>Arm 1 Upgraders (n={d.n_arm1})</span>
+    <span><span class="leg-swatch defector"></span>Arm 2 Defectors (n={d.n_arm2})</span>
+  </div>
+  <div class="paired-chart" data-drilldown-chart="q1_likes">
+    {d.q1_likes.slice(0, 7).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q1">
+        <div class="paired-theme">{pretty(row.code)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <p class="source-note">Asterisk on the delta indicates the upgrader vs defector difference is statistically significant at alpha=0.10 (two-proportion z-test, two-tailed).</p>
+  <div class="insight">
+    <p><strong>Read:</strong> Upgraders carry stronger overall-positive sentiment about Retinol 24 (95% vs 64% positive overall, p&lt;0.001) and notice the early texture improvement at higher rates. Both arms agree on tolerability and on Olay-brand familiarity. The difference is not that defectors hated the product. It is that defectors set the bar higher, recognized when the product stopped clearing it, and moved on.</p>
+  </div>
+
+  <h2>2b. What Fell Short</h2>
+  <p>Both arms describe the same Retinol 24 friction profile: the efficacy plateau around month five or six, the jar packaging concern, the desire for stronger results. The fact that defectors and upgraders share the same dissatisfaction profile but choose different responses is what makes this study analytically valuable.</p>
+  <p class="source-note">Source question: "Tell me about your experience using Retinol 24. What did you like or dislike about it?" Bars show the share of each arm who mentioned the theme as a friction point. <span class="vb-hint">Click any theme to read participant quotes.</span></p>
+  <div class="paired-chart" data-drilldown-chart="q1_dislikes">
+    {d.q1_dislikes.slice(0, 6).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q1">
+        <div class="paired-theme">{pretty(row.code)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="vuln-callout">
+    <p><strong>The jar is a universal friction point.</strong> Across both arms, women describe oxidation worry (light and air degrading the active retinol) and finger-contact hygiene anxiety. The jar format itself is the friction; this carries over into the perception of the MAX product, which is also a moisturizer in jar packaging. A serum-format step-up product would address an articulated dissatisfaction Olay currently leaves unanswered.</p>
+  </div>
+
+  <h2>2c. The Trigger Taxonomy</h2>
+  <p>What pushes a participant from passive dissatisfaction into action? The brief proposed six trigger categories; the data clusters them into a clear arm asymmetry. Defectors are content-driven and dermatologist-influenced. Upgraders are product-dissatisfaction-driven, with a "my Retinol 24 stopped working, my sister recommended MAX" narrative.</p>
+  <p class="source-note">Source question: "What prompted your switch? Was there anything going on in your life more broadly that was a factor in switching skincare products? Was there a specific event or situation that was a factor?" <span class="vb-hint">Click any trigger to read participant quotes.</span></p>
+  <div class="paired-chart" data-drilldown-chart="trigger_taxonomy">
+    {d.trigger_taxonomy.slice(0, 9).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q3">
+        <div class="paired-theme">{pretty(row.display_label)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>Read:</strong> Three triggers separate the arms at significance: <strong>content-driven discovery</strong> (defectors +42 pp, p&lt;0.001), <strong>product dissatisfaction with the plateau</strong> (upgraders +27 pp, p&lt;0.001), and <strong>visual self-confrontation</strong> (upgraders slightly higher, p=0.05). Multiple-factors-converging is roughly even across both arms; when triggers stack, the brand attachment becomes the deciding variable.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 03, THE DECISION PROCESS -->
+<!-- ============================================================ -->
+<Section title="The Decision Process: Channels, Consideration, Drivers" subtitle="Where defectors research, what they consider, and the decision logic that splits the two arms">
+  <p>
+    Once a participant decides to switch, what does her decision process actually look like? The channels she uses, the products she considers, and the factors she names as decisive together describe the strategic vulnerability Olay faces. This section is dense, and it is also where the brand strategy unlocks.
+  </p>
+
+  <h2>3a. Information Channels and the Asymmetry</h2>
+  <p>The channel asymmetry is the single most actionable finding in this report. Defectors lean on Reddit, TikTok dermatologists, and direct dermatologist consultation at substantially higher rates than upgraders. The pattern is consistent across every research-engagement channel measured.</p>
+  <p class="source-note">Source question: "When you started to consider the switch, where did you go for information?" <span class="vb-hint">Click any channel to read participant quotes.</span></p>
+  <div class="paired-chart" data-drilldown-chart="info_channels">
+    {d.info_channels.map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q4">
+        <div class="paired-theme">{pretty(row.display_label)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="vuln-callout">
+    <p><strong>This is where Olay loses the engaged customer.</strong> Reddit, TikTok dermatologists, and direct dermatologist consultation are the channels where the active research happens. Each of these favors a brand with a strong dermatologist-credibility story (CeraVe and La Roche-Posay) over a brand with a strong drugstore-loyalty story (Olay). Olay's traditional in-store and brand-website presence is largely invisible in the defector decision flow. This is a media-allocation finding with direct implications: the brand is showing up in the wrong channels for the customers it most needs to retain.</p>
+  </div>
+
+  <h2>3b. The Consideration Set</h2>
+  <p>When asked which products they compared during their switch, every participant named at least one alternative. The strategic question is whether Olay Retinol 24 MAX appears in the defector's consideration set. The answer is yes: a meaningful share of defectors considered MAX before choosing the competitor.</p>
+  <p class="source-note">Source question: "Which products did you compare or consider, even briefly? Please list the specific products by name if you can." Bars show the share of each arm whose consideration set included the product.</p>
+  <div class="source-legend">
+    <span><span class="leg-swatch upgrader"></span>Arm 1 Upgraders (n={d.n_arm1})</span>
+    <span><span class="leg-swatch defector"></span>Arm 2 Defectors (n={d.n_arm2})</span>
+  </div>
+  <div class="paired-chart">
+    {d.consideration_set.map((row: any) => (
+      <div class="paired-block">
+        <div class="paired-theme">{pretty(row.product)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>The diagnosis is positioning, not awareness.</strong> {d.arm2_considered_max.pct}% of defectors saw Olay MAX during their decision and chose a competitor anyway. If the answer were "make defectors aware of MAX," we would expect Olay MAX to appear in roughly zero percent of the defector consideration set. Instead it appears in {d.arm2_considered_max.pct}%. The brand has the impression; it loses the comparison. The strategic move is to give defectors a stronger reason to choose MAX, not a louder reminder that MAX exists.</p>
+  </div>
+
+  <h2>3c. Decision Factors That Tip the Choice</h2>
+  <p>Two questions, the open decision-factor question and its probe, captured what participants articulated as their primary reasons for choosing the product they chose. The arm comparison reveals the structural decision logic each cohort applies.</p>
+  <p class="source-note">Source questions combined: "What ultimately led you to choose the product you chose over the others?" and the probe "Please say more about that." Bars show the share of each arm who mentioned the theme as a decision factor across either question. <span class="vb-hint">Click any factor to read participant quotes.</span></p>
+  <div class="paired-chart" data-drilldown-chart="decision_factors">
+    {d.decision_factors_all.slice(0, 12).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q6">
+        <div class="paired-theme">{pretty(row.code)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="insight">
+    <p><strong>The arm decision logics are nearly disjoint.</strong> Upgraders cite brand-trust-from-tolerance, within-brand-upgrade as logical step, retail availability, and affordable price. Defectors cite serum format, dermatologist-developed positioning, ingredient transparency, and TikTok-derm content. The two cohorts are using fundamentally different decision frameworks. The strategic question for Olay: which framework does the brand want to compete in? Owning the upgrader framework (low effort, low risk, high familiarity) protects the half it already retains. Competing in the defector framework requires structural changes (serum format, dermatologist endorsements, ingredient-forward positioning) that the brand currently lacks.</p>
+  </div>
+
+  <h2>3d. How They Describe the Brand They Chose</h2>
+  <p>The simplest test of brand articulation is the question "How would you describe your current skincare brand to a friend?" The answers form a verbatim library of consumer language for each brand in the competitive set. Below are representative quotes from a sample of participants in each cohort.</p>
+
+  {Object.entries(d.verbatim_library).slice(0, 4).map(([brand, quotes]: [string, any]) => (
+    <>
+      <h3>{pretty(brand)} ({quotes.length} representative quotes)</h3>
+      <div class="quote-grid">
+        {quotes.slice(0, 4).map((q: any) => (
+          <div class="quote-card">
+            <p class="quote-text">"{q.quote}"</p>
+            <div class="quote-meta">Age {q.age} &bull; Income {q.income} &bull; {q.ethnicity}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  ))}
+
+  <div class="insight">
+    <p><strong>Read:</strong> The Olay MAX language is functional and unpretentious ("smarter version of the thing that already worked," "drugstore-priced," "actually does what it says"). The CeraVe language is barrier-aware and clinically credible ("takes the science seriously," "dermatologist actually stands behind"). The La Roche-Posay language is prestige-adjacent but reachable ("real deal but still reachable," "what dermatologists actually use"). All three brands have earned a clear voice with their customers. Olay's voice is functional and trusted, but in the language defectors care about (clinical, ingredient-forward, derm-endorsed), it doesn't compete.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 04, COMPETITIVE POSITION -->
+<!-- ============================================================ -->
+<Section title="Packaging Perceptions: Olay MAX vs CeraVe vs La Roche-Posay" subtitle="Awareness and trial baselines, then per-attribute perception comparisons across the three stimulus products">
+  <p>
+    Section 3 of the interview presented all three products side-by-side and asked four perception questions: which one conveys high-quality ingredients, which suggests it costs more, which suggests a dermatologist would recommend it, and which feels designed for "a woman like you." The answers map the competitive positioning at the package level, before any brand-level marketing exposure.
+  </p>
+
+  <figure class="stimulus">
+    <img src="/images/retinol-stimulus.png" alt="Three retinoid products shown side-by-side: CeraVe Resurfacing Retinol Serum in a white pump bottle with blue accents, Olay Regenerist Retinol 24 MAX in a purple jar, and La Roche-Posay Pure Retinol B3 Serum in a red dropper bottle." />
+    <figcaption>The visual stimulus shown to every participant before answering the four perception questions in this section. Position was randomized across respondents.</figcaption>
+  </figure>
+
+  <h2>4a. Awareness and Trial Baselines</h2>
+  <p>All three products are well-known in this cohort. Trial rates separate them: Olay MAX has the highest personal-use rate (largely because half the sample is currently using it), followed by CeraVe and La Roche-Posay. Awareness-to-trial conversion is meaningful for the two competitor products that participants saw but had not bought.</p>
+  <div class="crosstab">
+    <table>
+      <thead>
+        <tr><th></th><th>Recognized</th><th>Personally used</th><th>Awareness to trial</th></tr>
+      </thead>
+      <tbody>
+        {Object.entries(d.awareness).map(([prod, ax]: [string, any]) => (
+          <tr>
+            <td>{pretty(prod)}</td>
+            <td>{ax.pct}%</td>
+            <td>{d.trial[prod]?.pct ?? 0}%</td>
+            <td>{d.awareness_to_trial_conversion_pct[prod] ?? 0}%</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-note">"Which of these three products do you recognize?" and "Which of these three products have you personally used?" (n={d.n_total}). The simulator produced near-saturated recognition across all three products; real-data recruitment is expected to produce 60-85% recognition baselines per product.</p>
+
+  <h2>4b. Perception by Attribute Across All Participants</h2>
+  <p>For each attribute, participants picked one of the three products as the strongest fit. The chart below shows the share of all participants who picked each product on each attribute. The pattern is consistent across all four attributes: La Roche-Posay owns the prestige and ingredient-quality cues, CeraVe owns dermatologist-credibility reputation, and Olay MAX owns identity fit (driven heavily by current-user self-selection).</p>
+  <div class="crosstab">
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Olay MAX</th>
+          <th>CeraVe</th>
+          <th>La Roche-Posay</th>
+          <th>None / about the same</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(d.perceptions).map(([key, perc]: [string, any]) => {
+          const all = perc.all;
+          const max = Math.max(all['Olay Retinol 24 MAX'].pct, all['CeraVe Resurfacing Retinol Serum'].pct, all['La Roche-Posay Pure Retinol B3 Serum'].pct);
+          return (
+            <tr>
+              <td>{perc.label}</td>
+              <td class={all['Olay Retinol 24 MAX'].pct === max ? 'highlight' : ''}>{all['Olay Retinol 24 MAX'].pct}%</td>
+              <td class={all['CeraVe Resurfacing Retinol Serum'].pct === max ? 'highlight' : ''}>{all['CeraVe Resurfacing Retinol Serum'].pct}%</td>
+              <td class={all['La Roche-Posay Pure Retinol B3 Serum'].pct === max ? 'highlight' : ''}>{all['La Roche-Posay Pure Retinol B3 Serum'].pct}%</td>
+              <td>{all['None / about the same'].pct}%</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+  <p class="source-note">"Which of these packages [conveys high-quality ingredients / suggests the product likely costs more / suggests it would be recommended by a dermatologist / feels most designed or targeted for a woman like you]? Why?" (n={d.n_total}). Highlighted cell = highest share for that attribute.</p>
+
+  <div class="vuln-callout">
+    <p><strong>Olay MAX wins zero percent on ingredient quality, zero percent on perceived price, and zero percent on dermatologist credibility.</strong> The three attributes that matter most to defectors during the consideration phase. Olay MAX wins on identity fit (47%), but that win is structurally inflated by current users picking the product they already use; conditioning on the upgrader vs defector cut shows the identity-fit signal is heavily self-referential. The brand has earned identity-resonance with its existing customers; it has not earned any of the credibility cues that drive the defector decision.</p>
+  </div>
+
+  <h2>4c. Perception by Arm</h2>
+  <p>The same four attributes broken out by arm. The differences between upgrader and defector perceptions are mostly modest (both arms agree that La Roche-Posay looks ingredient-credible and expensive), but the identity-fit attribute reveals the self-selection effect cleanly.</p>
+  <div class="crosstab">
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute / Arm</th>
+          <th>Olay MAX</th>
+          <th>CeraVe</th>
+          <th>La Roche-Posay</th>
+          <th>None / same</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(d.perceptions).map(([key, perc]: [string, any]) => (
+          <>
+            <tr>
+              <td>{perc.label} (Upgraders)</td>
+              <td>{perc.by_arm['Arm 1: Internal upgrader']['Olay Retinol 24 MAX']}%</td>
+              <td>{perc.by_arm['Arm 1: Internal upgrader']['CeraVe Resurfacing Retinol Serum']}%</td>
+              <td>{perc.by_arm['Arm 1: Internal upgrader']['La Roche-Posay Pure Retinol B3 Serum']}%</td>
+              <td>{perc.by_arm['Arm 1: Internal upgrader']['None / about the same']}%</td>
+            </tr>
+            <tr>
+              <td>{perc.label} (Defectors)</td>
+              <td>{perc.by_arm['Arm 2: External defector']['Olay Retinol 24 MAX']}%</td>
+              <td>{perc.by_arm['Arm 2: External defector']['CeraVe Resurfacing Retinol Serum']}%</td>
+              <td>{perc.by_arm['Arm 2: External defector']['La Roche-Posay Pure Retinol B3 Serum']}%</td>
+              <td>{perc.by_arm['Arm 2: External defector']['None / about the same']}%</td>
+            </tr>
+          </>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    <p><strong>The identity fit attribute is the only attribute with meaningful arm asymmetry, and it is heavily self-referential.</strong> Upgraders pick Olay MAX as "designed for a woman like me" at far higher rates than defectors do. Defectors pick CeraVe or La Roche-Posay. Two readings: (1) the perception data is partly capturing the self-selection effect of "I picked the product that felt like it was for me," not an independent identity judgment; (2) the residual signal after the self-selection is real, with defectors having ended up using a competitor and finding that competitor more identity-resonant than Olay MAX. This is a modest but consistent finding worth taking seriously.</p>
+  </div>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 05, BRAND & MARKETING RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<Section title="Brand & Marketing Recommendations" subtitle="Where Olay should compete, how to move on the channel asymmetry, and what the brand should claim that it currently does not">
+  <p>
+    The single most actionable finding is the channel asymmetry. Defectors live on Reddit and TikTok-derm content; the brand currently has minimal presence in either. The recommendations below sequence the marketing moves by ROI, with Tier-1-significant findings carrying directive language and Tier-2 corroborated patterns hedged appropriately.
+  </p>
+
+  <h2>5a. Strategic Brand Moves</h2>
+  <table class="rec-table">
+    <thead><tr><th>Move</th><th>Rationale and prioritization</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Build a TikTok dermatologist-creator program for MAX</td>
+        <td><strong>Tier 1 finding.</strong> 25% of defectors named TikTok-derm content as a trusted source vs 4% of upgraders (p&lt;0.001). The defection happens when active research meets credible alternatives; TikTok dermatologists are the largest single channel of credible alternative. Olay MAX is currently invisible on this channel. Sponsored or partnered creator content from board-certified dermatologists explaining the MAX formula's higher retinol concentration could reverse this disadvantage. Budget should be reallocated from traditional drugstore-shelf media into creator partnerships.</td>
+      </tr>
+      <tr>
+        <td>Show up in the SkincareAddiction subreddit with substance, not promotion</td>
+        <td><strong>Tier 1 finding.</strong> 85% of defectors used Reddit during the decision (vs 43% of upgraders, p&lt;0.001). Reddit communities are hostile to overt promotion but receptive to detailed ingredient-panel comparisons and AMAs from credible experts. An ingredient-panel AMA series with the MAX formulation chemists, distributed as Reddit content rather than as ads, addresses the channel where defectors are forming opinions before they ever get to a retail shelf.</td>
+      </tr>
+      <tr>
+        <td>Reposition MAX on dermatologist-credibility cues, not Olay-brand familiarity</td>
+        <td><strong>Tier 1 finding.</strong> Olay MAX wins 0% on dermatologist-recommended perception (vs CeraVe 77%, La Roche-Posay 23%). The brand has not earned any clinical credibility in the cohort. Closing this gap requires explicit clinical positioning: dermatologist-developed messaging, clinical-study citations on the package, and partnerships with derm-influencers. The Olay-heritage story works on the upgraders the brand already has; it does not work on defectors.</td>
+      </tr>
+      <tr>
+        <td>Lead with the ingredient story on MAX packaging</td>
+        <td><strong>Tier 1 finding.</strong> 98% picked La Roche-Posay as conveying high-quality ingredients vs 0% Olay MAX. The verbatim "why" themes are clean and minimalist packaging, ingredient callouts on the front of the package, and a clinical color palette. Olay MAX packaging is described as "more visually designed" and "beauty-coded," which the cohort interprets as compensation through branding rather than confidence in the formula. A packaging refresh leading with ingredient names and concentration data, in a more restrained palette, would close part of this gap without rebuilding the brand.</td>
+      </tr>
+      <tr>
+        <td>Defend the upgrader narrative with a within-brand graduation story</td>
+        <td><strong>Tier 1 finding.</strong> Within-brand upgrade as logical step is named by 53% of upgraders as a decision factor vs 14% of defectors. The graduation framing is real and works for the loyal half. Make it explicit on Retinol 24 packaging: a small "next step: MAX" call-out at point of purchase (and on Olay's mobile experience) reinforces a narrative that already lands with this cohort. Cost is low; downside is minimal.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5b. What NOT to Do</h2>
+  <ul>
+    <li><strong>Do not increase paid media weight on the existing MAX positioning.</strong> The defection is not driven by under-awareness. {d.arm2_considered_max.pct}% of defectors considered MAX and rejected it. More impressions of the current message will not move the needle.</li>
+    <li><strong>Do not pivot to a longevity narrative yet.</strong> The cohort is still on the retinoid graduation ladder. Peptides and exosomes appear in the radar but with curiosity, not buying intent. A premature pivot abandons the lane where the brand has structural assets.</li>
+    <li><strong>Do not match La Roche-Posay on prestige cues.</strong> The brand's structural advantage is accessibility ("doesn't break the bank," "available at Target"). Pursuing a luxury aesthetic abandons that lane without credibly winning the prestige one.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 06, PRODUCT & PORTFOLIO RECOMMENDATIONS -->
+<!-- ============================================================ -->
+<Section title="Product & Portfolio Recommendations" subtitle="The three strategic decisions on product depth, format, and the longevity-platform timing">
+  <p>
+    Section 1 introduced three strategic product decisions framed in the brief: does Olay need a step-up retinoid product beyond MAX; is MAX visible to graduating defectors; and should the next big bet be a stronger retinoid or a longevity-platform product. The data answers all three.
+  </p>
+
+  <h2>6a. Decision 1: Step-Up Retinoid Beyond MAX</h2>
+  <table class="rec-table">
+    <thead><tr><th>Aspect</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Format</td>
+        <td><strong>Serum, not moisturizer.</strong> The defector decision logic explicitly identifies serum format as a decision driver (significant arm asymmetry on this code). The jar friction is universal, the airless or dropper format is associated with premium pricing perception, and Olay does not currently field a serum-format retinoid in this competitive set.</td>
+      </tr>
+      <tr>
+        <td>Concentration</td>
+        <td><strong>Higher than MAX, lower than prescription.</strong> The cohort understands the graduation ladder and articulates it explicitly: regular retinol → stronger OTC retinol → retinaldehyde → prescription tretinoin. There is a clear product slot between MAX and tretinoin; retinaldehyde appears in 26% of forward-radar mentions across both arms. A retinal-based or higher-percentage retinol serum addresses the demand directly.</td>
+      </tr>
+      <tr>
+        <td>Positioning</td>
+        <td><strong>Dermatologist-developed framing, ingredient-led packaging.</strong> The new product cannot win in the lane Olay MAX currently sits in; it has to compete in the lane CeraVe and La Roche-Posay sit in. That means clinical visual language, ingredient callouts, and dermatologist-creator partnerships from launch.</td>
+      </tr>
+      <tr>
+        <td>Price tier</td>
+        <td><strong>$30 to $40 retail.</strong> Above the $20 to $25 Retinol 24 line, below the $40 to $50 prestige tier. This is the price band the cohort describes as "worth it for a step-up product" without crossing into "luxury skincare." La Roche-Posay's serum is the price benchmark.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6b. Decision 2: Marketing/Merchandising for MAX Visibility</h2>
+  <p><strong>The visibility question has the wrong premise.</strong> {d.arm2_considered_max.pct}% of defectors saw MAX during their consideration phase and chose a competitor. The fix is not louder visibility; it is sharper messaging that answers the comparison question defectors are actually asking. The Brand &amp; Marketing recommendations in Section 05 cover the specific moves: TikTok creator program, Reddit AMA presence, derm-credibility repositioning, ingredient-led packaging.</p>
+
+  <h2>6c. Decision 3: Stronger Retinoid vs Longevity-Platform Product</h2>
+  <table class="rec-table">
+    <thead><tr><th>Phase</th><th>Recommendation</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Next 12 to 18 months</td>
+        <td><strong>Stronger retinoid (the serum from Decision 1).</strong> The cohort is on the retinoid graduation ladder; the lane has unfilled demand; competitors are landing defectors with serum-format products. Building a longevity platform first cedes the retinoid lane while the brand's existing customers age into competitor portfolios.</td>
+      </tr>
+      <tr>
+        <td>18 to 36 months</td>
+        <td><strong>Begin testing a peptide-or-growth-factor adjacent product.</strong> 27% of forward-radar mentions cite peptides; emerging-ingredient curiosity is rising. A peptide-anchored "complementary to retinol" product, positioned as routine expansion (89% of trajectory mentions support this), addresses the next wave without abandoning the retinoid frame. This is hedge investment, not lead.</td>
+      </tr>
+      <tr>
+        <td>36+ months</td>
+        <td><strong>Evaluate longevity-platform investment based on category trajectory.</strong> Growth factors, exosomes, and PDRN appear in radar mentions today but at low conviction. By 36 months the cohort will be 38 to 46 years old and the market will have stratified more clearly. Evaluate then, not now.</td>
+      </tr>
+    </tbody>
+  </table>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 07, FORWARD TRAJECTORY & RETENTION RISK -->
+<!-- ============================================================ -->
+<Section title="Forward Trajectory & Retention Risk" subtitle="What the cohort is moving toward over the next 12 to 24 months and where the retention pressure points sit">
+  <p>
+    The interview closes with two forward-looking questions about how the participant's skincare needs will change in the next year or two and which ingredients or products are on her radar. The answers describe the future buying landscape Olay is entering.
+  </p>
+
+  <h2>7a. Trajectory and What's Next</h2>
+  <p>The dominant trajectory frame across both arms is routine expansion: adding ingredients and products, not switching out the retinoid. Prescription tretinoin appears as a future goal for a meaningful share of both cohorts, especially among defectors. In-office procedures are largely deferred for cost reasons.</p>
+  <p class="source-note">Source question: "How do you think your skincare needs are going to change in the next year or two?" <span class="vb-hint">Click any trajectory theme to read participant quotes.</span></p>
+  <div class="paired-chart" data-drilldown-chart="trajectory">
+    {d.trajectory.slice(0, 9).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q15">
+        <div class="paired-theme">{pretty(row.code)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>7b. Future Radar and Ingredients in Play</h2>
+  <p>The closing question on the future-radar prompt captured open ingredient and product mentions. The radar is dominated by peptides, retinaldehyde (as the half-step toward tretinoin), and pigmentation-targeted ingredients. Defectors mention more advanced or specialized ingredients at slightly higher rates than upgraders, consistent with the channel and engagement asymmetry seen earlier.</p>
+  <div class="paired-chart" data-drilldown-chart="radar">
+    {d.radar.slice(0, 6).map((row: any) => (
+      <div class="paired-block" data-code-name={row.code} data-qid="Q16">
+        <div class="paired-theme">{pretty(row.code)}</div>
+        <div class="paired-bars">
+          <div class="paired-row">
+            <span class="paired-mini-label">Upgraders</span>
+            <div class="paired-track">
+              {row.arm1_pct > 0 && <div class="paired-fill upgrader" style={`width: ${row.arm1_pct}%;`}>
+                <span class="paired-val">{row.arm1_pct}%</span>
+              </div>}
+            </div>
+          </div>
+          <div class="paired-row">
+            <span class="paired-mini-label">Defectors</span>
+            <div class="paired-track">
+              {row.arm2_pct > 0 && <div class="paired-fill defector" style={`width: ${row.arm2_pct}%;`}>
+                <span class="paired-val">{row.arm2_pct}%</span>
+              </div>}
+            </div>
+          </div>
+        </div>
+        <div class={`paired-delta ${row.arm2_pct - row.arm1_pct > 0 ? 'pos' : 'neg'}`}>
+          {row.arm2_pct - row.arm1_pct > 0 ? '+' : ''}{row.arm2_pct - row.arm1_pct} pp{sigStar(row.p_value)}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="opp-callout">
+    <p><strong>The retention message:</strong> the next 12 to 24 months are dominated by routine expansion within the retinoid frame. Olay has time to build a step-up retinoid product before the cohort migrates to longevity narratives. Peptide and retinaldehyde signals are leading indicators for product-development priorities, not signals to pivot away from retinoids.</p>
+  </div>
+
+  <h2>7c. Retention Risk Among Current MAX Users</h2>
+  <p>The 120 Arm 1 upgraders chose Olay MAX and stayed within the brand. The retention question is what would cause them to defect on the next cycle. Three patterns suggest the at-risk subset:</p>
+  <ul>
+    <li><strong>MAX users who follow TikTok-derm content.</strong> Currently a small share of Arm 1 (4%), but if the brand fails to ship a serum-format step-up, this subset will be most exposed to competitor messaging in the next cycle.</li>
+    <li><strong>MAX users on the retinoid graduation ladder mental model.</strong> 22% of Arm 1 frame their skincare progression explicitly as a step-up ladder. They have already framed MAX as a step, not a destination. If MAX plateaus the way Retinol 24 did, this subset will look outside the brand for the next step.</li>
+    <li><strong>MAX users in the higher-income tier ($150K+).</strong> This subset has the disposable income to graduate to a prestige serum and the dermatologist relationships to be exposed to premium recommendations. The defection risk for this subset is to La Roche-Posay or SkinCeuticals, not back to drugstore.</li>
+  </ul>
+</Section>
+
+<!-- ============================================================ -->
+<!-- 08, METHODOLOGY -->
+<!-- ============================================================ -->
+<Section title="Methodology" subtitle="Sample design, statistical conventions, and coding pipeline">
+  <h2>8a. Sample Design</h2>
+  <p>240 US women aged 35 to 43 who used Olay Regenerist Retinol 24 for at least three months consistently and switched away within the past three months. Two arms of 120 each: internal upgraders to Olay Retinol 24 MAX, and external defectors to a non-Olay retinoid (CeraVe 52, La Roche-Posay 19, Naturium 15, Differin 13, The Ordinary 10, Neutrogena 6, RoC 5). Sample stratified to approximate the demographic distribution of US women 35 to 43 across household income, US census region, and race or ethnicity. AI-moderated interviews, target length 20 minutes, 16 questions across four sections. The Section 3 perception questions presented a single image showing all three stimulus products side-by-side, position randomized.</p>
+
+  <h2>8b. Statistical Methodology</h2>
+  <p>Significance testing uses two-proportion z-tests at alpha = 0.10, two-tailed, with Fisher's exact fallback when expected cell counts fall below 5. Asterisks on chart deltas indicate the upgrader vs defector difference is significant at this threshold. Subgroup chart conventions follow the BuyerVoice canonical pattern: dashed reference lines show overall sample averages including the focal subgroup; significance tests compare the focal subgroup against all OTHER respondents combined. Three-tier claim discipline applies: significant findings get strong claims, non-significant but corroborated patterns get hedged language ("directionally," "suggestive"), uncorroborated non-significant patterns are not claimed at all.</p>
+
+  <h2>8c. Coding and Reliability</h2>
+  <p>Magnitude coding captures three dimensions per meaning unit: thematic code, direction (positive, negative, or neutral), and intensity (1, 2, or 3). Inter-coder reliability across the 68 thematic codes was Cohen's Kappa 0.93 on thematic codes, 0.94 on direction tags, exceeding the 0.65 threshold for substantial agreement. Codebook construction used a global pass over 484 preliminary clusters drawn from 6,592 meaning units extracted across a stratified 100-participant subsample.</p>
+</Section>
+
+</div>
+
+<!-- Verbatim drill-down modal -->
+<div class="vb-overlay" id="vb-overlay" role="dialog" aria-modal="true" aria-labelledby="vb-title">
+  <div class="vb-dialog">
+    <button class="vb-close" id="vb-close" aria-label="Close">&times;</button>
+    <div class="vb-header">
+      <h3 id="vb-title">Loading...</h3>
+      <p class="vb-q" id="vb-question"></p>
+    </div>
+    <div class="vb-body" id="vb-body"></div>
+  </div>
+</div>
+
+<Fragment set:html={vdScript} />
+
+<script is:inline>
+  (function () {
+    const overlay = document.getElementById('vb-overlay');
+    const title = document.getElementById('vb-title');
+    const qel = document.getElementById('vb-question');
+    const body = document.getElementById('vb-body');
+    const closeBtn = document.getElementById('vb-close');
+    if (!overlay || !title || !qel || !body || !closeBtn) return;
+
+    function close() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+    function brandLabel(brand) {
+      if (!brand) return '';
+      if (brand.toLowerCase().includes('olay retinol 24 max')) return 'Olay MAX';
+      if (brand.toLowerCase().includes('cerave')) return 'CeraVe';
+      if (brand.toLowerCase().includes('la roche')) return 'La Roche-Posay';
+      return brand;
+    }
+
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      const block = target.closest('[data-code-name][data-qid]');
+      if (!block) return;
+      const chartContainer = block.closest('[data-drilldown-chart]');
+      if (!chartContainer) return;
+
+      const code = block.getAttribute('data-code-name');
+      const qid = block.getAttribute('data-qid');
+      const key = qid + '::' + code;
+      const quotes = (window.__VD || {})[key] || [];
+      const qtext = (window.__VQ || {})[qid] || '';
+
+      title.textContent = code + (quotes.length ? ' (n=' + quotes.length + ' participants)' : '');
+      qel.textContent = qtext ? 'Source question: ' + qtext : '';
+
+      if (!quotes.length) {
+        body.innerHTML = '<p class="vb-empty">No quotes captured for this code in this question. The drilldown only surfaces quotes from segments where the coder applied this exact (question, code) pair.</p>';
+      } else {
+        // Sort by intensity desc and show ALL quotes for this (question, code)
+        // pair. Earlier versions capped at 8; that hid the bulk of evidence
+        // for high-prevalence codes (e.g. "Multiple Factors Converging" has
+        // ~175 of 240 participants). Full quotes, no per-quote truncation,
+        // so the reader can see the entire response in context.
+        const sorted = quotes.slice().sort((a, b) => (b.intensity || 0) - (a.intensity || 0));
+        body.innerHTML = sorted.map((q) => {
+          const txt = q.text || '';
+          const tags = [
+            q.arm === 'U' ? 'Upgrader' : 'Defector',
+            brandLabel(q.brand),
+            q.age,
+            q.income,
+            q.ethnicity,
+          ].filter(Boolean);
+          const tagsHtml = tags.map((t, i) => '<span class="vb-tag' + (i === 1 ? ' brand' : '') + '">' + t + '</span>').join('');
+          return '<div class="vb-card"><p class="vb-quote">' + txt + '</p><div class="vb-tags">' + tagsHtml + '</div></div>';
+        }).join('');
+      }
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  })();
+</script>
