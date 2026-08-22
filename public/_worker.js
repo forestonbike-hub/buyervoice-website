@@ -36,6 +36,40 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // --- Block /internal/* on non-canonical hosts (e.g. *.pages.dev) ---
+    // Cloudflare Access gates /internal/* at the buyervoice.ai edge, but that
+    // policy does NOT apply to this project's *.pages.dev hostnames, so on
+    // those hosts the internal dashboard, its pages, and its APIs (including
+    // the visibility-flag writer and calendar-sync OAuth) would be world-
+    // readable and writable. Serve /internal/* only on the canonical hosts
+    // where Access is enforced; 404 everywhere else. Access runs upstream of
+    // this worker, so allowing buyervoice.ai here does not bypass it.
+    const INTERNAL_ALLOWED_HOSTS = new Set([
+      'buyervoice.ai',
+      'www.buyervoice.ai',
+      'localhost',
+      '127.0.0.1',
+    ]);
+    if (
+      (url.pathname === '/internal' || url.pathname.startsWith('/internal/')) &&
+      !INTERNAL_ALLOWED_HOSTS.has(url.hostname)
+    ) {
+      return new Response(
+        '<!DOCTYPE html><html><head><title>Not Found</title></head>' +
+        '<body style="font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#faf9f7">' +
+        '<div style="text-align:center"><h1 style="color:#1a1a1a;font-size:2rem">Page not found</h1>' +
+        '<p style="color:#666">This page is not currently available.</p>' +
+        '<a href="https://buyervoice.ai/" style="color:#c44b2d;text-decoration:none">Back to BuyerVoice.AI</a></div></body></html>',
+        {
+          status: 404,
+          headers: {
+            'Content-Type': 'text/html;charset=UTF-8',
+            'Cache-Control': 'no-store, must-revalidate',
+          },
+        }
+      );
+    }
+
     // --- Calendar Sync API (handled in a separate module) ---
     if (url.pathname.startsWith('/internal/api/calendar-sync/')) {
       return handleCalendarSync(request, env, url);
