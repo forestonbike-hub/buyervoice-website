@@ -525,6 +525,7 @@ import InternalLayout from '../../../layouts/InternalLayout.astro';
     <section id="study-workflow">
       <h2>Study Workflow</h2>
       <p>BuyerVoice is building a custom AI moderator application (not a third-party interview tool). This gives full control over the interview experience, recording requirements, screener logic, transcript format, and data pipeline.</p>
+      <p><strong>Platform architecture (decided August 21, 2026):</strong> v1 of the custom platform is a half-duplex, turn-based moderator (question, spoken answer, transcription, next question), not a full-duplex conversational voice agent. That choice keeps the moderator neutral, prevents mid-answer cut-offs, and produces one response per question for the coding pipeline. If later studies show participants want a more conversational moderator, LiveKit Agents is the upgrade path: the moderator logic carries over and only the transport and turn-taking layer changes, at about $50 more per 200-participant study. Details are in the PRD (Section 5.4) and the cost estimate in the <code>AI-moderator-product</code> folder of the repo.</p>
 
       <h3>End-to-End Flow</h3>
 
