@@ -543,7 +543,7 @@
         {
           "value": "£75,000-£99,999",
           "n": 28,
-          "pct": 15
+          "pct": 14
         },
         {
           "value": "Under £25,000",
@@ -553,7 +553,7 @@
         {
           "value": "£100,000+",
           "n": 14,
-          "pct": 8
+          "pct": 7
         },
         {
           "value": "Prefer not to say",
@@ -1186,7 +1186,9 @@
           "directional_threat": "Monzo",
           "primary_threat": "Even (n.s.)",
           "p_value": 0.6636,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Barclays",
@@ -1198,7 +1200,9 @@
           "directional_threat": "Starling",
           "primary_threat": "Even (n.s.)",
           "p_value": 0.2379,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Halifax",
@@ -1210,7 +1214,9 @@
           "directional_threat": "Starling",
           "primary_threat": "Even (n.s.)",
           "p_value": 0.3323,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "NatWest",
@@ -1222,7 +1228,9 @@
           "directional_threat": "Monzo",
           "primary_threat": "Monzo",
           "p_value": 0.0352,
-          "is_significant": true
+          "is_significant": true,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Nationwide Building Society",
@@ -1234,7 +1242,9 @@
           "directional_threat": "Even",
           "primary_threat": "Even (n.s.)",
           "p_value": 1.0,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Santander",
@@ -1246,7 +1256,9 @@
           "directional_threat": "Starling",
           "primary_threat": "Even (n.s.)",
           "p_value": 1.0,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "HSBC",
@@ -1258,7 +1270,9 @@
           "directional_threat": "Even",
           "primary_threat": "Even (n.s.)",
           "p_value": 1.0,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Royal Bank of Scotland",
@@ -1270,7 +1284,9 @@
           "directional_threat": "Monzo",
           "primary_threat": "Even (n.s.)",
           "p_value": 1.0,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "TSB",
@@ -1282,7 +1298,9 @@
           "directional_threat": "Starling",
           "primary_threat": "Even (n.s.)",
           "p_value": 1.0,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         },
         {
           "incumbent": "Bank of Scotland",
@@ -1294,7 +1312,9 @@
           "directional_threat": "Starling",
           "primary_threat": "Even (n.s.)",
           "p_value": 0.625,
-          "is_significant": false
+          "is_significant": false,
+          "sig_bh": false,
+          "_bh_family": "chapter1_who_switchers_are.per_incumbent_threat.rows"
         }
       ],
       "n_total_w1": 120,
@@ -1549,7 +1569,7 @@
           "label": "App Design Quality",
           "n_pos": 33,
           "n_total": 60,
-          "pct": 56
+          "pct": 55
         },
         {
           "code": "w1_Q7_social_proof_as_switching_catalyst",
@@ -1715,7 +1735,9 @@
           "n": 21,
           "p_value": 0.9664,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "NatWest",
@@ -1723,7 +1745,9 @@
           "n": 15,
           "p_value": 0.3753,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "Barclays",
@@ -1731,7 +1755,9 @@
           "n": 18,
           "p_value": 0.1135,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "HSBC",
@@ -1739,7 +1765,9 @@
           "n": 8,
           "p_value": 0.9546,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "Halifax",
@@ -1747,7 +1775,9 @@
           "n": 17,
           "p_value": 0.4979,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "Santander",
@@ -1755,7 +1785,9 @@
           "n": 9,
           "p_value": 0.5042,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         },
         {
           "label": "Nationwide Building Society",
@@ -1763,7 +1795,9 @@
           "n": 12,
           "p_value": 0.1768,
           "sigFlag": "",
-          "tier": "tier2_3_nonsig"
+          "tier": "tier2_3_nonsig",
+          "sig_bh": false,
+          "_bh_family": "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows"
         }
       ],
       "footnote": "Significance test compares the subgroup vs all other respondents combined; dashed line shows the overall sample average including the subgroup (n=120). α = 0.10 two-tailed."
@@ -1776,8 +1810,12 @@
         "w2_pct": 70,
         "w2_n": 160,
         "delta_pp": -7,
-        "p_value": 0.1917,
-        "sig": false
+        "delta_pp_raw": -6.67,
+        "p_value": 0.2145,
+        "test": "z",
+        "sig": false,
+        "sig_bh": false,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "Spending Visibility Through Categorization",
@@ -1786,8 +1824,12 @@
         "w2_pct": 58,
         "w2_n": 160,
         "delta_pp": -15,
-        "p_value": 0.0095,
-        "sig": true
+        "delta_pp_raw": -15.0,
+        "p_value": 0.0097,
+        "test": "z",
+        "sig": true,
+        "sig_bh": true,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "Phone Customer Service Friction",
@@ -1796,8 +1838,12 @@
         "w2_pct": 57,
         "w2_n": 160,
         "delta_pp": -4,
-        "p_value": 0.5011,
-        "sig": false
+        "delta_pp_raw": -3.96,
+        "p_value": 0.5058,
+        "test": "z",
+        "sig": false,
+        "sig_bh": false,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "Excessive Incumbent Fees",
@@ -1806,8 +1852,12 @@
         "w2_pct": 32,
         "w2_n": 160,
         "delta_pp": 7,
-        "p_value": 0.2014,
-        "sig": false
+        "delta_pp_raw": 7.08,
+        "p_value": 0.1925,
+        "test": "z",
+        "sig": false,
+        "sig_bh": false,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "Excessive Security Friction",
@@ -1816,8 +1866,12 @@
         "w2_pct": 10,
         "w2_n": 160,
         "delta_pp": -12,
-        "p_value": 0.0056,
-        "sig": true
+        "delta_pp_raw": -11.67,
+        "p_value": 0.0068,
+        "test": "z",
+        "sig": true,
+        "sig_bh": true,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "App Reliability Concerns",
@@ -1826,8 +1880,12 @@
         "w2_pct": 7,
         "w2_n": 160,
         "delta_pp": -13,
-        "p_value": 0.0012,
-        "sig": true
+        "delta_pp_raw": -13.12,
+        "p_value": 0.001,
+        "test": "z",
+        "sig": true,
+        "sig_bh": true,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       },
       {
         "label": "Uncompetitive Savings Rates",
@@ -1836,8 +1894,12 @@
         "w2_pct": 80,
         "w2_n": 160,
         "delta_pp": 63,
+        "delta_pp_raw": 63.33,
         "p_value": 0.0,
-        "sig": true
+        "test": "z",
+        "sig": true,
+        "sig_bh": true,
+        "_bh_family": "chapter1_why_they_left.cross_wave_push_force_comparison"
       }
     ]
   },
@@ -2633,7 +2695,7 @@
         },
         "Starling Bank": {
           "mentally_available_pct": 23,
-          "aware_not_linked_pct": 56,
+          "aware_not_linked_pct": 55,
           "unaware_pct": 23,
           "n": 40
         },
@@ -2644,6 +2706,29 @@
           "n": 40
         }
       }
+    }
+  },
+  "test_families": {
+    "chapter1_who_switchers_are.per_incumbent_threat.rows": {
+      "n_tests": 10,
+      "n_survivors": 0,
+      "bh_threshold": null,
+      "q": 0.1,
+      "p_key": "p_value"
+    },
+    "chapter1_why_they_left.push_subgroup_by_previous_bank_fees.rows": {
+      "n_tests": 7,
+      "n_survivors": 0,
+      "bh_threshold": null,
+      "q": 0.1,
+      "p_key": "p_value"
+    },
+    "chapter1_why_they_left.cross_wave_push_force_comparison": {
+      "n_tests": 7,
+      "n_survivors": 4,
+      "bh_threshold": 0.0097,
+      "q": 0.1,
+      "p_key": "p_value"
     }
   }
 }

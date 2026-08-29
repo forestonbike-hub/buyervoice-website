@@ -1,4 +1,5 @@
 ---
+import { ceilPctValue } from '../../lib/pct';
 // CrossTab.astro — canonical cross-tab component.
 //
 // Enforces the BuyerVoice cross-tab highlighting rule:
@@ -50,7 +51,7 @@ const {
 } = Astro.props;
 // BuyerVoice reporting rule: every percentage shown to a reader is rounded UP
 // to the nearest whole number. No decimals, anywhere. See the framework docs.
-function fmtPct(val: number) { return String(Math.ceil(val)); }
+function fmtPct(val: number) { return String(ceilPctValue(val)); }
 
 // Compute highlight mask: mask[r][c] = true means highlight this cell.
 const nRows = rows.length;

@@ -1,0 +1,118 @@
+---
+import { ceilPctValue } from '../../lib/pct';
+// Scatter2x2.astro — the canonical frequency x BWS-intensity scatter.
+//
+// X axis: how often the theme was raised (prevalence % in the cohort).
+// Y axis: how much weight sat behind those mentions (mean BWS score in
+// [-1, +1] within the question grouping). Quadrant lines render at the
+// medians of the plotted set; the frequent-and-heavy quadrant (top-right)
+// is the strategic one and its points render in signal red.
+//
+// The source note MUST carry the grouping's BWS reliability, e.g.
+// footnote={`BWS interval alpha = ${fmt2(alpha)}, n verbatims = ${n}.`}
+//
+// Usage:
+//   <Scatter2x2
+//     title="Concept appeal: frequency by intensity"
+//     questionText="First reaction and what makes it appealing"
+//     points={[{ label: 'Own-job application', x: 72, y: 0.41 }, ...]}
+//     footnote="BWS interval alpha = 0.78, n verbatims = 184."
+//     drilldownId="appeal_scatter"
+//   />
+interface Point {
+  label: string;
+  x: number;        // prevalence percent 0-100
+  y: number;        // mean BWS score -1..+1
+  n?: number;
+}
+interface Props {
+  title: string;
+  questionText: string;
+  points: Point[];
+  xLabel?: string;
+  yLabel?: string;
+  footnote?: string;
+  drilldownId?: string;
+}
+const {
+  title, questionText, points,
+  xLabel = 'Share of cohort raising the theme',
+  yLabel = 'Mean BWS intensity of peak mentions',
+  footnote, drilldownId,
+} = Astro.props;
+
+const W = 700, H = 400;
+const M = { top: 18, right: 130, bottom: 46, left: 56 };
+const IW = W - M.left - M.right;
+const IH = H - M.top - M.bottom;
+
+const xs = points.map((p) => p.x);
+const ys = points.map((p) => p.y);
+function median(vals: number[]) {
+  const s = [...vals].sort((a, b) => a - b);
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+}
+const medX = median(xs);
+const medY = median(ys);
+const xMax = Math.min(100, Math.max(...xs) * 1.15 + 5);
+const xMin = Math.max(0, Math.min(...xs) * 0.85 - 5);
+const yMax = Math.max(...ys) + 0.12;
+const yMin = Math.min(...ys) - 0.12;
+const sx = (v: number) => M.left + ((v - xMin) / (xMax - xMin)) * IW;
+const sy = (v: number) => M.top + IH - ((v - yMin) / (yMax - yMin)) * IH;
+const xTicks = [...new Set([Math.ceil(xMin / 10) * 10, Math.round(medX), Math.floor(xMax / 10) * 10])].sort((a, b) => a - b);
+const yTicks = [...new Set([Number(yMin.toFixed(1)), Number(medY.toFixed(2)), Number(yMax.toFixed(1))])].sort((a, b) => a - b);
+const topRight = (p: Point) => p.x >= medX && p.y >= medY;
+---
+
+<figure class="scatter2x2" {...(drilldownId ? { 'data-drilldown-chart': drilldownId } : {})}>
+  <figcaption class="chart-title">{title}</figcaption>
+  <p class="chart-question">{questionText}</p>
+  <div class="scatter-wrap">
+    <svg viewBox={`0 0 ${W} ${H}`} xmlns="http://www.w3.org/2000/svg" role="img" aria-label={`Frequency by intensity scatter: ${title}`}>
+      <rect x={M.left} y={M.top} width={IW} height={IH} fill="rgba(11,31,58,0.03)" />
+      <line x1={sx(medX)} y1={M.top} x2={sx(medX)} y2={M.top + IH} stroke="#B8341B" stroke-width="1" stroke-dasharray="4 3" opacity="0.55" />
+      <line x1={M.left} y1={sy(medY)} x2={M.left + IW} y2={sy(medY)} stroke="#B8341B" stroke-width="1" stroke-dasharray="4 3" opacity="0.55" />
+      <text x={M.left + IW - 4} y={M.top + 14} text-anchor="end" font-size="10" fill="#8B5A1F" letter-spacing="0.06em">FREQUENT AND HEAVILY WEIGHTED</text>
+      {xTicks.map((t) => (
+        <g>
+          <line x1={sx(t)} y1={M.top + IH} x2={sx(t)} y2={M.top + IH + 4} stroke="#6B6B6B" stroke-width="1" />
+          <text x={sx(t)} y={M.top + IH + 17} text-anchor="middle" font-size="10" fill="#6B6B6B">{ceilPctValue(t)}%</text>
+        </g>
+      ))}
+      {yTicks.map((t) => (
+        <g>
+          <line x1={M.left - 4} y1={sy(t)} x2={M.left} y2={sy(t)} stroke="#6B6B6B" stroke-width="1" />
+          <text x={M.left - 8} y={sy(t) + 3} text-anchor="end" font-size="10" fill="#6B6B6B">{t > 0 ? '+' : ''}{Number(t).toFixed(2).replace(/0+$/, '').replace(/\.$/, '.0')}</text>
+        </g>
+      ))}
+      <text x={M.left + IW / 2} y={H - 8} text-anchor="middle" font-size="11" fill="#1A1A1A">{xLabel}</text>
+      <text x={14} y={M.top + IH / 2} text-anchor="middle" font-size="11" fill="#1A1A1A" transform={`rotate(-90 14 ${M.top + IH / 2})`}>{yLabel}</text>
+      {points.map((p) => (
+        <g class="scatter-point" data-point-label={p.label}>
+          <circle cx={sx(p.x)} cy={sy(p.y)} r="6" fill={topRight(p) ? '#B8341B' : '#0B1F3A'} opacity="0.9" />
+          <text x={sx(p.x) + 9} y={sy(p.y) + 4} font-size="11" fill="#1A1A1A">{p.label}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+  {(footnote || drilldownId) && (
+    <p class="chart-footnote">
+      {footnote}{drilldownId && <span class="vb-hint"> Click a point to read participant quotes.</span>}
+    </p>
+  )}
+</figure>
+
+<style>
+  .scatter2x2 { margin: 32px 0; font-family: var(--sans); }
+  .chart-title { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+  .chart-question { font-size: 13px; color: var(--muted); margin: 0 0 12px; font-style: italic; }
+  .scatter-wrap { width: 100%; max-width: 740px; }
+  .scatter-wrap svg { width: 100%; height: auto; font-family: var(--sans); }
+  [data-drilldown-chart] .scatter-point { cursor: pointer; }
+  .chart-footnote { font-size: 11px; color: var(--muted); margin: 8px 0 0; font-style: italic; line-height: 1.5; }
+  .vb-hint { color: var(--signal); font-style: normal; }
+  .vb-hint::before { content: '\203A  '; }
+  @media print { .scatter2x2 { page-break-inside: avoid; } }
+</style>

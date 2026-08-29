@@ -2805,5 +2805,6 @@
     "n_codes_above_kappa_threshold": 55,
     "segmentation_finding": "Both wave-specific psychographic segmentations (W1 Adopters n=60; W2 Non-Adopters n=120) produced k=2 solutions with Jaccard stability below the 0.60 'do-not-publish' threshold (Hennig 2007). The 60 Adopters and 120 Non-Adopters are too homogeneous within their respective cohort identities to split into stable psychographic clusters at this sample size. Cohort splits in this report use the criterion variables (wave, replatform_likelihood_band, adoption_likelihood_band, likely_choice) and firmographic dimensions (platform, company_size_band) as direct categorical cuts, which are publishable directly.",
     "study_type": "B2B"
-  }
+  },
+  "test_families": {}
 }

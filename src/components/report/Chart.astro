@@ -1,4 +1,5 @@
 ---
+import { ceilPctValue } from '../../lib/pct';
 // Chart.astro — canonical bar chart component. Renders a subgroup
 // comparison with the dashed overall-average line and sig-flag
 // superscripts per the BuyerVoice statistical methodology:
@@ -44,21 +45,30 @@ interface Props {
   overallN?: number;
   rows: ChartRow[];
   footnote?: string;
+  color?: 'ink' | 'signal' | 'teal' | 'warm' | 'slate' | 'plum';  // single fill color per chart (framework rule)
+  drilldownId?: string;     // matches a key in the DrilldownModal charts block; adds the data attribute + hint
 }
-const { title, questionText, xLabel, overallAverage, overallN, rows, footnote } = Astro.props;
-const maxVal = Math.max(...rows.map((r) => r.value), overallAverage ?? 0, 1);
+const { title, questionText, xLabel, overallAverage, overallN, rows, footnote, color = 'ink', drilldownId } = Astro.props;
 const CHART_WIDTH_PX = 520;
-function leftPct(val: number) { return Math.min(100, (val / maxVal) * 100); }
+// Canonical bar rule (framework + review G8): the fill width IS the raw
+// prevalence percent. Never scale to the max value — that renders the top
+// bar as always-full, which misreads as 100%.
+function leftPct(val: number) { return Math.min(100, val); }
+const FILL_COLORS: Record<string, string> = {
+  ink: 'var(--ink)', signal: '#B8341B', teal: '#2A7A6E',
+  warm: '#C4784A', slate: '#5B6472', plum: '#6E3B5C',
+};
+const fillColor = FILL_COLORS[color] ?? FILL_COLORS.ink;
 // BuyerVoice reporting rule: every percentage shown to a reader is rounded UP
 // to the nearest whole number. No decimals, anywhere. See the framework docs.
-function fmtPct(val: number) { return String(Math.ceil(val)); }
+function fmtPct(val: number) { return String(ceilPctValue(val)); }
 ---
 
 <figure class="chart">
   <figcaption class="chart-title">{title}</figcaption>
   <p class="chart-question">{questionText}</p>
 
-  <div class="chart-canvas" style={`--chart-width: ${CHART_WIDTH_PX}px;`}>
+  <div class="chart-canvas" style={`--chart-width: ${CHART_WIDTH_PX}px;`} {...(drilldownId ? { 'data-drilldown-chart': drilldownId } : {})}>
     {overallAverage !== undefined && (
       <div
         class="overall-line"
@@ -69,10 +79,10 @@ function fmtPct(val: number) { return String(Math.ceil(val)); }
       </div>
     )}
     {rows.map((r) => (
-      <div class="chart-row">
+      <div class="chart-row bar-row" data-bar-label={r.label}>
         <span class="row-label">{r.label}{r.n !== undefined && <span class="row-n"> (n={r.n})</span>}</span>
         <div class="bar-track">
-          <div class="bar-fill" style={`width: ${leftPct(r.value)}%;`}>
+          <div class="bar-fill" style={`width: ${leftPct(r.value)}%; background: ${fillColor};`}>
             <span class="bar-value">
               {fmtPct(r.value)}%{r.sigFlag && <sup class="sig-flag">{r.sigFlag}</sup>}{r.sigLetter && <sup class="sig-letter">{r.sigLetter}</sup>}
             </span>
@@ -83,7 +93,11 @@ function fmtPct(val: number) { return String(Math.ceil(val)); }
   </div>
 
   {xLabel && <p class="chart-x-label">{xLabel}</p>}
-  {footnote && <p class="chart-footnote">{footnote}</p>}
+  {(footnote || drilldownId) && (
+    <p class="chart-footnote">
+      {footnote}{drilldownId && <span class="vb-hint"> Click a theme to read participant quotes.</span>}
+    </p>
+  )}
 </figure>
 
 <style>
@@ -97,7 +111,12 @@ function fmtPct(val: number) { return String(Math.ceil(val)); }
   .row-label { flex: 0 0 140px; font-size: 13px; color: var(--ink); font-weight: 500; }
   .row-n { color: var(--muted); font-weight: 400; }
   .bar-track { flex: 1; height: 22px; background: var(--card-bg); border-radius: 2px; position: relative; }
-  .bar-fill { height: 100%; background: var(--ink); border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600; min-width: 32px; }
+  .bar-fill { height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; color: #fff; font-size: 12px; font-weight: 600; min-width: 32px; }
+  .bar-row { cursor: default; }
+  [data-drilldown-chart] .bar-row { cursor: pointer; }
+  [data-drilldown-chart] .bar-row:hover .row-label { color: var(--signal); }
+  .vb-hint { color: var(--signal); font-style: normal; }
+  .vb-hint::before { content: '\203A  '; }
   .bar-value sup { font-weight: 400; margin-left: 2px; }
   .sig-flag { color: #FFD166; }
   .sig-letter { color: rgba(255,255,255,0.8); font-style: italic; }

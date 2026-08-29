@@ -3,4 +3,4 @@ Allow: /
 Disallow: /internal/
 Disallow: /presentation-draft/
 
-Sitemap: https://buyervoice.ai/sitemap.xml
+# No sitemap is published; the site is small and crawlable from the homepage.

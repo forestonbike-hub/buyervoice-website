@@ -4,13 +4,14 @@
 
 // Reports that can be toggled between public and internal-only.
 // Keys are the KV slug, values are the public URL prefix to gate.
+// [gen:report-registry] BEGIN — generated from src/data/reports.json; edit that file and run `npm run gen:registry`, never this block
 const GATED_REPORTS = {
-  'hr-report': '/hr-report/',
   'hr-report-v2': '/hr-report-v2/',
-  'retail-banking-report': '/retail-banking-report/',
-  'retail-banking-report-v2': '/retail-banking-report-v2/',
-  'maze-retail-banking-report': '/maze/retail-banking-report/',
+  'hr-report': '/hr-report/',
   'maze-hr-report': '/maze/hr-report/',
+  'retail-banking-report': '/retail-banking-report/',
+  'maze-retail-banking-report': '/maze/retail-banking-report/',
+  'retail-banking-report-v2': '/retail-banking-report-v2/',
   'uk-neobanks-report': '/uk-neobanks-report/',
   'maze-uk-neobanks-report': '/maze/uk-neobanks-report/',
   'intercom-fin-report': '/intercom-fin-report/',
@@ -22,15 +23,16 @@ const GATED_REPORTS = {
 
 // Reports that default to public when no KV flag has been set yet.
 // The dashboard toggle still takes precedence once a flag has been
-// written explicitly, but without this set a brand-new slug would
-// 404 on first load until someone opens the internal dashboard.
+// written explicitly. With the worker failing CLOSED when KV is unbound,
+// these are also the only gated pages a preview deployment serves.
 const DEFAULT_PUBLIC_REPORTS = new Set([
-  'maze-retail-banking-report',
   'maze-hr-report',
+  'maze-retail-banking-report',
   'maze-uk-neobanks-report',
   'maze-intercom-fin-report',
   'maze-retinol-switching-report',
 ]);
+// [gen:report-registry] END
 
 export default {
   async fetch(request, env, ctx) {
@@ -119,10 +121,12 @@ export default {
     for (const [slug, prefix] of Object.entries(GATED_REPORTS)) {
       if (url.pathname === prefix || url.pathname.startsWith(prefix)) {
         isGatedReport = true;
-        // If KV isn't bound, fail open (serve the page)
-        if (!env.REPORT_VISIBILITY) break;
-        const raw = await env.REPORT_VISIBILITY.get('config');
-        const visibility = raw ? JSON.parse(raw) : {};
+        // Fail CLOSED when KV is unbound (review G11): a preview deployment
+        // without the REPORT_VISIBILITY binding must not serve every gated
+        // report. Only DEFAULT_PUBLIC_REPORTS stay reachable in that state.
+        const visibility = env.REPORT_VISIBILITY
+          ? JSON.parse((await env.REPORT_VISIBILITY.get('config')) || '{}')
+          : {};
         // Treat slugs in DEFAULT_PUBLIC_REPORTS as public unless they have been
         // explicitly flipped off in KV. `slug in visibility` distinguishes
         // "never toggled" from "explicitly set to false".

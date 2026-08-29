@@ -7,7 +7,8 @@ import verbatimExemplars from '../../data/intercom-fin-report/verbatim-exemplars
 
 const s = reportStats;
 const vxScript = '<script>window.__VX=' + JSON.stringify(verbatimExemplars).replace(/<\//g, '<\\/') + ';<' + '/script>';
-const ceil = (n: number) => Math.ceil(n * 100);
+import { ceilRate } from '../../lib/pct';
+const ceil = (n: number) => ceilRate(n);  // rate in [0,1] -> whole percent, exact (G1)
 const fmt = (rate: number) => `${ceil(rate)}%`;
 
 const meta = s.cohort_metadata;

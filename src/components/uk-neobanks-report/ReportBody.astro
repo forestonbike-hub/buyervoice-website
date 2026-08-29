@@ -1,4 +1,5 @@
 ﻿---
+import { ceilPct } from '../../lib/pct';
 // ReportBody.astro, UK Neobank Switching Study report body.
 // Imported by BOTH the internal page (src/pages/internal/uk-neobanks-report/)
 // and the public page (src/pages/uk-neobanks-report/).
@@ -328,7 +329,7 @@ function pushPullPaired() {
   <h2>Seven Critical Findings</h2>
 
   <div class="insight">
-    <p><strong>1. NatWest customers go heavily to Monzo; Halifax and Barclays directionally lean Starling.</strong> The only individually significant per-incumbent skew in Wave 1 is NatWest at 80% Monzo / 20% Starling. Halifax (35%/65%) and Barclays (34%/67%) both lean Starling at directional levels, individually neither crosses the threshold at these sample sizes, but they corroborate each other and warrant a working hypothesis. For other incumbents the per-bank flows do not yet justify a tailored competitive-positioning split. See Section 2b "Where they came from" for the per-incumbent breakdown and the strategic-implication read. <em>Owner: All teams; per-bank tailoring lives with Brand &amp; Marketing.</em></p>
+    <p><strong>1. NatWest customers go heavily to Monzo; Halifax and Barclays directionally lean Starling.</strong> The strongest per-incumbent signal in Wave 1 is NatWest at 80% Monzo / 20% Starling; it is raw-significant but no row of the per-incumbent table survives multiple-comparison correction at these sample sizes, so it stands as the leading working hypothesis rather than a confirmed skew. Halifax (35%/65%) and Barclays (34%/67%) both lean Starling at directional levels and corroborate each other. For other incumbents the per-bank flows do not yet justify a tailored competitive-positioning split. See Section 2b "Where they came from" for the per-incumbent breakdown and the strategic-implication read. <em>Owner: All teams; per-bank tailoring lives with Brand &amp; Marketing.</em></p>
   </div>
 
   <div class="vuln-callout">
@@ -352,7 +353,7 @@ function pushPullPaired() {
   </div>
 
   <div class="opp-callout">
-    <p><strong>7. Retirees are a defensive asset, not a vulnerability.</strong> Retirees skew sharply low-likelihood-to-switch ({swl.retirees.low_pct}% low-likelihood vs {Math.ceil(swl.summary.n_low / swl.n_matched * 100)}% in the matched cohort), are well-aware of Monzo (75% mentally available) but unmoved on intent, and over-index on branch-and-trust concerns. Branch network contraction without a retiree-specific defensive plan trades a defensible high-loyalty cohort for a small property cost saving. <em>Owner: Retail &amp; Growth.</em></p>
+    <p><strong>7. Retirees are a defensive asset, not a vulnerability.</strong> Retirees skew sharply low-likelihood-to-switch ({swl.retirees.low_pct}% low-likelihood vs {ceilPct(swl.summary.n_low, swl.n_matched)}% in the matched cohort), are well-aware of Monzo (75% mentally available) but unmoved on intent, and over-index on branch-and-trust concerns. Branch network contraction without a retiree-specific defensive plan trades a defensible high-loyalty cohort for a small property cost saving. <em>Owner: Retail &amp; Growth.</em></p>
   </div>
 
   <h2>Three Highest-Leverage Moves</h2>
@@ -412,7 +413,7 @@ function pushPullPaired() {
 
   <h2>2b. Where they came from</h2>
   <p>Each switcher named a previous primary bank in the screener. The chart below is source-centric: one row per incumbent, with a 100%-wide stacked bar showing what share of that bank's departing switchers chose Monzo vs Starling. Each incumbent reader can find their own row to see who their departing customers tended to land at. The top-5 incumbents may not face the same threat, although our sample sizes per incumbent are small, there are some directional signals worth reading carefully.</p>
-  <p class="source-note">"Which bank was your main bank before, and roughly how long had you been with them?" (Wave 1 switchers, n=120 = 60 Monzo + 60 Starling). Each row sums to 100% of departing switchers from that incumbent in this study. An asterisk on the n indicates the only split that is individually statistically distinguishable from 50/50 at alpha=0.10 (two-sided exact binomial); other rows are directional only.</p>
+  <p class="source-note">"Which bank was your main bank before, and roughly how long had you been with them?" (Wave 1 switchers, n=120 = 60 Monzo + 60 Starling). Each row sums to 100% of departing switchers from that incumbent in this study. An asterisk on the n would indicate a split distinguishable from 50/50 at alpha=0.10 (two-sided exact binomial) after Benjamini-Hochberg correction across the rows of this table; in this sample no row survives the correction. NatWest's 80/20 split (raw p = 0.04) is the strongest directional signal.</p>
   <div class="source-legend">
     <span><span class="leg-swatch monzo"></span>Went to Monzo</span>
     <span><span class="leg-swatch starling"></span>Went to Starling</span>
@@ -425,12 +426,12 @@ function pushPullPaired() {
           {row.monzo_pct > 0 && <div class="source-seg monzo" style={`width: ${row.monzo_pct}%;`}>{row.monzo_pct}%</div>}
           {row.starling_pct > 0 && <div class="source-seg starling" style={`width: ${row.starling_pct}%;`}>{row.starling_pct}%</div>}
         </div>
-        <div class="source-n">n={row.n_switchers}{row.is_significant ? '*' : ''}</div>
+        <div class="source-n">n={row.n_switchers}{row.sig_bh ? '*' : ''}</div>
       </div>
     ))}
   </div>
   <div class="insight">
-    <p><strong>Read:</strong> the only individually significant skew in this Wave 1 sample is <strong>NatWest customers going heavily to Monzo</strong> (80%/20%, the only row with an asterisk). Halifax (35%/65%) and Barclays (34%/67%) both lean toward Starling at directional levels, individually neither crosses the alpha=0.10 threshold at these sample sizes, but the two corroborate each other and read as a tier-2 directional finding worth testing in a larger sample. Lloyds (58%/42%) is the closest to 50/50 of the major flows; Nationwide and HSBC split evenly. The strategic implication is narrower than the raw percentages suggest: <em>for NatWest, "compete with Monzo" is a strong directive; for Halifax and Barclays, "expect Starling to be the more common landing place" is a working hypothesis; for everyone else, the data does not yet justify a per-bank competitive-positioning split.</em></p>
+    <p><strong>Read:</strong> no row in this table survives multiple-comparison correction across its per-incumbent splits, so every per-bank flow here is a hypothesis, not a confirmed skew. The strongest signal is <strong>NatWest customers going heavily to Monzo</strong> (80%/20%; the strongest raw signal in the table, though short of the corrected threshold at these sample sizes). Halifax (35%/65%) and Barclays (34%/67%) both lean toward Starling and corroborate each other as a directional pattern. Lloyds (58%/42%) is the closest to 50/50 of the major flows; Nationwide and HSBC split evenly. The strategic implication is narrower than the raw percentages suggest: <em>for NatWest, "compete with Monzo" is the leading working hypothesis to validate in a larger sample; for Halifax and Barclays, "expect Starling to be the more common landing place" is a weaker working hypothesis; for everyone else, the data does not yet justify a per-bank competitive-positioning split.</em></p>
   </div>
 
   <h2>2c. Other banks they considered</h2>
@@ -438,7 +439,7 @@ function pushPullPaired() {
   <p class="source-note">"What banks did you consider switching to? Please list the names of those banks." (Wave 1 switchers, n=120). Bars show the share of all Wave 1 switchers who mentioned the alternative; the two destination neobanks are excluded so the third-party landscape is visible.</p>
   <div class="bar-chart">
     {d.chapter1_who_switchers_are.other_banks_considered.rows.map((row: any) => {
-      const combinedPct = Math.ceil((row.monzo_n + row.starling_n) / 120 * 100);
+      const combinedPct = ceilPct(row.monzo_n + row.starling_n, 120);
       return (
         <div class="bar-row">
           <span class="bar-label">{row.bank}</span>
@@ -722,7 +723,7 @@ function pushPullPaired() {
   </div>
 
   <h2>4b. Self-reported likelihood-to-switch</h2>
-  <p>The Wave 2 closing question asked non-switchers how likely they are to open an account with a digital-only bank in the next year. Each matched non-switcher's response is classified into a likelihood band by parsing the open-text answer. Of the {swl.n_matched} matched non-switchers, {swl.summary.n_high} (~{Math.ceil(swl.summary.n_high / swl.n_matched * 100)}%) describe themselves as somewhat likely, likely, or very likely; {swl.summary.n_low} (~{Math.ceil(swl.summary.n_low / swl.n_matched * 100)}%) describe themselves as somewhat unlikely or unlikely. {swl.summary.n_unclassified} responses didn't match a clear likelihood phrase and are excluded from the cohort comparison.</p>
+  <p>The Wave 2 closing question asked non-switchers how likely they are to open an account with a digital-only bank in the next year. Each matched non-switcher's response is classified into a likelihood band by parsing the open-text answer. Of the {swl.n_matched} matched non-switchers, {swl.summary.n_high} (~{ceilPct(swl.summary.n_high, swl.n_matched)}%) describe themselves as somewhat likely, likely, or very likely; {swl.summary.n_low} (~{ceilPct(swl.summary.n_low, swl.n_matched)}%) describe themselves as somewhat unlikely or unlikely. {swl.summary.n_unclassified} responses didn't match a clear likelihood phrase and are excluded from the cohort comparison.</p>
   <p class="source-note">"Looking ahead over the next 12 months, how likely do you think it is that you'll open an account with a digital-only bank? And which, if any, bank do you think you are most likely to open an account with?" (Wave 2 matched non-switchers, n={swl.n_matched})</p>
 
   <h3>Demographic differences</h3>
@@ -909,7 +910,7 @@ function pushPullPaired() {
   <p><strong>Composition:</strong> 4 in Wave 1 (switchers who are retired), 40 in Wave 2 (non-switchers who are retired; hard quota). Primary-bank distribution among Wave 2 retirees: Halifax 9, HSBC 7, Barclays 7, Lloyds 5, Santander 5, NatWest 4, RBS 2, BoS 1.</p>
 
   <h2>9a. Retiree likelihood-to-switch versus the matched cohort</h2>
-  <p>Wave 2 retirees (n={swl.retirees.n}) skew sharply toward the low-likelihood-to-switch end of the scale. Of the {swl.retirees.n} Wave 2 retirees: {swl.retirees.collapsed.high} are high-likelihood ({swl.retirees.high_pct}%), {swl.retirees.collapsed.low} are low-likelihood ({swl.retirees.low_pct}%). For comparison, the matched non-switcher cohort is {Math.ceil(swl.summary.n_high / swl.n_matched * 100)}% high-likelihood and {Math.ceil(swl.summary.n_low / swl.n_matched * 100)}% low-likelihood. Retirees are visibly more anchored to their current bank.</p>
+  <p>Wave 2 retirees (n={swl.retirees.n}) skew sharply toward the low-likelihood-to-switch end of the scale. Of the {swl.retirees.n} Wave 2 retirees: {swl.retirees.collapsed.high} are high-likelihood ({swl.retirees.high_pct}%), {swl.retirees.collapsed.low} are low-likelihood ({swl.retirees.low_pct}%). For comparison, the matched non-switcher cohort is {ceilPct(swl.summary.n_high, swl.n_matched)}% high-likelihood and {ceilPct(swl.summary.n_low, swl.n_matched)}% low-likelihood. Retirees are visibly more anchored to their current bank.</p>
   <div class="compact-stats">
     <div class="compact-stat">
       <div class="csn">{swl.retirees.high_pct}%</div>
@@ -920,11 +921,11 @@ function pushPullPaired() {
       <div class="csl">retirees low-likelihood (n={swl.retirees.collapsed.low} of {swl.retirees.n})</div>
     </div>
     <div class="compact-stat">
-      <div class="csn">{Math.ceil(swl.summary.n_high / swl.n_matched * 100)}%</div>
+      <div class="csn">{ceilPct(swl.summary.n_high, swl.n_matched)}%</div>
       <div class="csl">matched non-switchers high-likelihood (n={swl.summary.n_high} of {swl.n_matched})</div>
     </div>
     <div class="compact-stat">
-      <div class="csn">{Math.ceil(swl.summary.n_low / swl.n_matched * 100)}%</div>
+      <div class="csn">{ceilPct(swl.summary.n_low, swl.n_matched)}%</div>
       <div class="csl">matched non-switchers low-likelihood (n={swl.summary.n_low} of {swl.n_matched})</div>
     </div>
   </div>
@@ -1004,6 +1005,7 @@ function pushPullPaired() {
   <h2>8b. Statistical methodology</h2>
   <ul>
     <li><strong>alpha = 0.10, two-tailed.</strong> Two-proportion z-test when expected cell counts are at least 5; Fisher's exact otherwise.</li>
+    <li><strong>Multiple comparisons:</strong> within each chart, the set of row-level tests forms one pre-registered family adjusted with the Benjamini-Hochberg procedure at q = 0.10. Asterisks and directive claim language require surviving the correction; raw-significant results that do not survive are reported as directional working hypotheses.</li>
     <li><strong>Subgroup charts with a dashed overall-average line:</strong> the dashed line shows the overall sample average; the significance test compares the focal subgroup against all other respondents combined.</li>
     <li><strong>Every percentage rounded UP to the nearest whole number</strong> per BuyerVoice convention. A non-zero rate never reads as 0%.</li>
     <li><strong>Three-tier claim discipline:</strong> only findings with p &lt; 0.10 receive strong directive claims; non-significant patterns are hedged only when corroborated by an independent signal elsewhere in the data; non-significant and uncorroborated patterns get no claim and no chart.</li>

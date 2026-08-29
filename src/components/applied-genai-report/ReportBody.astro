@@ -8,9 +8,30 @@
 // the .genai-report wrapper class.
 import stats from '../../data/applied-genai-report/report-stats.json';
 import vx from '../../data/applied-genai-report/verbatim-exemplars.json';
+import { ceilPctValue } from '../../lib/pct';
 
 const m = stats.meta;
-const ceil = (v: number) => Math.ceil(v);
+// Percentages in report-stats.json are already 0-100 floats; ceilPctValue
+// rounds away float noise before the ceiling (review finding G1).
+const ceil = (v: number) => ceilPctValue(v);
+
+// Data-bound number helpers (review finding G2: hand-typed percentages in
+// prose drifted from the charts). A missing code fails the build on purpose.
+type StatRow = { code: string; pct: number; hot_pct: number; warm_pct: number };
+const byCode = (block: StatRow[], code: string): StatRow => {
+  const r = block.find((x) => x.code === code);
+  if (!r) throw new Error(`report-stats.json: code not found: ${code}`);
+  return r;
+};
+const P = (block: StatRow[], code: string, field: 'pct' | 'hot_pct' | 'warm_pct' = 'pct') =>
+  ceil(byCode(block, code)[field]);
+const famRow = (label: string) => {
+  const r = stats.too_basic_by_familiarity.rows.find((x: { label: string }) => x.label === label);
+  if (!r) throw new Error(`report-stats.json: familiarity row not found: ${label}`);
+  return r;
+};
+const fmtUSD = (v: number) => '$' + Math.round(v).toLocaleString('en-US');
+const fmt2 = (v: number) => v.toFixed(2);
 
 // Embed the drilldown payload for the client-side modal handler.
 const vxScript =
@@ -77,15 +98,24 @@ const aiHot = (stats.cohort_demo.ai_familiarity.hot ?? {}) as Record<string, num
 const aiWarm = (stats.cohort_demo.ai_familiarity.warm ?? {}) as Record<string, number>;
 const aiOrder = ['Regular user', 'Occasional user', 'Non-user'];
 
-// cohort-gap paired rows: significant gaps first (sorted by gap size),
-// then the themes where the two cohorts broadly agree (sorted by prevalence).
-const gapRowsAll = [...(stats.cohort_gaps as Row[])];
-const sigRows = gapRowsAll
-  .filter((r) => r.hot_vs_warm_sig)
-  .sort((a, b) => Math.abs(b.hot_pct - b.warm_pct) - Math.abs(a.hot_pct - a.warm_pct));
+// cohort-gap paired rows in three buckets: gaps that survive
+// Benjamini-Hochberg correction within their section's test family, gaps
+// that are raw-significant only (directional), and themes where the two
+// cohorts broadly agree.
+type RowBH = Row & { hot_vs_warm_sig_bh?: boolean };
+const gapRowsAll = [...(stats.cohort_gaps as RowBH[])];
+const byGap = (a: RowBH, b: RowBH) =>
+  Math.abs(b.hot_pct - b.warm_pct) - Math.abs(a.hot_pct - a.warm_pct);
+const sigRows = gapRowsAll.filter((r) => r.hot_vs_warm_sig_bh).sort(byGap);
+const rawOnlyRows = gapRowsAll
+  .filter((r) => r.hot_vs_warm_sig && !r.hot_vs_warm_sig_bh)
+  .sort(byGap);
 const agreeRows = gapRowsAll
   .filter((r) => !r.hot_vs_warm_sig)
   .sort((a, b) => b.hot_pct - a.hot_pct);
+const famTotals = (Object.values(stats.test_families) as any[]).reduce(
+  (acc, f) => ({ tests: acc.tests + f.n_tests, survivors: acc.survivors + f.n_survivors }),
+  { tests: 0, survivors: 0 });
 
 // Every single-percentage bar chart renders highest prevalence at the top.
 const sortPct = (arr: Row[]) => [...arr].sort((a, b) => b.pct - a.pct);
@@ -143,14 +173,14 @@ const intensityExamples = [
     <p>This study answers one question: should the university launch "Applied Generative AI for Professionals," an eight-week online certificate that teaches non-technical professionals to use generative artificial intelligence (AI) in their daily work? Fifty working professionals in the target market evaluated the concept in depth, including its $3,000 price.</p>
 
     <div class="verdict">
-      <p><strong>The verdict: a conditional yes.</strong> The concept, the format, and the hands-on approach draw near-universal approval, and 62% say they would seriously consider enrolling. But that demand is heavily contingent on employer funding, and the price sits at the ceiling of what the market expected. The evidence supports launching, on three conditions: build enrollment around an employer-sponsorship channel, publish the full curriculum with a level-fit path for experienced AI users, and lead the recruitment message with opportunity rather than fear. Each condition traces to a specific finding below.</p>
+      <p><strong>The verdict: a conditional yes.</strong> The concept, the format, and the hands-on approach draw near-universal approval, and {ceil(stats.intent.Likely / m.n * 100)}% say they would seriously consider enrolling. But that demand is heavily contingent on employer funding, and the price sits at the ceiling of what the market expected. The evidence supports launching, on three conditions: build enrollment around an employer-sponsorship channel, publish the full curriculum with a level-fit path for experienced AI users, and lead the recruitment message with opportunity rather than fear. Each condition traces to a specific finding below.</p>
     </div>
 
     <div class="stat-grid">
       <div class="stat-card"><div class="stat-num">{m.n}</div><div class="stat-label">Professionals interviewed</div></div>
-      <div class="stat-card"><div class="stat-num">96%</div><div class="stat-label">Positive first reaction to the concept</div></div>
-      <div class="stat-card"><div class="stat-num">62%</div><div class="stat-label">Likely to seriously consider enrolling</div></div>
-      <div class="stat-card"><div class="stat-num">96%</div><div class="stat-label">Say who funds it shapes the decision</div></div>
+      <div class="stat-card"><div class="stat-num">{P(stats.first_reaction, 'Positive Initial Program Reaction')}%</div><div class="stat-label">Positive first reaction to the concept</div></div>
+      <div class="stat-card"><div class="stat-num">{ceil(stats.intent.Likely / m.n * 100)}%</div><div class="stat-label">Likely to seriously consider enrolling</div></div>
+      <div class="stat-card"><div class="stat-num">{P(stats.funding, 'Funding Source Shapes Enrollment Decision')}%</div><div class="stat-label">Say who funds it shapes the decision</div></div>
     </div>
 
     <h2>The Concept as Participants Heard It</h2>
@@ -212,16 +242,16 @@ const intensityExamples = [
       <p><strong>3. The stated demand is employer-funding-contingent demand.</strong> 96% said who pays shapes whether they would enroll, and 88% would prefer their employer to fund or split the cost. The dependence runs deepest exactly where intent is highest: of the 31 likely enrollees, 27 prefer employer funding, and only 4 participants in the entire sample (8%) look both willing and able to self-fund at $3,000. Enrollment planning should treat the employer-sponsorship channel as the primary route and individual self-pay as the exception. <em>Owner: Corporate partnerships.</em></p>
     </div>
     <div class="vuln-callout">
-      <p><strong>4. The price has no headroom.</strong> Before the reveal, participants expected the program to cost about $2,150 at the median, and $3,000 sits at or above what 80% of the sample anticipated; nobody expected more. 70% still judged it reasonable once framed as a university certificate with live instruction, but acceptance splits along conviction: 84% of the likely cohort versus 50% of the unsure cohort, a statistically significant gap. Hold the price, defend it with proof, and do not raise it. <em>Owner: Program leadership.</em></p>
+      <p><strong>4. The price has no headroom.</strong> Before the reveal, participants expected the program to cost about {fmtUSD(stats.price_expectations.median_expectation_midpoint)} at the median, and $3,000 sits at or above what {ceil(stats.price_expectations.below_pct + stats.price_expectations.at_top_pct)}% of the sample anticipated; nobody expected more. {P(stats.price, 'Price Perceived as Reasonable')}% still judged it reasonable once framed as a university certificate with live instruction, but acceptance splits along conviction: {P(stats.price, 'Price Perceived as Reasonable', 'hot_pct')}% of the likely cohort versus {P(stats.price, 'Price Perceived as Reasonable', 'warm_pct')}% of the unsure cohort, a statistically significant gap that survives multiple-comparison correction. Hold the price, defend it with proof, and do not raise it. <em>Owner: Program leadership.</em></p>
     </div>
     <div class="insight">
-      <p><strong>5. Fear-based positioning preaches to the choir.</strong> The "stay ahead rather than get left behind" framing resonates with the already-convinced likely cohort (87%) but the persuadable unsure cohort resists it (50% resist versus 23% of the likely cohort, a significant gap). Opportunity framing, cited by 68% overall, is the safer lead message for moving the middle. <em>Owner: Enrollment marketing.</em></p>
+      <p><strong>5. Fear-based positioning preaches to the choir.</strong> The "stay ahead rather than get left behind" framing resonates with the already-convinced likely cohort ({P(stats.positioning, 'Fear Framing Resonance', 'hot_pct')}%) but the persuadable unsure cohort resists it ({P(stats.positioning, 'Fear Framing Resistance', 'warm_pct')}% resist versus {P(stats.positioning, 'Fear Framing Resistance', 'hot_pct')}% of the likely cohort, a directional gap; raw-significant, though it does not survive multiple-comparison correction). Opportunity framing, cited by {P(stats.positioning, 'Opportunity Framing Preference')}% overall, is the safer lead message for moving the middle. <em>Owner: Enrollment marketing.</em></p>
     </div>
     <div class="vuln-callout">
-      <p><strong>6. The unsure cohort needs proof, not persuasion.</strong> The unsure cohort significantly over-indexes on wanting an advanced or intermediate track (22% versus 3%), payment-plan flexibility (28% versus 6%), and lower price acceptance. The advanced-track question is concentrated among regular AI users, 95% of whom worry the content is too basic for them. These are solvable objections about proof and fit, not rejections of the concept. <em>Owner: Program design.</em></p>
+      <p><strong>6. The unsure cohort needs proof, not persuasion.</strong> The unsure cohort directionally over-indexes (raw-significant, not surviving multiple-comparison correction) on wanting an advanced or intermediate track ({P(stats.barriers, 'Demand for Intermediate or Advanced Track', 'warm_pct')}% versus {P(stats.barriers, 'Demand for Intermediate or Advanced Track', 'hot_pct')}%), payment-plan flexibility ({P(stats.funding, 'Payment Plan Accessibility', 'warm_pct')}% versus {P(stats.funding, 'Payment Plan Accessibility', 'hot_pct')}%), and lower price acceptance. The advanced-track question is concentrated among regular AI users, {ceil(famRow('Regular user').too_basic_pct)}% of whom worry the content is too basic for them. These are solvable objections about proof and fit, not rejections of the concept. <em>Owner: Program design.</em></p>
     </div>
     <div class="opp-callout">
-      <p><strong>7. Structure beats free content.</strong> What justifies paying over free online material is structure and accountability (86%), the limits of self-directed free content (92%), and the inadequacy of employer-provided training (78%), not the raw information. The value story is the guided path, the live cohort, and the credential. <em>Owner: Enrollment marketing and Program design.</em></p>
+      <p><strong>7. Structure beats free content.</strong> What justifies paying over free online material is structure and accountability ({P(stats.why_pay, 'Structured Program Over Self-Directed Learning')}%), the limits of self-directed free content ({P(stats.why_pay, 'Free Content Limitations')}%), and the inadequacy of employer-provided training ({P(stats.why_pay, 'Employer Training Insufficiency')}%), not the raw information. The value story is the guided path, the live cohort, and the credential. <em>Owner: Enrollment marketing and Program design.</em></p>
     </div>
 
     <h2>The Three Conditions</h2>
@@ -584,7 +614,7 @@ const intensityExamples = [
       ))}
     </div>
     <div class="insight">
-      <p><strong>Fear framing preaches to the choir.</strong> It resonates with the likely cohort (87%) but the unsure cohort resists it at 50% versus 23% of the likely cohort, a statistically significant gap. Opportunity framing (68% overall) and a "make me more effective" angle are the safer lead for the persuadable middle. Save urgency for audiences already leaning in.</p>
+      <p><strong>Fear framing preaches to the choir.</strong> It resonates with the likely cohort ({P(stats.positioning, 'Fear Framing Resonance', 'hot_pct')}%) but the unsure cohort resists it at {P(stats.positioning, 'Fear Framing Resistance', 'warm_pct')}% versus {P(stats.positioning, 'Fear Framing Resistance', 'hot_pct')}% of the likely cohort, a directional gap (raw-significant; it does not survive multiple-comparison correction). Opportunity framing ({P(stats.positioning, 'Opportunity Framing Preference')}% overall) and a "make me more effective" angle are the safer lead for the persuadable middle. Save urgency for audiences already leaning in.</p>
     </div>
 
   </div>
@@ -629,7 +659,7 @@ const intensityExamples = [
 
     <div class="paired-legend"><span class="pl-swatch pl-hot"></span> Likely (n = {stats.meta.n_hot}) &nbsp;&nbsp; <span class="pl-swatch pl-warm"></span> Unsure (n = {stats.meta.n_warm})</div>
 
-    <h3>The Significant Gaps</h3>
+    <h3>Gaps That Survive Multiple-Comparison Correction</h3>
     <div class="paired-chart" data-drilldown-chart="cohort_gaps">
       {sigRows.map((s) => (
         <div class="paired-block" data-code={s.code}>
@@ -641,7 +671,21 @@ const intensityExamples = [
         </div>
       ))}
     </div>
-    <p class="source-note">Themes where the likely-versus-unsure difference is individually significant at alpha = 0.10, two-tailed (two-proportion z-test, with Fisher's exact test where expected cell counts fall below five). Sorted by gap size. <span class="vb-hint">Click a theme to read participant quotes with the question that prompted each.</span></p>
+    <p class="source-note">Themes where the likely-versus-unsure difference is significant at alpha = 0.10, two-tailed (two-proportion z-test, Fisher's exact below five expected per cell) AND survives Benjamini-Hochberg correction within its section's test family. Sorted by gap size. <span class="vb-hint">Click a theme to read participant quotes with the question that prompted each.</span></p>
+
+    <h3>Directional Gaps</h3>
+    <div class="paired-chart" data-drilldown-chart="cohort_gaps">
+      {rawOnlyRows.map((s) => (
+        <div class="paired-block" data-code={s.code}>
+          <span class="paired-label">{s.code}</span>
+          <div class="paired-bars">
+            <div class="pb-track"><div class="pb-fill pl-hot" style={`width:${s.hot_pct}%`}><span class="pb-val">{ceil(s.hot_pct)}%</span></div></div>
+            <div class="pb-track"><div class="pb-fill pl-warm" style={`width:${s.warm_pct}%`}><span class="pb-val">{ceil(s.warm_pct)}%</span></div></div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="source-note">Themes where the difference is raw-significant at alpha = 0.10 but does not survive the multiple-comparison correction; read these as directional patterns to validate, not confirmed gaps. Sorted by gap size. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
 
     <h3>Where They Broadly Agree</h3>
     <div class="paired-chart" data-drilldown-chart="cohort_gaps">
@@ -658,11 +702,11 @@ const intensityExamples = [
     <p class="source-note">Themes where the cohort difference does not reach significance at alpha = 0.10; both cohorts give the concept a warm reception, need ROI confidence, and prefer employer funding. Sorted by prevalence in the likely cohort. <span class="vb-hint">Click a theme to read participant quotes.</span></p>
 
     <div class="insight">
-      <p><strong>The likely cohort buys the value story; the unsure cohort has not been given enough proof yet.</strong> Significant gaps favor the likely cohort on finding the price reasonable (84% versus 50%), valuing structure over free content (94% versus 72%), seeing free content as limited (100% versus 78%), and feeling a personal AI gap (77% versus 50%). The unsure cohort significantly over-indexes only on resisting fear framing and on wanting an advanced track, both of which are addressable by message and product changes rather than discounting.</p>
+      <p><strong>The likely cohort buys the value story; the unsure cohort has not been given enough proof yet.</strong> The gaps that survive multiple-comparison correction both sit on money: finding the price reasonable ({P(stats.price, 'Price Perceived as Reasonable', 'hot_pct')}% versus {P(stats.price, 'Price Perceived as Reasonable', 'warm_pct')}%) and carrying the cost personally ({P(stats.price, 'Self-Funded Cost Burden', 'hot_pct')}% versus {P(stats.price, 'Self-Funded Cost Burden', 'warm_pct')}%). Directional after correction, and pointing the same way: valuing structure over free content ({P(stats.why_pay, 'Structured Program Over Self-Directed Learning', 'hot_pct')}% versus {P(stats.why_pay, 'Structured Program Over Self-Directed Learning', 'warm_pct')}%), seeing free content as limited ({P(stats.why_pay, 'Free Content Limitations', 'hot_pct')}% versus {P(stats.why_pay, 'Free Content Limitations', 'warm_pct')}%), and feeling a personal AI gap ({P(stats.first_reaction, 'Latent AI Adoption Gap', 'hot_pct')}% versus {P(stats.first_reaction, 'Latent AI Adoption Gap', 'warm_pct')}%). The unsure cohort's directional over-indexes, resisting fear framing and wanting an advanced track, are addressable by message and product changes rather than discounting.</p>
     </div>
 
     <h2>Who Is in Each Cohort</h2>
-    <p>The cohorts are not cleanly split by AI experience. The unsure cohort is bimodal: it holds both a larger share of non-users (who need reassurance the program is not too advanced) and the experienced users who worry it is too basic. The likely cohort is anchored by the occasional-user middle, the group for whom a structured push is exactly what they have been missing. The depth concern maps almost perfectly onto experience: 95% of regular AI users worry the content is too basic, versus 40% of occasional users and 9% of non-users (the Program Design section quantifies this and sizes the advanced-track case).</p>
+    <p>The cohorts are not cleanly split by AI experience. The unsure cohort is bimodal: it holds both a larger share of non-users (who need reassurance the program is not too advanced) and the experienced users who worry it is too basic. The likely cohort is anchored by the occasional-user middle, the group for whom a structured push is exactly what they have been missing. The depth concern maps almost perfectly onto experience: {ceil(famRow('Regular user').too_basic_pct)}% of regular AI users worry the content is too basic, versus {ceil(famRow('Occasional user').too_basic_pct)}% of occasional users and {ceil(famRow('Non-user').too_basic_pct)}% of non-users (the Program Design section quantifies this and sizes the advanced-track case).</p>
     <div class="crosstab">
       <table>
         <thead>
@@ -706,7 +750,7 @@ const intensityExamples = [
       <p><strong>Lead with opportunity, not fear.</strong> Anchor the lead message on becoming demonstrably more effective at your actual job with no coding required. Opportunity framing is preferred by 68% and, critically, does not repel the persuadable unsure cohort the way "get left behind" does. Reserve urgency and "stay ahead" language for audiences who have already shown intent.</p>
     </div>
     <div class="vuln-callout">
-      <p><strong>Message that backfires:</strong> a fear-first headline. The undecided cohort resists it (50% versus 23% of the likely cohort, a significant gap). It converts people who were already going to convert and alienates the ones you need to persuade.</p>
+      <p><strong>Message that backfires:</strong> a fear-first headline. The undecided cohort resists it ({P(stats.positioning, 'Fear Framing Resistance', 'warm_pct')}% versus {P(stats.positioning, 'Fear Framing Resistance', 'hot_pct')}% of the likely cohort, a directional gap after correction). It converts people who were already going to convert and alienates the ones you need to persuade.</p>
     </div>
 
     <h2>Who to Recruit First</h2>
@@ -760,9 +804,9 @@ const intensityExamples = [
         </div>
       ))}
     </div>
-    <p class="source-note">Share of each experience group raising the "content too basic for advanced users" concern anywhere in their interview. The regular-user rate is significantly higher than the rest of the sample combined (alpha = 0.10, two-tailed; the difference is significant well beyond that threshold). Not clickable by group; the theme's quotes are available from the barriers chart.</p>
+    <p class="source-note">Share of each experience group raising the "content too basic for advanced users" concern anywhere in their interview. The regular-user rate is far higher than the other groups; the three-way split is presented descriptively (no formal test is attached to this chart). Not clickable by group; the theme's quotes are available from the barriers chart.</p>
     <div class="vuln-callout">
-      <p><strong>The advanced-track question is a regular-user question, and regular users are 36% of this market.</strong> 95% of regular AI users worry the content is too basic for them, versus 40% of occasional users and 9% of non-users, a statistically significant concentration. Five of the eighteen regular users went further and proposed a concrete mechanism (an advanced track, tier, or placement diagnostic). A published level-fit mechanism, whether a placement diagnostic, a labeled advanced track, or clear prerequisites, turns the single most common objection into a reason to trust the program, and it defines exactly who the second-cohort or advanced offering should serve.</p>
+      <p><strong>The advanced-track question is a regular-user question, and regular users are 36% of this market.</strong> 95% of regular AI users worry the content is too basic for them, versus 40% of occasional users and 9% of non-users, an overwhelming concentration. Five of the eighteen regular users went further and proposed a concrete mechanism (an advanced track, tier, or placement diagnostic). A published level-fit mechanism, whether a placement diagnostic, a labeled advanced track, or clear prerequisites, turns the single most common objection into a reason to trust the program, and it defines exactly who the second-cohort or advanced offering should serve.</p>
     </div>
 
     <h2>Publish the Curriculum</h2>
@@ -905,14 +949,14 @@ const intensityExamples = [
     <p>This is a concept-acceptance study. Fifty working professionals in the Greater Toronto Area, all currently employed with at least six years of experience and aged 25 or older, took part in a structured 15-question interview. Each reacted to a described continuing-education certificate: an eight-week online university program teaching non-technical professionals to use generative AI in their daily work, one live evening a week plus about four to five hours total, hands-on with real tools, ending in a university professional certificate. The concept was presented without a price; the $3,000 price was revealed partway through the interview. There was no company-size or seniority screen, so the sample spans individual contributors through senior leaders and small organizations through large enterprises, with a deliberate spread of AI familiarity (regular, occasional, and non-users).</p>
 
     <h3>Statistical methodology</h3>
-    <p>All significance tests use an alpha of 0.10, two-tailed. Comparisons between the likely and unsure cohorts use a two-proportion z-test where all expected cell counts reach five, with Fisher's exact test as the fallback for smaller cells. At a sample of 50, with cohorts of {stats.meta.n_hot} and {stats.meta.n_warm}, only differences that pass this test are reported as real. Non-significant differences are described as directional at most, and uncorroborated non-significant differences are not claimed. All percentages are rounded up to the nearest whole number.</p>
+    <p>All significance tests use an alpha of 0.10, two-tailed. Comparisons between the likely and unsure cohorts use a two-proportion z-test where all expected cell counts reach five, with Fisher's exact test as the fallback for smaller cells. At a sample of 50, with cohorts of {stats.meta.n_hot} and {stats.meta.n_warm}, only differences that pass this test are reported as real. Within each report section, the set of likely-versus-unsure comparisons forms one pre-registered family adjusted with the Benjamini-Hochberg procedure at q = 0.10 ({famTotals.tests} comparisons across {Object.keys(stats.test_families).length} families in this report; {famTotals.survivors} survive). A difference described as statistically significant survives that correction; raw-significant differences that do not are reported as directional. Non-significant differences are described as directional at most, and uncorroborated non-significant differences are not claimed. All percentages are rounded up to the nearest whole number.</p>
 
     <h3>Coding and reliability</h3>
-    <p>Every interview was coded on three dimensions: a thematic code, a direction (positive, negative, or neutral) per meaning unit, and a Best-Worst Scaling (BWS) intensity score that captures how heavily each theme was weighted within a question grouping. Thematic and direction coding used two independent coders with a third resolving disagreements. Agreement was almost perfect: Cohen's kappa of 0.905 on thematic codes and 0.934 on direction. Intensity used a two-stage Best-Worst Scaling design (identifying each participant's peak mention, then scaling those peaks), with reliability reported per question grouping. Krippendorff's ordinal alpha ran from 0.70 to 0.84 across the four groupings (0.84 for concept appeal, 0.81 for barriers and price, 0.70 for both program evaluation and AI readiness), with Spearman rank correlations between coders in the same range. The two scatter plots in this report draw on the two most reliable groupings.</p>
+    <p>Every interview was coded on three dimensions: a thematic code, a direction (positive, negative, or neutral) per meaning unit, and a Best-Worst Scaling (BWS) intensity score that captures how heavily each theme was weighted within a question grouping. Thematic and direction coding used two independent coders with a third resolving disagreements. Inter-coder agreement was {stats.reliability.thematic_kappa_label.toLowerCase()}: Cohen's kappa of {fmt2(stats.reliability.thematic_kappa)} on thematic codes (computed over the segments whose question offered each code) and {fmt2(stats.reliability.direction_kappa)} on direction (within-code, weighted by shared segments). Intensity used a two-stage Best-Worst Scaling design (identifying each participant's peak mention, then scaling those peaks), with reliability reported per question grouping. Krippendorff's alpha (interval) between the two coders ran from {fmt2(Math.min(...Object.values(stats.bws_reliability)))} to {fmt2(Math.max(...Object.values(stats.bws_reliability)))} across the four groupings ({fmt2(stats.bws_reliability['Concept appeal drivers'])} for concept appeal, {fmt2(stats.bws_reliability['Barriers and price sensitivity'])} for barriers and price, {fmt2(stats.bws_reliability['Program evaluation dimensions'])} for program evaluation, {fmt2(stats.bws_reliability['AI readiness and upskilling'])} for AI readiness), with Spearman rank correlations between coders in the same range. The two scatter plots in this report draw on the two most reliable groupings.</p>
     <p>Where a reception claim pairs a prevalence figure with an "affirmed outright" figure (for example, the weekly time commitment), the first counts everyone who raised the theme and the second counts only those whose statements carried a positive direction; the gap between them is the share who engaged with the theme conditionally. One analysis is analyst-coded rather than pipeline-coded: pre-reveal price expectations were hand-classified from each participant's stated expectation range into three bands relative to the $3,000 price (entirely below it, topping out at it, or comfortably containing it), following the participant's own characterization where one was given.</p>
 
     <h3>Known gaps</h3>
-    <p>Stated intent overstates real enrollment: nothing was actually purchased, so the 62% "likely" figure is a relative signal, not a conversion forecast, and it is expected to compress in a larger and more representative sample. Segments here are intent cohorts, not a formal statistical segmentation, which a sample of this size cannot reliably support. The unlikely cohort is a single participant and is not interpreted. The sample is limited to the Greater Toronto Area and to employed professionals with six or more years of experience, so findings should not be generalized to students, early-career workers, or other regions without further research.</p>
+    <p>Stated intent overstates real enrollment: nothing was actually purchased, so the 62% "likely" figure is a relative signal, not a conversion forecast, and it is expected to compress in a larger and more representative sample. Segments here are intent cohorts, not a formal statistical segmentation, which a sample of this size cannot reliably support. The unlikely cohort is a single participant and is not interpreted. The intensity (BWS) scores in this edition carry two limitations identified in an August 2026 pipeline audit and pending a re-run: the arbiter pass that resolves coder disagreements did not execute, so each score reflects one coder's picks, and in the barriers-and-price grouping participants who raised an attribute more than once were not scored; the reliability coefficients above are unaffected because they are computed between the two coders before arbitration. The sample is limited to the Greater Toronto Area and to employed professionals with six or more years of experience, so findings should not be generalized to students, early-career workers, or other regions without further research.</p>
 
   </div>
 </details>

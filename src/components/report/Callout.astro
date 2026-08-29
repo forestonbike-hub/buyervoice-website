@@ -1,0 +1,36 @@
+---
+// Callout.astro — the canonical INSIGHT / OPPORTUNITY / VULNERABILITY /
+// NEUTRAL callout box (colors lifted from the retail-banking-report
+// canonical CSS). One finding per callout; the optional `label` renders as
+// the bolded lead ("Positioning implication.").
+//
+// Usage:
+//   <Callout kind="opportunity" label="Positioning implication">
+//     Only 2% of Simplii customers earn under $50K...
+//   </Callout>
+interface Props {
+  kind?: 'insight' | 'opportunity' | 'vulnerability' | 'neutral';
+  label?: string;
+}
+const { kind = 'neutral', label } = Astro.props;
+---
+
+<div class:list={['callout', `callout-${kind}`]}>
+  <p>
+    {label && <strong>{label}.</strong>}{label && ' '}
+    <slot />
+  </p>
+</div>
+
+<style>
+  .callout { border-left: 4px solid var(--ink); background: var(--card-bg); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 18px 0; }
+  .callout p { font-size: 14px; margin: 0; line-height: 1.6; }
+  .callout strong { color: var(--ink); }
+  .callout-opportunity { border-left-color: #2A7A6E; background: rgba(42, 122, 110, 0.08); }
+  .callout-opportunity strong { color: #2A7A6E; }
+  .callout-vulnerability { border-left-color: #C4784A; background: rgba(196, 120, 74, 0.10); }
+  .callout-vulnerability strong { color: #8B5A1F; }
+  .callout-insight { border-left-color: #B8341B; background: rgba(184, 52, 27, 0.06); }
+  .callout-insight strong { color: #B8341B; }
+  @media print { .callout { page-break-inside: avoid; background: var(--card-bg) !important; } }
+</style>

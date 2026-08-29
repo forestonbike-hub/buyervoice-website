@@ -1,4 +1,5 @@
 ---
+import reportsManifest from '../data/reports.json';
 interface Props {
   title: string;
   description?: string;
@@ -18,15 +19,11 @@ const pages = [
   { name: 'How Brands Grow', href: '/internal/how-brands-grow/', category: 'Methodology' },
   { name: 'Syndicated Research Strategy', href: '/internal/syndicated-research-strategy/', category: 'Methodology' },
   { name: 'B2C Research Projects', href: '/internal/b2c-research-projects/', category: 'Methodology' },
-  { name: 'HR Interview Report', href: '/internal/hr-interview-report/', category: 'Reports' },
-  { name: 'HR Interview Report v2', href: '/internal/hr-interview-reportv2/', category: 'Reports' },
-  { name: 'HR Leaders BambooHR', href: '/internal/hr-leaders-bamboohr/', category: 'Reports' },
-  { name: 'HR Leaders BGR', href: '/internal/hr-leaders-bgr/', category: 'Reports' },
-  { name: 'Retail Banking CIBC', href: '/internal/retail-banking-cibc/', category: 'Reports' },
-  { name: 'UK Neobank Switching Study', href: '/internal/uk-neobanks-report/', category: 'Reports' },
-  { name: 'Intercom Fin-on-Top Study', href: '/internal/intercom-fin-report/', category: 'Reports' },
-  { name: 'Retinol Graduation Moment', href: '/internal/retinol-switching-report/', category: 'Reports' },
-  { name: 'Applied Generative AI Concept', href: '/internal/applied-genai-report/', category: 'Reports' },
+  // Reports category rows are generated from src/data/reports.json (rows
+  // with an `internal` path). Add new reports there, never here.
+  ...reportsManifest.reports
+    .filter((r) => r.internal)
+    .map((r) => ({ name: r.sidebarName || r.name, href: r.internal, category: 'Reports' })),
   { name: 'Calendar Sync', href: '/internal/calendar-sync/', category: 'Tools' },
   { name: 'Four Products v1', href: '/internal/four-products-v1/', category: 'Legacy' },
 ];

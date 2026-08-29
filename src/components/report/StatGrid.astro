@@ -1,0 +1,50 @@
+---
+// StatGrid.astro — the canonical 4-card stat grid.
+//
+// Two variants (framework rules):
+//   - default: the cover / section hero grid (repeat(4, 1fr), gap 24px,
+//     full container width, no max-width constraint)
+//   - compact: the cohort-descriptive block that opens a section
+//     ("who the switchers are"): gap 12px, padding 14px 12px, value 22px,
+//     label 11.5px
+//
+// Usage:
+//   <StatGrid stats={[
+//     { value: '300', label: 'Interviews' },
+//     { value: '~20min', label: 'Length' },
+//     { value: '417K', label: 'Words Analyzed' },
+//     { value: '83', label: 'Thematic Codes' },
+//   ]} />
+//   <StatGrid compact stats={...} />
+interface Stat {
+  value: string | number;
+  label: string;
+}
+interface Props {
+  stats: Stat[];
+  compact?: boolean;
+}
+const { stats, compact = false } = Astro.props;
+---
+
+<div class:list={[compact ? 'compact-stats' : 'stat-grid']}>
+  {stats.map((s) => (
+    <div class="stat-card">
+      <div class="stat-num">{s.value}</div>
+      <div class="stat-label">{s.label}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; margin: 20px 0; }
+  .compact-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0; }
+  .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px 16px; text-align: center; }
+  .compact-stats .stat-card { padding: 14px 12px; }
+  .stat-num { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1.1; }
+  .compact-stats .stat-num { font-size: 22px; }
+  .stat-label { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .compact-stats .stat-label { font-size: 11.5px; }
+  @media (max-width: 720px) { .stat-grid, .compact-stats { grid-template-columns: repeat(2, 1fr); } }
+  @media print { .stat-grid, .compact-stats { page-break-inside: avoid; } }
+</style>

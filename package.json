@@ -4,8 +4,12 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/gen-report-registry.mjs",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "gen:registry": "node scripts/gen-report-registry.mjs",
+    "precheck": "node scripts/precheck.mjs",
+    "deploy": "npm run build && npm run precheck && npx wrangler pages deploy dist --project-name buyervoice-ai --branch main"
   },
   "dependencies": {
     "astro": "^5.7.10"

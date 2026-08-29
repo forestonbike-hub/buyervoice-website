@@ -1,0 +1,190 @@
+{
+  "_comment": "Single source of truth for every research report (review G12). Drives the internal dashboard's Reports section, the internal sidebar's Reports category, the Pages worker's GATED_REPORTS and DEFAULT_PUBLIC_REPORTS blocks (via scripts/gen-report-registry.mjs, run automatically before every build), and the precheck's registry-consistency checks. Fields: slug (row id), name (dashboard card title), sidebarName (shorter sidebar label; defaults to name), desc (dashboard card description), href (dashboard link), internal (sidebar link; null = not in the sidebar), publicSlug + publicPath (KV visibility toggle; omit for internal-only pages), defaultPublic (serve 200 before any KV flag is written; Maze partner editions only), dataFolder (study folder under research-projects/Interview Projects, when the report binds to pipeline data), precheckSkip (named precheck rules this legacy report is exempt from; new reports must not use this).",
+  "reports": [
+    {
+      "slug": "hr-interview-report",
+      "name": "HR Interview Report",
+      "desc": "BambooHR recruiting software interview analysis (original version).",
+      "href": "/internal/hr-interview-report/",
+      "internal": "/internal/hr-interview-report/"
+    },
+    {
+      "slug": "hr-report-v2",
+      "name": "HR Interview Report v2",
+      "desc": "Updated HR interview analysis report.",
+      "href": "/internal/hr-interview-reportv2/",
+      "internal": "/internal/hr-interview-reportv2/",
+      "publicSlug": "hr-report-v2",
+      "publicPath": "/hr-report-v2/",
+      "precheckSkip": [
+        "q-numbers"
+      ]
+    },
+    {
+      "slug": "hr-leaders-bamboohr",
+      "name": "HR Leaders BambooHR",
+      "desc": "HR leaders study: real report, simulated report, codebook, and segmentation.",
+      "href": "/internal/hr-leaders-bamboohr/",
+      "internal": "/internal/hr-leaders-bamboohr/",
+      "dataFolder": "HR Leaders BambooHR"
+    },
+    {
+      "slug": "hr-report",
+      "name": "HR Leaders BGR",
+      "desc": "HR leaders study using the How Brands Grow methodology.",
+      "href": "/internal/hr-leaders-bgr/",
+      "internal": "/internal/hr-leaders-bgr/",
+      "publicSlug": "hr-report",
+      "publicPath": "/hr-report/",
+      "dataFolder": "HR Leaders BGR",
+      "precheckSkip": [
+        "q-numbers"
+      ]
+    },
+    {
+      "slug": "maze-hr-report",
+      "name": "HR Leaders Report (Maze edition)",
+      "desc": "Maze-branded version of the BambooHR mid-market report for partner-assisted distribution. Same content, Maze-styled chrome (cover, logo, fonts); BuyerVoice attribution in the cover POWERED BY line. Defaults to public.",
+      "href": "/maze/hr-report/",
+      "internal": null,
+      "publicSlug": "maze-hr-report",
+      "publicPath": "/maze/hr-report/",
+      "defaultPublic": true,
+      "precheckSkip": [
+        "q-numbers"
+      ]
+    },
+    {
+      "slug": "retail-banking-cibc",
+      "name": "Retail Banking CIBC (workflow)",
+      "sidebarName": "Retail Banking CIBC",
+      "desc": "B2C switcher study workflow: 300 Canadian bank switchers in BC/AB. Coding pipeline, codebook, segmentation artifacts.",
+      "href": "/internal/retail-banking-cibc/",
+      "internal": "/internal/retail-banking-cibc/",
+      "dataFolder": "Retail Banking CIBC"
+    },
+    {
+      "slug": "retail-banking-report",
+      "name": "Retail Banking Report",
+      "desc": "Canonical client-facing Simplii retail banking report. Stakeholder-first structure, mental-availability heatmap, per-source push-pull matrix, segmentation, clickable verbatim drill-downs.",
+      "href": "/retail-banking-report/",
+      "internal": null,
+      "publicSlug": "retail-banking-report",
+      "publicPath": "/retail-banking-report/",
+      "dataFolder": "Retail Banking CIBC",
+      "precheckSkip": [
+        "q-numbers",
+        "pvalues-in-prose"
+      ]
+    },
+    {
+      "slug": "maze-retail-banking-report",
+      "name": "Retail Banking Report (Maze edition)",
+      "desc": "Maze-branded version of the Simplii retail banking report for partner-assisted distribution. Same content, Maze-styled chrome (cover, logo, fonts); BuyerVoice attribution in the cover POWERED BY line. Defaults to public.",
+      "href": "/maze/retail-banking-report/",
+      "internal": null,
+      "publicSlug": "maze-retail-banking-report",
+      "publicPath": "/maze/retail-banking-report/",
+      "defaultPublic": true,
+      "precheckSkip": [
+        "q-numbers",
+        "pvalues-in-prose"
+      ]
+    },
+    {
+      "slug": "retail-banking-report-v2",
+      "name": "Retail Banking Report (archive)",
+      "desc": "Earlier data-loading prototype of the Simplii report. Kept for reference only; do not share externally.",
+      "href": "/retail-banking-report-v2/",
+      "internal": null,
+      "publicSlug": "retail-banking-report-v2",
+      "publicPath": "/retail-banking-report-v2/",
+      "precheckSkip": [
+        "emdash",
+        "q-numbers",
+        "pvalues-in-prose"
+      ]
+    },
+    {
+      "slug": "uk-neobanks-report",
+      "name": "UK Neobank Switching Study",
+      "desc": "Two-wave UK retail banking study: 120 switchers to Monzo or Starling Bank + 200 non-switchers at top-5 incumbents. Three-chapter narrative (Why They Left, How It's Going, Who's Next) plus retiree spotlight and 3-stakeholder recommendations. Simulated data; pipeline validation run.",
+      "href": "/internal/uk-neobanks-report/",
+      "internal": "/internal/uk-neobanks-report/",
+      "publicSlug": "uk-neobanks-report",
+      "publicPath": "/uk-neobanks-report/",
+      "dataFolder": "UK Neobanks/Combined Analysis"
+    },
+    {
+      "slug": "maze-uk-neobanks-report",
+      "name": "UK Neobank Switching Study (Maze edition)",
+      "desc": "Maze-branded version of the UK Neobank Switching Study for partner-assisted distribution. Same content, Maze-styled chrome (cover, logo, fonts); BuyerVoice attribution in the cover POWERED BY line. Defaults to public.",
+      "href": "/maze/uk-neobanks-report/",
+      "internal": null,
+      "publicSlug": "maze-uk-neobanks-report",
+      "publicPath": "/maze/uk-neobanks-report/",
+      "defaultPublic": true
+    },
+    {
+      "slug": "intercom-fin-report",
+      "name": "Intercom Fin-on-Top Strategic Study",
+      "sidebarName": "Intercom Fin-on-Top Study",
+      "desc": "B2B two-cohort study (60 Fin Adopters + 120 aware Non-Adopters) on Intercom's Fin-on-Top motion. Tests whether Fin-on-Top converts adopters to full Intercom replatform (answer: largely no, 60% of adopters lean against). 71% of aware Non-Adopters name Fin as their likely AI-agent choice within 12 months. Simulated data; methodology demo.",
+      "href": "/internal/intercom-fin-report/",
+      "internal": "/internal/intercom-fin-report/",
+      "publicSlug": "intercom-fin-report",
+      "publicPath": "/intercom-fin-report/",
+      "dataFolder": "Intercom Fin/Combined Analysis"
+    },
+    {
+      "slug": "maze-intercom-fin-report",
+      "name": "Intercom Fin-on-Top Strategic Study (Maze edition)",
+      "desc": "Maze-branded version of the Intercom Fin-on-Top Strategic Study for partner-assisted distribution. Same content, Maze-styled chrome (cover, logo, fonts); BuyerVoice attribution in the cover POWERED BY line. Defaults to public.",
+      "href": "/maze/intercom-fin-report/",
+      "internal": null,
+      "publicSlug": "maze-intercom-fin-report",
+      "publicPath": "/maze/intercom-fin-report/",
+      "defaultPublic": true
+    },
+    {
+      "slug": "retinol-switching-report",
+      "name": "The Retinol Graduation Moment",
+      "sidebarName": "Retinol Graduation Moment",
+      "desc": "B2C study (240 US women aged 35-43) on switching from Olay Regenerist Retinol 24 to either Olay Retinol 24 MAX (upgraders) or a competitor brand (defectors). Decodes the channel + trigger + decision-logic asymmetry between the two arms; recommends a serum-format step-up retinoid and a TikTok dermatologist creator program. Simulated data; pipeline validation run.",
+      "href": "/internal/retinol-switching-report/",
+      "internal": "/internal/retinol-switching-report/",
+      "publicSlug": "retinol-switching-report",
+      "publicPath": "/retinol-switching-report/",
+      "dataFolder": "Retinol Switching",
+      "precheckSkip": [
+        "emdash",
+        "pvalues-in-prose"
+      ]
+    },
+    {
+      "slug": "maze-retinol-switching-report",
+      "name": "The Retinol Graduation Moment (Maze edition)",
+      "desc": "Maze-branded version of The Retinol Graduation Moment for partner-assisted distribution. Same content, Maze-styled chrome (cover, logo, fonts); BuyerVoice attribution in the cover POWERED BY line. Defaults to public.",
+      "href": "/maze/retinol-switching-report/",
+      "internal": null,
+      "publicSlug": "maze-retinol-switching-report",
+      "publicPath": "/maze/retinol-switching-report/",
+      "defaultPublic": true,
+      "precheckSkip": [
+        "emdash",
+        "pvalues-in-prose"
+      ]
+    },
+    {
+      "slug": "applied-genai-report",
+      "name": "Applied Generative AI Course Concept",
+      "sidebarName": "Applied Generative AI Concept",
+      "desc": "B2B concept test (50 GTA professionals) of a proposed 8-week online university certificate teaching non-technical professionals to use generative AI, priced at $3,000. Concept lands broadly (96% positive); the decision turns on price and who funds it (96% say funding shapes it, 88% prefer employer-funded). Intent-cohort analysis of likely vs unsure buyers, plus fear-vs-opportunity framing findings. Simulated data; methodology demo.",
+      "href": "/internal/applied-genai-report/",
+      "internal": "/internal/applied-genai-report/",
+      "publicSlug": "applied-genai-report",
+      "publicPath": "/applied-genai-report/",
+      "dataFolder": "Applied GenAI Course Concept"
+    }
+  ]
+}

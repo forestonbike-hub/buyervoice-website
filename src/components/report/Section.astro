@@ -10,9 +10,9 @@
 //     ...
 //   </Section>
 //
-// Set `open` to default-expand a particular section (usually reserved
-// for the Executive Summary). Default is collapsed, matching the
-// framework rule ("all accordion sections collapsed on page load").
+// The `open` prop exists for tooling only; report pages NEVER pass it.
+// Every section loads collapsed, no exceptions, Executive Summary
+// included (framework rule, enforced by `npm run precheck`).
 interface Props {
   title: string;
   subtitle?: string;
