@@ -80,10 +80,10 @@ Two Cloudflare accounts, both owned by `forest.on.bike@gmail.com` (sole Super Ad
 
 | Account | ID | Contains |
 |---|---|---|
-| **BuyerVoice.AI** | `89e56c40bdd859abc694da97d5cb3a70` | All compute: the `buyervoice-calendar-sync` Worker, all Pages projects, the D1 database, the `REPORT_VISIBILITY` KV namespace. No DNS zones. |
-| "Forest.on.bike@gmail.com's Account" | (not pinned here) | All 7 DNS zones incl. `buyervoice.ai`; Cloudflare Access (`teamkaker.cloudflareaccess.com`). |
+| **BuyerVoice.AI** | `89e56c40bdd859abc694da97d5cb3a70` | All compute: every Worker (`buyervoice-calendar-sync`, `buyervoice-interview-api`, `buyervoice-interview-api-staging`, `buyervoice-sentry-relay`, `surgeryvolume`), all Pages projects, the D1 database, the `REPORT_VISIBILITY` KV namespace. Also 3 DNS zones, none of them BuyerVoice's: `surgeryvolume.com`, `surgeonvolume.com`, `procedurevolume.com` (the `surgeryvolume` Worker serves `surgeryvolume.com/*`). |
+| "Forest.on.bike@gmail.com's Account" | `3bb77e09dccb5f59ca3477a339226d6e` | 7 DNS zones incl. `buyervoice.ai`; Cloudflare Access (`teamkaker.cloudflareaccess.com`). No Workers. |
 
-The compute account was named "Forest.baker@kwantumlabs.ai's Account" until August 4, 2026; that label was cosmetic and no KwantumLabs address ever had access. `CLOUDFLARE_ACCOUNT_ID` in `.env` and `workers/calendar-sync/wrangler.toml` point at the compute account; do not "fix" them. `buyervoice.ai` is a cross-account custom domain on the `buyervoice-ai` Pages project. The API token is scoped to the compute account without D1 or Zone permissions (an empty zone listing there is not a bug). Decided August 2026: keep the split; revisit only if a partner or sale makes personal-identity ownership a problem.
+The compute account was named "Forest.baker@kwantumlabs.ai's Account" until August 4, 2026; that label was cosmetic and no KwantumLabs address ever had access. `CLOUDFLARE_ACCOUNT_ID` in `.env` and `workers/calendar-sync/wrangler.toml` point at the compute account; do not "fix" them. `buyervoice.ai` is a cross-account custom domain on the `buyervoice-ai` Pages project. The API token is scoped to the compute account with Workers and D1 permissions (D1 Write added September 18, 2026) but no Zone permissions, so a zone listing through it comes back empty even though that account holds 3 zones (not a bug). Decided August 2026: keep the split; revisit only if a partner or sale makes personal-identity ownership a problem.
 
 ## Data-dependent pages
 
