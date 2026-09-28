@@ -1,0 +1,307 @@
+---
+import Base from '../layouts/Base.astro';
+
+// The privacy policy (Forest, September 28, 2026). Kept to the basics: what the website and the
+// interviews at interview.buyervoice.ai collect, how long it is kept, and how to have it deleted.
+// The wording on deletion and rewards is the same as the interview platform's default consent text
+// (AI-moderator-product/platform/api/src/studies.ts): change one, change the other.
+// Service providers are described by what they do, not named. Google Analytics is the one
+// exception: Google's terms require a site that uses it to say so and to link to how Google
+// uses the data.
+const updated = 'September 28, 2026';
+---
+
+<Base
+  title="Privacy policy | BuyerVoice.AI"
+  description="What BuyerVoice.AI collects on this website and in research interviews, how long we keep it, and how to have it deleted."
+>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="BuyerVoice.AI home">
+        <img src="/images/logo-nav.svg" alt="BuyerVoice.AI" width="240" height="48" />
+      </a>
+      <div class="nav-links">
+        <a href="mailto:contact@buyervoice.ai" class="nav-cta">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="policy">
+    <div class="container">
+      <article class="policy-text">
+        <p class="eyebrow">Privacy</p>
+        <h1>Privacy policy</h1>
+        <p class="updated">Last updated: {updated}</p>
+
+        <p class="lead">
+          This is the privacy policy of BuyerVoice LLC, which runs BuyerVoice.AI. It covers this website and the
+          research interviews people take at interview.buyervoice.ai.
+        </p>
+
+        <h2>This website</h2>
+        <p>
+          We do not ask for your name or email on this website. If you write to us at
+          <a href="mailto:contact@buyervoice.ai">contact@buyervoice.ai</a>, we use what you send to answer you.
+        </p>
+        <p>
+          We use Google Analytics to see how the site is used: which pages are read and where visitors come from.
+          It sets cookies in your browser to do this. Google explains
+          <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how it uses information from sites that use its services</a>,
+          and you can turn Google Analytics off with
+          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google's opt-out add-on</a>
+          for your browser.
+        </p>
+        <p>We do not sell personal information.</p>
+
+        <h2>Research interviews</h2>
+        <h3>What we collect</h3>
+        <p>
+          Your answers: what you say, which we record and transcribe, and what you type or select. We also keep your
+          browser type and language, to help with technical problems. We do not store your IP address. An interview
+          does not ask for your name or email.
+        </p>
+        <h3>Who runs the interview</h3>
+        <p>An AI moderator. You are not talking to a person.</p>
+        <h3>How we use your answers</h3>
+        <p>
+          For research. We may share findings with the organization that sponsored the study. Findings never identify
+          you by name.
+        </p>
+        <h3>Who helps us</h3>
+        <p>
+          Service providers host the interview, transcribe recordings, and write follow-up questions. They handle your
+          answers only to provide those services to us.
+        </p>
+        <h3>How long we keep it</h3>
+        <p>
+          We delete audio recordings 90 days after a study closes. We keep transcripts and answers. If we hold contact
+          details used to invite you, we remove them 90 days after the study closes.
+        </p>
+        <h3>Rewards</h3>
+        <p>
+          If a study offers a reward, you claim it on a page run by our rewards provider. The provider asks you for
+          what it needs to deliver the reward, such as an email address, and handles it under its own privacy policy.
+          We do not receive it.
+        </p>
+
+        <h2>Deleting your data</h2>
+        <p>
+          Write to <a href="mailto:contact@buyervoice.ai">contact@buyervoice.ai</a> and include the reference code
+          from the end of your interview, or your interview link. We will delete your recording, transcript, and
+          answers within 45 days.
+        </p>
+        <p>Claim any reward first. A reward that has not been claimed cannot be claimed after your data is deleted.</p>
+        <p>The same address takes any other request about your information.</p>
+
+        <h2>Changes</h2>
+        <p>If this policy changes, we post the new version here with a new date.</p>
+
+        <h2>Contact</h2>
+        <p>
+          BuyerVoice LLC<br />
+          <a href="mailto:contact@buyervoice.ai">contact@buyervoice.ai</a>
+        </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="/" class="footer-logo" aria-label="BuyerVoice.AI home">
+          <img src="/images/logo.svg" alt="BuyerVoice.AI" width="160" height="32" />
+        </a>
+        <div class="footer-links">
+          <a href="/privacy" aria-current="page">Privacy</a>
+          <a href="mailto:contact@buyervoice.ai" class="footer-cta">Contact</a>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; 2026 BuyerVoice.AI. All rights reserved.</p>
+    </div>
+  </footer>
+</Base>
+
+<style>
+  /* Nav and footer: the homepage's, so the two pages read as one site. */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--ink);
+  }
+
+  .nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .nav-logo img {
+    height: 60px;
+    width: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.25rem;
+    align-items: center;
+  }
+
+  .nav-cta {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--signal);
+    text-decoration: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    background: #9a2c17;
+    color: #fff;
+  }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* The policy: one left-aligned column of text, as the brand brief asks of body copy. */
+  .policy {
+    padding-top: clamp(120px, 16vw, 180px);
+    padding-bottom: var(--section-gap);
+  }
+
+  .policy-text {
+    max-width: 68ch;
+  }
+
+  .policy-text h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    margin-top: 0.75rem;
+  }
+
+  .updated {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .lead {
+    margin-top: 2rem;
+    font-size: 1.12rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  .policy-text h2 {
+    font-size: 1.55rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .policy-text h3 {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--ink);
+    margin-top: 1.5rem;
+  }
+
+  .policy-text p {
+    margin-top: 0.75rem;
+  }
+
+  .policy-text h3 + p {
+    margin-top: 0.25rem;
+  }
+
+  .footer {
+    padding: 3rem 0;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-logo {
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .footer-logo img {
+    height: 28px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover,
+  .footer-links a[aria-current='page'] {
+    color: #fff;
+  }
+
+  .footer-cta {
+    color: #fff;
+    background: var(--signal);
+    padding: 0.4rem 1.1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .footer-cta:hover {
+    background: #9a2c17;
+    color: #fff;
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+</style>
