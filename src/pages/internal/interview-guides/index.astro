@@ -11,12 +11,18 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --color-green: var(--ink);
-      --color-deep-green: var(--ink);
-      --color-teal: #1a7a5e;
+      --ink: #0B1F3A;
+      --paper: #F7F5EF;
+      --signal: #B8341B;
+      --rule: #1A1A1A;
+      --muted: #6B6B6B;
+      --border: rgba(11, 31, 58, 0.10);
+      --card-bg: rgba(11, 31, 58, 0.03);
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --color-black: #1A1A1A;
       --color-white: #FFFFFF;
       --color-slate: var(--rule);
@@ -28,8 +34,7 @@
       --color-red-light: #FEE2E2;
       --color-blue: #2563EB;
       --color-blue-light: #EFF6FF;
-      --color-green-light: transparent;
-      --font-heading: var(--serif), Georgia, serif;
+      --font-heading: var(--serif);
       --font-body: var(--sans);
       --max-width: 1200px;
       --max-text-width: 760px;
@@ -88,13 +93,13 @@
       white-space: nowrap;
     }
     .nav-links a:hover {
-      color: var(--color-green);
-      background: var(--color-green-light);
+      color: var(--ink);
+      background: var(--card-bg);
     }
 
     /* HERO */
     .hero {
-      background: var(--color-green);
+      background: var(--ink);
       color: var(--color-white);
       padding: 72px 24px;
       text-align: center;
@@ -115,6 +120,7 @@
       margin-bottom: 20px;
     }
     .hero p {
+      color: var(--color-white);
       font-size: 18px;
       opacity: 0.9;
       max-width: 640px;
@@ -141,7 +147,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--color-green);
+      color: var(--ink);
       margin-bottom: 8px;
     }
     h2 {
@@ -241,7 +247,7 @@
       padding: 24px;
       border: 1px solid var(--color-medium-gray);
     }
-    .card.green { background: var(--color-green-light); border-color: #86efac; }
+    .card.green { background: rgba(42, 122, 110, 0.08); border-color: rgba(42, 122, 110, 0.35); }
     .card.amber { background: var(--color-amber-light); border-color: #fcd34d; }
     .card.blue { background: var(--color-blue-light); border-color: #93c5fd; }
     .card-title {
@@ -251,7 +257,7 @@
       letter-spacing: 0.06em;
       margin-bottom: 10px;
     }
-    .card-title.green { color: var(--color-deep-green); }
+    .card-title.green { color: var(--ink); }
     .card-title.amber { color: #92400e; }
     .card-title.blue { color: #1e40af; }
     .card p { font-size: 13px; max-width: none; }
@@ -272,7 +278,7 @@
       flex: 1;
       padding: 24px;
     }
-    .temporal-side.module-a { background: var(--color-green-light); }
+    .temporal-side.module-a { background: rgba(42, 122, 110, 0.08); }
     .temporal-side.module-b { background: var(--color-amber-light); }
     .temporal-divider {
       display: flex;
@@ -298,7 +304,7 @@
       letter-spacing: 0.06em;
       margin-bottom: 8px;
     }
-    .temporal-label.a { color: var(--color-deep-green); }
+    .temporal-label.a { color: var(--ink); }
     .temporal-label.b { color: #92400e; }
     .temporal-role {
       font-size: 12px;
@@ -308,7 +314,7 @@
       display: inline-block;
       margin-bottom: 10px;
     }
-    .temporal-role.a { background: #dcfce7; color: var(--color-deep-green); }
+    .temporal-role.a { background: rgba(42, 122, 110, 0.15); color: var(--ink); }
     .temporal-role.b { background: #fef3c7; color: #92400e; }
     .temporal-side ul { font-size: 13px; padding-left: 16px; color: var(--color-slate); margin-top: 8px; }
     .temporal-side li { margin-bottom: 5px; }
@@ -330,14 +336,14 @@
       overflow-x: auto;
     }
     .ann-qnum { color: #89dceb; font-weight: bold; }
-    .ann-tag { color: #a6e3a1; }
+    .ann-tag { color: #9FC3BE; }
     .ann-pipe { color: #6c7086; }
     .ann-question { color: #cdd6f4; }
     .ann-note-label { color: #fab387; font-weight: 600; }
     .ann-note { color: #bac2de; font-style: italic; }
     .ann-criterion { color: #f38ba8; }
     .ann-descriptor { color: #89dceb; }
-    .ann-basis { color: #a6e3a1; }
+    .ann-basis { color: #9FC3BE; }
     .ann-comment { color: #6c7086; }
 
     /* BADGE TAGS */
@@ -348,10 +354,10 @@
       font-size: 12px;
       font-weight: 600;
     }
-    .badge-basis { background: #dcfce7; color: var(--color-deep-green); }
+    .badge-basis { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
     .badge-criterion { background: #fee2e2; color: #991b1b; }
     .badge-descriptor { background: #eff6ff; color: #1e40af; }
-    .badge-module-a { background: #dcfce7; color: var(--color-deep-green); }
+    .badge-module-a { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
     .badge-module-b { background: #fef3c7; color: #92400e; }
 
     /* CODE BLOCK */
@@ -367,7 +373,7 @@
       margin-top: 16px;
     }
     .code-key { color: #89b4fa; }
-    .code-string { color: #a6e3a1; }
+    .code-string { color: #9FC3BE; }
     .code-comment { color: #6c7086; font-style: italic; }
 
     /* CHECKLIST */
@@ -445,6 +451,7 @@
       text-align: center;
       font-size: 13px;
     }
+    footer p { color: inherit; max-width: none; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
     footer a:hover { color: var(--color-white); }
   </style>
@@ -535,7 +542,7 @@
       <div class="card green">
         <div class="card-title green">Marketing</div>
         <p style="font-size:13px;margin-bottom:12px;">Needs pain points in the participant's own words, evaluation criteria, and what messaging resonates or triggers rejection.</p>
-        <p style="font-size:12px;font-weight:600;color:var(--color-deep-green);margin-bottom:6px;">Questions to include:</p>
+        <p style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;">Questions to include:</p>
         <ul>
           <li>What language did they use to describe the problem?</li>
           <li>What triggered the evaluation?</li>
@@ -587,7 +594,7 @@
         <div class="temporal-label a">Module A: Historical Evaluation</div>
         <span class="temporal-role a">Upstream of tool choice</span>
         <p style="font-size:13px;max-width:none;margin-bottom:10px;">Questions about the past evaluation process — what drove the decision, what criteria were applied, who was involved, why alternatives were rejected.</p>
-        <p style="font-size:12px;font-weight:600;color:var(--color-deep-green);margin-bottom:6px;">Basis variable candidates</p>
+        <p style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:6px;">Basis variable candidates</p>
         <ul>
           <li>What triggered the evaluation?</li>
           <li>What criteria mattered most?</li>

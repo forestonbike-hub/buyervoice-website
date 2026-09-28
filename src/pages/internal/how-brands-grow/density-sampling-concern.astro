@@ -26,13 +26,14 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--sans);
     background: #f8f9fa;
     color: #1a1a2e;
     line-height: 1.7;
     padding: 48px 20px;
   }
   .container { max-width: 900px; margin: 0 auto; }
+  h1, h2 { font-family: var(--serif); }
 
   h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
   .subtitle { font-size: 17px; color: #6b7280; margin-bottom: 48px; line-height: 1.6; }
@@ -68,8 +69,8 @@
     border: 1px solid #f48fb1;
   }
   .callout-suggestion {
-    background: #ecfdf5;
-    border: 1px solid #6ee7b7;
+    background: rgba(42, 122, 110, 0.08);
+    border: 1px solid rgba(42, 122, 110, 0.35);
   }
   .callout h3 {
     font-size: 15px;
@@ -79,7 +80,7 @@
   .callout-finding h3 { color: #1e40af; }
   .callout-concern h3 { color: #92400e; }
   .callout-key h3 { color: #c62828; }
-  .callout-suggestion h3 { color: #065f46; }
+  .callout-suggestion h3 { color: var(--ink); }
   .callout p { font-size: 14px; margin-bottom: 8px; }
   .callout p:last-child { margin-bottom: 0; }
 
@@ -241,7 +242,7 @@
   .logic-step:nth-child(1) { background: #dbeafe; color: #1e40af; border-radius: 2px 0 0 8px; }
   .logic-step:nth-child(3) { background: #fef3c7; color: #92400e; }
   .logic-step:nth-child(5) { background: #fce7f3; color: #9f1239; }
-  .logic-step:nth-child(7) { background: #dcfce7; color: #166534; border-radius: 0 8px 8px 0; }
+  .logic-step:nth-child(7) { background: rgba(42, 122, 110, 0.12); color: var(--ink); border-radius: 0 8px 8px 0; }
 
   /* Two-path diagram */
   .paths-container {
@@ -255,8 +256,8 @@
     padding: 24px;
   }
   .path-real {
-    background: #ecfdf5;
-    border: 2px solid #6ee7b7;
+    background: rgba(42, 122, 110, 0.08);
+    border: 2px solid rgba(42, 122, 110, 0.35);
   }
   .path-artifact {
     background: #fef3c7;
@@ -267,7 +268,7 @@
     font-weight: 700;
     margin-bottom: 12px;
   }
-  .path-real h4 { color: #065f46; }
+  .path-real h4 { color: var(--ink); }
   .path-artifact h4 { color: #92400e; }
   .path-card p { font-size: 13px; }
   .path-card ol {

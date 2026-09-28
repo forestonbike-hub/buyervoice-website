@@ -33,7 +33,6 @@ try {
 
   <meta name="robots" content="noindex, nofollow" />
 <title>Codebook Review — HR Leaders BambooHR (Simulated)</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style is:inline>
 :root {
   --ink: #0B1F3A;
@@ -49,6 +48,7 @@ try {
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--sans); color: var(--rule); line-height: 1.6; background: var(--paper); }
+button { font-family: inherit; }
 .container { max-width: 980px; margin: 0 auto; padding: 0 32px; }
 
 /* Header */
@@ -95,7 +95,7 @@ tr:hover td { background: #F9FAFB; }
 tr.low-kappa td { background: #FEF2F2; }
 tr.low-kappa:hover td { background: #FEE2E2; }
 .kappa-badge { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-weight: 700; }
-.kappa-badge.green { background: rgba(184, 52, 27, 0.08); color: #166534; }
+.kappa-badge.green { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
 .kappa-badge.yellow { background: #FEF9C3; color: #854D0E; }
 .kappa-badge.red { background: #FEE2E2; color: #991B1B; }
 .kappa-bar-wrap { display: flex; align-items: center; gap: 8px; }
@@ -118,7 +118,7 @@ tr.low-kappa:hover td { background: #FEE2E2; }
 .def-row:last-child { margin-bottom: 0; }
 .def-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 2px; }
 .def-text { font-size: 13px; color: var(--rule); }
-.def-text.include { color: #166534; }
+.def-text.include { color: #2A7A6E; }
 .def-text.exclude { color: #991B1B; }
 .code-stats { display: flex; gap: 24px; margin-bottom: 20px; }
 .cstat { text-align: center; padding: 12px 20px; background: var(--card-bg); border-radius: 2px; min-width: 90px; }
@@ -140,7 +140,7 @@ tr.low-kappa:hover td { background: #FEE2E2; }
 .demo-tag { font-size: 10px; background: #F3F4F6; color: var(--muted); padding: 1px 6px; border-radius: 10px; }
 .vote-cell { text-align: center; }
 .vote { display: inline-block; width: 28px; height: 28px; border-radius: 50%; line-height: 28px; font-size: 12px; font-weight: 700; }
-.vote.yes { background: rgba(184, 52, 27, 0.08); color: #166534; }
+.vote.yes { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
 .vote.no { background: #F3F4F6; color: #9CA3AF; }
 .final-cell { text-align: center; }
 .final-yes { display: inline-block; background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 2px; }

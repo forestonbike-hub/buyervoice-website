@@ -14,15 +14,19 @@
 
   <meta name="robots" content="noindex, nofollow" />
   <title>Executive Summary | BambooHR Recruiting Software</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --green: var(--ink);
-      --deep-green: var(--ink);
+      --ink: #0B1F3A;
+      --paper: #F7F5EF;
+      --signal: #B8341B;
+      --rule: #1A1A1A;
+      --muted: #6B6B6B;
+      --border: rgba(11, 31, 58, 0.10);
+      --card-bg: rgba(11, 31, 58, 0.03);
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --dark: var(--ink);
       --light-bg: var(--card-bg);
       --medium-gray: var(--border);
@@ -31,8 +35,8 @@
       --workday: #3B82F6;
       --greenhouse: #F59E0B;
       --max-width: 1200px;
-      --font-heading: var(--serif), Georgia, serif;
-      --font-body: var(--sans), -apple-system, sans-serif;
+      --font-heading: var(--serif);
+      --font-body: var(--sans);
     }
 
     html { scroll-behavior: smooth; }
@@ -99,8 +103,8 @@
     }
 
     .nav-links a.active {
-      color: var(--deep-green);
-      border-bottom: 2px solid var(--green);
+      color: var(--ink);
+      border-bottom: 2px solid var(--ink);
       border-radius: 2px 6px 0 0;
     }
 
@@ -111,7 +115,7 @@
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--white) !important;
-      background: var(--green);
+      background: var(--ink);
       padding: 8px 16px;
       border-radius: 2px;
       text-decoration: none;
@@ -119,7 +123,7 @@
       white-space: nowrap;
     }
 
-    .nav-cta:hover { background: var(--deep-green); }
+    .nav-cta:hover { background: var(--ink); }
 
     .hamburger {
       display: none;
@@ -169,7 +173,7 @@
 
     /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(135deg, #f0faf3 0%, var(--light-bg) 50%, #f0f4ff 100%);
+      background: var(--paper);
       padding: 80px 24px 64px;
       text-align: center;
     }
@@ -183,8 +187,8 @@
       display: inline-block;
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--deep-green);
-      background: rgba(58, 166, 85, 0.12);
+      color: var(--ink);
+      background: rgba(11, 31, 58, 0.08);
       padding: 6px 14px;
       border-radius: 20px;
       text-transform: uppercase;
@@ -270,7 +274,7 @@
       font-family: var(--font-heading);
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--ink);
       line-height: 1;
       margin-bottom: 12px;
     }
@@ -325,7 +329,7 @@
       font-family: var(--font-heading);
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--ink);
       line-height: 1;
     }
     .rec-stat-text {
@@ -355,7 +359,7 @@
       margin-bottom: 4px;
     }
     .perception-box-num.red { color: #EF4444; }
-    .perception-box-num.green { color: var(--green); }
+    .perception-box-num.green { color: var(--ink); }
     .perception-box-label {
       font-size: 0.7rem;
       font-weight: 700;
@@ -381,7 +385,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--green);
+      color: var(--ink);
       margin-bottom: 4px;
     }
     .rec-callout p {
@@ -420,7 +424,7 @@
       font-family: var(--font-heading);
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--ink);
       min-width: 24px;
     }
     .cep-item-name {
@@ -431,14 +435,14 @@
     .cep-item-pct {
       font-size: 0.8125rem;
       font-weight: 600;
-      color: var(--green);
+      color: var(--ink);
       margin-left: auto;
     }
     .cep-item-quotes {
       padding-left: 34px;
     }
     .cep-item-quote {
-      border-left: 3px solid var(--green);
+      border-left: 3px solid var(--ink);
       padding: 8px 12px;
       background: var(--light-bg);
       border-radius: 0 6px 6px 0;
@@ -478,8 +482,8 @@
     }
 
     .nav-card:hover {
-      border-color: var(--green);
-      box-shadow: 0 8px 24px rgba(58, 166, 85, 0.1);
+      border-color: var(--ink);
+      box-shadow: 0 8px 24px rgba(11, 31, 58, 0.1);
       transform: translateY(-2px);
     }
 
@@ -487,7 +491,7 @@
       font-family: var(--font-heading);
       font-size: 0.875rem;
       font-weight: 600;
-      color: var(--green);
+      color: var(--ink);
       margin-bottom: 8px;
     }
 
@@ -509,7 +513,7 @@
       margin-top: 12px;
       font-size: 0.8125rem;
       font-weight: 600;
-      color: var(--green);
+      color: var(--ink);
     }
 
     /* ===== METHODOLOGY ===== */
@@ -536,7 +540,7 @@
     .method-item h3 {
       font-size: 0.9375rem;
       font-weight: 600;
-      color: var(--deep-green);
+      color: var(--ink);
       margin-bottom: 8px;
     }
 
@@ -550,7 +554,7 @@
       margin-top: 32px;
       padding: 16px 20px;
       background: var(--white);
-      border-left: 3px solid var(--green);
+      border-left: 3px solid var(--ink);
       border-radius: 0 8px 8px 0;
       font-size: 0.8125rem;
       color: #666;

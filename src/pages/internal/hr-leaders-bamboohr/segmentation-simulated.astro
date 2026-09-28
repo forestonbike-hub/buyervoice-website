@@ -33,7 +33,6 @@ try {
 
   <meta name="robots" content="noindex, nofollow" />
 <title>Segmentation Prep — HR Leaders BambooHR (Simulated)</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style is:inline>
 :root {
   --ink: #0B1F3A;
@@ -96,7 +95,7 @@ body { font-family: var(--sans); color: var(--rule); line-height: 1.6; backgroun
 .dim-label { font-size: 12px; color: var(--muted); }
 .dim-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .purpose-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 2px; }
-.purpose-badge.basis { background: rgba(184, 52, 27, 0.08); color: #166534; }
+.purpose-badge.basis { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
 .purpose-badge.descriptor { background: #EEF2FF; color: #4338CA; }
 .purpose-badge.criterion { background: var(--card-bg); color: #92400E; }
 .type-badge { font-size: 10px; color: #9CA3AF; font-weight: 500; background: #F3F4F6; padding: 2px 8px; border-radius: 2px; }
@@ -374,7 +373,7 @@ function renderDimCard(dim, idx) {
         <div style="flex:1;height:16px;background:#E5E7EB;border-radius:8px;overflow:hidden">
           <div style="width:${s.pct_positive}%;height:100%;background:${color};border-radius:8px"></div>
         </div>
-        <span style="font-size:13px;font-weight:700;color:${isWarn?'#92400E':'#166534'}">${s.pct_positive}%</span>
+        <span style="font-size:13px;font-weight:700;color:${isWarn?'#92400E':'#2A7A6E'}">${s.pct_positive}%</span>
       </div>
       ${isWarn ? `<div style="font-size:12px;color:#92400E;font-weight:600">! Low variance: ${s.pct_positive > 80 ? 'Too many participants coded positive — this dimension may not differentiate clusters.' : 'Too few participants coded positive — limited signal for clustering.'}</div>` : ''}
     </div>`;

@@ -46,8 +46,6 @@ const themeList = [...themeSummary.values()]
 
   <meta name="robots" content="noindex, nofollow" />
 <title>Themes &amp; Evidence | BambooHR Recruiting Software</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #0B1F3A;
@@ -63,6 +61,7 @@ const themeList = [...themeSummary.values()]
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; }
+  button { font-family: inherit; }
 
   /* NAV */
   .nav { position: sticky; top: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--border); padding: 0 24px; }
@@ -101,7 +100,7 @@ const themeList = [...themeSummary.values()]
   .hero-stat-label { font-size: 14px; color: var(--rule); }
 
   /* CALLOUT BOX */
-  .callout-box { background: transparent; border: 1px solid #BBF7D0; border-radius: 2px; padding: 28px 32px; margin-bottom: 48px; }
+  .callout-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 2px; padding: 28px 32px; margin-bottom: 48px; }
   .callout-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
   .callout-list { list-style: none; padding: 0; }
   .callout-list li { font-size: 14px; color: var(--rule); line-height: 1.8; padding-left: 20px; position: relative; }

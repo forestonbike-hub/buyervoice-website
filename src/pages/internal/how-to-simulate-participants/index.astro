@@ -12,7 +12,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
 </head>
 
 <body>
@@ -209,7 +209,7 @@
                   <span>Client-specified recruit spec</span><span>Min. 30 directors/VPs regardless of overall seniority distribution</span>
                 </div>
               </div>
-              <div class="callout-inline" style="margin-top: 12px; padding: 10px 14px; background: #F0F9F3; border-left: 3px solid var(--ink); border-radius: 2px;">
+              <div class="callout-inline" style="margin-top: 12px; padding: 10px 14px; background: var(--card-bg); border-left: 3px solid var(--ink); border-radius: 2px;">
                 <p style="margin: 0; font-size: 13px;">In <code>study_config.json</code>: add a <code>"quotas"</code> field specifying the exact count. The script pre-assigns quota values, fills remaining slots from the filtered distribution, then shuffles to avoid clustering.</p>
               </div>
             </div>
@@ -874,7 +874,7 @@ wait && echo "All slices complete"`}</pre>
   <footer class="site-footer">
     <div class="container">
       <div class="footer-inner">
-        <span class="bv-logo" aria-label="BuyerVoice.AI" style="font-family:'Fraunces',Georgia,serif;display:inline-flex;align-items:baseline;line-height:1;"><span style="font-size:24px;font-weight:600;color:#0B1F3A;letter-spacing:-0.02em;">BuyerVoice</span><span style="font-size:16px;font-weight:500;color:#B8341B;letter-spacing:-0.01em;margin-left:1px;">.AI</span></span>
+        <span class="bv-logo" aria-label="BuyerVoice.AI" style="font-family:'Fraunces',Georgia,serif;display:inline-flex;align-items:baseline;line-height:1;"><span style="font-size:24px;font-weight:600;color:#F7F5EF;letter-spacing:-0.02em;">BuyerVoice</span><span style="font-size:16px;font-weight:500;color:#B8341B;letter-spacing:-0.01em;margin-left:1px;">.AI</span></span>
         <p class="footer-text">Marketing science + AI. Quantified insights in weeks, not months.</p>
         <p class="footer-link">
           <a href="https://buyervoice.ai">buyervoice.ai</a>
@@ -903,7 +903,7 @@ wait && echo "All slices complete"`}</pre>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: var(--sans), -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--sans);
     font-size: 16px;
     line-height: 1.5;
     color: var(--rule);
@@ -917,7 +917,7 @@ wait && echo "All slices complete"`}</pre>
 
   /* ===== TYPOGRAPHY ===== */
   h1, h2 {
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     color: #1A1A1A;
     line-height: 1.2;
   }
@@ -1023,7 +1023,7 @@ wait && echo "All slices complete"`}</pre>
     text-align: center;
   }
   .stat-number {
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     font-size: 40px;
     font-weight: 700;
     color: var(--ink);
@@ -1072,7 +1072,7 @@ wait && echo "All slices complete"`}</pre>
     gap: 20px;
   }
   .dimension-num {
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     font-size: 48px;
     font-weight: 700;
     color: var(--border);
@@ -1101,11 +1101,13 @@ wait && echo "All slices complete"`}</pre>
   .dist-row {
     display: flex;
     justify-content: space-between;
+    gap: 16px;
     font-size: 13px;
     padding: 5px 0;
     border-bottom: 1px solid #F0F2F5;
   }
   .dist-row:last-child { border-bottom: none; }
+  .dist-row > span:last-child { text-align: right; }
   .dist-header {
     font-size: 11px;
     font-weight: 600;
@@ -1144,7 +1146,7 @@ wait && echo "All slices complete"`}</pre>
     font-size: 11px;
     font-weight: 600;
   }
-  .verbose-high { background: #EDF7F0; color: var(--ink); }
+  .verbose-high { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
   .verbose-mid { background: #EEF4FF; color: #3B6FD4; }
   .verbose-low { background: var(--card-bg); color: var(--muted); }
   .verbose-descriptions p { font-size: 13px; margin-bottom: 6px; }
@@ -1188,7 +1190,7 @@ wait && echo "All slices complete"`}</pre>
   .realized-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .realized-chip {
     font-size: 11px;
-    background: #EDF7F0;
+    background: rgba(11, 31, 58, 0.06);
     color: var(--ink);
     border-radius: 2px;
     padding: 2px 8px;
@@ -1298,7 +1300,7 @@ wait && echo "All slices complete"`}</pre>
     gap: 16px;
   }
   .rule-num {
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     font-size: 32px;
     font-weight: 700;
     color: var(--ink);
@@ -1348,7 +1350,7 @@ wait && echo "All slices complete"`}</pre>
   .code-body {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: #A8D8A8;
+    color: var(--paper);
     padding: 20px;
     white-space: pre;
     overflow-x: auto;
@@ -1380,8 +1382,8 @@ wait && echo "All slices complete"`}</pre>
     padding: 24px;
   }
   .quality-good {
-    background: #EDF7F0;
-    border: 1px solid #B2DFBB;
+    background: rgba(42, 122, 110, 0.08);
+    border: 1px solid rgba(42, 122, 110, 0.35);
   }
   .quality-bad {
     background: #FEF3F2;
@@ -1453,8 +1455,8 @@ wait && echo "All slices complete"`}</pre>
   }
   .footer-logo { height: 32px; width: auto; filter: brightness(0) invert(1); opacity: 0.8; }
   .footer-text { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 0; max-width: 100%; }
-  .footer-link a { font-size: 14px; color: rgba(255,255,255,0.4); }
-  .footer-link a:hover { color: var(--ink); }
+  .footer-link a { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .footer-link a:hover { color: var(--paper); }
 
   /* ===== MAZE SECTION ===== */
   .maze-compare {
@@ -1475,7 +1477,7 @@ wait && echo "All slices complete"`}</pre>
     padding: 12px 20px;
   }
   .maze-raw .maze-col-header { background: #FEF3F2; color: #B91C1C; border-bottom: 1px solid #FECACA; }
-  .maze-output .maze-col-header { background: #EDF7F0; color: var(--ink); border-bottom: 1px solid #B2DFBB; }
+  .maze-output .maze-col-header { background: rgba(42, 122, 110, 0.12); color: var(--ink); border-bottom: 1px solid rgba(42, 122, 110, 0.35); }
   .maze-col-body { padding: 16px 20px; }
   .maze-example { font-size: 14px; line-height: 1.6; font-style: italic; color: var(--rule); margin: 0; max-width: 100%; }
   .maze-arrow {
@@ -1508,12 +1510,12 @@ wait && echo "All slices complete"`}</pre>
     letter-spacing: 0.05em;
   }
   .maze-omit-header { background: #FEF3F2; color: #B91C1C; border-bottom: 1px solid #FECACA; }
-  .maze-keep-header { background: #EDF7F0; color: var(--ink); border-bottom: 1px solid #B2DFBB; }
+  .maze-keep-header { background: rgba(42, 122, 110, 0.12); color: var(--ink); border-bottom: 1px solid rgba(42, 122, 110, 0.35); }
   .maze-rule-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; }
   .maze-rule-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--rule); line-height: 1.5; }
   .maze-rule-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
   .maze-x { background: #FEE2E2; color: #B91C1C; }
-  .maze-check { background: #D1FAE5; color: #065F46; }
+  .maze-check { background: rgba(42, 122, 110, 0.15); color: var(--ink); }
   .maze-stat-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1527,7 +1529,7 @@ wait && echo "All slices complete"`}</pre>
     text-align: center;
   }
   .maze-stat-num {
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     font-size: 32px;
     font-weight: 700;
     color: var(--ink);
@@ -1551,7 +1553,7 @@ wait && echo "All slices complete"`}</pre>
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--serif), Georgia, serif;
+    font-family: var(--serif);
     font-size: 24px;
     font-weight: 700;
   }
@@ -1599,7 +1601,7 @@ wait && echo "All slices complete"`}</pre>
   .kickoff-body {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: #A8D8A8;
+    color: var(--paper);
     padding: 20px;
     white-space: pre-wrap;
     line-height: 1.6;

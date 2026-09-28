@@ -14,9 +14,6 @@
 
   <meta name="robots" content="noindex, nofollow" />
   <title>Category Entry Points | BambooHR Brand Research</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
 :root {
   --ink: #0B1F3A;
@@ -33,7 +30,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--sans), -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--sans);
       color: var(--ink);
       background: var(--paper);
       line-height: 1.6;
@@ -352,9 +349,9 @@
     }
     /* Heat-map levels */
     .heat-0 { background: var(--paper); color: #999; }
-    .heat-low { background: #E8F5E9; color: var(--ink); }
-    .heat-med { background: #A5D6A7; color: #1A5C2E; }
-    .heat-high { background: #66BB6A; color: #ffffff; }
+    .heat-low { background: rgba(11, 31, 58, 0.08); color: var(--ink); }
+    .heat-med { background: rgba(11, 31, 58, 0.22); color: var(--ink); }
+    .heat-high { background: rgba(11, 31, 58, 0.78); color: #ffffff; }
     .heat-danger { background: #FF8A80; color: #B71C1C; }
     .heat-open { background: #FFF3E0; color: #E65100; }
     .heat-full-open { background: #FFCCBC; color: #BF360C; font-weight: 700; }
@@ -370,7 +367,7 @@
 
     /* ── INSIGHT BOX ── */
     .insight-box {
-      background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+      background: var(--card-bg);
       border-left: 4px solid var(--ink);
       border-radius: 0 12px 12px 0;
       padding: 2rem;

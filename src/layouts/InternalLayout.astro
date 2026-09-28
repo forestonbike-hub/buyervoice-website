@@ -25,7 +25,7 @@ const pages = [
     .filter((r) => r.internal)
     .map((r) => ({ name: r.sidebarName || r.name, href: r.internal, category: 'Reports' })),
   { name: 'Calendar Sync', href: '/internal/calendar-sync/', category: 'Tools' },
-  { name: 'Four Products v1', href: '/internal/four-products-v1/', category: 'Legacy' },
+  { name: 'Four Products v1', href: '/internal/four-products-v1/', category: 'Historical artifact' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -99,8 +99,8 @@ const currentPath = Astro.url.pathname;
           ))}
         </div>
         <div class="sidebar-section">
-          <h3 class="sidebar-heading">Legacy</h3>
-          {pages.filter(p => p.category === 'Legacy').map(page => (
+          <h3 class="sidebar-heading">Historical artifact</h3>
+          {pages.filter(p => p.category === 'Historical artifact').map(page => (
             <a href={page.href} class:list={['sidebar-link', { active: currentPath.startsWith(page.href) }]}>
               {page.name}
             </a>

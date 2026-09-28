@@ -16,19 +16,23 @@
 
   <meta name="robots" content="noindex, nofollow" />
   <title>Mental Availability Scorecard | BambooHR HR Interview Report</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --ink: #0B1F3A;
+      --paper: #F7F5EF;
+      --signal: #B8341B;
+      --rule: #1A1A1A;
+      --muted: #6B6B6B;
+      --border: rgba(11, 31, 58, 0.10);
+      --card-bg: rgba(11, 31, 58, 0.03);
+      --serif: 'Fraunces', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --white: #ffffff;
       --max-width: 1200px;
       --light-bg: var(--card-bg);
-      --font-heading: var(--serif), Georgia, serif;
-      --green: var(--ink);
-      --deep-green: var(--ink);
+      --font-heading: var(--serif);
       --dark: var(--ink);
       --light-gray: var(--card-bg);
       --medium-gray: var(--border);
@@ -44,7 +48,7 @@
     }
 
     body {
-      font-family: var(--sans), -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--sans);
       color: var(--dark);
       background: var(--paper);
       line-height: 1.6;
@@ -52,7 +56,7 @@
     }
 
     h1, h2, h3, h4, .stat-number, .nav-logo {
-      font-family: var(--serif), Georgia, serif;
+      font-family: var(--serif);
     }
 
     /* ─── NAV ─── */
@@ -103,8 +107,8 @@
       background: var(--light-bg);
     }
     .nav-links a.active {
-      color: var(--deep-green);
-      border-bottom: 2px solid var(--green);
+      color: var(--ink);
+      border-bottom: 2px solid var(--ink);
       border-radius: 2px 6px 0 0;
     }
     .nav-cta {
@@ -114,14 +118,14 @@
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--white) !important;
-      background: var(--green);
+      background: var(--ink);
       padding: 8px 16px;
       border-radius: 2px;
       text-decoration: none;
       transition: background 0.2s;
       white-space: nowrap;
     }
-    .nav-cta:hover { background: var(--deep-green); }
+    .nav-cta:hover { background: var(--ink); }
     .hamburger {
       display: none;
       background: none;
@@ -174,7 +178,7 @@
 
     /* ─── HERO ─── */
     .hero {
-      background: linear-gradient(135deg, #f0fdf4 0%, var(--light-gray) 100%);
+      background: var(--paper);
       padding: 72px 0 56px;
       border-bottom: 1px solid var(--medium-gray);
     }
@@ -184,8 +188,8 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--deep-green);
-      background: rgba(58,166,85,0.1);
+      color: var(--ink);
+      background: rgba(11, 31, 58, 0.08);
       padding: 6px 14px;
       border-radius: 100px;
       margin-bottom: 16px;
@@ -207,7 +211,7 @@
     /* ─── CALLOUT BOX ─── */
     .callout {
       background: var(--paper);
-      border-left: 4px solid var(--green);
+      border-left: 4px solid var(--ink);
       padding: 20px 24px;
       border-radius: 0 8px 8px 0;
       margin: 32px 0;
@@ -221,8 +225,8 @@
     .callout strong { color: var(--dark); }
 
     .callout-green-bg {
-      background: #f0fdf4;
-      border-left: 4px solid var(--green);
+      background: var(--card-bg);
+      border-left: 4px solid var(--ink);
       padding: 24px 28px;
       border-radius: 0 8px 8px 0;
       margin: 40px 0;
@@ -243,7 +247,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--green);
+      color: var(--ink);
       margin-bottom: 8px;
     }
     .section-header h2 {
@@ -273,8 +277,8 @@
       text-align: center;
     }
     .stat-card.highlight {
-      border-color: var(--green);
-      box-shadow: 0 0 0 1px var(--green);
+      border-color: var(--ink);
+      box-shadow: 0 0 0 1px var(--ink);
     }
     .stat-number {
       font-size: 2.75rem;
@@ -282,7 +286,7 @@
       line-height: 1;
       margin-bottom: 4px;
     }
-    .stat-number.green { color: var(--green); }
+    .stat-number.green { color: var(--ink); }
     .stat-number.blue { color: var(--workday); }
     .stat-number.amber { color: var(--greenhouse); }
     .stat-label {
@@ -464,8 +468,8 @@
       border-radius: 2px;
       padding: 6px 10px;
     }
-    .heat-high { background: rgba(58,166,85,0.15); color: var(--deep-green); }
-    .heat-med { background: rgba(58,166,85,0.08); color: #475569; }
+    .heat-high { background: rgba(11, 31, 58, 0.16); color: var(--ink); }
+    .heat-med { background: rgba(11, 31, 58, 0.06); color: #475569; }
     .heat-low { background: transparent; color: #94A3B8; }
     .heat-zero { color: #D1D5DB; }
 
@@ -548,7 +552,7 @@
       font-family: var(--serif);
       font-size: 2rem;
       font-weight: 700;
-      color: var(--green);
+      color: var(--ink);
       line-height: 1;
     }
     .retention-label {
@@ -591,7 +595,7 @@
     }
     .theme-bar-fill {
       height: 100%;
-      background: var(--green);
+      background: var(--ink);
       border-radius: 2px 0 0 4px;
       opacity: 0.7;
     }
@@ -635,7 +639,7 @@
     .insight-box {
       background: var(--paper);
       border: 1px solid var(--medium-gray);
-      border-left: 4px solid var(--green);
+      border-left: 4px solid var(--ink);
       border-radius: 0 12px 12px 0;
       padding: 28px 32px;
       margin: 40px 0;
@@ -645,7 +649,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--green);
+      color: var(--ink);
       margin-bottom: 8px;
     }
     .insight-box p {
@@ -714,7 +718,7 @@
       </div>
 
       <!-- ── Awareness Stats ── -->
-      <h3 style="font-family:var(--sans),sans-serif;font-size:0.9375rem;font-weight:700;margin-bottom:4px;margin-top:40px;">Brand Awareness Among Non-Users</h3>
+      <h3 style="font-family:var(--sans);font-size:0.9375rem;font-weight:700;margin-bottom:4px;margin-top:40px;">Brand Awareness Among Non-Users</h3>
       <p style="font-size:0.8125rem;color:#64748B;margin-bottom:20px;">Percentage of each brand's non-users who are aware of the brand (prompted)</p>
 
       <div class="stat-grid">
@@ -838,7 +842,7 @@
         <div class="chart-subtitle">Share of coded associations classified as positive, neutral, or negative</div>
 
         <div class="sentiment-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div> Positive</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2A7A6E;"></div> Positive</div>
           <div class="legend-item"><div class="legend-dot" style="background:var(--neutral-bar);"></div> Neutral</div>
           <div class="legend-item"><div class="legend-dot" style="background:var(--negative);"></div> Negative</div>
         </div>
@@ -847,7 +851,7 @@
         <div class="sentiment-row">
           <div class="sentiment-label">BambooHR</div>
           <div class="sentiment-track">
-            <div class="sentiment-seg" style="width:67.4%;background:var(--green);">67%</div>
+            <div class="sentiment-seg" style="width:67.4%;background:#2A7A6E;">67%</div>
             <div class="sentiment-seg neutral" style="width:32.6%;background:var(--neutral-bar);">33%</div>
           </div>
           <span class="bar-value-outside" style="width:80px;font-size:0.6875rem;">92 assoc.</span>
@@ -857,7 +861,7 @@
         <div class="sentiment-row">
           <div class="sentiment-label">Greenhouse</div>
           <div class="sentiment-track">
-            <div class="sentiment-seg" style="width:63.4%;background:var(--green);">63%</div>
+            <div class="sentiment-seg" style="width:63.4%;background:#2A7A6E;">63%</div>
             <div class="sentiment-seg neutral" style="width:36.6%;background:var(--neutral-bar);">37%</div>
           </div>
           <span class="bar-value-outside" style="width:80px;font-size:0.6875rem;">82 assoc.</span>
@@ -867,7 +871,7 @@
         <div class="sentiment-row">
           <div class="sentiment-label">Workday</div>
           <div class="sentiment-track">
-            <div class="sentiment-seg" style="width:43.8%;background:var(--green);">44%</div>
+            <div class="sentiment-seg" style="width:43.8%;background:#2A7A6E;">44%</div>
             <div class="sentiment-seg neutral" style="width:37.1%;background:var(--neutral-bar);">37%</div>
             <div class="sentiment-seg" style="width:19.1%;background:var(--negative);">19%</div>
           </div>

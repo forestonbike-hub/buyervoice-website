@@ -26,13 +26,14 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: var(--sans);
     background: #f8f9fa;
     color: #1a1a2e;
     line-height: 1.6;
     padding: 40px 20px;
   }
   .container { max-width: 1200px; margin: 0 auto; }
+  h1, h2 { font-family: var(--serif); }
 
   h1 {
     text-align: center;
@@ -182,13 +183,13 @@
     margin-bottom: 48px;
   }
   .overlap-card {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border: 2px solid #6ee7b7;
+    background: rgba(42, 122, 110, 0.08);
+    border: 2px solid rgba(42, 122, 110, 0.35);
     border-radius: 16px;
     padding: 32px;
   }
-  .overlap-card .model-label { color: #065f46; }
-  .overlap-card .model-title { color: #064e3b; font-size: 20px; margin-bottom: 16px; }
+  .overlap-card .model-label { color: var(--ink); }
+  .overlap-card .model-title { color: var(--ink); font-size: 20px; margin-bottom: 16px; }
 
   .overlap-grid {
     display: grid;
@@ -204,7 +205,7 @@
   .overlap-item h4 {
     font-size: 14px;
     font-weight: 700;
-    color: #065f46;
+    color: #2A7A6E;
     margin-bottom: 8px;
   }
   .overlap-item p {
@@ -243,7 +244,7 @@
   }
   .chain-step:nth-child(1) { background: #eff6ff; border-radius: 2px 0 0 12px; }
   .chain-step:nth-child(2) { background: #fef3c7; }
-  .chain-step:nth-child(3) { background: #ecfdf5; }
+  .chain-step:nth-child(3) { background: rgba(42, 122, 110, 0.12); }
   .chain-step:nth-child(4) { background: #fce7f3; }
   .chain-step:nth-child(5) { background: #f3e8ff; border-radius: 0 12px 12px 0; }
 
@@ -275,7 +276,7 @@
   }
   .tag-cep { background: #bfdbfe; color: #1e40af; }
   .tag-density { background: #fde68a; color: #92400e; }
-  .tag-both { background: #a7f3d0; color: #065f46; }
+  .tag-both { background: rgba(42, 122, 110, 0.15); color: var(--ink); }
 
   /* Interview design */
   .interview-section {
@@ -300,7 +301,7 @@
   .interview-phase:first-child { border-radius: 2px 12px 0 0; }
   .interview-phase:last-child { border-radius: 0 0 12px 12px; border-bottom: none; }
 
-  .interview-phase.phase-open { border-left-color: #10b981; }
+  .interview-phase.phase-open { border-left-color: #2A7A6E; }
   .interview-phase.phase-cep { border-left-color: #2563eb; }
   .interview-phase.phase-attributes { border-left-color: #d97706; }
   .interview-phase.phase-brand { border-left-color: #8b5cf6; }
@@ -330,7 +331,7 @@
     text-align: center;
     font-weight: 600;
   }
-  .method-unaided { background: #dcfce7; color: #166534; }
+  .method-unaided { background: rgba(42, 122, 110, 0.12); color: var(--ink); }
   .method-aided { background: #dbeafe; color: #1e40af; }
   .method-free { background: #fef3c7; color: #92400e; }
   .method-hybrid { background: #ede9fe; color: #5b21b6; }
@@ -374,7 +375,7 @@
   }
   .del-source.from-cep { color: #2563eb; }
   .del-source.from-density { color: #d97706; }
-  .del-source.from-both { color: #059669; }
+  .del-source.from-both { color: #2A7A6E; }
   .deliverable-card p {
     font-size: 13px;
     color: #4b5563;
@@ -761,8 +762,8 @@
 <div class="interview-section">
   <h2 class="section-header">The BuyerVoice.AI Interview: Capturing Both Models in One Conversation</h2>
 
-  <div class="callout" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 2px; padding: 20px 24px; margin-bottom: 24px;">
-    <h3 style="font-size: 14px; font-weight: 700; color: #065f46; margin-bottom: 8px;">B2B vs. B2C: How Stage 1 Differs</h3>
+  <div class="callout" style="background: rgba(42, 122, 110, 0.08); border: 1px solid rgba(42, 122, 110, 0.35); border-radius: 2px; padding: 20px 24px; margin-bottom: 24px;">
+    <h3 style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">B2B vs. B2C: How Stage 1 Differs</h3>
     <p style="font-size: 13px; color: var(--rule); margin-bottom: 8px;"><strong>B2B studies:</strong> Category Entry Points in B2B are typically business events (growth, turnover, contract expiry, compliance changes) that can be identified collaboratively with the client's sales team before fieldwork. Stage 1 serves as a brief warm-up and validation that the pre-built CEP list is complete. If a participant mentions a buying trigger not on the list, that's a valuable discovery.</p>
     <p style="font-size: 13px; color: var(--rule); margin-bottom: 0;"><strong>B2C studies:</strong> Consumer categories often have many diverse CEPs across occasions, need states, and life situations. Stage 1 should NOT be included in the measurement interview. Instead, conduct a separate CEP discovery study (~60 interviews) beforehand to generate the CEP list. The measurement interview starts directly at Stage 2.</p>
   </div>
